@@ -5,6 +5,9 @@ const TelegramBot = require('node-telegram-bot-api');
 const token = process.env.TELEGRAM_API_TOKEN
 const bot = new TelegramBot(token, {polling: true});
 
+// web-приложение
+const webAppUrl = process.env.WEB_APP_URL;
+
 const express = require('express');
 const cors = require('cors');
 const https = require('https');
