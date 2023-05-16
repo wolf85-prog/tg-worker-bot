@@ -8,6 +8,9 @@ const bot = new TelegramBot(token, {polling: true});
 // web-приложение
 const webAppUrl = process.env.WEB_APP_URL;
 
+
+let workerId, workerName, dateBorn, Worklist;
+
 const express = require('express');
 const cors = require('cors');
 const https = require('https');
@@ -29,6 +32,50 @@ const credentials = {
 };
 
 const httpsServer = https.createServer(credentials, app);
+
+
+//--------------------------------------------------------------------------------------------------------
+//              REQUEST
+//--------------------------------------------------------------------------------------------------------
+
+//создание страницы (проекта) базы данных проектов
+app.post('/web-data', async (req, res) => {
+    const {queryId, workername, dateborn, worklist = []} = req.body;
+    const d = new Date(dateborn);
+    const year = d.getFullYear();
+    const month = String(d.getMonth()+1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+
+    try {
+
+            console.log("Начинаю сохранять данные по заявке...")
+            workerName = workername
+            dateBorn = dateborn
+ 
+            console.log("Сохранение данных завершено: ", workerName)
+            
+            await bot.answerWebAppQuery(queryId, {
+                type: 'article',
+                id: queryId,
+                title: 'Специалист успешно добавлен',
+                input_message_content: {
+                    parse_mode: 'HTML',
+                    message_text: 
+`Специалист успешно добавлен!
+  
+<b>Проект:</b> ${workername} 
+<b>Дата рождения:</b> ${day}.${month}.${year}
+  
+<b>Специальности:</b>  
+${worklist.map(item =>' - ' + item.spec + ' = ' + item.count + ' чел.').join('\n')}`
+              }
+        })
+  
+        return res.status(200).json({});
+    } catch (e) {
+        return res.status(500).json({})
+    }
+})
 
 
 
