@@ -40,17 +40,16 @@ const httpsServer = https.createServer(credentials, app);
 
 //создание страницы (проекта) базы данных проектов
 app.post('/web-data', async (req, res) => {
-    const {queryId, workername, dateborn, worklist = []} = req.body;
-    const d = new Date(dateborn);
-    const year = d.getFullYear();
-    const month = String(d.getMonth()+1).padStart(2, "0");
-    const day = String(d.getDate()).padStart(2, "0");
+    const {queryId, workerfamily} = req.body;
+    // const d = new Date(dateborn);
+    // const year = d.getFullYear();
+    // const month = String(d.getMonth()+1).padStart(2, "0");
+    // const day = String(d.getDate()).padStart(2, "0");
 
     try {
 
             console.log("Начинаю сохранять данные по заявке...")
-            workerName = workername
-            dateBorn = dateborn
+            workerName = workerfamily
  
             console.log("Сохранение данных завершено: ", workerName)
             
@@ -63,12 +62,12 @@ app.post('/web-data', async (req, res) => {
                     message_text: 
 `Специалист успешно добавлен!
   
-<b>Проект:</b> ${workername} 
-<b>Дата рождения:</b> ${day}.${month}.${year}
+<b>Фамилия:</b> ${workerfamily} 
+<b>Дата рождения:</b> 
   
-<b>Специальности:</b>  
-${worklist.map(item =>' - ' + item.spec + ' = ' + item.count + ' чел.').join('\n')}`
-              }
+<b>Специальности:</b>`  
+// ${worklist.map(item =>' - ' + item.spec + ' = ' + item.count + ' чел.').join('\n')}
+            }
         })
   
         return res.status(200).json({});
