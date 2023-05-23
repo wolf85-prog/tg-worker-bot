@@ -40,18 +40,17 @@ const httpsServer = https.createServer(credentials, app);
 
 //создание страницы (проекта) базы данных проектов
 app.post('/web-data', async (req, res) => {
-    const {queryId, workerfamily} = req.body;
-    // const d = new Date(dateborn);
-    // const year = d.getFullYear();
-    // const month = String(d.getMonth()+1).padStart(2, "0");
-    // const day = String(d.getDate()).padStart(2, "0");
+    const {queryId, workerfamily, workerName, phone, worklist, 
+        city, dateborn, companys, stag} = req.body;
+    const d = new Date(dateborn);
+    const year = d.getFullYear();
+    const month = String(d.getMonth()+1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
 
     try {
 
             console.log("Начинаю сохранять данные по заявке...")
-            workerName = workerfamily
- 
-            console.log("Сохранение данных завершено: ", workerName)
+            console.log("Сохранение данных завершено: ")
             
             await bot.answerWebAppQuery(queryId, {
                 type: 'article',
@@ -63,10 +62,16 @@ app.post('/web-data', async (req, res) => {
 `Специалист успешно добавлен!
   
 <b>Фамилия:</b> ${workerfamily} 
-<b>Дата рождения:</b> 
+<b>Имя:</b> ${workerName} 
+<b>Телефон:</b> ${phone} 
+<b>Дата рождения:</b> ${day}.${month}.${year}
+
+<b>Город:</b> ${city} 
+<b>Компании:</b> ${companys} 
+<b>Опыт работы:</b> ${stag} 
   
-<b>Специальности:</b>`  
-// ${worklist.map(item =>' - ' + item.spec + ' = ' + item.count + ' чел.').join('\n')}
+<b>Специальности:</b> 
+${worklist.map(item =>' - ' + item.spec + ', ' + item.cat).join('\n')}`
             }
         })
   
