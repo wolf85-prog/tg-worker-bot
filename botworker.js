@@ -17,6 +17,10 @@ const https = require('https');
 const fs = require('fs');
 const app = express();
 
+//подключение к БД PostreSQL
+const sequelize = require('./botworker/connections/db')
+const {UserBot, Message, Conversation} = require('./botworker/models/models')
+
 app.use(express.json());
 app.use(cors());
 
@@ -81,19 +85,77 @@ ${worklist.map(item =>' - ' + item.spec + ', ' + item.cat).join('\n')}`
     }
 })
 
-
-
-bot.on('message', (msg) => {
+bot.on('message', async (msg) => {
     const chatId = msg.chat.id;
+    const firstname = msg.from.first_name
+    const lastname = msg.from.last_name
+    const text = msg.text ? msg.text : '';
+    const messageId = msg.message_id;
 
-    bot.sendMessage(chatId, 'Я принял ваш запрос!')
-})
+    //console.log("msg: ", msg)
+    //console.log("text: ", text)
+
+    try {
+        // команда Старт
+        if (text === '/start') {
+            //добавить пользователя в бд
+            const user = await UserBot.findOne({where:{chatId: chatId.toString()}})
+            if (!user) {
+                await UserBot.create({ firstname: firstname, lastname: lastname, chatId: chatId })
+                console.log('Пользователь добавлен в БД')
+            } else {
+                console.log('Отмена добавления в БД. Пользователь уже существует')
+            }
+        
+            await bot.sendMessage(chatId, 'Добро пожаловать в телеграм-бот U.L.E.Y_Workhub.', {
+                reply_markup: ({
+                    inline_keyboard:[
+                        [{text: 'Информация', callback_data:'Информация'}, {text: 'Настройки', callback_data:'Настройки'}],
+                        [{text: 'Открыть проекты U.L.E.Y', web_app: {url: webAppUrl}}],
+                    ]
+                })
+            })
+        }
+
+        //обработка сообщений    
+        if ((text || '')[0] !== '/' && text) {       
+            if (text.startsWith('Специалист успешно добавлен')) {           
+                //const response = await bot.sendMessage(chatTelegramId, `${text} \n \n от ${firstname} ${lastname} ${chatId}`)
+
+                console.log("Отправляю сообщение в админ-панель...")        
+
+            } else {
+//----------------------------------------------------------------------------------------------------------------
+                //добавление пользователя в БД
+                const user = await UserBot.findOne({where:{chatId: chatId.toString()}})
+                if (!user) {
+                    await UserBot.create({ firstname: firstname, lastname: lastname, chatId: chatId })
+                    console.log('Пользователь добавлен в БД')
+                } else {
+                    console.log('Отмена операции! Пользователь уже существует')
+                }
+
+
+                // ответ бота
+                await bot.sendMessage(chatId, 'Я принял ваш запрос!')
+                //await bot.sendMessage(chatTelegramId, `${text} \n \n от ${firstname} ${lastname} ${chatId}`)           
+            }
+        }
+
+    } catch (error) {
+        console.log('Произошла непредвиденная ошибка! ', error.message)
+    }
+    
+  });
+
 
 //-------------------------------------------------------------------------------------------------------------------------------
 const PORT = process.env.PORT || 8001;
 
 const start = async () => {
     try {
+        await sequelize.authenticate()
+        await sequelize.sync()
         
         httpsServer.listen(PORT, () => {
             console.log('HTTPS Server BotWorker running on port ' + PORT);
