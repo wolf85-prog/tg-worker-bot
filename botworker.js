@@ -134,7 +134,7 @@ bot.on('message', async (msg) => {
         //обработка сообщений    
         if ((text || '')[0] !== '/' && text) {       
             if (text.startsWith('Специалист успешно добавлен')) {           
-                //const response = await bot.sendMessage(chatTelegramId, `${text} \n \n от ${firstname} ${lastname} ${chatId}`)
+                const response = await bot.sendMessage(chatTelegramId, `${text} \n \n от ${firstname} ${lastname} ${chatId}`)
 
                 console.log("Отправляю сообщение в админ-панель...")    
                 
