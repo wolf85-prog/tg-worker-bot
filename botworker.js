@@ -18,6 +18,7 @@ const cors = require('cors');
 const https = require('https');
 const fs = require('fs');
 const app = express();
+const router = require('./botworker/routes/index')
 
 //подключение к БД PostreSQL
 const sequelize = require('./botworker/connections/db')
