@@ -11,6 +11,8 @@ const webAppUrl = process.env.WEB_APP_URL;
 
 let workerId, workerFam, workerName2, phone2, dateBorn, Worklist, city2, stag2, companys2;
 
+const sendMyMessage = require('./botworker/common/sendMyMessage')
+
 const express = require('express');
 const cors = require('cors');
 const https = require('https');
