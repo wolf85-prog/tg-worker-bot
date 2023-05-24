@@ -59,14 +59,13 @@ app.post('/web-data', async (req, res) => {
             workerFam = workerfamily
             workerName2 = workerName
             phone2 = phone
-            dateBorn = `${day}.${month}.${year}`
+            dateBorn = dateborn
             phone2 = phone
             city2 = city
             stag2 = stag
             companys2 = companys
-            Teh = teh
             Worklist = worklist 
-            console.log("Сохранение данных завершено: ", projectName)
+            console.log("Сохранение данных завершено: ", workerFam)
             
             await bot.answerWebAppQuery(queryId, {
                 type: 'article',
