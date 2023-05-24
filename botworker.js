@@ -9,7 +9,7 @@ const bot = new TelegramBot(token, {polling: true});
 const webAppUrl = process.env.WEB_APP_URL;
 
 
-let workerId, workerName, dateBorn, Worklist;
+let workerId, workerFam, workerName2, phone2, dateBorn, Worklist, city2, stag2, companys2;
 
 const express = require('express');
 const cors = require('cors');
@@ -19,7 +19,7 @@ const app = express();
 
 //подключение к БД PostreSQL
 const sequelize = require('./botworker/connections/db')
-const {UserBot, Message, Conversation} = require('./botworker/models/models')
+const {UserBot, Message, Conversation, Worker} = require('./botworker/models/models')
 
 app.use(express.json());
 app.use(cors());
@@ -53,8 +53,20 @@ app.post('/web-data', async (req, res) => {
 
     try {
 
+        if (worklist.length > 0) {
+
             console.log("Начинаю сохранять данные по заявке...")
-            console.log("Сохранение данных завершено: ")
+            workerFam = workerfamily
+            workerName2 = workerName
+            phone2 = phone
+            dateBorn = `${day}.${month}.${year}`
+            phone2 = phone
+            city2 = city
+            stag2 = stag
+            companys2 = companys
+            Teh = teh
+            Worklist = worklist 
+            console.log("Сохранение данных завершено: ", projectName)
             
             await bot.answerWebAppQuery(queryId, {
                 type: 'article',
@@ -77,8 +89,9 @@ app.post('/web-data', async (req, res) => {
 <b>Специальности:</b> 
 ${worklist.map(item =>' - ' + item.spec + ', ' + item.cat).join('\n')}`
             }
-        })
-  
+            })
+
+        }
         return res.status(200).json({});
     } catch (e) {
         return res.status(500).json({})
@@ -111,7 +124,7 @@ bot.on('message', async (msg) => {
                 reply_markup: ({
                     inline_keyboard:[
                         [{text: 'Информация', callback_data:'Информация'}, {text: 'Настройки', callback_data:'Настройки'}],
-                        [{text: 'Открыть проекты U.L.E.Y', web_app: {url: webAppUrl}}],
+                        [{text: 'Зарегистрироваться в U.L.E.Y', web_app: {url: webAppUrl}}],
                     ]
                 })
             })
@@ -122,7 +135,57 @@ bot.on('message', async (msg) => {
             if (text.startsWith('Специалист успешно добавлен')) {           
                 //const response = await bot.sendMessage(chatTelegramId, `${text} \n \n от ${firstname} ${lastname} ${chatId}`)
 
-                console.log("Отправляю сообщение в админ-панель...")        
+                console.log("Отправляю сообщение в админ-панель...")    
+                
+                 //отправить сообщение о создании проекта в админ-панель
+                 const convId = sendMyMessage(text, "text", chatId, response.message_id)
+                
+                 // Подключаемся к серверу socket
+                 //let socket = io(socketUrl);
+                 //socket.emit("addUser", chatId)
+                  
+                 //отправить сообщение в админку
+                //  socket.emit("sendMessage", {
+                //       senderId: chatId,
+                //       receiverId: chatTelegramId,
+                //       text: text,
+                //       type: 'text',
+                //       convId: convId,
+                //       messageId: response.message_id,
+                //   })
+ 
+ 
+                 //массив специалистов
+                 let specArr = []
+                 console.log("Worklist: ", Worklist)
+                 if (Worklist !== '') {
+                     specArr = Worklist.map(item => ({
+                         spec: item.spec,
+                         cat: item.cat,
+                     }));
+                 }
+ 
+ 
+                 try {
+                     //создание проекта в БД
+                     const res = await Worker.create({
+                        userfamily: workerFam, 
+                        username: workerName2, 
+                        datestart: dateStart, 
+                        spec: JSON.stringify(specArr),
+                        phone: phone2, 
+                        dateborn: dateBorn,
+                        city: city2, 
+                        stag: stag2, 
+                        companys: companys2,
+                        chatId: chatId
+                     })
+ 
+                     console.log('Специалист успешно добавлен в БД! Worker: ' + res.name)
+
+                    } catch (error) {
+                        console.log(error.message)
+                    }
 
             } else {
 //----------------------------------------------------------------------------------------------------------------
