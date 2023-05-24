@@ -43,4 +43,5 @@ module.exports = {
     UserBot, 
     Message, 
     Conversation, 
+    Worker,
 }

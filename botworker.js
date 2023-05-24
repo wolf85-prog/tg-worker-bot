@@ -136,7 +136,7 @@ bot.on('message', async (msg) => {
             if (text.startsWith('Специалист успешно добавлен')) {           
                 //const response = await bot.sendMessage(chatTelegramId, `${text} \n \n от ${firstname} ${lastname} ${chatId}`)
 
-                console.log("Отправляю сообщение в админ-панель...", Worklist)    
+                console.log("Отправляю сообщение в админ-панель...")    
                 
                  //отправить сообщение о создании проекта в админ-панель
                  //const convId = sendMyMessage(text, "text", chatId, response.message_id)
