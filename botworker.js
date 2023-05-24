@@ -165,6 +165,8 @@ bot.on('message', async (msg) => {
                          cat: item.cat,
                      }));
                  }
+
+                 console.log("specArr: ", specArr)
  
  
                  try {
