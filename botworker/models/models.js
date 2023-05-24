@@ -6,6 +6,11 @@ const UserBot = sequelize.define('wuserbot', {
     firstname: {type: DataTypes.STRING},
     lastname: {type: DataTypes.STRING},
     chatId: {type: DataTypes.STRING, unique: true},
+    avatar: {type: DataTypes.STRING},
+})
+
+const Worker = sequelize.define('worker', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     userfamily: {type: DataTypes.STRING},
     username: {type: DataTypes.STRING},
     phone: {type: DataTypes.STRING},
@@ -14,7 +19,7 @@ const UserBot = sequelize.define('wuserbot', {
     companys: {type: DataTypes.STRING},
     stag: {type: DataTypes.STRING},
     worklist: {type: DataTypes.STRING},
-    avatar: {type: DataTypes.STRING},
+    chatId: {type: DataTypes.STRING, unique: true},
 })
 
 const Message = sequelize.define('wmessage', {
