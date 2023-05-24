@@ -25,6 +25,7 @@ const {UserBot, Message, Conversation, Worker} = require('./botworker/models/mod
 
 app.use(express.json());
 app.use(cors());
+app.use('/', router)
 
 // Certificate
 const privateKey = fs.readFileSync('privkey.pem', 'utf8'); //fs.readFileSync('/etc/letsencrypt/live/proj.uley.team/privkey.pem', 'utf8');
