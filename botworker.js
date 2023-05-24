@@ -172,7 +172,6 @@ bot.on('message', async (msg) => {
                      const res = await Worker.create({
                         userfamily: workerFam, 
                         username: workerName2, 
-                        datestart: dateStart, 
                         spec: JSON.stringify(specArr),
                         phone: phone2, 
                         dateborn: dateBorn,
