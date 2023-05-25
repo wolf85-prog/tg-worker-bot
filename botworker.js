@@ -202,6 +202,23 @@ bot.on('message', async (msg) => {
                     console.log('Отмена операции! Пользователь уже существует')
                 }
 
+                // сохранить отправленное боту сообщение пользователя в БД
+                const convId = sendMyMessage(text, 'text', chatId, messageId)
+
+                // Подключаемся к серверу socket
+                //let socket = io(socketUrl);
+
+                // socket.emit("addUser", chatId)
+
+                // socket.emit("sendMessage", {
+                //     senderId: chatId,
+                //     receiverId: chatTelegramId,
+                //     text: text,
+                //     type: 'text',
+                //     convId: convId,
+                //     messageId: messageId,
+                // })
+
 
                 // ответ бота
                 await bot.sendMessage(chatId, 'Я принял ваш запрос!')
