@@ -141,22 +141,22 @@ bot.on('message', async (msg) => {
 
                 console.log("Отправляю сообщение в админ-панель...")    
                 
-                 //отправить сообщение о создании проекта в админ-панель
-                 //const convId = sendMyMessage(text, "text", chatId, response.message_id)
+                //отправить сообщение о создании проекта в админ-панель
+                const convId = sendMyMessage(text, "text", chatId, response.message_id)
                 
-                 // Подключаемся к серверу socket
-                 //let socket = io(socketUrl);
-                 //socket.emit("addUser", chatId)
+                // Подключаемся к серверу socket
+                let socket = io(socketUrl);
+                socket.emit("addUser", chatId)
                   
                  //отправить сообщение в админку
-                //  socket.emit("sendMessage", {
-                //       senderId: chatId,
-                //       receiverId: chatTelegramId,
-                //       text: text,
-                //       type: 'text',
-                //       convId: convId,
-                //       messageId: response.message_id,
-                //   })
+                socket.emit("sendMessageSpec", {
+                    senderId: chatId,
+                    receiverId: chatTelegramId,
+                    text: text,
+                    type: 'text',
+                    convId: convId,
+                    messageId: response.message_id,
+                })
  
  
                  //массив специалистов
