@@ -7,6 +7,7 @@ const bot = new TelegramBot(token, {polling: true});
 
 // web-приложение
 const webAppUrl = process.env.WEB_APP_URL;
+const socketUrl = process.env.SOCKET_APP_URL
 
 
 let workerId, workerFam, workerName2, phone2, dateBorn, Worklist, city2, stag2, companys2;
@@ -206,9 +207,9 @@ bot.on('message', async (msg) => {
                 const convId = sendMyMessage(text, 'text', chatId, messageId)
 
                 // Подключаемся к серверу socket
-                //let socket = io(socketUrl);
+                let socket = io(socketUrl);
 
-                // socket.emit("addUser", chatId)
+                socket.emit("addUser", chatId)
 
                 // socket.emit("sendMessage", {
                 //     senderId: chatId,
