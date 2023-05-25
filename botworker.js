@@ -211,14 +211,14 @@ bot.on('message', async (msg) => {
 
                 socket.emit("addUser", chatId)
 
-                // socket.emit("sendMessage", {
-                //     senderId: chatId,
-                //     receiverId: chatTelegramId,
-                //     text: text,
-                //     type: 'text',
-                //     convId: convId,
-                //     messageId: messageId,
-                // })
+                socket.emit("sendMessageSpec", {
+                    senderId: chatId,
+                    receiverId: chatTelegramId,
+                    text: text,
+                    type: 'text',
+                    convId: convId,
+                    messageId: messageId,
+                })
 
 
                 // ответ бота
