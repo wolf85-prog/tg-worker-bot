@@ -9,6 +9,8 @@ const bot = new TelegramBot(token, {polling: true});
 const webAppUrl = process.env.WEB_APP_URL;
 const socketUrl = process.env.SOCKET_APP_URL
 
+//socket.io
+const {io} = require("socket.io-client")
 
 let workerId, workerFam, workerName2, phone2, dateBorn, Worklist, city2, stag2, companys2;
 
