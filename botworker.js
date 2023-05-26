@@ -146,12 +146,12 @@ bot.on('message', async (msg) => {
         //обработка сообщений    
         if ((text || '')[0] !== '/' && text) {       
             if (text.startsWith('Специалист успешно добавлен')) {           
-                const response = await bot.sendMessage(chatGiaId, `${text} \n \n от ${firstname} ${lastname} ${chatId}`)
+                //const response = await bot.sendMessage(chatGiaId, `${text} \n \n от ${firstname} ${lastname} ${chatId}`)
 
                 console.log("Отправляю сообщение в админ-панель...")    
                 
                 //отправить сообщение о создании проекта в админ-панель
-                const convId = sendMyMessage(text, "text", chatId, response.message_id)
+                const convId = sendMyMessage(text, "text", chatId, messageId)
                 
                 // Подключаемся к серверу socket
                 let socket = io(socketUrl);
@@ -164,7 +164,7 @@ bot.on('message', async (msg) => {
                     text: text,
                     type: 'text',
                     convId: convId,
-                    messageId: response.message_id,
+                    messageId: messageId,
                 })
  
  
