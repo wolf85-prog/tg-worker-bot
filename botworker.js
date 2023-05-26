@@ -219,8 +219,6 @@ bot.on('message', async (msg) => {
                 // Подключаемся к серверу socket
                 let socket = io(socketUrl);
 
-                console.log(socket)
-
                 socket.emit("addUser", chatId)
 
                 socket.emit("sendMessageSpec", {
