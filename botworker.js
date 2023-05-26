@@ -8,6 +8,12 @@ const bot = new TelegramBot(token, {polling: true});
 // web-приложение
 const webAppUrl = process.env.WEB_APP_URL;
 const socketUrl = process.env.SOCKET_APP_URL
+const chatTelegramId = process.env.CHAT_ID
+
+//notion api
+const { Client } = require("@notionhq/client");
+const notion = new Client({ auth: process.env.NOTION_API_KEY });
+const token_fetch = 'Bearer ' + process.env.NOTION_API_KEY;
 
 //socket.io
 const {io} = require("socket.io-client")
