@@ -9,6 +9,7 @@ const bot = new TelegramBot(token, {polling: true});
 const webAppUrl = process.env.WEB_APP_URL;
 const socketUrl = process.env.SOCKET_APP_URL
 const chatTelegramId = process.env.CHAT_ID
+const chatGiaId = process.env.GIA_ID
 
 //notion api
 const { Client } = require("@notionhq/client");
@@ -145,7 +146,7 @@ bot.on('message', async (msg) => {
         //обработка сообщений    
         if ((text || '')[0] !== '/' && text) {       
             if (text.startsWith('Специалист успешно добавлен')) {           
-                //const response = await bot.sendMessage(chatTelegramId, `${text} \n \n от ${firstname} ${lastname} ${chatId}`)
+                const response = await bot.sendMessage(chatGiaId, `${text} \n \n от ${firstname} ${lastname} ${chatId}`)
 
                 console.log("Отправляю сообщение в админ-панель...")    
                 
