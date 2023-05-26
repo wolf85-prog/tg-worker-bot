@@ -194,6 +194,8 @@ bot.on('message', async (msg) => {
 
             } else {
 //----------------------------------------------------------------------------------------------------------------
+                //отправка сообщения    
+
                 //добавление пользователя в БД
                 const user = await UserBot.findOne({where:{chatId: chatId.toString()}})
                 if (!user) {
@@ -208,6 +210,8 @@ bot.on('message', async (msg) => {
 
                 // Подключаемся к серверу socket
                 let socket = io(socketUrl);
+
+                console.log(socket)
 
                 socket.emit("addUser", chatId)
 
