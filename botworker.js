@@ -153,9 +153,9 @@ bot.on('message', async (msg) => {
                    dateborn: '',
                    city: '', 
                    companys: '',
-                   stag: '',                      
-                   worklist: JSON.stringify([]),
-                   chatId: chatId
+                   stag: ''                      
+                //    worklist: JSON.stringify([]),
+                //    chatId: chatId
                 })
 
                 console.log('Специалист успешно добавлен в БД! Worker: ' + res.username)
