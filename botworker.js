@@ -147,15 +147,15 @@ bot.on('message', async (msg) => {
             try {
                 //создание проекта в БД
                 const res = await Worker.create({
-                   userfamily: 'иванов' 
-                //    username: 'сергей', 
-                //    phone: '', 
-                //    dateborn: '',
-                //    city: '', 
-                //    companys: '',
-                //    stag: '',                      
-                //    worklist: JSON.stringify([]),
-                //    chatId: chatId,
+                   userfamily: 'иванов', 
+                   username: 'сергей', 
+                   phone: '', 
+                   dateborn: '',
+                   city: '', 
+                   companys: '',
+                   stag: '',                      
+                   worklist: JSON.stringify([]),
+                   chatId: chatId
                 })
 
                 console.log('Специалист успешно добавлен в БД! Worker: ' + res.username)
