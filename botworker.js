@@ -186,13 +186,13 @@ bot.on('message', async (msg) => {
                      const res = await Worker.create({
                         userfamily: workerFam, 
                         username: workerName2, 
-                        spec: JSON.stringify(specArr),
+                        worklist: JSON.stringify(specArr),
                         phone: phone2, 
                         dateborn: dateBorn,
                         city: city2, 
                         stag: stag2, 
                         companys: companys2,
-                        chatId: chatId
+                        chatId: chatId,
                      })
  
                      console.log('Специалист успешно добавлен в БД! Worker: ' + res.name)
