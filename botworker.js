@@ -154,7 +154,7 @@ bot.on('message', async (msg) => {
                    city: '', 
                    companys: '',
                    stag: '',                      
-                   worklist: [],
+                   worklist: JSON.stringify([]),
                    chatId: chatId,
                 })
 
