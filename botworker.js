@@ -143,6 +143,28 @@ bot.on('message', async (msg) => {
             })
         }
 
+        if (text === '/addspec') {
+            try {
+                //создание проекта в БД
+                const res = await Worker.create({
+                   userfamily: 'иванов', 
+                   username: 'сергей', 
+                   phone: '', 
+                   dateborn: '',
+                   city: '', 
+                   companys: '',
+                   stag: '',                      
+                   worklist: [],
+                   chatId: chatId,
+                })
+
+                console.log('Специалист успешно добавлен в БД! Worker: ' + res.username)
+
+               } catch (error) {
+                   console.log(error.message)
+               }
+        }
+
         //обработка сообщений    
         if ((text || '')[0] !== '/' && text) {       
             if (text.startsWith('Специалист успешно добавлен')) {           
@@ -186,16 +208,16 @@ bot.on('message', async (msg) => {
                      const res = await Worker.create({
                         userfamily: workerFam, 
                         username: workerName2, 
-                        worklist: JSON.stringify(specArr),
                         phone: phone2, 
                         dateborn: dateBorn,
                         city: city2, 
-                        stag: stag2, 
                         companys: companys2,
+                        stag: stag2,                      
+                        worklist: JSON.stringify(specArr),
                         chatId: chatId,
                      })
  
-                     console.log('Специалист успешно добавлен в БД! Worker: ' + res.name)
+                     console.log('Специалист успешно добавлен в БД! Worker: ' + res.username)
 
                     } catch (error) {
                         console.log(error.message)
