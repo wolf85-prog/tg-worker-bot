@@ -9,7 +9,6 @@ const bot = new TelegramBot(token, {polling: true});
 const webAppUrl = process.env.WEB_APP_URL;
 const socketUrl = process.env.SOCKET_APP_URL
 const chatTelegramId = process.env.CHAT_ID
-const chatGiaId = process.env.GIA_ID
 
 //notion api
 const { Client } = require("@notionhq/client");
@@ -21,6 +20,9 @@ const {io} = require("socket.io-client")
 
 let workerId, workerFam, workerName2, phone2, dateBorn, Worklist, city2, stag2, companys2;
 
+//functions
+const getBlocksP = require('./botworker/common/getBlocksP')
+const addPretendent = require('./botworker/common/addPretendent')
 const sendMyMessage = require('./botworker/common/sendMyMessage')
 
 const express = require('express');
@@ -264,6 +266,94 @@ bot.on('message', async (msg) => {
         console.log('Произошла непредвиденная ошибка! ', error.message)
     }
     
+  });
+
+
+  //--------------------------------------------------------------------------------------------------------------------
+  
+  //Ответ на нажатие кнопок настройки и информаци
+  bot.on('callback_query', async (msg) => {
+    const data = msg.data;
+    const chatId = msg.message.chat.id;
+    const messageId = msg.message.message_id;
+  
+    // if (data === '/menu') {
+    //     return bot.sendMessage(chatId, 'Смотрите и создавайте Notion-проекты в web-приложении прямо из мессенджера Telegram.', {
+    //         reply_markup: ({
+    //             inline_keyboard:[
+    //                 [{text: 'Информация', callback_data:'Информация'}, {text: 'Настройки', callback_data:'Настройки'}],
+    //                 [{text: 'Открыть Notion-проекты', web_app: {url: webAppUrl}}],
+    //             ]
+    //         })
+    //     })
+    // }
+
+    if (data === '/report') {
+        //отправить сообщение о создании проекта в админ-панель
+        const convId = await sendMyMessage('Пользователь нажал кнопку в рассылке', "text", chatId)
+
+        // Подключаемся к серверу socket
+        let socket = io(socketUrl);
+        socket.emit("addUser", chatId)
+        socket.emit("sendMessage", {
+            senderId: chatId,
+            receiverId: chatTelegramId,
+            text: 'Пользователь нажал кнопку в рассылке',
+            convId: convId,
+            messageId: messageId,
+        })
+
+        return bot.sendMessage(chatId, 'Ваша заявка принята! Мы свяжемся с вами в ближайшее время.')
+    }
+
+
+    //нажатие на кнопку "Принять"
+    if (data.startsWith('/accept')) {
+        const projectId = data.split(' ');
+        console.log("projectId: ", projectId[1])
+
+        const blockId = await getBlocksP(projectId[1]); 
+        
+        //Добавить специалиста в таблицу Претенденты
+        await addPretendent(blockId);
+
+        //отправить сообщение в админ-панель
+        const convId = await sendMyMessage('Пользователь нажал кнопку "Принять" в рассылке', "text", chatId)
+
+        // Подключаемся к серверу socket
+        let socket = io(socketUrl);
+        socket.emit("addUser", chatId)
+        socket.emit("sendMessage", {
+            senderId: chatId,
+            receiverId: chatTelegramId,
+            text: 'Пользователь нажал кнопку "Принять" в рассылке',
+            convId: convId,
+            messageId: messageId,
+        })
+
+        return bot.sendMessage(chatId, 'Ваша заявка принята! Мы свяжемся с вами в ближайшее время.')
+    }
+
+    //нажатие на кнопку "Отклонить"
+    if (data === '/cancel') {
+        //отправить сообщение в админ-панель
+        const convId = await sendMyMessage('Пользователь нажал кнопку "Отклонить" в рассылке', "text", chatId)
+
+        // Подключаемся к серверу socket
+        let socket = io(socketUrl);
+        socket.emit("addUser", chatId)
+        socket.emit("sendMessage", {
+            senderId: chatId,
+            receiverId: chatTelegramId,
+            text: 'Пользователь нажал кнопку "Отклонить" в рассылке',
+            convId: convId,
+            messageId: messageId,
+        })
+
+        return bot.sendMessage(chatId, 'Спасибо!')
+    }
+
+    //bot.sendMessage(chatId, `Вы нажали кнопку ${data}`, backOptions)
   });
 
 
