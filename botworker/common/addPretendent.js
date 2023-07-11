@@ -4,7 +4,7 @@ const { Client } = require("@notionhq/client");
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
 
 //send data to notion
-module.exports = async function addPretendent(blockId) {
+module.exports = async function addPretendent(blockId, workerId) {
     try {
         const response = await notion.pages.create({
             parent: { database_id: blockId },
@@ -39,6 +39,14 @@ module.exports = async function addPretendent(blockId) {
                             },
                             "plain_text": "Техническое Задание текстом подробно",
                             "href": null
+                        }
+                    ]
+                },
+                "4. ФИО": {
+                    type: "relation",
+                    relation: [
+                        {
+                            "id": workerId
                         }
                     ]
                 },

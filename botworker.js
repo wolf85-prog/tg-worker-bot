@@ -311,11 +311,12 @@ bot.on('message', async (msg) => {
     if (data.startsWith('/accept')) {
         const projectId = data.split(' ');
         console.log("projectId: ", projectId[1])
+        console.log("workerId: ", projectId[2])
 
         const blockId = await getBlocksP(projectId[1]); 
         
         //Добавить специалиста в таблицу Претенденты
-        await addPretendent(blockId);
+        await addPretendent(blockId, projectId[2]);
 
         //отправить сообщение в админ-панель
         const convId = await sendMyMessage('Пользователь нажал кнопку "Принять" в рассылке', "text", chatId)
