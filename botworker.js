@@ -35,7 +35,7 @@ const router = require('./botworker/routes/index')
 
 //подключение к БД PostreSQL
 const sequelize = require('./botworker/connections/db')
-const {UserBot, Message, Conversation, Worker} = require('./botworker/models/models')
+const {UserBot, Message, Conversation, Worker, Pretendent} = require('./botworker/models/models')
 
 app.use(express.json());
 app.use(cors());
@@ -309,14 +309,16 @@ bot.on('message', async (msg) => {
 
     //нажатие на кнопку "Принять"
     if (data.startsWith('/accept')) {
-        const projectId = data.split('|');
-        console.log("projectId: ", projectId[1])
-        console.log("workerId: ", projectId[2])
+        const pretendentId = data.split(' ');
+        console.log("pretendentId: ", pretendentId[1])
+        const id = pretendentId[1]
 
-        const blockId = await getBlocksP(projectId[1]); 
+        const user = await Pretendent.findOne({where: {id}})
+
+        const blockId = await getBlocksP(user.projectId);    
         
         //Добавить специалиста в таблицу Претенденты
-        await addPretendent(blockId, projectId[2]);
+        await addPretendent(blockId, user.workerId);
 
         //отправить сообщение в админ-панель
         //const convId = await sendMyMessage('Пользователь нажал кнопку "Принять" в рассылке', "text", chatId)
