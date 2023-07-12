@@ -313,12 +313,12 @@ bot.on('message', async (msg) => {
         console.log("pretendentId: ", pretendentId[1])
         const id = pretendentId[1]
 
-        const user = await Pretendent.findOne({where: {id}})
+        //const user = await Pretendent.findOne({where: {id}})
 
-        const blockId = await getBlocksP(user.projectId);    
+        //const blockId = await getBlocksP(user.projectId);    
         
         //Добавить специалиста в таблицу Претенденты
-        await addPretendent(blockId, user.workerId);
+        //await addPretendent(blockId, user.workerId);
 
         //отправить сообщение в админ-панель
         //const convId = await sendMyMessage('Пользователь нажал кнопку "Принять" в рассылке', "text", chatId)
