@@ -310,7 +310,7 @@ bot.on('message', async (msg) => {
     //нажатие на кнопку "Принять"
     if (data.startsWith('/accept')) {
         const pretendentId = data.split(' ');
-        console.log("pretendentId: ", pretendentId[1])
+        console.log("pretendentId: ", data)
         const id = pretendentId[1]
 
         //const user = await Pretendent.findOne({where: {id}})
