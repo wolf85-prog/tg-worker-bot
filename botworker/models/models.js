@@ -38,3 +38,29 @@ const Conversation = sequelize.define('wconversation', {
     members: {type: DataTypes.ARRAY(DataTypes.STRING)},
 })
 
+const Distributionw = sequelize.define('distributionw', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true}, 
+    text: {type: DataTypes.STRING}, //текст сообщения;
+    image: {type: DataTypes.STRING}, //ссылка на картинку;
+    button: {type: DataTypes.STRING}, //текст кнопки;
+    receivers: {type: DataTypes.STRING}, //массив получателей;
+    datestart: {type: DataTypes.STRING},  //дата начала рассылки
+    delivered: {type: DataTypes.BOOLEAN}, //доставлено
+})
+
+const Pretendent = sequelize.define('pretendent', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true}, 
+    projectId: {type: DataTypes.STRING},  //id проекта
+    workerId: {type: DataTypes.STRING}, //id специалиста;
+    receiverId: {type: DataTypes.STRING}, //чат-id получателя;
+})
+
+module.exports = {
+    UserBot, 
+    Worker,
+    Message, 
+    Conversation, 
+    Distributionw,
+    Pretendent
+}
+
