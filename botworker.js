@@ -8,6 +8,14 @@ const bot = new TelegramBot(token, {polling: true});
 // web-приложение
 const webAppUrl = process.env.WEB_APP_URL;
 
+//notion api
+const { Client } = require("@notionhq/client");
+const notion = new Client({ auth: process.env.NOTION_API_KEY });
+const token_fetch = 'Bearer ' + process.env.NOTION_API_KEY;
+const databaseId = process.env.NOTION_DATABASE_ID
+const databaseWorkersId = process.env.NOTION_DATABASE_WORKERS_ID
+const chatTelegramId = process.env.CHAT_ID
+
 
 let workerId, workerName, dateBorn, Worklist;
 
@@ -19,6 +27,10 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
+
+//подключение к БД PostreSQL
+const sequelize = require('./botworker/connections/db')
+const {Pretendent} = require('./botworker/models/models');
 
 // Certificate
 const privateKey = fs.readFileSync('privkey.pem', 'utf8'); //fs.readFileSync('/etc/letsencrypt/live/proj.uley.team/privkey.pem', 'utf8');
@@ -89,13 +101,15 @@ const PORT = process.env.PORT || 8001;
 
 const start = async () => {
     try {
+        await sequelize.authenticate()
+        await sequelize.sync()
         
         httpsServer.listen(PORT, () => {
             console.log('HTTPS Server BotWorker running on port ' + PORT);
         });
 
     } catch (error) {
-        console.log('Ошибка!', error.message)
+        console.log('Подключение к БД сломалось!', error.message)
     }
 }
 
