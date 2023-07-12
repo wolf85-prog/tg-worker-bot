@@ -309,7 +309,7 @@ bot.on('message', async (msg) => {
 
     //нажатие на кнопку "Принять"
     if (data.startsWith('/accept')) {
-        const projectId = data.split(' ');
+        const projectId = data.split('|');
         console.log("projectId: ", projectId[1])
         console.log("workerId: ", projectId[2])
 
