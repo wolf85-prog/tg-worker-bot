@@ -10,6 +10,7 @@ const webAppUrl = process.env.WEB_APP_URL;
 
 //socket.io
 const {io} = require("socket.io-client")
+const socketUrl = process.env.SOCKET_APP_URL
 
 //notion api
 const { Client } = require("@notionhq/client");
@@ -321,18 +322,18 @@ bot.on('message', async (msg) => {
         await addPretendent(blockId, user.workerId);
 
         //отправить сообщение в админ-панель
-        //const convId = await sendMyMessage('Пользователь нажал кнопку "Принять" в рассылке', "text", chatId)
+        const convId = await sendMyMessage('Пользователь нажал кнопку "Принять" в рассылке', "text", chatId)
 
         // Подключаемся к серверу socket
-        // let socket = io(socketUrl);
-        // socket.emit("addUser", chatId)
-        // socket.emit("sendMessage", {
-        //     senderId: chatId,
-        //     receiverId: chatTelegramId,
-        //     text: 'Пользователь нажал кнопку "Принять" в рассылке',
-        //     convId: convId,
-        //     messageId: messageId,
-        // })
+        let socket = io(socketUrl);
+        socket.emit("addUser", chatId)
+        socket.emit("sendMessageSpec", {
+            senderId: chatId,
+            receiverId: chatTelegramId,
+            text: 'Пользователь нажал кнопку "Принять" в рассылке',
+            convId: convId,
+            messageId: messageId,
+        })
 
         return bot.sendMessage(chatId, 'Ваша заявка принята! Мы свяжемся с вами в ближайшее время.')
     }
