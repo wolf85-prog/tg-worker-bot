@@ -289,6 +289,7 @@ bot.on('message', async (msg) => {
     //     })
     // }
 
+    //⚠️
 
     //нажатие на кнопку "Принять"
     if (data.startsWith('/accept')) {
