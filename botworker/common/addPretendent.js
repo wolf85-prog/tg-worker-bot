@@ -5,7 +5,7 @@ const notion = new Client({ auth: process.env.NOTION_API_KEY });
 
 // текущая дата
 const dateNow = new Date();
-const date = dateNow.getFullYear() + "-0" + ((dateNow.getMonth())+1) + "-01T00:00:00.000"
+//const date = dateNow.getFullYear() + "-0" + ((dateNow.getMonth())+1) + "-01T00:00:00.000"
 
 //send data to notion
 module.exports = async function addPretendent(blockId, workerId) {
@@ -52,7 +52,7 @@ module.exports = async function addPretendent(blockId, workerId) {
                 "3. Дата": {
                     type: 'date',                   
                     date: {
-                        "start": date,
+                        "start": dateNow,
                         "end": null,
                         "time_zone": "Europe/Moscow"
                     }
