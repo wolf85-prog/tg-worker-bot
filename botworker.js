@@ -7,6 +7,7 @@ const bot = new TelegramBot(token, {polling: true});
 
 // web-приложение
 const webAppUrl = process.env.WEB_APP_URL;
+const socketUrl = process.env.SOCKET_APP_URL
 
 //socket.io
 const {io} = require("socket.io-client")
@@ -313,26 +314,26 @@ bot.on('message', async (msg) => {
         console.log("pretendentId: ", data)
         const id = pretendentId[1]
 
-        //const user = await Pretendent.findOne({where: {id}})
+        const user = await Pretendent.findOne({where: {id}})
 
-        //const blockId = await getBlocksP(user.projectId);    
+        const blockId = await getBlocksP(user.projectId);    
         
         //Добавить специалиста в таблицу Претенденты
-        //await addPretendent(blockId, user.workerId);
+        await addPretendent(blockId, user.workerId);
 
         //отправить сообщение в админ-панель
-        //const convId = await sendMyMessage('Пользователь нажал кнопку "Принять" в рассылке', "text", chatId)
+        const convId = await sendMyMessage('Пользователь нажал кнопку "Принять" в рассылке', "text", chatId)
 
         // Подключаемся к серверу socket
-        // let socket = io(socketUrl);
-        // socket.emit("addUser", chatId)
-        // socket.emit("sendMessage", {
-        //     senderId: chatId,
-        //     receiverId: chatTelegramId,
-        //     text: 'Пользователь нажал кнопку "Принять" в рассылке',
-        //     convId: convId,
-        //     messageId: messageId,
-        // })
+        let socket = io(socketUrl);
+        socket.emit("addUser", chatId)
+        socket.emit("sendMessage", {
+            senderId: chatId,
+            receiverId: chatTelegramId,
+            text: 'Пользователь нажал кнопку "Принять" в рассылке',
+            convId: convId,
+            messageId: messageId,
+        })
 
         return bot.sendMessage(chatId, 'Ваша заявка принята! Мы свяжемся с вами в ближайшее время.')
     }
@@ -340,23 +341,23 @@ bot.on('message', async (msg) => {
     //нажатие на кнопку "Отклонить"
     if (data === '/cancel') {
         //отправить сообщение в админ-панель
-        //const convId = await sendMyMessage('Пользователь нажал кнопку "Отклонить" в рассылке', "text", chatId)
+        const convId = await sendMyMessage('Пользователь нажал кнопку "Отклонить" в рассылке', "text", chatId)
 
         // Подключаемся к серверу socket
-        // let socket = io(socketUrl);
-        // socket.emit("addUser", chatId)
-        // socket.emit("sendMessage", {
-        //     senderId: chatId,
-        //     receiverId: chatTelegramId,
-        //     text: 'Пользователь нажал кнопку "Отклонить" в рассылке',
-        //     convId: convId,
-        //     messageId: messageId,
-        // })
+        let socket = io(socketUrl);
+        socket.emit("addUser", chatId)
+        socket.emit("sendMessage", {
+            senderId: chatId,
+            receiverId: chatTelegramId,
+            text: 'Пользователь нажал кнопку "Отклонить" в рассылке',
+            convId: convId,
+            messageId: messageId,
+        })
 
         return bot.sendMessage(chatId, 'Спасибо!')
     }
 
-    //bot.sendMessage(chatId, `Вы нажали кнопку ${data}`, backOptions)
+    bot.sendMessage(chatId, `Вы нажали кнопку ${data}`, backOptions)
   });
 
 
