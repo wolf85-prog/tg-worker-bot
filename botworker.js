@@ -7,7 +7,6 @@ const bot = new TelegramBot(token, {polling: true});
 
 // web-приложение
 const webAppUrl = process.env.WEB_APP_URL;
-const socketUrl = process.env.SOCKET_APP_URL
 
 //socket.io
 const {io} = require("socket.io-client")
@@ -309,15 +308,15 @@ bot.on('message', async (msg) => {
         const convId = await sendMyMessage('Пользователь нажал кнопку "Принять" в рассылке', "text", chatId)
 
         // Подключаемся к серверу socket
-        // let socket = io(socketUrl);
-        // socket.emit("addUser", chatId)
-        // socket.emit("sendMessage", {
-        //     senderId: chatId,
-        //     receiverId: chatTelegramId,
-        //     text: 'Пользователь нажал кнопку "Принять" в рассылке',
-        //     convId: convId,
-        //     messageId: messageId,
-        // })
+        let socket = io(socketUrl);
+        socket.emit("addUser", chatId)
+        socket.emit("sendMessageSpec", {
+            senderId: chatId,
+            receiverId: chatTelegramId,
+            text: 'Пользователь нажал кнопку "Принять" в рассылке',
+            convId: convId,
+            messageId: messageId,
+        })
 
         return bot.sendMessage(chatId, 'Ваша заявка принята! Мы свяжемся с вами в ближайшее время.')
     }
@@ -328,15 +327,15 @@ bot.on('message', async (msg) => {
         const convId = await sendMyMessage('Пользователь нажал кнопку "Отклонить" в рассылке', "text", chatId)
 
         // Подключаемся к серверу socket
-        // let socket = io(socketUrl);
-        // socket.emit("addUser", chatId)
-        // socket.emit("sendMessage", {
-        //     senderId: chatId,
-        //     receiverId: chatTelegramId,
-        //     text: 'Пользователь нажал кнопку "Отклонить" в рассылке',
-        //     convId: convId,
-        //     messageId: messageId,
-        // })
+        let socket = io(socketUrl);
+        socket.emit("addUser", chatId)
+        socket.emit("sendMessageSpec", {
+            senderId: chatId,
+            receiverId: chatTelegramId,
+            text: 'Пользователь нажал кнопку "Отклонить" в рассылке',
+            convId: convId,
+            messageId: messageId,
+        })
 
         return bot.sendMessage(chatId, 'Хорошо, тогда в следующий раз!')
     }
