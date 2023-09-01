@@ -17,38 +17,38 @@ module.exports = async function addPretendent(blockId, workerId) {
                 emoji: "➡️"
             },
             properties: {
-                "1. Ставка": {
-                    type: "title",
-                    title: [
-                        {
-                            type: 'text',
-                            text: {
-                                content: "0 000.00 — 0 000.00 руб/час * 0 — 0 часов",
-                            },
-                            "annotations": {
-                                "bold": false,
-                                "italic": false,
-                                "strikethrough": false,
-                                "underline": false,
-                                "code": false,
-                                "color": "default"
-                            },
-                            "plain_text": "0 000.00 — 0 000.00 руб/час * 0 — 0 часов",
-                            "href": null
-                        }
-                    ],
-                },
-                "2. Тех. Задание": {
-                    type: 'rich_text',   
-                    rich_text: [
-                        {
-                            "type": "text",
-                            "text": {
-                                "content": "Техническое Задание текстом подробно",
-                            },                           
-                        }
-                    ]
-                },
+                // "1. Ставка": {
+                //     type: "title",
+                //     title: [
+                //         {
+                //             type: 'text',
+                //             text: {
+                //                 content: "0 000.00 — 0 000.00 руб/час * 0 — 0 часов",
+                //             },
+                //             "annotations": {
+                //                 "bold": false,
+                //                 "italic": false,
+                //                 "strikethrough": false,
+                //                 "underline": false,
+                //                 "code": false,
+                //                 "color": "default"
+                //             },
+                //             "plain_text": "0 000.00 — 0 000.00 руб/час * 0 — 0 часов",
+                //             "href": null
+                //         }
+                //     ],
+                // },
+                // "2. Тех. Задание": {
+                //     type: 'rich_text',   
+                //     rich_text: [
+                //         {
+                //             "type": "text",
+                //             "text": {
+                //                 "content": "Техническое Задание текстом подробно",
+                //             },                           
+                //         }
+                //     ]
+                // },
                 "3. Дата": {
                     type: 'date',                   
                     date: {
