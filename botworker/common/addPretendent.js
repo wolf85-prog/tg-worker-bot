@@ -12,10 +12,10 @@ module.exports = async function addPretendent(blockId, workerId) {
     try {
         const response = await notion.pages.create({
             parent: { database_id: blockId },
-            icon: {
-                type: "emoji",
-                emoji: "➡️"
-            },
+            // icon: {
+            //     type: "emoji",
+            //     emoji: "➡️"
+            // },
             properties: {
                 // "1. Ставка": {
                 //     type: "title",
