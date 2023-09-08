@@ -136,7 +136,7 @@ bot.on('message', async (msg) => {
                 console.log('Отмена добавления в БД. Пользователь уже существует')
             }
         
-            await bot.sendMessage(chatId, '', {
+            await bot.sendMessage(chatId, ' ', {
                 reply_markup: ({
                     inline_keyboard:[
                         [{text: 'Поехали', web_app: {url: webAppUrl}}],
