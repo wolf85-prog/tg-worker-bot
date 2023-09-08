@@ -136,11 +136,10 @@ bot.on('message', async (msg) => {
                 console.log('Отмена добавления в БД. Пользователь уже существует')
             }
         
-            await bot.sendMessage(chatId, 'Добро пожаловать в телеграм-бот U.L.E.Y_Workhub.', {
+            await bot.sendMessage(chatId, '', {
                 reply_markup: ({
                     inline_keyboard:[
-                        [{text: 'Информация', callback_data:'Информация'}, {text: 'Настройки', callback_data:'Настройки'}],
-                        [{text: 'Зарегистрироваться в U.L.E.Y', web_app: {url: webAppUrl}}],
+                        [{text: 'Поехали', web_app: {url: webAppUrl}}],
                     ]
                 })
             })
