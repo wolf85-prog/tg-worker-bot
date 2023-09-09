@@ -254,7 +254,7 @@ bot.on('message', async (msg) => {
 
 
                 // ответ бота
-                await bot.sendMessage(chatId, 'Я принял ваш запрос!')
+                //await bot.sendMessage(chatId, 'Я принял ваш запрос!')
                 //await bot.sendMessage(chatTelegramId, `${text} \n \n от ${firstname} ${lastname} ${chatId}`)           
             }
         }
