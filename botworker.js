@@ -456,7 +456,7 @@ bot.on('message', async (msg) => {
                 }
 
                 // сохранить отправленное боту сообщение пользователя в БД
-                const convId = sendMyMessage(text, 'text', chatId, messageId, reply_id)
+                const convId = sendMyMessage(str_text, 'text', chatId, messageId, reply_id)
 
                 // Подключаемся к серверу socket
                 let socket = io(socketUrl);
@@ -466,7 +466,7 @@ bot.on('message', async (msg) => {
                 socket.emit("sendMessageSpec", {
                     senderId: chatId,
                     receiverId: chatTelegramId,
-                    text: text,
+                    text: str_text,
                     type: 'text',
                     convId: convId,
                     messageId: messageId,
