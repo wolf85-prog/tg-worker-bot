@@ -347,7 +347,7 @@ bot.on('message', async (msg) => {
                 let convId;
                 if(msg.voice) {
                     // сохранить отправленное боту сообщение пользователя в БД
-                    convId = await sendMyMessage(`${botApiUrl}/${msg.voice.file_name}`, 'file', chatId, messageId)
+                    convId = await sendMyMessage(`${botApiUrl}/${msg.voice.file_unique_id}.${ras[1]}`, 'file', chatId, messageId)
                 }
 
                 //Подключаемся к серверу socket
@@ -356,7 +356,7 @@ bot.on('message', async (msg) => {
                 socket.emit("sendMessageSpec", {
                     senderId: chatId,
                     receiverId: chatTelegramId,
-                    text: `${botApiUrl}/${msg.voice.file_name}`,
+                    text: `${botApiUrl}/${msg.voice.file_unique_id}.${ras[1]}`,
                     convId: convId,
                 })
             })
