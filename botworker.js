@@ -40,7 +40,7 @@ const {UserBot, Message, Conversation, Worker, Pretendent} = require('./botworke
 
 app.use(express.json());
 app.use(cors());
-//app.use(express.static('telegram-webapp-bot'));
+app.use(express.static('tg-worker-bot'));
 app.use(express.static(path.resolve(__dirname, 'static')))
 
 // Certificate
