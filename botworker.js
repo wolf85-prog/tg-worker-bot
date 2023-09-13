@@ -13,6 +13,9 @@ const botApiUrl = process.env.REACT_APP_API_URL
 const {io} = require("socket.io-client")
 const socketUrl = process.env.SOCKET_APP_URL
 
+//fetch api
+const fetch = require('node-fetch');
+
 //notion api
 const { Client } = require("@notionhq/client");
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
