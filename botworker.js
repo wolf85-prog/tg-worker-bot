@@ -40,6 +40,8 @@ const {UserBot, Message, Conversation, Worker, Pretendent} = require('./botworke
 
 app.use(express.json());
 app.use(cors());
+//app.use(express.static('telegram-webapp-bot'));
+app.use(express.static(path.resolve(__dirname, 'static')))
 
 // Certificate
 const privateKey = fs.readFileSync('privkey.pem', 'utf8'); //fs.readFileSync('/etc/letsencrypt/live/proj.uley.team/privkey.pem', 'utf8');
