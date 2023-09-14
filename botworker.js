@@ -41,7 +41,8 @@ const path = require('path')
 
 //подключение к БД PostreSQL
 const sequelize = require('./botworker/connections/db')
-const {UserBot, Message, Conversation, Worker, Pretendent} = require('./botworker/models/models')
+const {UserBot, Message, Conversation, Worker, Pretendent} = require('./botworker/models/models');
+const addWorker = require("./botworker/common/addWorker");
 
 app.use(express.json());
 app.use(cors());
@@ -426,6 +427,11 @@ bot.on('message', async (msg) => {
                         chatId: chatId,
                     })
 
+                    const fio = workerName2 + ' '+ workerFam + ' [Workhub]'
+                    const age = dateBorn
+
+                    await addWorker(fio, chatId, age, phone2, specArr, city2)
+
                     //очистить переменные
                     console.log("Очищаю переменные...")
                     workerFam = '';
@@ -434,9 +440,9 @@ bot.on('message', async (msg) => {
                     dateBorn = '';
                     city2 = '';
  
-                     console.log('Специалист успешно добавлен в БД! Worker: ' + res.userfamily)
+                     console.log('Специалист успешно добавлен в БД! Worker: ' + res.username)
 
-                     await bot.sendMessage(chatId, `Добро пожаловать в U.L.E.Y, ${firstname}! 
+                     await bot.sendMessage(chatId, `Добро пожаловать в U.L.E.Y, ${res.username}! 
 Внимательно следи за этим чатом. Именно здесь будут размещаться весь поток поступающих заявок. 
 
 Увидимся на наших проектах! 😈`)
