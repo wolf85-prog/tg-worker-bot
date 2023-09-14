@@ -140,7 +140,8 @@ bot.on('message', async (msg) => {
                 console.log('Отмена добавления в БД. Пользователь уже существует')
             }
         
-            await bot.sendMessage(chatId, 'Ну что, начнем?', {
+            await bot.sendMessage(chatId, `Привет! Я Telegram-bot U.L.E.Y! 
+            Добро пожаловать в нашу дружную команду профессионалов.`, {
                 reply_markup: ({
                     inline_keyboard:[
                         [{text: 'Поехали!', web_app: {url: webAppUrl}}],
