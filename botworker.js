@@ -109,7 +109,7 @@ app.post('/web-data', async (req, res) => {
 <b>Город:</b> ${city} 
   
 <b>Специальности:</b> 
-${worklist.map(item =>' - ' + item.spec + ', ' + item.cat).join('\n')}`
+${worklist.map(item =>' - ' + item.spec).join('\n')}`
             }
             })
 
