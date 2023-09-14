@@ -430,7 +430,18 @@ bot.on('message', async (msg) => {
                     const fio = workerName2 + ' '+ workerFam + ' [Workhub]'
                     const age = `${dateBorn}-01-01`
 
-                    await addWorker(fio, chatId, age, phone2, specArr, city2)
+                    let arrWorks = []
+                    //добавить список работников        
+                    specArr.forEach((worker) => {           
+                        for (let i = 0; i < worker.count; i++) {                        
+                            const newSpec = {
+                                name: worker.spec,
+                            }
+                            arrWorks.push(newSpec)         
+                        }                       
+                    });
+
+                    await addWorker(fio, chatId, age, phone2, arrWorks, city2)
 
                     //очистить переменные
                     console.log("Очищаю переменные...")
