@@ -31,7 +31,7 @@ async function getWorkers() {
                 tgId: page.properties.Telegram.number,
                 phone: page.properties.Phone.phone_number,
                 age: page.properties.Age.date,
-                city: page.properties.City.rich_text,
+                city: page.properties.City[0]?.plain_text,
             };
         });
 
