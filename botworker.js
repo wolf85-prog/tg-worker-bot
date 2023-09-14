@@ -141,7 +141,7 @@ bot.on('message', async (msg) => {
             }
         
             await bot.sendMessage(chatId, `Привет! Я Telegram-bot U.L.E.Y! 
-            Добро пожаловать в нашу дружную команду профессионалов.`, {
+Добро пожаловать в нашу дружную команду профессионалов.`, {
                 reply_markup: ({
                     inline_keyboard:[
                         [{text: 'Поехали!', web_app: {url: webAppUrl}}],
