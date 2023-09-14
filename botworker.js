@@ -428,7 +428,7 @@ bot.on('message', async (msg) => {
                     })
 
                     const fio = workerName2 + ' '+ workerFam + ' [Workhub]'
-                    const age = dateBorn
+                    const age = `${dateBorn}-01-01`
 
                     await addWorker(fio, chatId, age, phone2, specArr, city2)
 
