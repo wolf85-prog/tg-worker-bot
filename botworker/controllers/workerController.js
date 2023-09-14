@@ -24,7 +24,7 @@ async function getWorkers() {
             results = [...results, ...data.results];
         }
 
-        const workers = results.map((manager) => {
+        const workers = results.map((page) => {
             return {
                 id: page.id,
                 fio: page.properties.Name.title[0]?.plain_text,
