@@ -32,6 +32,7 @@ async function getWorkers() {
                 phone: page.properties.Phone.phone_number,
                 age: page.properties.Age.date,
                 city: page.properties.City[0]?.plain_text,
+                spec: page.properties.Specialization.multi_select,
             };
         });
 
