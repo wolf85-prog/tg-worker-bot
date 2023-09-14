@@ -47,6 +47,7 @@ app.use(express.json());
 app.use(cors());
 app.use(express.static('tg-worker-bot'));
 app.use(express.static(path.resolve(__dirname, 'static')))
+app.use('/', router)
 
 // Certificate
 const privateKey = fs.readFileSync('privkey.pem', 'utf8'); //fs.readFileSync('/etc/letsencrypt/live/proj.uley.team/privkey.pem', 'utf8');
