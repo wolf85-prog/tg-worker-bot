@@ -14,7 +14,10 @@ async function getWorkers() {
             return {
                id: page.id,
                fio: page.properties.Name.title[0]?.plain_text,
-               tgId: page.properties.Telegram.number
+               tgId: page.properties.Telegram.number,
+               phone: page.properties.Phone.phone_number,
+               age: page.properties.Age.date,
+               city: page.properties.City.rich_text,
             };
         });
 
