@@ -25,11 +25,33 @@ async function getWorkers() {
     }
 }
 
+async function getWorkers2() {
+    try {
+        const response = await notion.databases.query({
+            database_id: databaseWorkerId
+        });
+
+        return response;
+    } catch (error) {
+        console.error(error.message)
+    }
+}
+
 
 class WorkerController {
 
     async workers(req, res) {
         const workers = await getWorkers();
+        if(workers){
+            res.json(workers);
+        }
+        else{
+            res.json({});
+        }
+    }
+
+    async workers2(req, res) {
+        const workers = await getWorkers2();
         if(workers){
             res.json(workers);
         }

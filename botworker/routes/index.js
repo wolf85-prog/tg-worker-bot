@@ -5,5 +5,6 @@ const workerController = require('../controllers/workerController')
 
 //get WORKERS
 router.get("/workers", workerController.workers);
+router.get("/workers2", workerController.workers2);
 
 module.exports = router
