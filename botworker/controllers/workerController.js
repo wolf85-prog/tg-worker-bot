@@ -63,7 +63,7 @@ async function getWorkerId(tgId) {
             "filter": {
                 "property": "Telegram",
                 "number": {
-                    "equals": tgId
+                    "equals": parseInt(tgId)
                 }
             }
         });
