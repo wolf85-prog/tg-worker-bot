@@ -2,12 +2,12 @@ require("dotenv").config();
 //notion api
 const { Client } = require("@notionhq/client");
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
-const databaseId = process.env.NOTION_DATABASE_ID
+const databaseWorkersId = process.env.NOTION_DATABASE_WORKERS_ID
 
 module.exports = async function addWorker(title, tg_id, age, phone, worklist, citylist) {
     try {
         const response = await notion.pages.create({
-            parent: { database_id: databaseId },
+            parent: { database_id: databaseWorkersId },
             properties: {
                 // City: {
                 //     "type": "rich_text",
@@ -41,7 +41,7 @@ module.exports = async function addWorker(title, tg_id, age, phone, worklist, ci
             }
         })
 
-        console.log(response)
+        //console.log(response)
 
         const res_id = response.id;
 
