@@ -403,14 +403,14 @@ bot.on('message', async (msg) => {
                  //массив специалистов
                  let specArr = []
                  console.log("Worklist: ", Worklist)
-                 if (Worklist !== '') {
-                     specArr = Worklist.map(item => ({
-                         spec: item.spec,
-                         cat: item.cat,
-                     }));
-                 }
+                //  if (Worklist !== '') {
+                //      specArr = Worklist.map(item => ({
+                //          spec: item.spec,
+                //          cat: item.cat,
+                //      }));
+                //  }
 
-                 console.log("specArr: ", specArr)
+                 //console.log("specArr: ", specArr)
  
  
                 try {
@@ -430,20 +430,26 @@ bot.on('message', async (msg) => {
                     const fio = workerName2 + ' '+ workerFam + ' [Workhub]'
                     const age = `${dateBorn}-01-01`
 
-                    let arrWorks = []
+                    //let arrWorks = []
                     //добавить список работников        
-                    specArr.forEach((worker) => {           
-                        for (let i = 0; i < worker.count; i++) {                        
-                            const newSpec = {
-                                name: worker.spec,
-                            }
-                            arrWorks.push(newSpec)         
-                        }                       
-                    });
+                    // specArr.forEach((worker) => {           
+                    //     for (let i = 0; i < worker.count; i++) {                        
+                    //         const newSpec = {
+                    //             name: worker.spec,
+                    //         }
+                    //         arrWorks.push(newSpec)         
+                    //     }                       
+                    // });
 
-                    console.log("arrWorks: ", arrWorks)
+                    if (Worklist !== '') {
+                        specArr = Worklist.map(item => ({
+                            name: item.spec,
+                        }));
+                    }
 
-                    await addWorker(fio, chatId, age, phone2, arrWorks, city2)
+                    console.log("specArr: ", specArr)
+
+                    await addWorker(fio, chatId, age, phone2, specArr, city2)
 
                     //очистить переменные
                     console.log("Очищаю переменные...")
