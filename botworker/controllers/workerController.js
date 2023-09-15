@@ -74,6 +74,16 @@ async function getWorkerId(tgId) {
     }
 }
 
+async function sendMessage() {
+    try {
+        
+
+        //return response;
+    } catch (error) {
+        console.error(error.message)
+    }
+}
+
 
 class WorkerController {
 
@@ -102,6 +112,16 @@ class WorkerController {
         const worker = await getWorkerId(id);
         if(worker){
             res.json(worker);
+        }
+        else{
+            res.json([]);
+        }
+    }
+
+    async message(req, res) {
+        const mess = await sendMessage();
+        if(mess){
+            res.json(mess);
         }
         else{
             res.json([]);

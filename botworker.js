@@ -48,7 +48,7 @@ app.use(express.json());
 app.use(cors());
 app.use(express.static('tg-worker-bot'));
 app.use(express.static(path.resolve(__dirname, 'static')))
-app.use('/', router)
+app.use('/api', router);
 
 // Certificate
 const privateKey = fs.readFileSync('privkey.pem', 'utf8'); //fs.readFileSync('/etc/letsencrypt/live/proj.uley.team/privkey.pem', 'utf8');
@@ -96,11 +96,11 @@ app.post('/web-data', async (req, res) => {
             await bot.answerWebAppQuery(queryId, {
                 type: 'article',
                 id: queryId,
-                title: 'Специалист успешно добавлен',
+                title: 'Твои данные добавлены',
                 input_message_content: {
                     parse_mode: 'HTML',
                     message_text: 
-`Специалист успешно добавлен!
+`Твои данные добавлены!
   
 <b>Фамилия:</b> ${workerfamily} 
 <b>Имя:</b> ${workerName} 
@@ -127,7 +127,7 @@ bot.on('message', async (msg) => {
     const text = msg.text ? msg.text : '';
     const messageId = msg.message_id;
 
-    console.log("msg: ", msg)
+    //console.log("msg: ", msg)
     //console.log("text: ", text)
 
     try {
@@ -377,7 +377,7 @@ bot.on('message', async (msg) => {
                 await bot.sendMessage(text.substring(6, text.indexOf('.')), text.slice(text.indexOf('.') + 2)) 
 
             // Проект успешно создан
-            } else if (text.startsWith('Специалист успешно добавлен')) {           
+            } else if (text.startsWith('Твои данные добавлены!')) {           
                 const response = await bot.sendMessage(chatTelegramId, `${text} \n \n от ${firstname} ${lastname} ${chatId}`)
 
                 console.log("Отправляю сообщение в админ-панель...")    
@@ -396,7 +396,7 @@ bot.on('message', async (msg) => {
                     text: text,
                     type: 'text',
                     convId: convId,
-                    messageId: response.message_id,
+                    messageId: parseInt(response.message_id)-1,
                 })
  
 
@@ -414,7 +414,7 @@ bot.on('message', async (msg) => {
                         chatId: chatId,
                     })
 
-                    const fio = workerName2 + ' '+ workerFam + ' [Workhub]'
+                    const fio = workerFam + ' '+ workerName2 + ' [Workhub]'
                     const age = `${dateBorn}-01-01`
 
                     //массив специалистов
