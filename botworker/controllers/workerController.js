@@ -68,8 +68,6 @@ async function getWorkerId(tgId) {
             }
         });
 
-        //title: response.properties.Name.title[0]?.plain_text,  
-
         return response;
     } catch (error) {
         console.error(error.message)
