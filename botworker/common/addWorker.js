@@ -17,10 +17,13 @@ module.exports = async function addWorker(title, tg_id, age, phone, worklist, ci
                     "type": "phone_number",
                     "phone_number": phone
                 },
-                // Age: {
-                //     "type": "date",
-                //     "date": age
-                // },
+                Age: {
+                    "type": "date",
+                    date: {
+                        "start": age,
+                        "end": null,
+                    }
+                },
                 // Specialization: {
                 //     "type": "multi_select",
                 //     "multi_select": worklist
