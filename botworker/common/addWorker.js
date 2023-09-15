@@ -11,7 +11,14 @@ module.exports = async function addWorker(title, tg_id, age, phone, worklist, ci
             properties: {
                 City: {
                     "type": "rich_text",
-                    "rich_text": citylist
+                    rich_text: [
+                        {
+                            type: 'text',
+                            text: {
+                                content: citylist,
+                            },
+                        }
+                    ],
                 },
                 Phone: {
                     "type": "phone_number",

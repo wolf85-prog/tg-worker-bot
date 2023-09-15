@@ -429,8 +429,6 @@ bot.on('message', async (msg) => {
 
                     const fio = workerName2 + ' '+ workerFam + ' [Workhub]'
                     const age = `${dateBorn}-01-01`
-                    const citylist = []
-                    citylist.push(city2)
 
                     let arrWorks = []
                     //добавить список работников        
@@ -443,7 +441,7 @@ bot.on('message', async (msg) => {
                         }                       
                     });
 
-                    await addWorker(fio, chatId, age, phone2, arrWorks, citylist)
+                    await addWorker(fio, chatId, age, phone2, arrWorks, city2)
 
                     //очистить переменные
                     console.log("Очищаю переменные...")
