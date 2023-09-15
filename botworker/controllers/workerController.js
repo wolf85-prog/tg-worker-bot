@@ -2,6 +2,12 @@ require("dotenv").config();
 const { Client } = require("@notionhq/client");
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
 const databaseWorkerId = process.env.NOTION_DATABASE_WORKERS_ID
+const chatTelegramId = process.env.CHAT_ID
+const sendMyMessage = require('./../common/sendMyMessage')
+
+//socket.io
+const {io} = require("socket.io-client")
+const socketUrl = process.env.SOCKET_APP_URL
 
 //получить данные таблицы Специалисты
 async function getWorkers() {
@@ -74,9 +80,24 @@ async function getWorkerId(tgId) {
     }
 }
 
-async function sendMessage() {
+async function sendMessage(chatId) {
     try {
-        
+        //отправить сообщение о создании проекта в админ-панель
+        const convId = sendMyMessage("Регистрация нового пользователя", "text", chatId)
+                
+        // Подключаемся к серверу socket
+        let socket = io(socketUrl);
+        socket.emit("addUser", chatId)
+          
+         //отправить сообщение в админку
+        socket.emit("sendMessageSpec", {
+            senderId: chatId,
+            receiverId: chatTelegramId,
+            text: "Регистрация нового пользователя",
+            type: 'text',
+            convId: convId,
+            messageId: '',
+        })
 
         //return response;
     } catch (error) {
@@ -119,7 +140,8 @@ class WorkerController {
     }
 
     async message(req, res) {
-        const mess = await sendMessage();
+        const id = req.params.id; // получаем id
+        const mess = await sendMessage(id);
         if(mess){
             res.json(mess);
         }
