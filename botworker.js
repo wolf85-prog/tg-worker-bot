@@ -378,76 +378,52 @@ bot.on('message', async (msg) => {
 
             // Проект успешно создан
             } else if (text.startsWith('Специалист успешно добавлен')) {           
-                //const response = await bot.sendMessage(chatTelegramId, `${text} \n \n от ${firstname} ${lastname} ${chatId}`)
+                const response = await bot.sendMessage(chatTelegramId, `${text} \n \n от ${firstname} ${lastname} ${chatId}`)
 
                 console.log("Отправляю сообщение в админ-панель...")    
                 
                 //отправить сообщение о создании проекта в админ-панель
-                //const convId = sendMyMessage(text, "text", chatId, parseInt(response.message_id)-1)
+                const convId = sendMyMessage(text, "text", chatId, parseInt(response.message_id)-1)
                 
                 // Подключаемся к серверу socket
-                // let socket = io(socketUrl);
-                // socket.emit("addUser", chatId)
+                let socket = io(socketUrl);
+                socket.emit("addUser", chatId)
                   
-                //  //отправить сообщение в админку
-                // socket.emit("sendMessageSpec", {
-                //     senderId: chatId,
-                //     receiverId: chatTelegramId,
-                //     text: text,
-                //     type: 'text',
-                //     convId: convId,
-                //     messageId: response.message_id,
-                // })
+                 //отправить сообщение в админку
+                socket.emit("sendMessageSpec", {
+                    senderId: chatId,
+                    receiverId: chatTelegramId,
+                    text: text,
+                    type: 'text',
+                    convId: convId,
+                    messageId: response.message_id,
+                })
  
- 
-                 //массив специалистов
-                 let specArr = []
-                 console.log("Worklist: ", Worklist)
-                //  if (Worklist !== '') {
-                //      specArr = Worklist.map(item => ({
-                //          spec: item.spec,
-                //          cat: item.cat,
-                //      }));
-                //  }
 
-                 //console.log("specArr: ", specArr)
- 
- 
                 try {
                     //создание проекта в БД
-                    // const res = await Worker.create({
-                    //     userfamily: workerFam, 
-                    //     username: workerName2, 
-                    //     phone: phone2, 
-                    //     dateborn: dateBorn,
-                    //     city: city2, 
-                    //     //companys: companys2,
-                    //     //stag: stag2,                      
-                    //     worklist: JSON.stringify(specArr),
-                    //     chatId: chatId,
-                    // })
+                    const res = await Worker.create({
+                        userfamily: workerFam, 
+                        username: workerName2, 
+                        phone: phone2, 
+                        dateborn: dateBorn,
+                        city: city2, 
+                        //companys: companys2,
+                        //stag: stag2,                      
+                        worklist: JSON.stringify(specArr),
+                        chatId: chatId,
+                    })
 
                     const fio = workerName2 + ' '+ workerFam + ' [Workhub]'
                     const age = `${dateBorn}-01-01`
 
-                    //let arrWorks = []
-                    //добавить список работников        
-                    // specArr.forEach((worker) => {           
-                    //     for (let i = 0; i < worker.count; i++) {                        
-                    //         const newSpec = {
-                    //             name: worker.spec,
-                    //         }
-                    //         arrWorks.push(newSpec)         
-                    //     }                       
-                    // });
-
+                    //массив специалистов
+                    let specArr = []
                     if (Worklist !== '') {
                         specArr = Worklist.map(item => ({
                             name: item.spec,
                         }));
                     }
-
-                    console.log("specArr: ", specArr)
 
                     await addWorker(fio, chatId, age, phone2, specArr, city2)
 
@@ -459,12 +435,12 @@ bot.on('message', async (msg) => {
                     dateBorn = '';
                     city2 = '';
  
-                    //console.log('Специалист успешно добавлен в БД! Worker: ' + res.username)
+                    console.log('Специалист успешно добавлен в БД! Worker: ' + res.username)
 
-//                     await bot.sendMessage(chatId, `Добро пожаловать в U.L.E.Y, ${res.username}! 
-// Внимательно следи за этим чатом. Именно здесь будут размещаться весь поток поступающих заявок. 
+                    await bot.sendMessage(chatId, `Добро пожаловать в U.L.E.Y, ${res.username}! 
+Внимательно следи за этим чатом. Именно здесь будут размещаться весь поток поступающих заявок. 
 
-// Увидимся на наших проектах! 😈`)
+Увидимся на наших проектах! 😈`)
 
                 } catch (error) {
                     console.log(error.message)
