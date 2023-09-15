@@ -31,10 +31,10 @@ module.exports = async function addWorker(title, tg_id, age, phone, worklist, ci
                         "end": null,
                     }
                 },
-                // Specialization: {
-                //     "type": "multi_select",
-                //     "multi_select": worklist
-                // },
+                Specialization: {
+                    "type": "multi_select",
+                    "multi_select": worklist
+                },
                 Telegram: {
                     "type": "number",
                     "number": tg_id

@@ -441,6 +441,8 @@ bot.on('message', async (msg) => {
                         }                       
                     });
 
+                    console.log("arrWorks: ", arrWorks)
+
                     await addWorker(fio, chatId, age, phone2, arrWorks, city2)
 
                     //очистить переменные
