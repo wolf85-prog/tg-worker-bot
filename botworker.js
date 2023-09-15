@@ -428,7 +428,7 @@ bot.on('message', async (msg) => {
                     // })
 
                     const fio = workerName2 + ' '+ workerFam + ' [Workhub]'
-                    const age = new Date(`${dateBorn}-01-01`)
+                    const age = `${dateBorn}-01-01T00:00:00`
 
                     let arrWorks = []
                     //добавить список работников        

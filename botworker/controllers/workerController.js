@@ -55,6 +55,27 @@ async function getWorkers2() {
     }
 }
 
+//получить специалиста по его telegram id
+async function getWorkerId(tgId) {
+    try {
+        const response = await notion.databases.query({
+            database_id: databaseWorkerId, 
+            "filter": {
+                "property": "Telegram",
+                "number": {
+                    "equals": tgId
+                }
+            }
+        });
+
+        //title: response.properties.Name.title[0]?.plain_text,  
+
+        return response;
+    } catch (error) {
+        console.error(error.message)
+    }
+}
+
 
 class WorkerController {
 
@@ -75,6 +96,17 @@ class WorkerController {
         }
         else{
             res.json({});
+        }
+    }
+
+    async workerId(req, res) {
+        const id = req.params.id; // получаем id
+        const worker = await getWorkerId(id);
+        if(worker){
+            res.json(worker);
+        }
+        else{
+            res.json([]);
         }
     }
 }
