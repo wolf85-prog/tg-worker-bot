@@ -13,22 +13,22 @@ module.exports = async function addWorker(title, tg_id, age, phone, worklist, ci
                 //     "type": "rich_text",
                 //     "rich_text": citylist
                 // },
-                // Phone: {
-                //     "type": "phone_number",
-                //     "phone_number": phone
-                // },
-                // Age: {
-                //     "type": "date",
-                //     "date": age
-                // },
+                Phone: {
+                    "type": "phone_number",
+                    "phone_number": phone
+                },
+                Age: {
+                    "type": "date",
+                    "date": age
+                },
                 // Specialization: {
                 //     "type": "multi_select",
                 //     "multi_select": worklist
                 // },
-                // Telegram: {
-                //     "type": "number",
-                //     "number": tg_id
-                // },
+                Telegram: {
+                    "type": "number",
+                    "number": tg_id
+                },
                 Name: {
                     title:[
                         {
