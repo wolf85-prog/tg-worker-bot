@@ -72,10 +72,10 @@ const httpsServer = https.createServer(credentials, app);
 app.post('/web-data', async (req, res) => {
     const {queryId, workerfamily, workerName, phone, worklist, 
         city, dateborn} = req.body;
-    const d = new Date(dateborn);
-    const year = d.getFullYear();
-    const month = String(d.getMonth()+1).padStart(2, "0");
-    const day = String(d.getDate()).padStart(2, "0");
+    //const d = new Date(dateborn);
+    //const year = d.getFullYear();
+    //const month = String(d.getMonth()+1).padStart(2, "0");
+    //const day = String(d.getDate()).padStart(2, "0");
 
     try {
 
@@ -104,7 +104,7 @@ app.post('/web-data', async (req, res) => {
 <b>Фамилия:</b> ${workerfamily} 
 <b>Имя:</b> ${workerName} 
 <b>Телефон:</b> ${phone} 
-<b>Год рождения:</b> ${year}
+<b>Год рождения:</b> ${dateborn}
 <b>Город:</b> ${city} 
   
 <b>Специальности:</b> 
