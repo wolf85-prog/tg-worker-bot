@@ -104,7 +104,7 @@ app.post('/web-data', async (req, res) => {
 <b>Фамилия:</b> ${workerfamily} 
 <b>Имя:</b> ${workerName} 
 <b>Телефон:</b> ${phone} 
-<b>Дата рождения:</b> ${day}.${month}.${year}
+<b>Год рождения:</b> ${year}
 <b>Город:</b> ${city} 
   
 <b>Специальности:</b> 
