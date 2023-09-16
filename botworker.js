@@ -86,7 +86,6 @@ app.post('/web-data', async (req, res) => {
             workerName2 = workerName
             phone2 = phone
             dateBorn = dateborn
-            phone2 = phone
             city2 = city
             // stag2 = stag
             // companys2 = companys
@@ -399,6 +398,20 @@ bot.on('message', async (msg) => {
                     messageId: parseInt(response.message_id)-1,
                 })
  
+                //массив специалистов
+                let specArr = []
+                let specArr2 = []
+                console.log("Worklist: ", Worklist)
+                if (Worklist !== '') {
+                    specArr = Worklist.map(item => ({
+                        spec: item.spec,
+                        cat: item.cat,
+                    }));
+
+                    specArr2 = Worklist.map(item => ({
+                        name: item.spec,
+                    }));
+                }
 
                 try {
                     //создание проекта в БД
@@ -417,15 +430,8 @@ bot.on('message', async (msg) => {
                     const fio = workerFam + ' '+ workerName2 + ' [Workhub]'
                     const age = `${dateBorn}-01-01`
 
-                    //массив специалистов
-                    let specArr = []
-                    if (Worklist !== '') {
-                        specArr = Worklist.map(item => ({
-                            name: item.spec,
-                        }));
-                    }
-
-                    await addWorker(fio, chatId, age, phone2, specArr, city2)
+                    //сохраниь в бд ноушен
+                    await addWorker(fio, chatId, age, phone2, specArr2, city2)
 
                     //очистить переменные
                     console.log("Очищаю переменные...")
