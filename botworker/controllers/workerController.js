@@ -74,7 +74,19 @@ async function getWorkerId(tgId) {
             }
         });
 
-        return response;
+        const worker = response.results.map((page) => {
+            return {
+                id: page.id,
+                fio: page.properties.Name.title[0]?.plain_text,
+                tgId: page.properties.Telegram.number,
+                phone: page.properties.Phone.phone_number,
+                age: page.properties.Age.date,
+                city: page.properties.City[0]?.plain_text,
+                spec: page.properties.Specialization.multi_select,
+            };
+        });
+
+        return worker;
     } catch (error) {
         console.error(error.message)
     }
