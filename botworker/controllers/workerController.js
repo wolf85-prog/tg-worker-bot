@@ -71,7 +71,11 @@ async function getWorkerId(tgId) {
                 "number": {
                     "equals": parseInt(tgId)
                 }
-            }
+            },
+            "sorts": [{ 
+                "timestamp": "created_time", 
+                "direction": "descending" 
+            }]
         });
 
         const worker = response.results.map((page) => {
