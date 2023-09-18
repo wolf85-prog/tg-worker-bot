@@ -107,7 +107,7 @@ async function getWorkerChildrenId(blockId) {
             };
         });
 
-        //return response;
+        return worker;
     } catch (error) {
         console.error(error.message)
     }
