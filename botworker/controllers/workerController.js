@@ -86,7 +86,7 @@ async function getWorkerId(tgId) {
             };
         });
 
-        return response;
+        return worker;
     } catch (error) {
         console.error(error.message)
     }
