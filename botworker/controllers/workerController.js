@@ -81,12 +81,12 @@ async function getWorkerId(tgId) {
                 tgId: page.properties.Telegram.number,
                 phone: page.properties.Phone.phone_number,
                 age: page.properties.Age.date,
-                city: page.properties.City[0]?.plain_text,
+                city: page.properties.City.rich_text[0]?.plain_text,
                 spec: page.properties.Specialization.multi_select,
             };
         });
 
-        return response;
+        return worker;
     } catch (error) {
         console.error(error.message)
     }
