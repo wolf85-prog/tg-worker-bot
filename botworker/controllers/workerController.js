@@ -100,7 +100,14 @@ async function getWorkerChildrenId(blockId) {
             block_id: blockId,
         });
 
-        return response;
+        const worker = response.results.map((page) => {
+            return {
+                id: page.id,
+                image: page.image.file.url,
+            };
+        });
+
+        //return response;
     } catch (error) {
         console.error(error.message)
     }
