@@ -74,7 +74,7 @@ async function getWorkerId(tgId) {
             },
             "sorts": [{ 
                 "timestamp": "created_time", 
-                "direction": "descending" 
+                "direction": "ascending" 
             }]
         });
 
