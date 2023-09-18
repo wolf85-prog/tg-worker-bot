@@ -92,6 +92,20 @@ async function getWorkerId(tgId) {
     }
 }
 
+//получить данные дочерних блоков по заданному ID
+async function getWorkerChildrenId(blockId) {
+    try {
+
+        const response = await notion.blocks.children.list({
+            block_id: blockId,
+        });
+
+        return response;
+    } catch (error) {
+        console.error(error.message)
+    }
+}
+
 async function sendMessage(chatId) {
     try {
         //отправить сообщение о создании проекта в админ-панель
@@ -145,6 +159,17 @@ class WorkerController {
         const worker = await getWorkerId(id);
         if(worker){
             res.json(worker);
+        }
+        else{
+            res.json([]);
+        }
+    }
+
+    async workerChildrenId(req, res) {
+        const id = req.params.id; // получаем id
+        const data = await getWorkerChildrenId(id);
+        if(data){
+            res.json(data);
         }
         else{
             res.json([]);
