@@ -43,6 +43,7 @@ const path = require('path')
 const sequelize = require('./botworker/connections/db')
 const {UserBot, Message, Conversation, Worker, Pretendent} = require('./botworker/models/models');
 const addWorker = require("./botworker/common/addWorker");
+const getWorkerNotion = require("./botworker/common/getWorkerNotion");
 
 app.use(express.json());
 app.use(cors());
@@ -141,15 +142,28 @@ bot.on('message', async (msg) => {
                 console.log('Отмена добавления в БД. Пользователь уже существует')
             }
         
-            await bot.sendMessage(chatId, `Привет! Я Telegram-bot U.L.E.Y! 
-Добро пожаловать в нашу дружную команду профессионалов.`, {
+            //найти пользователя в ноушене (Специалисты)
+            const worker = await getWorkerNotion(chatId)
+
+            if (worker) {
+                console.log(`Привет, ${worker.fio}`)
+            } else {
+                console.log("Вы не зарегистрированы!")
+            }
+            
+
+            await bot.sendMessage(chatId, `Привет! Я Workhub бот!
+Присоединяйся к нашей дружной команде профессионалов!`, {
                 reply_markup: ({
                     inline_keyboard:[
                         [{text: 'Поехали!', web_app: {url: webAppUrl}}],
                     ]
                 })
             })
+
         }
+
+
 
         if (text === '/addspec') {
             try {
@@ -445,9 +459,10 @@ bot.on('message', async (msg) => {
  
                     console.log('Специалист успешно добавлен в БД! Worker: ' + res.username)
 
-                    await bot.sendMessage(chatId, `Добро пожаловать в U.L.E.Y, ${res.username}! 
-Внимательно следи за этим чатом. Именно здесь будут размещаться весь поток поступающих заявок. 
-
+                    await bot.sendMessage(chatId, `Отлично, ${res.username}!
+Внимательно следи за этим чатом.
+Именно здесь будут размещаться весь поток поступающих заявок.
+                    
 Увидимся на наших проектах! 😈`)
 
                 } catch (error) {
