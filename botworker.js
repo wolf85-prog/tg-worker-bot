@@ -148,19 +148,29 @@ bot.on('message', async (msg) => {
             if (worker) {
                 //console.log(worker)
                 console.log(`Привет, ${worker[0].fio}`)
+                await bot.sendMessage(chatId, `Привет! Я Workhub бот!
+Присоединяйся к нашей дружной команде профессионалов!`, {
+                    reply_markup: ({
+                        inline_keyboard:[
+                            [{text: 'Поехали!', callback_data:'/worker'}],
+                        ]
+                    })
+                })
             } else {
                 console.log("Вы не зарегистрированы!")
+
+                await bot.sendMessage(chatId, `Привет! Я Workhub бот!
+Присоединяйся к нашей дружной команде профессионалов!`, {
+                    reply_markup: ({
+                        inline_keyboard:[
+                            [{text: 'Поехали!', web_app: {url: webAppUrl}}],
+                        ]
+                    })
+                })
             }
             
 
-            await bot.sendMessage(chatId, `Привет! Я Workhub бот!
-Присоединяйся к нашей дружной команде профессионалов!`, {
-                reply_markup: ({
-                    inline_keyboard:[
-                        [{text: 'Поехали!', web_app: {url: webAppUrl}}],
-                    ]
-                })
-            })
+            
 
         }
 
@@ -583,6 +593,15 @@ bot.on('message', async (msg) => {
         })
 
         return bot.sendMessage(chatId, 'Хорошо, тогда в следующий раз!')
+    }
+
+
+    //нажатие на кнопку "Отклонить"
+    if (data === '/worker') {
+        //отправить сообщение в админ-панель
+        //const convId = await sendMyMessage('Вы уже зарегистрированы!', chatId)
+
+        return bot.sendMessage(chatId, 'Вы уже зарегистрированы!')
     }
 
     bot.sendMessage(chatId, `Вы нажали кнопку ${data}`, backOptions)
