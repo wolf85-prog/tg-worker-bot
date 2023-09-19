@@ -152,7 +152,7 @@ bot.on('message', async (msg) => {
 Присоединяйся к нашей дружной команде профессионалов!`, {
                     reply_markup: ({
                         inline_keyboard:[
-                            [{text: 'Поехали!', callback_data:'/worker'}],
+                            [{text: 'Поехали!', web_app: {url: webAppUrl}}],
                         ]
                     })
                 })
