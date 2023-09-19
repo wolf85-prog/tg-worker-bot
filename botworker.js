@@ -146,8 +146,8 @@ bot.on('message', async (msg) => {
             const worker = await getWorkerNotion(chatId)
 
             if (worker) {
-                console.log(worker)
-                console.log(`Привет, ${worker.data.fio}`)
+                //console.log(worker)
+                console.log(`Привет, ${worker[0].fio}`)
             } else {
                 console.log("Вы не зарегистрированы!")
             }
