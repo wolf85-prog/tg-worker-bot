@@ -90,7 +90,7 @@ async function getWorkerId(tgId) {
             };
         });
 
-        return worker;
+        return response;
     } catch (error) {
         console.error(error.message)
     }
