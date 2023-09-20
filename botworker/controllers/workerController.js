@@ -87,10 +87,16 @@ async function getWorkerId(tgId) {
                 age: page.properties.Age.date,
                 city: page.properties.City.rich_text[0]?.plain_text,
                 spec: page.properties.Specialization.multi_select,
+                comment: page.properties["Комментарии"].rich_text.plain_text,
+                reyting: page.properties["Рейтинг"].rich_text.plain_text,
+                merch: page.properties.Merch.multi_select[0]?.name,
+                comteg: page.properties["КомТег"].multi_select[0]?.name,
+                rank: page.properties.Rank.number,
+
             };
         });
 
-        return response;
+        return worker;
     } catch (error) {
         console.error(error.message)
     }
