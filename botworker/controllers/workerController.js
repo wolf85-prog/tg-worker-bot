@@ -164,14 +164,14 @@ async function getStatus() {
 
         results = [...data.results]
 
-        while(data.has_more) {
-            data = await notion.databases.query({
-                database_id: databaseStatusId,
-                start_cursor: data.next_cursor,
-            }); 
+        // while(data.has_more) {
+        //     data = await notion.databases.query({
+        //         database_id: databaseStatusId,
+        //         start_cursor: data.next_cursor,
+        //     }); 
 
-            results = [...results, ...data.results];
-        }
+        //     results = [...results, ...data.results];
+        // }
 
         // const workers = results.map((page) => {
         //     return {
@@ -185,7 +185,7 @@ async function getStatus() {
         //     };
         // });
 
-        return results;
+        return data;
 
     } catch (error) {
         console.error(error.message)
