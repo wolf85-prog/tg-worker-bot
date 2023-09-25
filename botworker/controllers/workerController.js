@@ -90,8 +90,8 @@ async function getWorkerId(tgId) {
                 spec: page.properties.Specialization.multi_select,
                 comment: page.properties["Комментарии"].rich_text[0]?.plain_text,
                 reyting: page.properties["Рейтинг"].rich_text[0]?.plain_text,
-                merch: page.properties.Merch.multi_select[0]?.name,
-                comteg: page.properties["КомТег"].multi_select[0]?.name,
+                merch: page.properties.Merch.multi_select,
+                comteg: page.properties["КомТег"].multi_select,
                 rank: page.properties.Rank.number,
 
             };
