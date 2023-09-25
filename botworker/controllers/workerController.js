@@ -2,6 +2,7 @@ require("dotenv").config();
 const { Client } = require("@notionhq/client");
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
 const databaseWorkerId = process.env.NOTION_DATABASE_WORKERS_ID
+const databaseStatusId = process.env.NOTION_DATABASE_STATUS_ID
 const chatTelegramId = process.env.CHAT_ID
 const sendMyMessage = require('./../common/sendMyMessage')
 
@@ -151,6 +152,47 @@ async function sendMessage(chatId) {
 }
 
 
+
+async function getStatus() {
+    try {
+
+        let results = []
+
+        let data = await notion.databases.query({
+            database_id: databaseStatusId
+        });
+
+        results = [...data.results]
+
+        while(data.has_more) {
+            data = await notion.databases.query({
+                database_id: databaseStatusId,
+                start_cursor: data.next_cursor,
+            }); 
+
+            results = [...results, ...data.results];
+        }
+
+        // const workers = results.map((page) => {
+        //     return {
+        //         id: page.id,
+        //         fio: page.properties.Name.title[0]?.plain_text,
+        //         tgId: page.properties.Telegram.number,
+        //         phone: page.properties.Phone.phone_number,
+        //         age: page.properties.Age.date,
+        //         city: page.properties.City[0]?.plain_text,
+        //         spec: page.properties.Specialization.multi_select,
+        //     };
+        // });
+
+        return results;
+
+    } catch (error) {
+        console.error(error.message)
+    }
+}
+
+
 class WorkerController {
 
     async workers(req, res) {
@@ -200,6 +242,16 @@ class WorkerController {
         const mess = await sendMessage(id);
         if(mess){
             res.json(mess);
+        }
+        else{
+            res.json([]);
+        }
+    }
+
+    async status(req, res) {
+        const status = await getStatus();
+        if(status){
+            res.json(status);
         }
         else{
             res.json([]);
