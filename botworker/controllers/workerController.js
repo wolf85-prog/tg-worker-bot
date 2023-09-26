@@ -191,7 +191,7 @@ async function getProjects() {
             };
         });
 
-        return projects;
+        return response;
 
     } catch (error) {
         console.error(error.message)
