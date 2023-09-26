@@ -177,15 +177,10 @@ async function getProjects() {
             return {
                 id: page.id,
                 title: page.properties.Name.title[0]?.plain_text,
+                date: page.properties["Дата"].date,
+                status: page.properties["Статус проекта"].select.name,
             };
         });
-
-        // const projects = response.results.map((page) => {
-        //     return {
-        //         id: page.id,
-        //         title: page.properties.Name.title[0]?.plain_text,
-        //     };
-        // });
 
         return projects;
 
