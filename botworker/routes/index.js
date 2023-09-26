@@ -14,6 +14,6 @@ router.get('/workers/children/:id', workerController.workerChildrenId); // по�
 router.get("/sendmessage/:id", workerController.message);
 
 //get PROJECTS
-router.get("/workers/projects", workerController.projects);
+router.get("/projects", workerController.projects);
 
 module.exports = router
