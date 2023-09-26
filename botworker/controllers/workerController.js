@@ -2,7 +2,7 @@ require("dotenv").config();
 const { Client } = require("@notionhq/client");
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
 const databaseWorkerId = process.env.NOTION_DATABASE_WORKERS_ID
-const databaseStatusId = process.env.NOTION_DATABASE_STATUS_ID
+const databaseId = process.env.NOTION_DATABASE_ID
 const chatTelegramId = process.env.CHAT_ID
 const sendMyMessage = require('./../common/sendMyMessage')
 
@@ -153,39 +153,34 @@ async function sendMessage(chatId) {
 
 
 
-async function getStatus() {
+async function getProjects() {
     try {
 
         let results = []
 
         let data = await notion.databases.query({
-            database_id: databaseStatusId
+            database_id: databaseId
         });
 
         results = [...data.results]
 
-        // while(data.has_more) {
-        //     data = await notion.databases.query({
-        //         database_id: databaseStatusId,
-        //         start_cursor: data.next_cursor,
-        //     }); 
+        while(data.has_more) {
+            data = await notion.databases.query({
+                database_id: databaseId,
+                start_cursor: data.next_cursor,
+            }); 
 
-        //     results = [...results, ...data.results];
-        // }
+            results = [...results, ...data.results];
+        }
 
-        // const workers = results.map((page) => {
-        //     return {
-        //         id: page.id,
-        //         fio: page.properties.Name.title[0]?.plain_text,
-        //         tgId: page.properties.Telegram.number,
-        //         phone: page.properties.Phone.phone_number,
-        //         age: page.properties.Age.date,
-        //         city: page.properties.City[0]?.plain_text,
-        //         spec: page.properties.Specialization.multi_select,
-        //     };
-        // });
+        const projects = results.map((page) => {
+            return {
+                id: page.id,
+                title: page.properties.Name.title[0]?.plain_text,
+            };
+        });
 
-        return data;
+        return projects;
 
     } catch (error) {
         console.error(error.message)
@@ -248,10 +243,10 @@ class WorkerController {
         }
     }
 
-    async status(req, res) {
-        const status = await getStatus();
-        if(status){
-            res.json(status);
+    async projects(req, res) {
+        const projects = await getProjects();
+        if(projects){
+            res.json(projects);
         }
         else{
             res.json([]);

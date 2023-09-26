@@ -13,7 +13,7 @@ router.get('/workers/children/:id', workerController.workerChildrenId); // по�
 //SEND MESSAGE
 router.get("/sendmessage/:id", workerController.message);
 
-//get STATUS
-router.get("/status", workerController.status);
+//get PROJECTS
+router.get("/workers/projects", workerController.projects);
 
 module.exports = router
