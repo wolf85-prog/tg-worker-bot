@@ -156,42 +156,38 @@ async function sendMessage(chatId) {
 async function getProjects() {
     try {
 
-        const response = await notion.databases.query({
+        let results = []
+
+        let data = await notion.databases.query({
             database_id: databaseId
         });
 
-        // let results = []
+        results = [...data.results]
 
-        // let data = await notion.databases.query({
-        //     database_id: databaseId
-        // });
+        while(data.has_more) {
+            data = await notion.databases.query({
+                database_id: databaseId,
+                start_cursor: data.next_cursor,
+            }); 
 
-        // results = [...data.results]
+            results = [...results, ...data.results];
+        }
 
-        // while(data.has_more) {
-        //     data = await notion.databases.query({
-        //         database_id: databaseId,
-        //         start_cursor: data.next_cursor,
-        //     }); 
-
-        //     results = [...results, ...data.results];
-        // }
-
-        // const projects = results.map((page) => {
-        //     return {
-        //         id: page.id,
-        //         title: page.properties.Name.title[0]?.plain_text,
-        //     };
-        // });
-
-        const projects = response.results.map((page) => {
+        const projects = results.map((page) => {
             return {
                 id: page.id,
                 title: page.properties.Name.title[0]?.plain_text,
             };
         });
 
-        return response;
+        // const projects = response.results.map((page) => {
+        //     return {
+        //         id: page.id,
+        //         title: page.properties.Name.title[0]?.plain_text,
+        //     };
+        // });
+
+        return projects;
 
     } catch (error) {
         console.error(error.message)
