@@ -179,7 +179,7 @@ async function getProjects() {
                 title: page.properties.Name.title[0]?.plain_text,
                 date_start: page.properties["Дата"].date?.start,
                 date_end: page.properties["Дата"].date?.end,
-                status: page.properties["Статус проекта"].select?.name,
+                status: page.properties["Статус проекта"].select,
             };
         });
 
