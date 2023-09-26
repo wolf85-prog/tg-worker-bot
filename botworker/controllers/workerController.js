@@ -156,24 +156,35 @@ async function sendMessage(chatId) {
 async function getProjects() {
     try {
 
-        let results = []
-
-        let data = await notion.databases.query({
+        const response = await notion.databases.query({
             database_id: databaseId
         });
 
-        results = [...data.results]
+        // let results = []
 
-        while(data.has_more) {
-            data = await notion.databases.query({
-                database_id: databaseId,
-                start_cursor: data.next_cursor,
-            }); 
+        // let data = await notion.databases.query({
+        //     database_id: databaseId
+        // });
 
-            results = [...results, ...data.results];
-        }
+        // results = [...data.results]
 
-        const projects = results.map((page) => {
+        // while(data.has_more) {
+        //     data = await notion.databases.query({
+        //         database_id: databaseId,
+        //         start_cursor: data.next_cursor,
+        //     }); 
+
+        //     results = [...results, ...data.results];
+        // }
+
+        // const projects = results.map((page) => {
+        //     return {
+        //         id: page.id,
+        //         title: page.properties.Name.title[0]?.plain_text,
+        //     };
+        // });
+
+        const projects = response.results.map((page) => {
             return {
                 id: page.id,
                 title: page.properties.Name.title[0]?.plain_text,
