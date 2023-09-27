@@ -195,26 +195,26 @@ async function getProjectStatus() {
 
         const response = await notion.databases.query({
             database_id: databaseId,
-            "filter": {
-                "and": [
+            "filter": //{
+                //"and": [
                     {
                         "property": "Статус проекта",
                         "select": {
                             "equals": "Ready"
                         }
                     },
-                    {
-                        "property": "Статус проекта",
-                        "select": {
-                            "equals": "Load"
-                        }
-                    },
-                    {
-                        "property": "Статус проекта",
-                        "select": {
-                            "equals": "OnAir"
-                        }
-                    }
+                    // {
+                    //     "property": "Статус проекта",
+                    //     "select": {
+                    //         "equals": "Load"
+                    //     }
+                    // },
+                    // {
+                    //     "property": "Статус проекта",
+                    //     "select": {
+                    //         "equals": "OnAir"
+                    //     }
+                    // }
                     // {
                     //     // "property": "Date",
                     //     // "date": {
@@ -225,9 +225,9 @@ async function getProjectStatus() {
                     //         "after": "2023-05-31"
                     //     }
                     // }
-                ]
+               // ]
                 
-            },
+            //},
         });
 
         const responseResults = response.results.map((page) => {
