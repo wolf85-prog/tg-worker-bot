@@ -190,7 +190,7 @@ async function getProjects() {
     }
 }
 
-async function getProjectStatus() {
+async function getProjectNew() {
     try {
 
         const response = await notion.databases.query({
@@ -225,6 +225,52 @@ async function getProjectStatus() {
                     //         "after": "2023-05-31"
                     //     }
                     // }
+                ]
+                
+            },
+        });
+
+        const responseResults = response.results.map((page) => {
+            return {
+                id: page.id,
+                title: page.properties.Name.title[0]?.plain_text,
+                date_start: page.properties["Дата"].date?.start,
+                date_end: page.properties["Дата"].date?.end,
+                status: page.properties["Статус проекта"].select,
+            };
+        });
+
+        return responseResults;
+
+    } catch (error) {
+        console.error(error.message)
+    }
+}
+
+
+async function getProjectOld() {
+    try {
+
+        const response = await notion.databases.query({
+            database_id: databaseId,
+            "filter": {
+                "and": [
+                    {
+                        "property": "Статус проекта",
+                        "select": {
+                            "does_not_equal": "Wasted"
+                        }
+                    },
+                    {
+                        // "property": "Date",
+                        // "date": {
+                        //     "after": "2023-05-31"
+                        // }
+                        "timestamp": "created_time",
+                        "created_time": {
+                            "after": "2023-07-31"
+                        }
+                    }
                 ]
                 
             },
@@ -313,8 +359,18 @@ class WorkerController {
         }
     }
 
-    async projectStatus(req, res) {
-        const projects = await getProjectStatus();
+    async projectsNew(req, res) {
+        const projects = await getProjectNew();
+        if(projects){
+            res.json(projects);
+        }
+        else{
+            res.json([]);
+        }
+    }
+
+    async projectsOld(req, res) {
+        const projects = await getProjectOld();
         if(projects){
             res.json(projects);
         }

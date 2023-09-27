@@ -16,7 +16,10 @@ router.get("/sendmessage/:id", workerController.message);
 //get PROJECTS ALL
 router.get("/projectall", workerController.projectAll);
 
+//get PROJECTS NEW
+router.get("/projectsnew", workerController.projectsNew);
+
 //get PROJECTS STATUS
-router.get("/projectstatus", workerController.projectStatus);
+router.get("/projectsold", workerController.projectsOld);
 
 module.exports = router
