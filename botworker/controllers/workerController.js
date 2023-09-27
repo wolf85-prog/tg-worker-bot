@@ -190,6 +190,63 @@ async function getProjects() {
     }
 }
 
+async function getProjectStatus() {
+    try {
+
+        const response = await notion.databases.query({
+            database_id: databaseId,
+            "filter": {
+                "and": [
+                    {
+                        "property": "Статус проекта",
+                        "select": {
+                            "equals": "Ready"
+                        }
+                    },
+                    {
+                        "property": "Статус проекта",
+                        "select": {
+                            "equals": "Load"
+                        }
+                    },
+                    {
+                        "property": "Статус проекта",
+                        "select": {
+                            "equals": "OnAir"
+                        }
+                    }
+                    // {
+                    //     // "property": "Date",
+                    //     // "date": {
+                    //     //     "after": "2023-05-31"
+                    //     // }
+                    //     "timestamp": "created_time",
+                    //     "created_time": {
+                    //         "after": "2023-05-31"
+                    //     }
+                    // }
+                ]
+                
+            },
+        });
+
+        const responseResults = response.results.map((page) => {
+            return {
+                id: page.id,
+                title: page.properties.Name.title[0]?.plain_text,
+                date_start: page.properties["Дата"].date?.start,
+                date_end: page.properties["Дата"].date?.end,
+                status: page.properties["Статус проекта"].select,
+            };
+        });
+
+        return responseResults;
+
+    } catch (error) {
+        console.error(error.message)
+    }
+}
+
 
 class WorkerController {
 
@@ -246,8 +303,18 @@ class WorkerController {
         }
     }
 
-    async projects(req, res) {
+    async projectAll(req, res) {
         const projects = await getProjects();
+        if(projects){
+            res.json(projects);
+        }
+        else{
+            res.json([]);
+        }
+    }
+
+    async projectStatus(req, res) {
+        const projects = await getProjectStatus();
         if(projects){
             res.json(projects);
         }
