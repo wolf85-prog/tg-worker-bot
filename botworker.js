@@ -144,6 +144,7 @@ bot.on('message', async (msg) => {
         
             //найти пользователя в ноушене (Специалисты)
             const worker = await getWorkerNotion(chatId)
+            console.log("worker: ", worker)
 
             if (worker) {
                 //console.log(worker)
