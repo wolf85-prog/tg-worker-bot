@@ -144,9 +144,9 @@ bot.on('message', async (msg) => {
         
             //найти пользователя в ноушене (Специалисты)
             const worker = await getWorkerNotion(chatId)
-            console.log("worker: ", worker)
+            //console.log("worker: ", worker)
 
-            if (worker) {
+            if (worker.length > 0) {
                 //console.log(worker)
                 console.log(`Привет, ${worker[0].fio}`)
                 await bot.sendMessage(chatId, `Привет! Я Workhub бот!
