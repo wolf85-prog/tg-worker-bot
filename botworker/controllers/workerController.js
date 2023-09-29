@@ -276,18 +276,22 @@ async function getProjectOld() {
         const response = await notion.databases.query({
             database_id: databaseId,
             "filter": {
-                "and": [
+                "or": [
                     {
                         "property": "Статус проекта",
                         "select": {
-                            "does_not_equal": "Wasted"
+                            "equal": "Wasted"
                         }
                     },
                     {
-                        // "property": "Date",
-                        // "date": {
-                        //     "after": "2023-05-31"
-                        // }
+                        "property": "Статус проекта",
+                        "select": {
+                            "equal": "Done"
+                        }
+                    },
+                ],
+                "and": [
+                    {
                         "timestamp": "created_time",
                         "created_time": {
                             "after": "2023-08-31"
