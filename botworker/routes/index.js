@@ -2,6 +2,8 @@ const Router = require('express')
 const router = new Router()
 
 const workerController = require('../controllers/workerController')
+const databaseController = require('../controllers/databaseController')
+const blockController = require('../controllers/blockController')
 
 //get WORKERS
 router.get("/workers", workerController.workers);
