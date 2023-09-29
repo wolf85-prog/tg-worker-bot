@@ -162,7 +162,7 @@ async function getProjects() {
             {
                 "timestamp": "created_time",
                 "created_time": {
-                    "after": "2023-07-31"
+                    "after": "2023-08-31"
                 }
             }
         });
@@ -290,7 +290,7 @@ async function getProjectOld() {
                         // }
                         "timestamp": "created_time",
                         "created_time": {
-                            "after": "2023-07-31"
+                            "after": "2023-08-31"
                         }
                     }
                 ]
