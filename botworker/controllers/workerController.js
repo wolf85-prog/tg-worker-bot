@@ -159,7 +159,18 @@ async function getProjects() {
         let results = []
 
         let data = await notion.databases.query({
-            database_id: databaseId
+            database_id: databaseId,
+            "filter": 
+            {
+                        // "property": "Date",
+                        // "date": {
+                        //     "after": "2023-05-31"
+                        // }
+                "timestamp": "created_time",
+                "created_time": {
+                    "after": "2023-07-31"
+                }
+            }
         });
 
         results = [...data.results]
