@@ -156,16 +156,10 @@ async function sendMessage(chatId) {
 async function getProjects() {
     try {
 
-        let results = []
-
-        let data = await notion.databases.query({
+        const response = await notion.databases.query({
             database_id: databaseId,
             "filter": 
             {
-                        // "property": "Date",
-                        // "date": {
-                        //     "after": "2023-05-31"
-                        // }
                 "timestamp": "created_time",
                 "created_time": {
                     "after": "2023-07-31"
@@ -173,18 +167,7 @@ async function getProjects() {
             }
         });
 
-        results = [...data.results]
-
-        while(data.has_more) {
-            data = await notion.databases.query({
-                database_id: databaseId,
-                start_cursor: data.next_cursor,
-            }); 
-
-            results = [...results, ...data.results];
-        }
-
-        const projects = results.map((page) => {
+        const responseResults = response.results.map((page) => {
             return {
                 id: page.id,
                 title: page.properties.Name.title[0]?.plain_text,
@@ -194,7 +177,36 @@ async function getProjects() {
             };
         });
 
-        return projects;
+        return responseResults;
+
+        // let results = []
+
+        // let data = await notion.databases.query({
+        //     database_id: databaseId
+        // });
+
+        // results = [...data.results]
+
+        // while(data.has_more) {
+        //     data = await notion.databases.query({
+        //         database_id: databaseId,
+        //         start_cursor: data.next_cursor,
+        //     }); 
+
+        //     results = [...results, ...data.results];
+        // }
+
+        // const projects = results.map((page) => {
+        //     return {
+        //         id: page.id,
+        //         title: page.properties.Name.title[0]?.plain_text,
+        //         date_start: page.properties["Дата"].date?.start,
+        //         date_end: page.properties["Дата"].date?.end,
+        //         status: page.properties["Статус проекта"].select,
+        //     };
+        // });
+
+        //return projects;
 
     } catch (error) {
         console.error(error.message)
@@ -203,7 +215,6 @@ async function getProjects() {
 
 async function getProjectNew() {
     try {
-
         const response = await notion.databases.query({
             database_id: databaseId,
             "filter": {
