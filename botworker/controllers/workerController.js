@@ -289,16 +289,7 @@ async function getProjectOld() {
                             "equal": "Done"
                         }
                     },
-                ],
-                "and": [
-                    {
-                        "timestamp": "created_time",
-                        "created_time": {
-                            "after": "2023-08-31"
-                        }
-                    }
-                ]
-                
+                ],            
             },
         });
 
