@@ -141,6 +141,11 @@ bot.on('message', async (msg) => {
                 console.log('Пользователь добавлен в БД')
             } else {
                 console.log('Отмена добавления в БД. Пользователь уже существует')
+                await UserBot.update({ username: username }, {
+                    where: {
+                      chatId: chatId.toString(),
+                    },
+                });
             }
 
             await bot.sendMessage(chatId, `Привет! Я Workhub бот!
