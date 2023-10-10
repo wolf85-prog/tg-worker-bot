@@ -475,6 +475,11 @@ bot.on('message', async (msg) => {
                     console.log('Пользователь добавлен в БД')
                 } else {
                     console.log('Отмена операции! Пользователь уже существует')
+                    await UserBot.update({ username: username }, {
+                        where: {
+                          chatId: chatId.toString(),
+                        },
+                    });
                 }
 
                 //обработка пересылаемых сообщений
