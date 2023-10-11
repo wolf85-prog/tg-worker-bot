@@ -605,6 +605,7 @@ bot.on('message', async (msg) => {
             senderId: chatId,
             receiverId: chatTelegramId,
             text: 'Пользователь нажал кнопку "Согласен"',
+            type: 'text',
             convId: convId,
             messageId: messageId,
         })
