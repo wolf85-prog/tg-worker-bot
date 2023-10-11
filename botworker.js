@@ -610,6 +610,51 @@ bot.on('message', async (msg) => {
             messageId: messageId,
         })
 
+        //return bot.sendMessage(chatId, 'Согласен!')
+    }
+
+    if (data === '/passport2') {
+        //отправить сообщение в админ-панель
+        //const convId = await sendMyMessage('Согласен!', chatId)
+
+        bot.sendMessage(chatId, `Ваш отказ принят.
+        До встречи на следующем проекте!`)
+
+        // Подключаемся к серверу socket
+        // let socket = io(socketUrl);
+        // socket.emit("addUser", chatId)
+        // socket.emit("sendMessageSpec", {
+        //     senderId: chatId,
+        //     receiverId: chatTelegramId,
+        //     text: 'Пользователь нажал кнопку "Согласен"',
+        //     type: 'text',
+        //     convId: convId,
+        //     messageId: messageId,
+        // })
+
+        return bot.sendMessage(chatId, 'Согласен!')
+    }
+
+    if (data === '/passport3') {
+
+        bot.sendMessage(chatId, "Иногда заказчики требуют персональные данные  специалистов приглашенных на проект, в этом случае участие в нем возможно только после предоставления необходимых данных.")
+
+
+        //отправить сообщение в админ-панель
+        //const convId = await sendMyMessage('Согласен!', chatId)
+
+        // Подключаемся к серверу socket
+        // let socket = io(socketUrl);
+        // socket.emit("addUser", chatId)
+        // socket.emit("sendMessageSpec", {
+        //     senderId: chatId,
+        //     receiverId: chatTelegramId,
+        //     text: 'Пользователь нажал кнопку "Согласен"',
+        //     type: 'text',
+        //     convId: convId,
+        //     messageId: messageId,
+        // })
+
         return bot.sendMessage(chatId, 'Согласен!')
     }
 
