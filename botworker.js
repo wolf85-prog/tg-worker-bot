@@ -610,7 +610,13 @@ bot.on('message', async (msg) => {
             messageId: messageId,
         })
 
-        //return bot.sendMessage(chatId, 'Согласен!')
+        return bot.sendMessage(chatId, 'Заплните данные, нажав кнопку Пасспорт', {
+                    reply_markup: ({
+                        inline_keyboard:[
+                            [{text: 'Паспорт', web_app: {url: webAppUrl}}],
+                        ]
+                    })
+                })
     }
 
     if (data === '/passport2') {
@@ -618,7 +624,7 @@ bot.on('message', async (msg) => {
         //const convId = await sendMyMessage('Согласен!', chatId)
 
         bot.sendMessage(chatId, `Ваш отказ принят.
-        До встречи на следующем проекте!`)
+До встречи на следующем проекте!`)
 
         // Подключаемся к серверу socket
         // let socket = io(socketUrl);
@@ -632,7 +638,7 @@ bot.on('message', async (msg) => {
         //     messageId: messageId,
         // })
 
-        return bot.sendMessage(chatId, 'Согласен!')
+        //return bot.sendMessage(chatId, 'Согласен!')
     }
 
     if (data === '/passport3') {
