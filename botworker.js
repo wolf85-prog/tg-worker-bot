@@ -593,32 +593,6 @@ bot.on('message', async (msg) => {
         return bot.sendMessage(chatId, 'Вы уже зарегистрированы!')
     }
 
-    //нажатие на кнопку "Отправить паспортные данные"
-    if (data === '/passport') {
-        //отправить сообщение в админ-панель
-        const convId = await sendMyMessage('Согласен!', chatId)
-
-        // Подключаемся к серверу socket
-        let socket = io(socketUrl);
-        socket.emit("addUser", chatId)
-        socket.emit("sendMessageSpec", {
-            senderId: chatId,
-            receiverId: chatTelegramId,
-            text: 'Пользователь нажал кнопку "Согласен"',
-            type: 'text',
-            convId: convId,
-            messageId: messageId,
-        })
-
-        return bot.sendMessage(chatId, 'Заплните данные, нажав кнопку Пасспорт', {
-                    reply_markup: ({
-                        inline_keyboard:[
-                            [{text: 'Паспорт', web_app: {url: webAppUrl}}],
-                        ]
-                    })
-                })
-    }
-
     if (data === '/passport2') {
         //отправить сообщение в админ-панель
         //const convId = await sendMyMessage('Согласен!', chatId)
@@ -661,7 +635,7 @@ bot.on('message', async (msg) => {
         //     messageId: messageId,
         // })
 
-        return bot.sendMessage(chatId, 'Согласен!')
+        //return bot.sendMessage(chatId, 'Согласен!')
     }
 
     bot.sendMessage(chatId, `Вы нажали кнопку ${data}`, backOptions)
