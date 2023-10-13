@@ -8,6 +8,7 @@ const bot = new TelegramBot(token, {polling: true});
 // web-приложение
 const webAppUrl = process.env.WEB_APP_URL;
 const botApiUrl = process.env.REACT_APP_API_URL
+const webAppUrlPas = process.env.WEB_APP_URL + '/add-passport';
 
 //socket.io
 const {io} = require("socket.io-client")
@@ -632,11 +633,11 @@ bot.on('message', async (msg) => {
         //     messageId: messageId,
         // })
 
-        return bot.sendMessage(chatId, "Иногда заказчики требуют персональные данные  специалистов приглашенных на проект, в этом случае участие в нем возможно только после предоставления необходимых данных.", {
+        bot.sendMessage(chatId, "Иногда заказчики требуют персональные данные  специалистов приглашенных на проект, в этом случае участие в нем возможно только после предоставления необходимых данных.", {
             reply_markup: ({
                 inline_keyboard: [
                     [
-                        {"text": "Согласен предоставить персональные данные", web_app: {url: webAppPassport}}, 
+                        {"text": "Согласен предоставить персональные данные", web_app: {url: webAppUrlPas}}, 
                     ],
                     [
                         {"text": "Отказываюсь от предоставления данных и участия в проектах", callback_data:'/passport2'},
