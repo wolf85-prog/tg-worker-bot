@@ -98,11 +98,11 @@ app.post('/web-data', async (req, res) => {
             await bot.answerWebAppQuery(queryId, {
                 type: 'article',
                 id: queryId,
-                title: 'Твои данные добавлены',
+                title: 'Данные успешно добавлены',
                 input_message_content: {
                     parse_mode: 'HTML',
                     message_text: 
-`Твои данные добавлены!
+`Данные успешно добавлены!
   
 <b>Фамилия:</b> ${workerfamily} 
 <b>Имя:</b> ${workerName} 
@@ -141,14 +141,13 @@ app.post('/web-passport', async (req, res) => {
                 input_message_content: {
                     parse_mode: 'HTML',
                     message_text: 
-`Твой паспорт добавлен!
+`Твои данные добавлены!
   
-<b>Фамилия:</b> ${pasFam} 
-<b>Имя:</b> ${pasName} 
-<b>Отчество:</b> ${pasSoname} 
-<b>Дата рождения:</b> ${pasDateborn} 
-<b>Серия и номер:</b> ${pasNumber}
-<b>Дата выдачи:</b> ${pasDate} 
+<b>${pasFam} ${pasName} ${pasSoname} </b>  
+
+<b>Дата рождения:</b> ${pasDateborn.split('-')[2]}.${pasDateborn.split('-')[1]}.${pasDateborn.split('-')[1]}
+<b>Серия и номер:</b> ${pasNumber.split('/')[0]} ${pasNumber.split('/')[1]}
+<b>Дата выдачи:</b> ${pasDate.split('-')[2]}.${pasDate.split('-')[1]}.${pasDate.split('-')[1]} 
 <b>Кем выдан:</b> ${pasKem}
 <b>Код подразделения:</b> ${pasKod}
 <b>Место рождения:</b> ${pasPlaceborn}
@@ -161,10 +160,10 @@ app.post('/web-passport', async (req, res) => {
   
             const pass_str = `${pasFam} ${pasName} ${pasSoname} 
                             
-                            Паспорт: ${pasNumber}
-                            Дата рождения: ${pasDateborn}
+                            Паспорт: ${pasNumber.split('/')[0]} ${pasNumber.split('/')[1]}
+                            Дата рождения: ${pasDateborn.split('-')[2]}.${pasDateborn.split('-')[1]}.${pasDateborn.split('-')[1]}
                             Выдан: ${pasKem} 
-                            Дата выдачи: ${pasDate}   
+                            Дата выдачи: ${pasDate.split('-')[2]}.${pasDate.split('-')[1]}.${pasDate.split('-')[1]}   
                             Код подразделения: ${pasKod}
                             
                             Место рождения: ${pasPlaceborn}
@@ -449,7 +448,7 @@ bot.on('message', async (msg) => {
                 await bot.sendMessage(text.substring(6, text.indexOf('.')), text.slice(text.indexOf('.') + 2)) 
 
             // Проект успешно создан
-            } else if (text.startsWith('Твои данные добавлены!')) {           
+            } else if (text.startsWith('Данные успешно добавлены!')) {           
                 const response = await bot.sendMessage(chatTelegramId, `${text} \n \n от ${firstname} ${lastname} ${chatId}`)
 
                 console.log("Отправляю сообщение в админ-панель...")    
