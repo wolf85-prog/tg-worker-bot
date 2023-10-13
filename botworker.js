@@ -160,15 +160,15 @@ app.post('/web-passport', async (req, res) => {
   
             const pass_str = `${pasFam} ${pasName} ${pasSoname} 
                             
-                            Паспорт: ${pasNumber.split('/')[0]} ${pasNumber.split('/')[1]}
-                            Дата рождения: ${pasDateborn.split('-')[2]}.${pasDateborn.split('-')[1]}.${pasDateborn.split('-')[1]}
-                            Выдан: ${pasKem} 
-                            Дата выдачи: ${pasDate.split('-')[2]}.${pasDate.split('-')[1]}.${pasDate.split('-')[1]}   
-                            Код подразделения: ${pasKod}
+Паспорт: ${pasNumber.split('/')[0]} ${pasNumber.split('/')[1]}
+Дата рождения: ${pasDateborn.split('-')[2]}.${pasDateborn.split('-')[1]}.${pasDateborn.split('-')[1]}
+Выдан: ${pasKem} 
+Дата выдачи: ${pasDate.split('-')[2]}.${pasDate.split('-')[1]}.${pasDate.split('-')[1]}   
+Код подразделения: ${pasKod}
                             
-                            Место рождения: ${pasPlaceborn}
+Место рождения: ${pasPlaceborn}
                             
-                            Адрес регистрации: ${pasAdress}` 
+Адрес регистрации: ${pasAdress}` 
 
             const worker = await getWorkerNotion(user?.id)
             console.log(worker[0]?.id)
