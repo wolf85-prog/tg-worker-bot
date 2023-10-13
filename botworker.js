@@ -8,6 +8,7 @@ const bot = new TelegramBot(token, {polling: true});
 // web-приложение
 const webAppUrl = process.env.WEB_APP_URL;
 const botApiUrl = process.env.REACT_APP_API_URL
+const webAppUrlPas = process.env.WEB_APP_URL + '/add-passport';
 
 //socket.io
 const {io} = require("socket.io-client")
@@ -166,6 +167,7 @@ bot.on('message', async (msg) => {
     const chatId = msg.chat.id;
     const firstname = msg.from.first_name
     const lastname = msg.from.last_name
+    const username = msg.from.username
     const text = msg.text ? msg.text : '';
     const messageId = msg.message_id;
 
@@ -178,10 +180,15 @@ bot.on('message', async (msg) => {
             //добавить пользователя в бд
             const user = await UserBot.findOne({where:{chatId: chatId.toString()}})
             if (!user) {
-                await UserBot.create({ firstname: firstname, lastname: lastname, chatId: chatId })
+                await UserBot.create({ firstname: firstname, lastname: lastname, chatId: chatId, username: username })
                 console.log('Пользователь добавлен в БД')
             } else {
                 console.log('Отмена добавления в БД. Пользователь уже существует')
+                await UserBot.update({ username: username }, {
+                    where: {
+                      chatId: chatId.toString(),
+                    },
+                });
             }
 
             await bot.sendMessage(chatId, `Привет! Я Workhub бот!
@@ -507,10 +514,15 @@ bot.on('message', async (msg) => {
                 //добавление пользователя в БД
                 const user = await UserBot.findOne({where:{chatId: chatId.toString()}})
                 if (!user) {
-                    await UserBot.create({ firstname: firstname, lastname: lastname, chatId: chatId })
+                    await UserBot.create({ firstname: firstname, lastname: lastname, chatId: chatId, username: username })
                     console.log('Пользователь добавлен в БД')
                 } else {
                     console.log('Отмена операции! Пользователь уже существует')
+                    await UserBot.update({ username: username }, {
+                        where: {
+                          chatId: chatId.toString(),
+                        },
+                    });
                 }
 
                 //обработка пересылаемых сообщений
@@ -624,7 +636,60 @@ bot.on('message', async (msg) => {
         return bot.sendMessage(chatId, 'Вы уже зарегистрированы!')
     }
 
-    bot.sendMessage(chatId, `Вы нажали кнопку ${data}`, backOptions)
+
+
+    if (data === '/passport2') {
+        //отправить сообщение в админ-панель
+        //const convId = await sendMyMessage('Согласен!', chatId)
+
+        // Подключаемся к серверу socket
+        // let socket = io(socketUrl);
+        // socket.emit("addUser", chatId)
+        // socket.emit("sendMessageSpec", {
+        //     senderId: chatId,
+        //     receiverId: chatTelegramId,
+        //     text: 'Пользователь нажал кнопку "Согласен"',
+        //     type: 'text',
+        //     convId: convId,
+        //     messageId: messageId,
+        // })
+
+        return bot.sendMessage(chatId, `Ваш отказ принят.
+До встречи на следующем проекте!`)  
+
+    }
+
+    if (data === '/passport3') {
+        //отправить сообщение в админ-панель
+        //const convId = await sendMyMessage('Согласен!', chatId)
+
+        // Подключаемся к серверу socket
+        // let socket = io(socketUrl);
+        // socket.emit("addUser", chatId)
+        // socket.emit("sendMessageSpec", {
+        //     senderId: chatId,
+        //     receiverId: chatTelegramId,
+        //     text: 'Пользователь нажал кнопку "Согласен"',
+        //     type: 'text',
+        //     convId: convId,
+        //     messageId: messageId,
+        // })
+
+        bot.sendMessage(chatId, "Иногда заказчики требуют персональные данные  специалистов приглашенных на проект, в этом случае участие в нем возможно только после предоставления необходимых данных.", {
+            reply_markup: ({
+                inline_keyboard: [
+                    [
+                        {"text": "Согласен предоставить персональные данные", web_app: {url: webAppUrlPas}}, 
+                    ],
+                    [
+                        {"text": "Отказываюсь от предоставления данных и участия в проектах", callback_data:'/passport2'},
+                    ],
+                ]
+            })
+        }) 
+
+    }
+
   });
 
 
