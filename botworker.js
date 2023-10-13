@@ -45,6 +45,7 @@ const sequelize = require('./botworker/connections/db')
 const {UserBot, Message, Conversation, Worker, Pretendent} = require('./botworker/models/models');
 const addWorker = require("./botworker/common/addWorker");
 const getWorkerNotion = require("./botworker/common/getWorkerNotion");
+const addPassport = require("./botworker/common/addPassport");
 
 app.use(express.json());
 app.use(cors());
@@ -126,7 +127,7 @@ ${worklist.map(item =>' - ' + item.spec).join('\n')}`
 app.post('/web-passport', async (req, res) => {
     const {queryId, pasFam, pasName, pasSoname, pasDateborn, pasNumber, pasDate, pasKem, pasKod, pasPlaceborn, 
         pasAdress, 
-        pasEmail} = req.body;
+        pasEmail, user} = req.body;
     //const d = new Date(dateborn);
     //const year = d.getFullYear();
     //const month = String(d.getMonth()+1).padStart(2, "0");
@@ -155,6 +156,26 @@ app.post('/web-passport', async (req, res) => {
 <b>Email:</b> ${pasEmail}
 ` 
             }})
+
+            console.log("Начинаю сохранять данные в ноушене...", user?.id)
+  
+            const pass_str = `${pasFam} ${pasName} ${pasSoname} 
+                            
+                            Паспорт: ${pasNumber}
+                            Дата рождения: ${pasDateborn}
+                            Выдан: ${pasKem} 
+                            Дата выдачи: ${pasDate}   
+                            Код подразделения: ${pasKod}
+                            
+                            Место рождения: ${pasPlaceborn}
+                            
+                            Адрес регистрации: ${pasAdress}` 
+
+            const worker = await getWorkerNotion(user?.id)
+            console.log(worker)
+
+            //сохраниь в бд ноушен
+            await addPassport(pass_str, worker?.id)
 
         return res.status(200).json({});
     } catch (e) {

@@ -4,7 +4,7 @@ const { Client } = require("@notionhq/client");
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
 const databaseWorkerId = process.env.NOTION_DATABASE_WORKERS_ID
 
-//получить id блока заданной страницы по id
+//получить id блока заданной страницы по tg_id
 module.exports = async function getWorkerNotion(chatId) {
     try {
         const response = await notion.databases.query({
