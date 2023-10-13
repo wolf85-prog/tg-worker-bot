@@ -593,13 +593,12 @@ bot.on('message', async (msg) => {
         return bot.sendMessage(chatId, 'Вы уже зарегистрированы!')
     }
 
+
+
     if (data === '/passport2') {
         //отправить сообщение в админ-панель
         //const convId = await sendMyMessage('Согласен!', chatId)
 
-        bot.sendMessage(chatId, `Ваш отказ принят.
-До встречи на следующем проекте!`)
-
         // Подключаемся к серверу socket
         // let socket = io(socketUrl);
         // socket.emit("addUser", chatId)
@@ -612,14 +611,12 @@ bot.on('message', async (msg) => {
         //     messageId: messageId,
         // })
 
-        //return bot.sendMessage(chatId, 'Согласен!')
+        return bot.sendMessage(chatId, `Ваш отказ принят.
+До встречи на следующем проекте!`)  
+
     }
 
     if (data === '/passport3') {
-
-        bot.sendMessage(chatId, "Иногда заказчики требуют персональные данные  специалистов приглашенных на проект, в этом случае участие в нем возможно только после предоставления необходимых данных.")
-
-
         //отправить сообщение в админ-панель
         //const convId = await sendMyMessage('Согласен!', chatId)
 
@@ -635,10 +632,21 @@ bot.on('message', async (msg) => {
         //     messageId: messageId,
         // })
 
-        //return bot.sendMessage(chatId, 'Согласен!')
+        return bot.sendMessage(chatId, "Иногда заказчики требуют персональные данные  специалистов приглашенных на проект, в этом случае участие в нем возможно только после предоставления необходимых данных.", {
+            reply_markup: ({
+                inline_keyboard: [
+                    [
+                        {"text": "Согласен предоставить персональные данные", web_app: {url: webAppPassport}}, 
+                    ],
+                    [
+                        {"text": "Отказываюсь от предоставления данных и участия в проектах", callback_data:'/passport2'},
+                    ],
+                ]
+            })
+        }) 
+
     }
 
-    bot.sendMessage(chatId, `Вы нажали кнопку ${data}`, backOptions)
   });
 
 
