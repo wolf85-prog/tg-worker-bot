@@ -120,6 +120,48 @@ ${worklist.map(item =>' - ' + item.spec).join('\n')}`
     }
 })
 
+
+//добавление паспорта
+app.post('/web-passport', async (req, res) => {
+    const {queryId, pasFam, pasName, pasSoname, pasDateborn, pasNumber, pasDate, pasKem, pasKod, pasPlaceborn, 
+        pasAdress, 
+        pasEmail} = req.body;
+    //const d = new Date(dateborn);
+    //const year = d.getFullYear();
+    //const month = String(d.getMonth()+1).padStart(2, "0");
+    //const day = String(d.getDate()).padStart(2, "0");
+
+    try {
+            await bot.answerWebAppQuery(queryId, {
+                type: 'article',
+                id: queryId,
+                title: 'Твой паспорт добавлен',
+                input_message_content: {
+                    parse_mode: 'HTML',
+                    message_text: 
+`Твой паспорт добавлен!
+  
+<b>Фамилия:</b> ${pasFam} 
+<b>Имя:</b> ${pasName} 
+<b>Отчество:</b> ${pasSoname} 
+<b>Дата рождения:</b> ${pasDateborn} 
+<b>Серия и номер:</b> ${pasNumber}
+<b>Дата выдачи:</b> ${pasDate} 
+<b>Кем выдан:</b> ${pasKem}
+<b>Код подразделения:</b> ${pasKod}
+<b>Место рождения:</b> ${pasPlaceborn}
+<b>Адрес регистрации:</b> ${pasAdress}
+<b>Email:</b> ${pasEmail}
+` 
+            }})
+
+        return res.status(200).json({});
+    } catch (e) {
+        return res.status(500).json({})
+    }
+})
+
+
 bot.on('message', async (msg) => {
     const chatId = msg.chat.id;
     const firstname = msg.from.first_name
