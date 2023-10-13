@@ -171,7 +171,7 @@ app.post('/web-passport', async (req, res) => {
                             Адрес регистрации: ${pasAdress}` 
 
             const worker = await getWorkerNotion(user?.id)
-            console.log(worker)
+            console.log(worker?.id)
 
             //сохраниь в бд ноушен
             await addPassport(pass_str, worker?.id)
