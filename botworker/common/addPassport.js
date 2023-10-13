@@ -7,7 +7,7 @@ const databaseWorkersId = process.env.NOTION_DATABASE_WORKERS_ID
 module.exports = async function addPassport(passport_str, pageId) {
     try {
         const response = await notion.pages.update({
-            parent: { database_id: databaseWorkersId },
+            //parent: { database_id: databaseWorkersId },
             page_id: pageId,
             properties: {
                 Passport: {
