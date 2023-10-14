@@ -136,7 +136,7 @@ app.post('/web-passport', async (req, res) => {
             await bot.answerWebAppQuery(queryId, {
                 type: 'article',
                 id: queryId,
-                title: 'Твой паспорт добавлен',
+                title: 'Твои данные добавлены',
                 input_message_content: {
                     parse_mode: 'HTML',
                     message_text: 
@@ -145,7 +145,7 @@ app.post('/web-passport', async (req, res) => {
 <b>${pasFam} ${pasName} ${pasSoname} </b>  
 
 <b>Дата рождения:</b> ${pasDateborn.split('-')[2]}.${pasDateborn.split('-')[1]}.${pasDateborn.split('-')[1]}
-<b>Серия и номер:</b> ${pasNumber.split('/')[0]} ${pasNumber.split('/')[1]}
+<b>Серия и номер:</b> ${pasNumber.split(' ')[0]} ${pasNumber.split(' ')[1]}
 <b>Дата выдачи:</b> ${pasDate.split('-')[2]}.${pasDate.split('-')[1]}.${pasDate.split('-')[1]} 
 <b>Кем выдан:</b> ${pasKem}
 <b>Код подразделения:</b> ${pasKod}
@@ -159,7 +159,7 @@ app.post('/web-passport', async (req, res) => {
   
             const pass_str = `${pasFam} ${pasName} ${pasSoname} 
                             
-Паспорт: ${pasNumber.split('/')[0]} ${pasNumber.split('/')[1]}
+Паспорт: ${pasNumber.split(' ')[0]} ${pasNumber.split(' ')[1]}
 Дата рождения: ${pasDateborn.split('-')[2]}.${pasDateborn.split('-')[1]}.${pasDateborn.split('-')[1]}
 Выдан: ${pasKem} 
 Дата выдачи: ${pasDate.split('-')[2]}.${pasDate.split('-')[1]}.${pasDate.split('-')[1]}   
