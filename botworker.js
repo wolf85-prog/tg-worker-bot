@@ -126,8 +126,7 @@ ${worklist.map(item =>' - ' + item.spec).join('\n')}`
 //добавление паспорта
 app.post('/web-passport', async (req, res) => {
     const {queryId, pasFam, pasName, pasSoname, pasDateborn, pasNumber, pasDate, pasKem, pasKod, pasPlaceborn, 
-        pasAdress, 
-        pasEmail, user} = req.body;
+        pasAdress, pasEmail, user, image} = req.body;
     //const d = new Date(dateborn);
     //const year = d.getFullYear();
     //const month = String(d.getMonth()+1).padStart(2, "0");
@@ -175,7 +174,7 @@ app.post('/web-passport', async (req, res) => {
             console.log(worker)
 
             //сохраниь в бд ноушен
-            await addPassport(pass_str, worker?.id)
+            await addPassport(pass_str, image, worker?.id)
 
         return res.status(200).json({});
     } catch (e) {
