@@ -46,6 +46,7 @@ const {UserBot, Message, Conversation, Worker, Pretendent} = require('./botworke
 const addWorker = require("./botworker/common/addWorker");
 const getWorkerNotion = require("./botworker/common/getWorkerNotion");
 const addPassport = require("./botworker/common/addPassport");
+const addImage = require("./botworker/common/addImage");
 
 app.use(express.json());
 app.use(cors());
@@ -173,7 +174,10 @@ app.post('/web-passport', async (req, res) => {
             //console.log(worker[0]?.id)
 
             //сохраниь в бд ноушен
-            await addPassport(pass_str, image, worker[0]?.id)
+            await addPassport(pass_str, worker[0]?.id)
+
+            //сохраниь в бд ноушен
+            await addImage(image, worker[0]?.id)
 
         return res.status(200).json({});
     } catch (e) {

@@ -4,7 +4,7 @@ const { Client } = require("@notionhq/client");
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
 const databaseWorkersId = process.env.NOTION_DATABASE_WORKERS_ID
 
-module.exports = async function addPassport(passport_str, url_image, pageId) {
+module.exports = async function addPassport(passport_str, pageId) {
     try {
         const response = await notion.pages.update({
             //parent: { database_id: databaseWorkersId },
@@ -21,17 +21,17 @@ module.exports = async function addPassport(passport_str, url_image, pageId) {
                         }
                     ],
                 },
-                "Files & media": {
-                    "type": "files",
-                    "files": [
-                        {
-                            "type": "file",
-                            "file": {
-                                "url": url_image
-                            }
-                        }
-                    ]
-                }
+                // "Files & media": {
+                //     "type": "files",
+                //     "files": [
+                //         {
+                //             "type": "file",
+                //             "file": {
+                //                 "url": url_image
+                //             }
+                //         }
+                //     ]
+                // }
             }
         })
 
