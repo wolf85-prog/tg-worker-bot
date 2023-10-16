@@ -145,7 +145,7 @@ app.post('/web-passport', async (req, res) => {
   
 <b>${pasFam} ${pasName} ${pasSoname} </b>  
 
-<b>Дата рождения:</b> ${pasDateborn.split('-')[2]}.${pasDateborn.split('-')[1]}.${pasDateborn.split('-')[1]}
+<b>Дата рождения:</b> ${pasDateborn.split('-')[2]}.${pasDateborn.split('-')[1]}.${pasDateborn.split('-')[0]}
 <b>Серия и номер:</b> ${pasNumber.split(' ')[0]} ${pasNumber.split(' ')[1]}
 <b>Дата выдачи:</b> ${pasDate.split('-')[2]}.${pasDate.split('-')[1]}.${pasDate.split('-')[1]} 
 <b>Кем выдан:</b> ${pasKem}
