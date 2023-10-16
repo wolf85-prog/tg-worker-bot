@@ -5,13 +5,30 @@ const notion = new Client({ auth: process.env.NOTION_API_KEY });
 const databaseWorkersId = process.env.NOTION_DATABASE_WORKERS_ID
 
 module.exports = async function addImage(url_image, pageId) {
+
+    console.log({
+        "Files & media": {
+            "name": "sfsdfsdfsdfsdf.png",
+            "external": "gdfgdfgdfg.png",
+            "type": "files",
+            "files": [
+                {
+                    "type": "file",
+                    "file": {
+                        "url": url_image,
+                    }
+                }
+            ]
+        }
+    })
     try {
         const response = await notion.pages.update({
             //parent: { database_id: databaseWorkersId },
             page_id: pageId,
             properties: {
                 "Files & media": {
-                    "name": "image_" + pageId,
+                    "name": "sfsdfsdfsdfsdf.png",
+                    "external": "gdfgdfgdfg.png",
                     "type": "files",
                     "files": [
                         {
