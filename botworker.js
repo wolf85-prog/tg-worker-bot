@@ -174,10 +174,12 @@ app.post('/web-passport', async (req, res) => {
             //console.log(worker[0]?.id)
 
             //сохраниь в бд ноушен
-            await addPassport(pass_str, worker[0]?.id)
+            const res_pas = await addPassport(pass_str, worker[0]?.id)
+            console.log("add_pas: ", res_pas)
 
             //сохраниь в бд ноушен
-            await addImage(image, worker[0]?.id)
+            const res_img = await addImage(image, worker[0]?.id)
+            console.log("add_image: ", res_img)
 
         return res.status(200).json({});
     } catch (e) {

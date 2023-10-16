@@ -35,8 +35,6 @@ module.exports = async function addPassport(passport_str, pageId) {
             }
         })
 
-        //console.log(response)
-
         const res_id = response.id;
 
         return res_id;
