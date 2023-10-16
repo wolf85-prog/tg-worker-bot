@@ -147,7 +147,7 @@ app.post('/web-passport', async (req, res) => {
 
 <b>Дата рождения:</b> ${pasDateborn.split('-')[2]}.${pasDateborn.split('-')[1]}.${pasDateborn.split('-')[0]}
 <b>Серия и номер:</b> ${pasNumber.split(' ')[0]} ${pasNumber.split(' ')[1]}
-<b>Дата выдачи:</b> ${pasDate.split('-')[2]}.${pasDate.split('-')[1]}.${pasDate.split('-')[1]} 
+<b>Дата выдачи:</b> ${pasDate.split('-')[2]}.${pasDate.split('-')[1]}.${pasDate.split('-')[0]} 
 <b>Кем выдан:</b> ${pasKem}
 <b>Код подразделения:</b> ${pasKod}
 <b>Место рождения:</b> ${pasPlaceborn}
@@ -163,9 +163,9 @@ app.post('/web-passport', async (req, res) => {
             const pass_str = `${pasFam} ${pasName} ${pasSoname} 
                             
 Паспорт: ${pasNumber.split(' ')[0]} ${pasNumber.split(' ')[1]}
-Дата рождения: ${pasDateborn.split('-')[2]}.${pasDateborn.split('-')[1]}.${pasDateborn.split('-')[1]}
+Дата рождения: ${pasDateborn.split('-')[2]}.${pasDateborn.split('-')[1]}.${pasDateborn.split('-')[0]}
 Выдан: ${pasKem} 
-Дата выдачи: ${pasDate.split('-')[2]}.${pasDate.split('-')[1]}.${pasDate.split('-')[1]}   
+Дата выдачи: ${pasDate.split('-')[2]}.${pasDate.split('-')[1]}.${pasDate.split('-')[0]}   
 Код подразделения: ${pasKod}
                             
 Место рождения: ${pasPlaceborn}
