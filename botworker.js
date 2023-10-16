@@ -126,7 +126,6 @@ ${worklist.map(item =>' - ' + item.spec).join('\n')}`
 
 //добавление паспорта
 app.post('/web-passport', async (req, res) => {
-    console.log(req.body)
     const {queryId, pasFam, pasName, pasSoname, pasDateborn, pasNumber, pasDate, pasKem, pasKod, pasPlaceborn, 
         pasAdress, pasEmail, user, image} = req.body;
     //const d = new Date(dateborn);
@@ -154,10 +153,12 @@ app.post('/web-passport', async (req, res) => {
 <b>Место рождения:</b> ${pasPlaceborn}
 <b>Адрес регистрации:</b> ${pasAdress}
 <b>Email:</b> ${pasEmail}
+<b>Аватар:</b> ${image}
 ` 
             }})
 
             console.log("Начинаю сохранять данные в ноушене...", user?.id)
+            console.log("Картинка: ", image)
   
             const pass_str = `${pasFam} ${pasName} ${pasSoname} 
                             
