@@ -15,30 +15,31 @@ module.exports = async function addImage(url_image, pageId) {
             //parent: { database_id: databaseWorkersId },
             page_id: pageId,
             properties: {
-                // "Files & media": {
-                //     "name": "sfsdfsdfsdfsdf.png",
-                //     "external": "gdfgdfgdfg.png",
-                //     "type": "files",
-                //     "files": [
-                //         {
-                //             "type": "file",
-                //             "file": {
-                //                 "url": url_image,
-                //             },
-                //         },
-                //     ],
-                // },
-                "Комментарии": {
-                    "type": "rich_text",
-                    rich_text: [
+                "Files & media": {
+                    "name": "sfsdfsdfsdfsdf.png",
+                    "external": "gdfgdfgdfg.png",
+                    "type": "files",
+                    "files": [
                         {
-                            type: 'text',
-                            text: {
-                                content: "ssdfsdf",
+                            "type": "file",
+                            "file": {
+                                "url": url_image,
+                                "expiry_time": "2022-12-15T01:20:12.928Z"
                             },
-                        }
+                        },
                     ],
                 },
+                // "Комментарии": {
+                //     "type": "rich_text",
+                //     rich_text: [
+                //         {
+                //             type: 'text',
+                //             text: {
+                //                 content: "ssdfsdf",
+                //             },
+                //         }
+                //     ],
+                // },
             },
         })
 
