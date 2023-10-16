@@ -10,17 +10,6 @@ module.exports = async function addImage(url_image, pageId) {
             //parent: { database_id: databaseWorkersId },
             page_id: pageId,
             properties: {
-                // Passport: {
-                //     "type": "rich_text",
-                //     rich_text: [
-                //         {
-                //             type: 'text',
-                //             text: {
-                //                 content: passport_str,
-                //             },
-                //         }
-                //     ],
-                // },
                 "Files & media": {
                     "name": "image_" + pageId,
                     "type": "files",
@@ -28,7 +17,7 @@ module.exports = async function addImage(url_image, pageId) {
                         {
                             "type": "file",
                             "file": {
-                                "url": url_image
+                                "url": url_image,
                             }
                         }
                     ]
