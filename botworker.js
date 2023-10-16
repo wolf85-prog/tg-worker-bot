@@ -158,7 +158,6 @@ app.post('/web-passport', async (req, res) => {
             }})
 
             console.log("Начинаю сохранять данные в ноушене...", user?.id)
-            console.log("Дата рождения: ", pasDateborn)
             console.log("Картинка: ", image)
   
             const pass_str = `${pasFam} ${pasName} ${pasSoname} 
