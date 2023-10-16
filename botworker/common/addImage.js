@@ -20,7 +20,6 @@ module.exports = async function addImage(url_image, pageId) {
                     "files": [
                         {
                             "name": "sfsdfsdfsdfsdf.png",
-                            "external": "gdfgdfgdfg.png",
                             "type": "file",
                             "file": {
                                 "url": url_image,
