@@ -40,6 +40,7 @@ async function getWorkers() {
                 age: page.properties.Age.date,
                 city: page.properties.City[0]?.plain_text,
                 spec: page.properties.Specialization.multi_select,
+                //image: page.properties.["Files & media"].files[0]?.external.url
             };
         });
 
