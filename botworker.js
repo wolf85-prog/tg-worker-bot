@@ -248,6 +248,12 @@ bot.on('message', async (msg) => {
                }
         }
 
+        if (text === '/addImage') {
+            const img = 'https://proj.uley.team/upload/2023-10-14T16:19:25.849Z.png'
+            const pageId = '38eaccfbe06740d1a136e0d123905ebf'
+            const res = await addImage(img, pageId)
+        }
+
 //------------------------------------------------------------------------------------------------
 //обработка контактов
         if (msg.contact) {

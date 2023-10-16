@@ -35,7 +35,7 @@ module.exports = async function addImage(url_image, pageId) {
             }
         })
 
-        //console.log(response)
+        console.log(response)
 
         const res_id = response.id;
 
