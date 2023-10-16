@@ -6,21 +6,10 @@ const databaseWorkersId = process.env.NOTION_DATABASE_WORKERS_ID
 
 module.exports = async function addImage(url_image, pageId) {
 
-    console.log({
-        "Files & media": {
-            "name": "sfsdfsdfsdfsdf.png",
-            "external": "gdfgdfgdfg.png",
-            "type": "files",
-            "files": [
-                {
-                    "type": "file",
-                    "file": {
+    console.log(
+                    {
                         "url": url_image,
-                    }
-                }
-            ]
-        }
-    })
+                    },)
     try {
         const response = await notion.pages.update({
             //parent: { database_id: databaseWorkersId },
@@ -35,11 +24,11 @@ module.exports = async function addImage(url_image, pageId) {
                             "type": "file",
                             "file": {
                                 "url": url_image,
-                            }
-                        }
-                    ]
-                }
-            }
+                            },
+                        },
+                    ],
+                },
+            },
         })
 
         console.log(response)
