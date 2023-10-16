@@ -126,6 +126,7 @@ ${worklist.map(item =>' - ' + item.spec).join('\n')}`
 
 //добавление паспорта
 app.post('/web-passport', async (req, res) => {
+    console.log(req.body)
     const {queryId, pasFam, pasName, pasSoname, pasDateborn, pasNumber, pasDate, pasKem, pasKod, pasPlaceborn, 
         pasAdress, pasEmail, user, image} = req.body;
     //const d = new Date(dateborn);
