@@ -176,7 +176,8 @@ app.post('/web-passport', async (req, res) => {
             //console.log(worker[0]?.id)
 
             //сохраниь в бд ноушен
-            if (worker.passport.length === 0) {
+            if (worker[0]?.passport.length === 0) {
+                console.log("Начинаю сохранять паспорт...")
                 const res_pas = await addPassport(pass_str, worker[0]?.id)
                 console.log("add_pas: ", res_pas)
             
