@@ -176,12 +176,15 @@ app.post('/web-passport', async (req, res) => {
             //console.log(worker[0]?.id)
 
             //сохраниь в бд ноушен
-            const res_pas = await addPassport(pass_str, worker[0]?.id)
-            console.log("add_pas: ", res_pas)
-
-            //сохраниь в бд ноушен
-            const res_img = await addImage(image, worker[0]?.id)
-            console.log("add_image: ", res_img)
+            if (worker.passport.length === 0) {
+                const res_pas = await addPassport(pass_str, worker[0]?.id)
+                console.log("add_pas: ", res_pas)
+            
+                const res_img = await addImage(image, worker[0]?.id)
+                console.log("add_image: ", res_img)
+            } else {
+                console.log("Паспорт уже существует!")
+            }    
 
         return res.status(200).json({});
     } catch (e) {
