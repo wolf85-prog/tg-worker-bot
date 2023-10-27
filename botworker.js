@@ -468,24 +468,24 @@ bot.on('message', async (msg) => {
             } else if (text.startsWith('Данные успешно добавлены!')) {           
                 const response = await bot.sendMessage(chatTelegramId, `${text} \n \n от ${firstname} ${lastname} ${chatId}`)
 
-                console.log("Отправляю сообщение в админ-панель...")    
+                //console.log("Отправляю сообщение в админ-панель...")    
                 
                 //отправить сообщение о добавлении специалиста в бд в админ-панель
-                const convId = sendMyMessage(text, "text", chatId, parseInt(response.message_id)-1)
+                //const convId = sendMyMessage(text, "text", chatId, parseInt(response.message_id)-1)
                 
                 // Подключаемся к серверу socket
-                let socket = io(socketUrl);
-                socket.emit("addUser", chatId)
+                // let socket = io(socketUrl);
+                // socket.emit("addUser", chatId)
                   
                  //отправить сообщение в админку
-                socket.emit("sendMessageSpec", {
-                    senderId: chatId,
-                    receiverId: chatTelegramId,
-                    text: text,
-                    type: 'text',
-                    convId: convId,
-                    messageId: parseInt(response.message_id)-1,
-                })
+                // socket.emit("sendMessageSpec", {
+                //     senderId: chatId,
+                //     receiverId: chatTelegramId,
+                //     text: text,
+                //     type: 'text',
+                //     convId: convId,
+                //     messageId: parseInt(response.message_id)-1,
+                // })
  
                 //массив специалистов
                 let specArr = []
@@ -640,7 +640,7 @@ bot.on('message', async (msg) => {
             text: 'Пользователь нажал кнопку "Принять" в рассылке',
             convId: convId,
             messageId: messageId,
-        })
+        })              
 
         return bot.sendMessage(chatId, 'Ваша заявка принята! Мы свяжемся с вами в ближайшее время.')
     }
