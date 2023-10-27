@@ -466,7 +466,7 @@ bot.on('message', async (msg) => {
 
                 console.log("Отправляю сообщение в админ-панель...")    
                 
-                //отправить сообщение о создании проекта в админ-панель
+                //отправить сообщение о добавлении специалиста в бд в админ-панель
                 const convId = sendMyMessage(text, "text", chatId, parseInt(response.message_id)-1)
                 
                 // Подключаемся к серверу socket
@@ -499,7 +499,7 @@ bot.on('message', async (msg) => {
                 }
 
                 try {
-                    //создание проекта в БД
+                    //добавление специалиста в БД
                     const res = await Worker.create({
                         userfamily: workerFam, 
                         username: workerName2, 
