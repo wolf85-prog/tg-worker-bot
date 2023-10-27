@@ -173,15 +173,19 @@ app.post('/web-passport', async (req, res) => {
 Адрес регистрации: ${pasAdress}` 
 
             const worker = await getWorkerNotion(user?.id)
-            //console.log(worker[0]?.id)
+            console.log("passport: ", worker[0].passport)
 
             //сохраниь в бд ноушен
-            const res_pas = await addPassport(pass_str, worker[0]?.id)
-            console.log("add_pas: ", res_pas)
-
-            //сохраниь в бд ноушен
-            const res_img = await addImage(image, worker[0]?.id)
-            console.log("add_image: ", res_img)
+            if (!worker[0].passport) {
+                console.log("Начинаю сохранять паспорт...")
+                const res_pas = await addPassport(pass_str, worker[0]?.id)
+                console.log("add_pas: ", res_pas)
+            
+                const res_img = await addImage(image, worker[0]?.id)
+                console.log("add_image: ", res_img)
+            } else {
+                console.log("Паспорт уже существует!")
+            }    
 
         return res.status(200).json({});
     } catch (e) {

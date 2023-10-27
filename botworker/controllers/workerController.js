@@ -94,7 +94,7 @@ async function getWorkerId(tgId) {
                 merch: page.properties.Merch.multi_select,
                 comteg: page.properties["КомТег"].multi_select,
                 rank: page.properties.Rank.number,
-
+                passport: page.properties.Passport.rich_text[0]?.plain_text,
             };
         });
 
