@@ -623,6 +623,15 @@ bot.on('message', async (msg) => {
 
         const user = await Pretendent.findOne({where: {id}})
 
+        //обновить поле accept на true (принял)
+        await Pretendent.update({ accept: true }, {
+            where: {
+                id,
+            },
+        });
+          
+          
+
         const blockId = await getBlocksP(user.projectId);    
         
         //Добавить специалиста в таблицу Претенденты
