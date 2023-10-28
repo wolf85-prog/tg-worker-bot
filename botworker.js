@@ -626,7 +626,7 @@ bot.on('message', async (msg) => {
         //обновить поле accept на true (принял)
         await Pretendent.update({ accept: true }, {
             where: {
-                id,
+                id: id,
             },
         });
           
