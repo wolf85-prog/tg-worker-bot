@@ -194,6 +194,41 @@ app.post('/web-passport', async (req, res) => {
 })
 
 
+//добавление паспорта
+app.post('/web-stavka', async (req, res) => {
+    const {queryId, summaStavki} = req.body;
+
+    try {
+            await bot.answerWebAppQuery(queryId, {
+                type: 'article',
+                id: queryId,
+                title: 'Твоя ставка отправлена',
+                input_message_content: {
+                    parse_mode: 'HTML',
+                    message_text: 
+`Твоя ставка ${summaStavki} отправлена!`}})
+
+            console.log("Начинаю сохранять данные в ноушене...", user?.id)
+
+            //сохраниь в бд ноушен
+            // if (!worker[0].passport) {
+            //     console.log("Начинаю сохранять паспорт...")
+            //     const res_pas = await addPassport(pass_str, worker[0]?.id)
+            //     console.log("add_pas: ", res_pas)
+            
+            //     const res_img = await addImage(image, worker[0]?.id)
+            //     console.log("add_image: ", res_img)
+            // } else {
+            //     console.log("Паспорт уже существует!")
+            // }    
+
+        return res.status(200).json({});
+    } catch (e) {
+        return res.status(500).json({})
+    }
+})
+
+
 bot.on('message', async (msg) => {
     const chatId = msg.chat.id;
     const firstname = msg.from.first_name
