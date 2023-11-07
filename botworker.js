@@ -47,6 +47,7 @@ const addWorker = require("./botworker/common/addWorker");
 const getWorkerNotion = require("./botworker/common/getWorkerNotion");
 const addPassport = require("./botworker/common/addPassport");
 const addImage = require("./botworker/common/addImage");
+const updatePretendent = require("./botworker/common/updatePretendent");
 
 app.use(express.json());
 app.use(cors());
@@ -196,7 +197,7 @@ app.post('/web-passport', async (req, res) => {
 
 //добавление паспорта
 app.post('/web-stavka', async (req, res) => {
-    const {queryId, summaStavki} = req.body;
+    const {queryId, summaStavki, id} = req.body;
 
     try {
             await bot.answerWebAppQuery(queryId, {
@@ -216,11 +217,13 @@ app.post('/web-stavka', async (req, res) => {
             //     const res_pas = await addPassport(pass_str, worker[0]?.id)
             //     console.log("add_pas: ", res_pas)
             
-            //     const res_img = await addImage(image, worker[0]?.id)
-            //     console.log("add_image: ", res_img)
-            // } else {
-            //     console.log("Паспорт уже существует!")
-            // }    
+            const user = await Pretendent.findOne({where: {id}})    
+
+            const blockId = await getBlocksP(user.projectId);    
+        
+            //обновить специалиста в таблице Претенденты
+            await updatePretendent(blockId, user.workerId, summaStavki);
+ 
 
         return res.status(200).json({});
     } catch (e) {
@@ -664,8 +667,7 @@ bot.on('message', async (msg) => {
                 id: id,
             },
         });
-          
-          
+                  
 
         const blockId = await getBlocksP(user.projectId);    
         
