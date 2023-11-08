@@ -713,8 +713,10 @@ bot.on('message', async (msg) => {
                   
         const blockId = await getBlocksP(user.projectId);    
         
+        const workerId = await getWorkerPretendent(blockId)
+        
         //Добавить специалиста в таблицу Претенденты
-        await updatePretendent2(blockId);
+        await updatePretendent(blockId);
 
         //отправить сообщение в админ-панель
         const convId = await sendMyMessage('Пользователь нажал кнопку "Отклонить" в рассылке', "text", chatId)

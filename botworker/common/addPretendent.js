@@ -12,10 +12,10 @@ module.exports = async function addPretendent(blockId, workerId, stavka) {
     try {
         const response = await notion.pages.create({
             parent: { database_id: blockId },
-            // icon: {
-            //     type: "emoji",
-            //     emoji: "➡️"
-            // },
+            icon: {
+                type: "emoji",
+                emoji: "➡️"
+            },
             properties: {
                 "1. Ставка": {
                     type: "title",
@@ -23,7 +23,7 @@ module.exports = async function addPretendent(blockId, workerId, stavka) {
                         {
                             type: 'text',
                             text: {
-                                content: stavka ? "➡️" + stavka + " руб/час * 0 — 0 часов" : "",
+                                content: stavka ? stavka : "",
                             },
                             "annotations": {
                                 "bold": false,
@@ -33,7 +33,7 @@ module.exports = async function addPretendent(blockId, workerId, stavka) {
                                 "code": false,
                                 "color": "default"
                             },
-                            "plain_text": stavka ? "➡️" + stavka + " руб/час * 0 — 0 часов" : "",
+                            "plain_text": stavka ? stavka: "",
                             "href": null
                         }
                     ],
