@@ -219,7 +219,8 @@ app.post('/web-stavka', async (req, res) => {
             
             const user = await Pretendent.findOne({where: {id}})    
 
-            const blockId = await getBlocksP(user.projectId);    
+            const blockId = await getBlocksP(user.projectId); 
+            console.log("Ставка: ", blockId)   
         
             //обновить специалиста в таблице Претенденты
             await updatePretendent(blockId, summaStavki);
