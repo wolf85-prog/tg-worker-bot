@@ -222,7 +222,7 @@ app.post('/web-stavka', async (req, res) => {
             const blockId = await getBlocksP(user.projectId);    
         
             //обновить специалиста в таблице Претенденты
-            await updatePretendent(blockId, user.workerId, summaStavki);
+            await updatePretendent(blockId, summaStavki);
  
 
         return res.status(200).json({});
@@ -666,8 +666,7 @@ bot.on('message', async (msg) => {
             where: {
                 id: id,
             },
-        });
-                  
+        });           
 
         const blockId = await getBlocksP(user.projectId);    
         
@@ -706,11 +705,10 @@ bot.on('message', async (msg) => {
             },
         });
                   
-
         const blockId = await getBlocksP(user.projectId);    
         
         //Добавить специалиста в таблицу Претенденты
-        await addPretendent(blockId, user.workerId);
+        await updatePretendent2(blockId);
 
         //отправить сообщение в админ-панель
         const convId = await sendMyMessage('Пользователь нажал кнопку "Отклонить" в рассылке', "text", chatId)

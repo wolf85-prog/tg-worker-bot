@@ -7,7 +7,7 @@ const notion = new Client({ auth: process.env.NOTION_API_KEY });
 const dateNow = new Date();
 
 //send data to notion
-module.exports = async function updatePretendent(pageId, stavka) {
+module.exports = async function updatePretendent2(pageId) {
     try {
         const response = await notion.pages.update({
             page_id: pageId,
@@ -23,7 +23,7 @@ module.exports = async function updatePretendent(pageId, stavka) {
                         {
                             type: 'text',
                             text: {
-                                content: "➡️" + stavka + " руб/час * 0 — 0 часов",
+                                content: "❌",
                             },
                             "annotations": {
                                 "bold": false,
@@ -33,7 +33,7 @@ module.exports = async function updatePretendent(pageId, stavka) {
                                 "code": false,
                                 "color": "default"
                             },
-                            "plain_text": "➡️" + stavka + " руб/час * 0 — 0 часов",
+                            "plain_text": "❌",
                             "href": null
                         }
                     ],
