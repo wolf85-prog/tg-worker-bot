@@ -222,8 +222,8 @@ app.post('/web-stavka', async (req, res) => {
             const blockId = await getBlocksP(user.projectId); 
             console.log("Ставка: ", blockId)   
         
-            //обновить специалиста в таблице Претенденты
-            await updatePretendent(blockId, summaStavki);
+            //Добавить специалиста в таблицу Претенденты со своей  ставкой
+            await addPretendent(blockId, user.workerId, summaStavki);
  
 
         return res.status(200).json({});
