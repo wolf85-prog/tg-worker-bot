@@ -693,6 +693,25 @@ bot.on('message', async (msg) => {
 
     //нажатие на кнопку "Отклонить"
     if (data === '/cancel') {
+        const pretendentId = data.split(' ');
+        console.log("pretendentId: ", data)
+        const id = pretendentId[1]
+
+        const user = await Pretendent.findOne({where: {id}})
+
+        //обновить поле accept на true (принял)
+        await Pretendent.update({ accept: false }, {
+            where: {
+                id: id,
+            },
+        });
+                  
+
+        const blockId = await getBlocksP(user.projectId);    
+        
+        //Добавить специалиста в таблицу Претенденты
+        await addPretendent(blockId, user.workerId);
+
         //отправить сообщение в админ-панель
         const convId = await sendMyMessage('Пользователь нажал кнопку "Отклонить" в рассылке', "text", chatId)
 
