@@ -197,7 +197,7 @@ app.post('/web-passport', async (req, res) => {
 
 //добавление паспорта
 app.post('/web-stavka', async (req, res) => {
-    const {queryId, summaStavki, id} = req.body;
+    const {queryId, summaStavki, id, id2} = req.body;
 
     try {
             await bot.answerWebAppQuery(queryId, {
@@ -211,13 +211,16 @@ app.post('/web-stavka', async (req, res) => {
 
             console.log("Начинаю сохранять данные в ноушене...", user?.id)
 
+            console.log("ID: ", id)
+            console.log("ID2: ", id2)
+
             //сохраниь в бд ноушен
             // if (!worker[0].passport) {
             //     console.log("Начинаю сохранять паспорт...")
             //     const res_pas = await addPassport(pass_str, worker[0]?.id)
             //     console.log("add_pas: ", res_pas)
             
-            const user = await Pretendent.findOne({where: {id}})    
+            const user = await Pretendent.findOne({where: {id: id2}})    
 
             const blockId = await getBlocksP(user.projectId); 
             console.log("Ставка: ", blockId)   
