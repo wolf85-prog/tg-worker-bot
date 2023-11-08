@@ -214,12 +214,15 @@ app.post('/web-stavka', async (req, res) => {
             console.log("ID: ", id)
 
             //сохраниь в бд ноушен
-            // if (!worker[0].passport) {
-            //     console.log("Начинаю сохранять паспорт...")
-            //     const res_pas = await addPassport(pass_str, worker[0]?.id)
-            //     console.log("add_pas: ", res_pas)
+
+            const user = await Pretendent.findOne({where: {id}}) 
             
-            const user = await Pretendent.findOne({where: {id}})    
+            //обновить поле accept на true (принял)
+            await Pretendent.update({ accept: true }, {
+                where: {
+                    id: id,
+                },
+            }); 
 
             const blockId = await getBlocksP(user.projectId); 
             console.log("Ставка: ", blockId)   
