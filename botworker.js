@@ -209,7 +209,7 @@ app.post('/web-stavka', async (req, res) => {
                     message_text: 
 `Твоя ставка ${summaStavki} отправлена!`}})
 
-            console.log("Начинаю сохранять данные в ноушене...", user?.id)
+            console.log("Начинаю сохранять данные в ноушене...", id)
 
             console.log("ID: ", id)
 
