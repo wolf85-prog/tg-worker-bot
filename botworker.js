@@ -124,6 +124,35 @@ ${worklist.map(item =>' - ' + item.spec).join('\n')}`
     }
 })
 
+//добавление паспорта
+app.post('/web-addspec', async (req, res) => {
+    const {queryId, worklist} = req.body;
+
+    try {
+            await bot.answerWebAppQuery(queryId, {
+                type: 'article',
+                id: queryId,
+                title: 'Данные успешно добавлены',
+                input_message_content: {
+                    parse_mode: 'HTML',
+                    message_text: 
+`Данные успешно добавлены!`}})
+
+            console.log("Начинаю сохранять данные в ноушене...", user?.id)
+
+            //сохраниь в бд ноушен
+            // if (!worker[0].passport) {
+            //     console.log("Начинаю сохранять паспорт...")
+            //     const res_pas = await addPassport(pass_str, worker[0]?.id)
+            //     console.log("add_pas: ", res_pas)
+ 
+
+        return res.status(200).json({});
+    } catch (e) {
+        return res.status(500).json({})
+    }
+})
+
 
 //добавление паспорта
 app.post('/web-passport', async (req, res) => {
