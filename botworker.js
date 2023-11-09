@@ -136,7 +136,12 @@ app.post('/web-addspec', async (req, res) => {
                 input_message_content: {
                     parse_mode: 'HTML',
                     message_text: 
-`Данные успешно добавлены!`}})
+`Данные успешно добавлены!
+
+<b>Специальности:</b> 
+${worklist.map(item =>' - ' + item.spec).join('\n')}`
+            }
+            })
 
             console.log("Начинаю сохранять данные в ноушене...", user?.id)
 
