@@ -7,7 +7,7 @@ const notion = new Client({ auth: process.env.NOTION_API_KEY });
 const dateNow = new Date();
 
 //send data to notion
-module.exports = async function updatePretendent(pageId) {
+module.exports = async function updatePretendent2(pageId) {
     try {
         const response = await notion.pages.update({
             page_id: pageId,

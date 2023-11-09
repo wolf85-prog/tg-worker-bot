@@ -238,20 +238,26 @@ app.post('/web-stavka', async (req, res) => {
                     message_text: 
 `Твоя ставка ${summaStavki} отправлена!`}})
 
-            console.log("Начинаю сохранять данные в ноушене...", user?.id)
+            console.log("Начинаю сохранять данные в ноушене...", id)
+
+            console.log("ID: ", id)
 
             //сохраниь в бд ноушен
-            // if (!worker[0].passport) {
-            //     console.log("Начинаю сохранять паспорт...")
-            //     const res_pas = await addPassport(pass_str, worker[0]?.id)
-            //     console.log("add_pas: ", res_pas)
-            
-            const user = await Pretendent.findOne({where: {id}})    
 
-            const blockId = await getBlocksP(user.projectId);    
+            const user = await Pretendent.findOne({where: {id}}) 
+            
+            //обновить поле accept на true (принял)
+            await Pretendent.update({ accept: true }, {
+                where: {
+                    id: id,
+                },
+            }); 
+
+            const blockId = await getBlocksP(user.projectId); 
+            console.log("Ставка: ", blockId)   
         
-            //обновить специалиста в таблице Претенденты
-            await updatePretendent(blockId, user.workerId, summaStavki);
+            //Добавить специалиста в таблицу Претенденты со своей  ставкой
+            await addPretendent(blockId, user.workerId, summaStavki);
  
 
         return res.status(200).json({});
@@ -695,8 +701,7 @@ bot.on('message', async (msg) => {
             where: {
                 id: id,
             },
-        });
-                  
+        });           
 
         const blockId = await getBlocksP(user.projectId);    
         
@@ -722,6 +727,26 @@ bot.on('message', async (msg) => {
 
     //нажатие на кнопку "Отклонить"
     if (data === '/cancel') {
+        const pretendentId = data.split(' ');
+        console.log("pretendentId: ", data)
+        const id = pretendentId[1]
+
+        const user = await Pretendent.findOne({where: {id}})
+
+        //обновить поле accept на true (принял)
+        await Pretendent.update({ accept: false }, {
+            where: {
+                id: id,
+            },
+        });
+                  
+        const blockId = await getBlocksP(user.projectId);    
+        
+        const workerId = await getWorkerPretendent(blockId)
+        
+        //Добавить специалиста в таблицу Претенденты
+        await updatePretendent(blockId);
+
         //отправить сообщение в админ-панель
         const convId = await sendMyMessage('Пользователь нажал кнопку "Отклонить" в рассылке', "text", chatId)
 
