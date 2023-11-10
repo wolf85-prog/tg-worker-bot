@@ -351,7 +351,7 @@ bot.on('message', async (msg) => {
 
         if (text === '/editspec') {
             const res = await getWorkerNotion(chatId)
-            console.log("Worker: ", res[0].id)
+            console.log("Worker: ", res[0])
             
 
             const list = res[0].Specialization
