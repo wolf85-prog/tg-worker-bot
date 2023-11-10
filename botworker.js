@@ -48,6 +48,7 @@ const getWorkerNotion = require("./botworker/common/getWorkerNotion");
 const addPassport = require("./botworker/common/addPassport");
 const addImage = require("./botworker/common/addImage");
 const updatePretendent = require("./botworker/common/updatePretendent");
+const updateWorker = require("./botworker/common/updateWorker");
 
 app.use(express.json());
 app.use(cors());
@@ -342,7 +343,9 @@ bot.on('message', async (msg) => {
 
         if (text === '/editspec') {
             const res = await getWorkerNotion(chatId)
-            console.log("Worker: ", res)
+            console.log("Worker: ", res.id)
+
+            await updateWorker(res.id, [{id: 1, cat: 'Sound', spec: 'Звукорежиссер', icon: 'Sound'}])
         }
 
 //------------------------------------------------------------------------------------------------
