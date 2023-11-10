@@ -353,7 +353,16 @@ bot.on('message', async (msg) => {
             const res = await getWorkerNotion(chatId)
             console.log("Worker: ", res[0].id)
 
-            await updateWorker(res[0].id, [{cat: 'Sound', spec: 'Звукорежиссер', icon: 'Sound'}])
+             //массив специалистов
+             let specArr = []
+             console.log("Worklist: ", Worklist)
+             if (Worklist !== '') {
+                 specArr = Worklist.map(item => ({
+                     name: item.spec,
+                 }));
+             }
+
+            await updateWorker(res[0].id, specArr)
         }
 
 //------------------------------------------------------------------------------------------------
