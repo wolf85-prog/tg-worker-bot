@@ -355,12 +355,11 @@ bot.on('message', async (msg) => {
 
              //массив специалистов
              let specArr = []
-             console.log("Worklist: ", Worklist)
-             if (Worklist !== '') {
-                 specArr = Worklist.map(item => ({
-                     name: item.spec,
-                 }));
-             }
+
+            const obj = {
+                     name: 'Звукорежиссер',
+                 };
+            specArr.push(obj)
 
             await updateWorker(res[0].id, specArr)
         }
