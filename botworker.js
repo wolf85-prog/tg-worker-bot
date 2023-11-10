@@ -133,11 +133,11 @@ app.post('/web-addspec', async (req, res) => {
             await bot.answerWebAppQuery(queryId, {
                 type: 'article',
                 id: queryId,
-                title: 'Данные успешно добавлены',
+                title: 'Специальность успешно добавлена',
                 input_message_content: {
                     parse_mode: 'HTML',
                     message_text: 
-`Данные успешно добавлены!
+`Специальность успешно добавлена!
 
 <b>Специальности:</b> 
 ${worklist.map(item =>' - ' + item.spec).join('\n')}`
@@ -164,7 +164,7 @@ ${worklist.map(item =>' - ' + item.spec).join('\n')}`
 
                 worklist.forEach(item => {               
                     const obj = {
-                        name: item.name,
+                        name: item.spec,
                     }
                     arrSpec.push(obj)
                 });
