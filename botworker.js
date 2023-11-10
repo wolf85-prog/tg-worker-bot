@@ -147,10 +147,26 @@ ${worklist.map(item =>' - ' + item.spec).join('\n')}`
             console.log("Начинаю сохранять данные в ноушене...", user?.id)
 
             //сохраниь в бд ноушен
-            // if (!worker[0].passport) {
-            //     console.log("Начинаю сохранять паспорт...")
-            //     const res_pas = await addPassport(pass_str, worker[0]?.id)
-            //     console.log("add_pas: ", res_pas)
+            const res = await getWorkerNotion(chatId)
+          
+            const newlist = res[0].spec
+            console.log("Worklist: ", newlist)
+
+            //массив специалистов
+
+            Worklist.forEach(item => {               
+                const obj = {
+                    name: item.name,
+                }
+                newlist.push(obj)
+            });
+
+            // const obj = {
+            //          name: 'Звукорежиссер',
+            //      };
+            // newlist.push(obj)
+
+            await updateWorker(res[0].id, newlist)
  
 
         return res.status(200).json({});
@@ -351,18 +367,12 @@ bot.on('message', async (msg) => {
 
         if (text === '/editspec') {
             const res = await getWorkerNotion(chatId)
-            console.log("Worker: ", res[0])
-            
-
+          
             const list = res[0].spec
             console.log("Worklist: ", list)
 
              //массив специалистов
              let specArr = []
-
-            // specArr = list.map(item => ({
-            //     name: item.name,
-            // }));
 
             const obj = {
                      name: 'Звукорежиссер',
