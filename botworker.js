@@ -333,7 +333,7 @@ bot.on('message', async (msg) => {
 //                     })
 //             })   
 
-                await bot.sendPhoto(chatId, 'https://proj.uley.team/upload/2023-11-10T10:37:06.398Z.png', {
+                await bot.sendPhoto(chatId, 'https://proj.uley.team/upload/2023-11-10T15:12:06.645Z.png', {
                     reply_markup: ({
                         inline_keyboard:[
                             [{text: 'Поехали!', web_app: {url: webAppUrl}}],
