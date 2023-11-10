@@ -340,6 +340,11 @@ bot.on('message', async (msg) => {
             const res = await addImage(img, pageId)
         }
 
+        if (text === '/editspec') {
+            const res = await getWorkerNotion(chatId)
+            console.log("Worker: ", res)
+        }
+
 //------------------------------------------------------------------------------------------------
 //обработка контактов
         if (msg.contact) {
