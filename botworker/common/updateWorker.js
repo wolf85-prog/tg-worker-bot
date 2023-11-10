@@ -20,9 +20,9 @@ module.exports = async function updateWorker(pageId, worklist) {
         })
         //console.log(response)
         if (response) {
-            console.log("Претендент обновлен!") //+ JSON.stringify(response))
+            console.log("Специалист обновлен!") //+ JSON.stringify(response))
         } else {
-            console.log("Ошибка обновления претендента!") //+ JSON.stringify(response))
+            console.log("Ошибка обновления специалиста!") //+ JSON.stringify(response))
         }
     } catch (error) {
         console.error(error.message)

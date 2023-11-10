@@ -301,14 +301,22 @@ bot.on('message', async (msg) => {
                 });
             }
 
-            await bot.sendMessage(chatId, `Привет! Я Workhub бот!
-Присоединяйся к нашей дружной команде профессионалов!`, {
+//             await bot.sendMessage(chatId, `Привет! Я Workhub бот!
+// Присоединяйся к нашей дружной команде профессионалов!`, {
+//                     reply_markup: ({
+//                         inline_keyboard:[
+//                             [{text: 'Поехали!', web_app: {url: webAppUrl}}],
+//                         ]
+//                     })
+//             })   
+
+                await bot.sendPhoto(chatId, 'https://proj.uley.team/upload/2023-11-10T10:11:50.226Z.png', {
                     reply_markup: ({
                         inline_keyboard:[
                             [{text: 'Поехали!', web_app: {url: webAppUrl}}],
                         ]
                     })
-                })     
+                })
         }
 
 
@@ -345,7 +353,7 @@ bot.on('message', async (msg) => {
             const res = await getWorkerNotion(chatId)
             console.log("Worker: ", res[0].id)
 
-            await updateWorker(res[0].id, [{id: 1, cat: 'Sound', spec: 'Звукорежиссер', icon: 'Sound'}])
+            await updateWorker(res[0].id, [{cat: 'Sound', spec: 'Звукорежиссер', icon: 'Sound'}])
         }
 
 //------------------------------------------------------------------------------------------------
