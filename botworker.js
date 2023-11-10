@@ -310,7 +310,7 @@ bot.on('message', async (msg) => {
 //                     })
 //             })   
 
-                await bot.sendPhoto(chatId, 'https://proj.uley.team/upload/2023-11-10T10:11:50.226Z.png', {
+                await bot.sendPhoto(chatId, 'https://proj.uley.team/upload/2023-11-10T10:37:06.398Z.png', {
                     reply_markup: ({
                         inline_keyboard:[
                             [{text: 'Поехали!', web_app: {url: webAppUrl}}],
@@ -352,6 +352,10 @@ bot.on('message', async (msg) => {
         if (text === '/editspec') {
             const res = await getWorkerNotion(chatId)
             console.log("Worker: ", res[0].id)
+            
+
+            const list = res[0].Specialization
+            console.log("Worklist: ", list)
 
              //массив специалистов
              let specArr = []
