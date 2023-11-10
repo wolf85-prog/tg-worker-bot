@@ -343,9 +343,9 @@ bot.on('message', async (msg) => {
 
         if (text === '/editspec') {
             const res = await getWorkerNotion(chatId)
-            console.log("Worker: ", res.id)
+            console.log("Worker: ", res[0].id)
 
-            await updateWorker(res.id, [{id: 1, cat: 'Sound', spec: 'Звукорежиссер', icon: 'Sound'}])
+            await updateWorker(res[0].id, [{id: 1, cat: 'Sound', spec: 'Звукорежиссер', icon: 'Sound'}])
         }
 
 //------------------------------------------------------------------------------------------------
