@@ -127,7 +127,7 @@ ${worklist.map(item =>' - ' + item.spec).join('\n')}`
 
 //добавление паспорта
 app.post('/web-addspec', async (req, res) => {
-    const {queryId, worklist} = req.body;
+    const {queryId, worklist, user} = req.body;
 
     try {
             await bot.answerWebAppQuery(queryId, {
@@ -147,7 +147,7 @@ ${worklist.map(item =>' - ' + item.spec).join('\n')}`
             console.log("Начинаю сохранять данные в ноушене...", user?.id)
 
             //сохраниь в бд ноушен
-            const res = await getWorkerNotion(chatId)
+            const res = await getWorkerNotion(user?.id)
           
             const newlist = res[0].spec
             console.log("Worklist: ", newlist)
@@ -160,11 +160,6 @@ ${worklist.map(item =>' - ' + item.spec).join('\n')}`
                 }
                 newlist.push(obj)
             });
-
-            // const obj = {
-            //          name: 'Звукорежиссер',
-            //      };
-            // newlist.push(obj)
 
             await updateWorker(res[0].id, newlist)
  
