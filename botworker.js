@@ -354,11 +354,15 @@ bot.on('message', async (msg) => {
             console.log("Worker: ", res[0])
             
 
-            const list = res[0].Specialization
+            const list = res[0].spec
             console.log("Worklist: ", list)
 
              //массив специалистов
              let specArr = []
+
+            specArr = list.map(item => ({
+                name: item.name,
+            }));
 
             const obj = {
                      name: 'Звукорежиссер',
