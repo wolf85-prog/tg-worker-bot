@@ -154,7 +154,7 @@ ${worklist.map(item =>' - ' + item.spec).join('\n')}`
 
             //массив специалистов
 
-            Worklist.forEach(item => {               
+            worklist.forEach(item => {               
                 const obj = {
                     name: item.name,
                 }
