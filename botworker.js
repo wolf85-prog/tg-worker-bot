@@ -360,16 +360,16 @@ bot.on('message', async (msg) => {
              //массив специалистов
              let specArr = []
 
-            specArr = list.map(item => ({
-                name: item.name,
-            }));
+            // specArr = list.map(item => ({
+            //     name: item.name,
+            // }));
 
             const obj = {
                      name: 'Звукорежиссер',
                  };
-            specArr.push(obj)
+            list.push(obj)
 
-            await updateWorker(res[0].id, specArr)
+            await updateWorker(res[0].id, list)
         }
 
 //------------------------------------------------------------------------------------------------
