@@ -148,20 +148,26 @@ ${worklist.map(item =>' - ' + item.spec).join('\n')}`
 
             //сохраниь в бд ноушен
             const res = await getWorkerNotion(user?.id)
-          
-            const newlist = res[0].spec
-            console.log("Worklist: ", newlist)
+            let arrSpec =[]
+            const oldlist = res[0].spec
+            console.log("Worklist: ", oldlist)
 
             //массив специалистов
+            oldlist.forEach(item => {               
+                const obj = {
+                    name: item.name,
+                }
+                arrSpec.push(obj)
+            });
 
             worklist.forEach(item => {               
                 const obj = {
                     name: item.name,
                 }
-                newlist.push(obj)
+                arrSpec.push(obj)
             });
 
-            await updateWorker(res[0].id, newlist)
+            await updateWorker(res[0].id, arrSpec)
  
 
         return res.status(200).json({});
