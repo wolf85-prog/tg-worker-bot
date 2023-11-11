@@ -254,7 +254,7 @@ app.post('/web-passport', async (req, res) => {
 })
 
 
-//добавление паспорта
+//альтернативна ставка
 app.post('/web-stavka', async (req, res) => {
     const {queryId, summaStavki, id} = req.body;
 
@@ -266,7 +266,7 @@ app.post('/web-stavka', async (req, res) => {
                 input_message_content: {
                     parse_mode: 'HTML',
                     message_text: 
-`Твоя ставка ${summaStavki} отправлена!`}})
+`Твоя ставка отправлена!`}})
 
             console.log("Начинаю сохранять данные в ноушене...", id)
 
@@ -288,7 +288,6 @@ app.post('/web-stavka', async (req, res) => {
         
             //Добавить специалиста в таблицу Претенденты со своей  ставкой
             await addPretendent(blockId, user.workerId, summaStavki);
- 
 
         return res.status(200).json({});
     } catch (e) {
@@ -676,6 +675,21 @@ bot.on('message', async (msg) => {
                     console.log(error.message)
                 }
 
+            } else if (text.startsWith('Твоя ставка отправлена!')) {
+                //отправить сообщение в админ-панель
+                const convId = await sendMyMessage('Твоя ставка отправлена', "text", chatId)
+
+                // Подключаемся к серверу socket
+                let socket = io(socketUrl);
+                socket.emit("addUser", chatId)
+                socket.emit("sendMessageSpec", {
+                    senderId: chatId,
+                    receiverId: chatTelegramId,
+                    text: 'Твоя ставка отправлена',
+                    convId: convId,
+                    messageId: messageId,
+                })
+            
             } else {
 //----------------------------------------------------------------------------------------------------------------
                 //отправка сообщения    
