@@ -8,7 +8,7 @@ const databaseWorkerId = process.env.NOTION_DATABASE_WORKERS_ID
 module.exports = async function getWorkerPretendent(blockId, workerId) {
     try {
         const response = await notion.databases.query({
-            page_id: blockId,
+            database_id: blockId,
             "filter": {
                 "property": "4. ФИО",
                 "relation": {
