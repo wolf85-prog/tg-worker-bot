@@ -343,6 +343,32 @@ bot.on('message', async (msg) => {
         }
 
 
+        if (text === '/updatepretendent ') {
+            const pretendentId = data.split(' ');
+            console.log("pretendentId: ", data)
+            const id = pretendentId[1]
+
+            //претендент
+            const user = await Pretendent.findOne({where: {id}})
+
+            //обновить поле accept на true (принял)
+            await Pretendent.update({ accept: false }, {
+                where: {
+                    id: id,
+                },
+            });
+                    
+            const blockId = await getBlocksP(user.projectId);  
+            console.log("blockId: ", blockId)  
+            
+            //основной состав
+            const workerId = await getWorkerPretendent(blockId)
+            console.log("workerId: ", workerId) 
+            
+            //Добавить специалиста в таблицу Претенденты
+            await updatePretendent(blockId);
+        }
+
 
         if (text === '/addspec') {
             try {

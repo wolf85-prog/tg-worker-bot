@@ -11,11 +11,10 @@ module.exports = async function updatePretendent(pageId) {
     try {
         const response = await notion.pages.update({
             page_id: pageId,
-            // parent: { database_id: blockId },
-            // icon: {
-            //     type: "emoji",
-            //     emoji: "➡️"
-            // },
+            icon: {
+                type: "emoji",
+                emoji: "❌"
+            },
             properties: {
                 "1. Ставка": {
                     type: "title",
@@ -23,7 +22,7 @@ module.exports = async function updatePretendent(pageId) {
                         {
                             type: 'text',
                             text: {
-                                content: "❌",
+                                content: " ",
                             },
                             "annotations": {
                                 "bold": false,
@@ -33,7 +32,7 @@ module.exports = async function updatePretendent(pageId) {
                                 "code": false,
                                 "color": "default"
                             },
-                            "plain_text": "❌",
+                            "plain_text": " ",
                             "href": null
                         }
                     ],
