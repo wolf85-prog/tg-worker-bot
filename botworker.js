@@ -343,7 +343,7 @@ bot.on('message', async (msg) => {
         }
 
 
-        if (text === '/updpretendent') {
+        if (text.startsWith('/updpretendent')) {
             console.log("updpretendent: ")
             
             const pretendentId = text.split(' ');
