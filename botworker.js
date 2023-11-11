@@ -368,8 +368,8 @@ bot.on('message', async (msg) => {
             const worker = await getWorkerPretendent(blockId, user.workerId)
             console.log("worker: ", worker) 
             
-            //Добавить специалиста в таблицу Претенденты
-            //await updatePretendent(blockId);
+            //обновить специалиста в таблице Претенденты
+            await updatePretendent(worker[0].id);
         }
 
 
