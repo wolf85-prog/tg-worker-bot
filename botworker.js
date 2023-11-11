@@ -31,6 +31,7 @@ let workerId, workerFam, workerName2, phone2, dateBorn, Worklist, city2, stag2, 
 const getBlocksP = require('./botworker/common/getBlocksP')
 const addPretendent = require('./botworker/common/addPretendent')
 const sendMyMessage = require('./botworker/common/sendMyMessage')
+const getWorkerPretendent = require('./botworker/common/getWorkerPretendent')
 
 const express = require('express');
 const cors = require('cors');
@@ -364,11 +365,11 @@ bot.on('message', async (msg) => {
             console.log("blockId: ", blockId)  
             
             //основной состав
-            const workerId = await getWorkerPretendent(blockId)
+            const workerId = await getWorkerPretendent(blockId, chatId)
             console.log("workerId: ", workerId) 
             
             //Добавить специалиста в таблицу Претенденты
-            await updatePretendent(blockId);
+            //await updatePretendent(blockId);
         }
 
 
