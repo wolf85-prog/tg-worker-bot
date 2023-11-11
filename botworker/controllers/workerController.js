@@ -312,6 +312,28 @@ async function getProjectOld() {
 }
 
 
+async function getPretendents(id) {
+    try {
+
+        const response = await notion.databases.query({
+            database_id: id,
+        });
+
+        const responseResults = response.results.map((page) => {
+            return {
+                id: page.id,
+                fioId: page.properties["4. ФИО"].relation,
+            };
+        });
+
+        return responseResults;
+
+    } catch (error) {
+        console.error(error.message)
+    }
+}
+
+
 class WorkerController {
 
     async workers(req, res) {
@@ -391,6 +413,17 @@ class WorkerController {
         const projects = await getProjectOld();
         if(projects){
             res.json(projects);
+        }
+        else{
+            res.json([]);
+        }
+    }
+
+    async pretendents(req, res) {
+        const id = req.params.id; // получаем id
+        const pretendents = await getPretendents(id);
+        if(pretendents){
+            res.json(pretendents);
         }
         else{
             res.json([]);

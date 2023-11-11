@@ -37,4 +37,7 @@ router.get('/blocksp/:id', blockController.blocksPId); //получить id т�
 router.get('/blocks2/:id', blockController.blocksId2); //подробная инфа
 router.get('/block/:id', blockController.blockId); // получить данные доп. таблиц
 
+//get Pretendent from project
+router.get("/pretendents/:projectId", workerController.pretendents);
+
 module.exports = router
