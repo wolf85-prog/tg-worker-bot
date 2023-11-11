@@ -343,7 +343,9 @@ bot.on('message', async (msg) => {
         }
 
 
-        if (text === '/updatepretendent') {
+        if (text === '/updpretendent') {
+            console.log("updpretendent: ")
+            
             const pretendentId = text.split(' ');
             console.log("pretendentId: ", pretendentId[1])
             const id = pretendentId[1]
