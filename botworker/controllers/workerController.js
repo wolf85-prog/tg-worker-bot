@@ -420,7 +420,7 @@ class WorkerController {
     }
 
     async pretendents(req, res) {
-        const id = req.params.id; // получаем id
+        const id = req.params.projectId; // получаем id
         const pretendents = await getPretendents(id);
         if(pretendents){
             res.json(pretendents);
