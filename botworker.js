@@ -345,31 +345,7 @@ bot.on('message', async (msg) => {
 
 
         if (text.startsWith('/updpretendent')) {
-            console.log("updpretendent: ")
-            
-            const pretendentId = text.split(' ');
-            console.log("pretendentId: ", pretendentId[1])
-            const id = pretendentId[1]
 
-            //претендент
-            const user = await Pretendent.findOne({where: {id}})
-
-            //обновить поле accept на true (принял)
-            await Pretendent.update({ accept: false }, {
-                where: {
-                    id: id,
-                },
-            });
-                    
-            const blockId = await getBlocksP(user.projectId);  
-            console.log("blockId: ", blockId)  
-            
-            //основной состав
-            const worker = await getWorkerPretendent(blockId, user.workerId)
-            console.log("worker: ", worker) 
-            
-            //обновить специалиста в таблице Претенденты
-            await updatePretendent(worker[0].id);
         }
 
 
@@ -814,21 +790,24 @@ bot.on('message', async (msg) => {
         console.log("pretendentId: ", data)
         const id = pretendentId[1]
 
+        //претендент
         const user = await Pretendent.findOne({where: {id}})
 
-        //обновить поле accept на true (принял)
+        //обновить поле accept на false (отклонил)
         await Pretendent.update({ accept: false }, {
             where: {
                 id: id,
             },
         });
-                  
-        const blockId = await getBlocksP(user.projectId);    
-        
-        const workerId = await getWorkerPretendent(blockId)
-        
-        //Добавить специалиста в таблицу Претенденты
-        await updatePretendent(blockId);
+                    
+        const blockId = await getBlocksP(user.projectId);  
+        console.log("blockId: ", blockId)  
+            
+        //претендент
+        const worker = await getWorkerPretendent(blockId, user.workerId)
+            
+        //обновить специалиста в таблице Претенденты
+        await updatePretendent(worker[0].id);
 
         //отправить сообщение в админ-панель
         const convId = await sendMyMessage('Пользователь нажал кнопку "Отклонить" в рассылке', "text", chatId)
