@@ -20,11 +20,9 @@ module.exports = async function getWorkerPretendent(blockId, workerId) {
         const worker = response.results.map((page) => {
             return {
                 id: page.id,
-                fioId: page.properties["4. ФИО"].relation,
+                //fioId: page.properties["4. ФИО"].relation,
             };
         });
-
-        //console.log("response: ", response)
 
         return worker;
     } catch (error) {
