@@ -365,8 +365,8 @@ bot.on('message', async (msg) => {
             console.log("blockId: ", blockId)  
             
             //основной состав
-            const workerId = await getWorkerPretendent(blockId, chatId)
-            console.log("workerId: ", workerId) 
+            const worker = await getWorkerPretendent(blockId, user.workerId)
+            console.log("worker: ", worker) 
             
             //Добавить специалиста в таблицу Претенденты
             //await updatePretendent(blockId);
