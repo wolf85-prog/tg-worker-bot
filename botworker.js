@@ -805,23 +805,23 @@ bot.on('message', async (msg) => {
         const id = pretendentId[1]
 
         //претендент
-        const user = await Pretendent.findOne({where: {id}})
+        //const user = await Pretendent.findOne({where: {id}})
 
         //обновить поле accept на false (отклонил)
-        await Pretendent.update({ accept: false }, {
-            where: {
-                id: id,
-            },
-        });
+        // await Pretendent.update({ accept: false }, {
+        //     where: {
+        //         id: id,
+        //     },
+        // });
                     
-        const blockId = await getBlocksP(user.projectId);  
-        console.log("blockId: ", blockId)  
+        // const blockId = await getBlocksP(user.projectId);  
+        // console.log("blockId: ", blockId)  
             
-        //претендент
-        const worker = await getWorkerPretendent(blockId, user.workerId)
+        // //претендент
+        // const worker = await getWorkerPretendent(blockId, user.workerId)
             
-        //обновить специалиста в таблице Претенденты
-        await updatePretendent(worker[0].id);
+        // //обновить специалиста в таблице Претенденты
+        // await updatePretendent(worker[0].id);
 
         //отправить сообщение в админ-панель
         const convId = await sendMyMessage('Пользователь нажал кнопку "Отклонить" в рассылке', "text", chatId)
