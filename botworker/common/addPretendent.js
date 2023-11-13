@@ -5,6 +5,7 @@ const notion = new Client({ auth: process.env.NOTION_API_KEY });
 
 // текущая дата
 const dateNow = new Date();
+console.log("dateNow: ", dateNow)
 //const date = dateNow.getFullYear() + "-0" + ((dateNow.getMonth())+1) + "-01T00:00:00.000"
 
 //send data to notion
