@@ -285,9 +285,14 @@ app.post('/web-stavka', async (req, res) => {
 
             const blockId = await getBlocksP(user.projectId); 
             console.log("Ставка: ", blockId)   
+
+            // текущая дата
+            const date = Date.now() + 10800000; //+3 часа
+            const dateNow =new Date(date)
+            console.log("dateNow: ", dateNow)
         
             //Добавить специалиста в таблицу Претенденты со своей  ставкой
-            await addPretendent(blockId, user.workerId, summaStavki);
+            await addPretendent(blockId, user.workerId, summaStavki, dateNow);
 
         return res.status(200).json({});
     } catch (e) {
@@ -782,6 +787,7 @@ bot.on('message', async (msg) => {
         const date = Date.now() + 10800000; //+3 часа
         const dateNow =new Date(date)
         console.log("dateNow: ", dateNow)
+
         const stavka = ""
         
         //Добавить специалиста в таблицу Претенденты
