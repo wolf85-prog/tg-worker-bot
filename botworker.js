@@ -779,12 +779,13 @@ bot.on('message', async (msg) => {
         const blockId = await getBlocksP(user.projectId);  
         
         // текущая дата
-        const dateNow = Date.now() + 10800000; //+3 часа
-        console.log("dateNow: ", dateNow.getTime())
+        const date = Date.now() + 10800000; //+3 часа
+        const dateNow =new Date(date)
+        console.log("dateNow: ", dateNow)
         const stavka = ""
         
         //Добавить специалиста в таблицу Претенденты
-        await addPretendent(blockId, user.workerId, stavka, dateNow.getTime());
+        await addPretendent(blockId, user.workerId, stavka, dateNow);
 
         //отправить сообщение в админ-панель
         const convId = await sendMyMessage('Пользователь нажал кнопку "Принять" в рассылке', "text", chatId)
