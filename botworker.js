@@ -776,10 +776,14 @@ bot.on('message', async (msg) => {
             },
         });           
 
-        const blockId = await getBlocksP(user.projectId);    
+        const blockId = await getBlocksP(user.projectId);  
+        
+        // текущая дата
+        const dateNow = new Date();
+        const stavka = ""
         
         //Добавить специалиста в таблицу Претенденты
-        await addPretendent(blockId, user.workerId);
+        await addPretendent(blockId, user.workerId, stavka, dateNow);
 
         //отправить сообщение в админ-панель
         const convId = await sendMyMessage('Пользователь нажал кнопку "Принять" в рассылке', "text", chatId)

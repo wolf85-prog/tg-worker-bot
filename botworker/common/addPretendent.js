@@ -3,13 +3,8 @@ require("dotenv").config();
 const { Client } = require("@notionhq/client");
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
 
-// текущая дата
-const dateNow = new Date();
-console.log("dateNow: ", dateNow)
-//const date = dateNow.getFullYear() + "-0" + ((dateNow.getMonth())+1) + "-01T00:00:00.000"
-
 //send data to notion
-module.exports = async function addPretendent(blockId, workerId, stavka) {
+module.exports = async function addPretendent(blockId, workerId, stavka, dateNow) {
     try {
         const response = await notion.pages.create({
             parent: { database_id: blockId },
@@ -39,17 +34,6 @@ module.exports = async function addPretendent(blockId, workerId, stavka) {
                         }
                     ],
                 },
-                // "2. Тех. Задание": {
-                //     type: 'rich_text',   
-                //     rich_text: [
-                //         {
-                //             "type": "text",
-                //             "text": {
-                //                 "content": "Техническое Задание текстом подробно",
-                //             },                           
-                //         }
-                //     ]
-                // },
                 "3. Дата": {
                     type: 'date',                   
                     date: {
