@@ -4,6 +4,7 @@ const router = new Router()
 const workerController = require('../controllers/workerController')
 const databaseController = require('../controllers/databaseController')
 const blockController = require('../controllers/blockController')
+const projectController = require('../controllers/projectController')
 
 //get WORKERS
 router.get("/workers", workerController.workers);
@@ -23,6 +24,8 @@ router.get("/projectsnew", workerController.projectsNew);
 
 //get PROJECTS STATUS
 router.get("/projectsold", workerController.projectsOld);
+
+router.get("/project/:id", projectController.projectId);
 
 
 //get DATABASE (специалисты)
