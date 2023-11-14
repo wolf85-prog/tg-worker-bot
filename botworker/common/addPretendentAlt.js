@@ -4,10 +4,14 @@ const { Client } = require("@notionhq/client");
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
 
 //send data to notion
-module.exports = async function addPretendent(blockId, workerId, dateNow) {
+module.exports = async function addPretendentAlt(blockId, workerId, stavka, dateNow) {
     try {
         const response = await notion.pages.create({
             parent: { database_id: blockId },
+            icon: {
+                type: "emoji",
+                emoji: "✅"
+            },
             properties: {
                 "1. Ставка": {
                     type: "title",
@@ -15,7 +19,7 @@ module.exports = async function addPretendent(blockId, workerId, dateNow) {
                         {
                             type: 'text',
                             text: {
-                                content: "",
+                                content: stavka ? stavka : "",
                             },
                             "annotations": {
                                 "bold": false,
@@ -25,7 +29,7 @@ module.exports = async function addPretendent(blockId, workerId, dateNow) {
                                 "code": false,
                                 "color": "default"
                             },
-                            "plain_text": "",
+                            "plain_text": stavka ? stavka: "",
                             "href": null
                         }
                     ],

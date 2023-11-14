@@ -30,8 +30,10 @@ let workerId, workerFam, workerName2, phone2, dateBorn, Worklist, city2, stag2, 
 //functions
 const getBlocksP = require('./botworker/common/getBlocksP')
 const addPretendent = require('./botworker/common/addPretendent')
+const addPretendentAlt = require('./botworker/common/addPretendentAlt')
 const sendMyMessage = require('./botworker/common/sendMyMessage')
 const getWorkerPretendent = require('./botworker/common/getWorkerPretendent')
+const updatePretendent = require("./botworker/common/updatePretendent");
 
 const express = require('express');
 const cors = require('cors');
@@ -48,7 +50,6 @@ const addWorker = require("./botworker/common/addWorker");
 const getWorkerNotion = require("./botworker/common/getWorkerNotion");
 const addPassport = require("./botworker/common/addPassport");
 const addImage = require("./botworker/common/addImage");
-const updatePretendent = require("./botworker/common/updatePretendent");
 const updateWorker = require("./botworker/common/updateWorker");
 
 app.use(express.json());
@@ -285,9 +286,14 @@ app.post('/web-stavka', async (req, res) => {
 
             const blockId = await getBlocksP(user.projectId); 
             console.log("Ставка: ", blockId)   
+
+            // текущая дата
+            const date = Date.now() + 10800000; //+3 часа
+            const dateNow =new Date(date)
+            console.log("dateNow: ", dateNow)
         
             //Добавить специалиста в таблицу Претенденты со своей  ставкой
-            await addPretendent(blockId, user.workerId, summaStavki);
+            await addPretendentAlt(blockId, user.workerId, summaStavki, dateNow);
 
         return res.status(200).json({});
     } catch (e) {
@@ -776,10 +782,15 @@ bot.on('message', async (msg) => {
             },
         });           
 
-        const blockId = await getBlocksP(user.projectId);    
+        const blockId = await getBlocksP(user.projectId);  
+        
+        // текущая дата
+        const date = Date.now() + 10800000; //+3 часа
+        const dateNow =new Date(date)
+        console.log("dateNow: ", dateNow)
         
         //Добавить специалиста в таблицу Претенденты (Ноушен)
-        await addPretendent(blockId, user.workerId);
+        await addPretendent(blockId, user.workerId, dateNow);
 
         //отправить сообщение в админ-панель
         const convId = await sendMyMessage('Пользователь нажал кнопку "Принять" в рассылке', "text", chatId)
