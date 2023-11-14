@@ -778,7 +778,7 @@ bot.on('message', async (msg) => {
 
         const blockId = await getBlocksP(user.projectId);    
         
-        //Добавить специалиста в таблицу Претенденты
+        //Добавить специалиста в таблицу Претенденты (Ноушен)
         await addPretendent(blockId, user.workerId);
 
         //отправить сообщение в админ-панель
