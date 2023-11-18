@@ -171,17 +171,17 @@ async function getProjects() {
         const responseResults = response.results.map((page) => {
             
             //2
-            const response2 = notion.blocks.children.list({
-                block_id: page.id,
-            });
-            let res;
-            const responseResults2 = response2.results.map((block) => {
-                if (block.child_database?.title === "Основной состав"){
-                   res = block.id 
-                }
-            }); 
+            // const response2 = notion.blocks.children.list({
+            //     block_id: page.id,
+            // });
+            // let res;
+            // const responseResults2 = response2.results.map((block) => {
+            //     if (block.child_database?.title === "Основной состав"){
+            //        res = block.id 
+            //     }
+            // }); 
 
-            return res;
+            return {id: page.id};
             
             //3
             // const response3 = notion.databases.query({
