@@ -175,13 +175,13 @@ async function getProjects() {
                 block_id: page.id,
             });
             let res;
-            const responseResults2 = response2.results.map((block) => {
-                if (block.child_database?.title === "Основной состав"){
-                   res = block.id 
-                }
-            }); 
+            // const responseResults2 = response2.results.map((block) => {
+            //     if (block.child_database?.title === "Основной состав"){
+            //        res = block.id 
+            //     }
+            // }); 
 
-            return res;
+            return response2;
             
             //3
             // const response3 = notion.databases.query({
