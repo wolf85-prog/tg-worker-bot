@@ -171,10 +171,10 @@ async function getProjects() {
 
         let i = 0;
 
-        const responseResults = response.results.map((page) => {
+        const responseResults = response.results.map(async(page) => {
             
             //2
-            setTimeout(async()=> {
+           // setTimeout(async()=> {
                 const response2 = await notion.blocks.children.list({
                     block_id: page.id,
                 });
@@ -186,7 +186,7 @@ async function getProjects() {
                 }); 
 
                 return page.id;
-            }, 2500 * ++i)  
+            //}, 2500 * ++i)  
 
             
             
