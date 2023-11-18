@@ -181,7 +181,7 @@ async function getProjects() {
             //     }
             // }); 
 
-            return {id: page.id};
+            return page.id;
             
             //3
             // const response3 = notion.databases.query({
