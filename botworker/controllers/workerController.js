@@ -174,7 +174,7 @@ async function getProjects() {
             
             //2
             setTimeout(async()=> {
-                const response2 = await notion.blocks.children.list({
+                const response2 = await notion.blocks.retrieve({
                     block_id: page.id,
                 });
                 let res;
