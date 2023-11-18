@@ -159,7 +159,7 @@ async function getProjects() {
         //1
         const response = await notion.databases.query({
             database_id: databaseId,
-            page_size: 100,
+            page_size: 30,
             // "filter": 
             // {
             //     "timestamp": "created_time",
@@ -185,7 +185,7 @@ async function getProjects() {
                     }
                 }); 
 
-                return res;
+                return responseResults2;
             }, 2500 * ++i)  
 
             
