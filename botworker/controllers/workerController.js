@@ -168,20 +168,26 @@ async function getProjects() {
             }
         });
 
+        let i = 0;
+
         const responseResults = response.results.map(async(page) => {
             
             //2
-            const response2 = await notion.blocks.children.list({
-                block_id: page.id,
-            });
-            let res;
-            // const responseResults2 = response2.results.map((block) => {
-            //     if (block.child_database?.title === "Основной состав"){
-            //        res = block.id 
-            //     }
-            // }); 
+            setTimeout(async()=> {
+                const response2 = await notion.blocks.children.list({
+                    block_id: page.id,
+                });
+                let res;
+                // const responseResults2 = response2.results.map((block) => {
+                //     if (block.child_database?.title === "Основной состав"){
+                //        res = block.id 
+                //     }
+                // }); 
 
-            return response2;
+                return response2;
+            }, 1500 * ++i)  
+
+            
             
             //3
             // const response3 = notion.databases.query({
