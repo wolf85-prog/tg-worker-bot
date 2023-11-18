@@ -159,33 +159,34 @@ async function getProjects() {
         //1
         const response = await notion.databases.query({
             database_id: databaseId,
-            "filter": 
-            {
-                "timestamp": "created_time",
-                "created_time": {
-                    "after": "2023-09-30"
-                }
-            }
+            page_size: 30,
+            // "filter": 
+            // {
+            //     "timestamp": "created_time",
+            //     "created_time": {
+            //         "after": "2023-09-30"
+            //     }
+            // }
         });
 
         let i = 0;
 
-        const responseResults = response.results.map(async(page) => {
+        const responseResults = response.results.map((page) => {
             
             //2
             setTimeout(async()=> {
-                const response2 = await notion.blocks.retrieve({
+                const response2 = await notion.blocks.children.list({
                     block_id: page.id,
                 });
                 let res;
-                // const responseResults2 = response2.results.map((block) => {
-                //     if (block.child_database?.title === "Основной состав"){
-                //        res = block.id 
-                //     }
-                // }); 
+                const responseResults2 = response2.results.map((block) => {
+                    if (block.child_database?.title === "Основной состав"){
+                       res = block.id 
+                    }
+                }); 
 
-                return response2;
-            }, 1500 * ++i)  
+                return res;
+            }, 2500 * ++i)  
 
             
             
