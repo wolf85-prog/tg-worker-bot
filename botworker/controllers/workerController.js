@@ -174,19 +174,19 @@ async function getProjects() {
         const responseResults = response.results.map((page) => {
             
             //2
-           setTimeout(async()=> {
-                // const response2 = await notion.blocks.children.list({
-                //     block_id: page.id,
-                // });
-                // let res;
-                // const responseResults2 = response2.results.map((block) => {
-                //     if (block.child_database?.title === "Основной состав"){
-                //        res = block.id 
-                //     }
-                // }); 
+           //setTimeout(async()=> {
+                const response2 = notion.blocks.children.list({
+                    block_id: page.id,
+                });
+                let res;
+                const responseResults2 = response2.results.map((block) => {
+                    if (block.child_database?.title === "Основной состав"){
+                       res = block.id 
+                    }
+                }); 
 
-                return page.id;
-            }, 1500 * ++i)  
+                return res;
+            //}, 1500 * ++i)  
 
             
             
