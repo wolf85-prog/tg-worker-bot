@@ -169,21 +169,19 @@ async function getProjects() {
             // }
         });
 
-        let i = 0;
-
-        const responseResults = response.results.map(async(page) => {
+        const responseResults = response.results.map((page) => {
             
             //2
            // setTimeout(async()=> {
-                const response2 = await notion.blocks.children.list({
-                    block_id: page.id,
-                });
-                let res;
-                const responseResults2 = response2.results.map((block) => {
-                    if (block.child_database?.title === "Основной состав"){
-                       res = block.id 
-                    }
-                }); 
+                // const response2 = await notion.blocks.children.list({
+                //     block_id: page.id,
+                // });
+                // let res;
+                // const responseResults2 = response2.results.map((block) => {
+                //     if (block.child_database?.title === "Основной состав"){
+                //        res = block.id 
+                //     }
+                // }); 
 
                 return page.id;
             //}, 2500 * ++i)  
