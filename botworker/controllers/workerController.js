@@ -169,57 +169,14 @@ async function getProjects() {
             // }
         });
 
-        let i = 0;
-
         const responseResults = response.results.map((page) => {
-            
-            //2
-           //setTimeout(async()=> {
-                const response2 = notion.blocks.children.list({
-                    block_id: page.id,
-                });
-                let res;
-                const responseResults2 = response2.results.map((block) => {
-                    if (block.child_database?.title === "Основной состав"){
-                       res = block.id 
-                    }
-                }); 
-
-                return res;
-            //}, 1500 * ++i)  
-
-            
-            
-            //3
-            // const response3 = notion.databases.query({
-            //     database_id: res
-            // });
-    
-            // const responseResults3 = response3.results.filter((page3) => page3.properties["2. Дата"].date !== null).map((page3) => {
-            //     return {
-            //         id: page.id,
-            //         title: page.properties.Name.title[0]?.plain_text,
-            //         date_start: page.properties["Дата"].date?.start,
-            //         date_end: page.properties["Дата"].date?.end,
-            //         status: page.properties["Статус проекта"].select,
-
-            //         date: page3.properties["2. Дата"].date?.start,
-            //         fio_id: page3.properties["4. ФИО"].relation[0]?.id,
-            //         vid: page3.properties["3. Вид работ"].multi_select[0]?.name,
-            //         spec: page3.properties["5. Специализация"].multi_select[0]?.name                
-            //     };
-
-            //     return responseResults3;
-            // });
-
-
-            // return {
-            //     id: page.id,
-            //     title: page.properties.Name.title[0]?.plain_text,
-            //     date_start: page.properties["Дата"].date?.start,
-            //     date_end: page.properties["Дата"].date?.end,
-            //     status: page.properties["Статус проекта"].select,
-            // };
+            return {
+                id: page.id,
+                title: page.properties.Name.title[0]?.plain_text,
+                date_start: page.properties["Дата"].date?.start,
+                date_end: page.properties["Дата"].date?.end,
+                status: page.properties["Статус проекта"].select,
+            };
         });
 
         
