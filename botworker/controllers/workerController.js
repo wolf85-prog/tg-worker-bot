@@ -168,10 +168,10 @@ async function getProjects() {
             }
         });
 
-        const responseResults = response.results.map((page) => {
+        const responseResults = response.results.map(async(page) => {
             
             //2
-            const response2 = notion.blocks.children.list({
+            const response2 = await notion.blocks.children.list({
                 block_id: page.id,
             });
             let res;
