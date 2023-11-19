@@ -45,7 +45,7 @@ const path = require('path')
 
 //подключение к БД PostreSQL
 const sequelize = require('./botworker/connections/db')
-const {UserBot, Message, Conversation, Worker, Pretendent} = require('./botworker/models/models');
+const {UserBot, Message, Conversation, Worker, Pretendent, Projectcash} = require('./botworker/models/models');
 const addWorker = require("./botworker/common/addWorker");
 const getWorkerNotion = require("./botworker/common/getWorkerNotion");
 const addPassport = require("./botworker/common/addPassport");
@@ -405,6 +405,17 @@ bot.on('message', async (msg) => {
             console.log("getProjects start...")
             const projects = await getProjectsAll()
             console.log(projects)
+
+            projects.map(async(project)=> {
+                await Projectcash.create({ 
+                    title: project.title, 
+                    dateStart: project.date_start, 
+                    dateEnd: project.date_end, 
+                    status: JSON.stringify(project.status), 
+                    specs: JSON.stringify(project.specs)  
+                })
+            })
+            
         }
 
 //------------------------------------------------------------------------------------------------
