@@ -169,9 +169,9 @@ async function getProjectsCash() {
                 ['id', 'DESC'],
             ],
         })
-        return res.status(200).json(projects);
+        return projects;
     } catch (error) {
-        return res.status(500).json(error.message);
+        console.error(error.message);
     }
 }
 
