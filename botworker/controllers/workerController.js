@@ -377,7 +377,7 @@ class WorkerController {
                 if (blockId) {  
                     databaseBlock = await getDatabaseId(blockId); 
                     //если бд ноушена доступна
-                    if (databaseBlock.length > 0) {
+                    if (databaseBlock) {
                         databaseBlock.map((db) => {
                             if (db.fio_id) {
                                 const newSpec = {
