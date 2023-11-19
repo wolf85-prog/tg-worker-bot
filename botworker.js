@@ -52,6 +52,7 @@ const addPassport = require("./botworker/common/addPassport");
 const addImage = require("./botworker/common/addImage");
 const updateWorker = require("./botworker/common/updateWorker");
 const getProjects = require("./botworker/common/getProjects");
+const { getProjectsAll } = require("./botworker/http/chatAPI");
 
 app.use(express.json());
 app.use(cors());
@@ -402,7 +403,7 @@ bot.on('message', async (msg) => {
 
         if (text === '/saveprojects') {
             console.log("getProjects start...")
-            const projects = await getProjects()
+            const projects = await getProjectsAll()
             console.log(projects)
         }
 
