@@ -375,6 +375,7 @@ class WorkerController {
                 let arraySpec = []
                 const blockId = await getBlocks(project.id);
                 if (blockId) {  
+                    console.log("blockId: ", blockId)
                     databaseBlock = await getDatabaseId(blockId); 
                     //если бд ноушена доступна
                     if (databaseBlock) {
