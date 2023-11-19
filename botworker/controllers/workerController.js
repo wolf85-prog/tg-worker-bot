@@ -393,8 +393,6 @@ class WorkerController {
                             }
                         })
 
-                        console.log(arraySpec)
-
                         const newProject = {
                             id: project.id,
                             title: project.title,
@@ -404,7 +402,6 @@ class WorkerController {
                             specs: arraySpec,
                         }
                         arrayProject.push(newProject)
-                        console.log(arrayProject)
                     }                   
                 } else {
                     console.log("База данных не найдена! Проект ID: " + project.title)
