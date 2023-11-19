@@ -58,12 +58,22 @@ const Pretendent = sequelize.define('pretendent', {
     accept: {type: DataTypes.BOOLEAN}, //принято
 })
 
+const Projectcash = sequelize.define('projectcash', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true}, 
+    title: {type: DataTypes.STRING},  //название проекта
+    dateStart: {type: DataTypes.STRING}, //начало
+    dateEnd: {type: DataTypes.STRING}, //конец
+    status: {type: DataTypes.STRING}, //стытус проекта
+    specs: {type: DataTypes.STRING}, // специалисты
+})
+
 module.exports = {
     UserBot, 
     Worker,
     Message, 
     Conversation, 
     Distributionw,
-    Pretendent
+    Pretendent,
+    Projectcash
 }
 
