@@ -1,7 +1,7 @@
 const {$host} = require("./index");
 
-
-export const getProjectsAll = async () =>{
+module.exports = async function getProjectsAll() {
+//export const getProjectsAll = async () =>{
     try {
        let response = await $host.get(`api/projectall`);
        //console.log(response);
