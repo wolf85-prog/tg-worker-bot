@@ -406,14 +406,17 @@ class WorkerController {
                     console.log("База данных не найдена! Проект ID: " + project.title)
                 }
                 
-                if (index === project.length-1) {
-                    setTimeout(()=> {
-                        res.json(arrayProject);
-                    }, 5000)     
-                }
+                // if (index === project.length-1) {
+                //     setTimeout(()=> {
+                //         res.json(arrayProject);
+                //     }, 5000)     
+                // }
             })
 
             //res.json(arrayProject);
+            setTimeout(()=> {
+                res.json(arrayProject);
+            }, 10000) 
         }
         else{
             res.json([]);
