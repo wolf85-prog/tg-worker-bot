@@ -370,7 +370,8 @@ class WorkerController {
         let arrayProject = []
 
         const projects = await getProjects();
-        if(projects){
+        console.log("projects: ", projects)
+        //if(projects){
             projects.map(async(project)=> {
                 let arraySpec = []
                 const blockId = await getBlocks(project.id);
@@ -410,10 +411,10 @@ class WorkerController {
                 }	  
             })
             res.json(arrayProject);
-        }
-        else{
-            res.json([]);
-        }
+       // }
+        // else{
+        //     res.json([]);
+        // }
     }
 
     async projectsNew(req, res) {
