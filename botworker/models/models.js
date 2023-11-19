@@ -63,8 +63,8 @@ const Projectcash = sequelize.define('projectcash', {
     title: {type: DataTypes.STRING},  //название проекта
     dateStart: {type: DataTypes.STRING}, //начало
     dateEnd: {type: DataTypes.STRING}, //конец
-    status: {type: DataTypes.STRING}, //стытус проекта
-    specs: {type: DataTypes.STRING}, // специалисты
+    status: {type: DataTypes.TEXT}, //стытус проекта
+    specs: {type: DataTypes.TEXT}, // специалисты
 })
 
 module.exports = {
