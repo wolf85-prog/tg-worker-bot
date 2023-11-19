@@ -6,10 +6,11 @@ const databaseId = process.env.NOTION_DATABASE_ID
 const chatTelegramId = process.env.CHAT_ID
 const sendMyMessage = require('./../common/sendMyMessage')
 
-//socket.io
-const {io} = require("socket.io-client");
 const getBlocks = require("../common/getBlocks");
 const getDatabaseId = require("../common/getDatabaseId");
+
+//socket.io
+const {io} = require("socket.io-client");
 const socketUrl = process.env.SOCKET_APP_URL
 
 //получить данные таблицы Специалисты
@@ -366,9 +367,12 @@ class WorkerController {
 
     async projectAll(req, res) {
         let databaseBlock;
+        let arrayProject = []
+
         const projects = await getProjects();
         if(projects){
             projects.map(async(project)=> {
+                let arraySpec = []
                 const blockId = await getBlocks(project.id);
                 if (blockId) {  
                     databaseBlock = await getDatabaseId(blockId); 
