@@ -58,7 +58,7 @@ module.exports = async function getProjects() {
                         }
                     })
 
-                    console.log(arraySpec)
+                    //console.log(arraySpec)
 
                     const newProject = {
                         id: project.id,
@@ -75,7 +75,7 @@ module.exports = async function getProjects() {
             }
             
         })
-
+        console.log("start timeout...")
         setTimeout(()=> {
            return arrayProject;
         }, 10000) 

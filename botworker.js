@@ -401,6 +401,7 @@ bot.on('message', async (msg) => {
         }
 
         if (text === '/saveprojects') {
+            console.log("getProjects start...")
             const projects = await getProjects()
             console.log(projects)
         }
