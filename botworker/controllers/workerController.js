@@ -9,6 +9,7 @@ const sendMyMessage = require('./../common/sendMyMessage')
 //socket.io
 const {io} = require("socket.io-client");
 const getBlocks = require("../common/getBlocks");
+const getDatabaseId = require("../common/getDatabaseId");
 const socketUrl = process.env.SOCKET_APP_URL
 
 //получить данные таблицы Специалисты
@@ -364,10 +365,42 @@ class WorkerController {
     }
 
     async projectAll(req, res) {
+        let databaseBlock;
         const projects = await getProjects();
         if(projects){
-            const blockId = await getBlocks();
-            res.json(blockId);
+            projects.map(async(project)=> {
+                const blockId = await getBlocks(project.id);
+                if (blockId) {  
+                    databaseBlock = await getDatabaseId(blockId); 
+                    //если бд ноушена доступна
+                    if (databaseBlock.length > 0) {
+                        databaseBlock.map((db) => {
+                            if (db.fio_id) {
+                                const newSpec = {
+                                    id: db?.fio_id,
+                                    vid: db?.vid,
+                                    spec: db?.spec,
+                                    date: db?.date,
+                                }
+                                arraySpec.push(newSpec)
+                            }
+                        })
+
+                        const newProject = {
+                            id: project.id,
+                            title: project.title,
+                            date_start: project.date_start,
+                            date_end: project.date_end,
+                            status: project.status,
+                            specs: arraySpec,
+                        }
+                        arrayProject.push(newProject)
+                    }                   
+                } else {
+                    console.log("База данных не найдена! Проект ID: " + project.title)
+                }	  
+            })
+            res.json(arrayProject);
         }
         else{
             res.json([]);
