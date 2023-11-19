@@ -11,6 +11,7 @@ module.exports = async function getProjects() {
     let arrayProject = []
     let responseResults
 
+    console.log("start get projects...")
     try {
         //1
         const response = await notion.databases.query({
@@ -28,7 +29,7 @@ module.exports = async function getProjects() {
             };
         });
 
-        
+        console.log(responseResults)
         //return responseResults;
 
     } catch (error) {
@@ -75,5 +76,7 @@ module.exports = async function getProjects() {
         setTimeout(()=> {
            return arrayProject;
         }, 10000) 
+    } else {
+        return arrayProject;
     }
 }
