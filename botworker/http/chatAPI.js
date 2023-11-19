@@ -1,4 +1,4 @@
-import {$host} from "./index";
+const {$host} = require("./index");
 
 
 export const getProjectsAll = async () =>{
