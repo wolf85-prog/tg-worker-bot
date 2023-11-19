@@ -1,4 +1,9 @@
-const {$host} = require("./index");
+//const {$host} = require("./index");
+const axios = require("axios");
+
+const $host = axios.create({
+    baseURL: process.env.REACT_APP_API_URL
+})
 
 module.exports = async function getProjectsAll() {
 //export const getProjectsAll = async () =>{
