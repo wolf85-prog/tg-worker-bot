@@ -73,7 +73,7 @@ module.exports = async function getProjects() {
         })
 
         setTimeout(()=> {
-            res.json(arrayProject);
+           return arrayProject;
         }, 10000) 
     }
 }
