@@ -7,7 +7,8 @@ const chatTelegramId = process.env.CHAT_ID
 const sendMyMessage = require('./../common/sendMyMessage')
 
 //socket.io
-const {io} = require("socket.io-client")
+const {io} = require("socket.io-client");
+const getBlocks = require("../common/getBlocks");
 const socketUrl = process.env.SOCKET_APP_URL
 
 //получить данные таблицы Специалисты
@@ -365,7 +366,8 @@ class WorkerController {
     async projectAll(req, res) {
         const projects = await getProjects();
         if(projects){
-            res.json(projects);
+            const blockId = await getBlocks();
+            res.json(blockId);
         }
         else{
             res.json([]);
