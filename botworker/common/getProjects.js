@@ -29,7 +29,7 @@ module.exports = async function getProjects() {
             };
         });
 
-        console.log(responseResults)
+        //console.log(responseResults)
         //return responseResults;
 
     } catch (error) {
@@ -42,6 +42,7 @@ module.exports = async function getProjects() {
             let arraySpec = []
             const blockId = await getBlocks(project.id);
             if (blockId) {  
+                //console.log(blockId)
                 databaseBlock = await getDatabaseId(blockId); 
                 //если бд ноушена доступна
                 if (databaseBlock) {
@@ -56,6 +57,8 @@ module.exports = async function getProjects() {
                             arraySpec.push(newSpec)
                         }
                     })
+
+                    console.log(arraySpec)
 
                     const newProject = {
                         id: project.id,
