@@ -377,31 +377,34 @@ class WorkerController {
                 if (blockId) {  
                     //console.log("blockId: ", blockId)
                     databaseBlock = await getDatabaseId(blockId); 
-                    console.log(JSON.stringify(databaseBlock))
+                    //console.log(JSON.stringify(databaseBlock))
                     //если бд ноушена доступна
-                    // if (databaseBlock) {
-                    //     databaseBlock.map((db) => {
-                    //         if (db.fio_id) {
-                    //             const newSpec = {
-                    //                 id: db?.fio_id,
-                    //                 vid: db?.vid,
-                    //                 spec: db?.spec,
-                    //                 date: db?.date,
-                    //             }
-                    //             arraySpec.push(newSpec)
-                    //         }
-                    //     })
+                    if (databaseBlock) {
+                        databaseBlock.map((db) => {
+                            if (db.fio_id) {
+                                const newSpec = {
+                                    id: db?.fio_id,
+                                    vid: db?.vid,
+                                    spec: db?.spec,
+                                    date: db?.date,
+                                }
+                                arraySpec.push(newSpec)
+                            }
+                        })
 
-                    //     const newProject = {
-                    //         id: project.id,
-                    //         title: project.title,
-                    //         date_start: project.date_start,
-                    //         date_end: project.date_end,
-                    //         status: project.status,
-                    //         specs: arraySpec,
-                    //     }
-                    //     arrayProject.push(newProject)
-                    //}                   
+                        console.log(arraySpec)
+
+                        const newProject = {
+                            id: project.id,
+                            title: project.title,
+                            date_start: project.date_start,
+                            date_end: project.date_end,
+                            status: project.status,
+                            specs: arraySpec,
+                        }
+                        arrayProject.push(newProject)
+                        console.log(arrayProject)
+                    }                   
                 } else {
                     console.log("База данных не найдена! Проект ID: " + project.title)
                 }	  
