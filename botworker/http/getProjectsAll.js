@@ -1,4 +1,5 @@
-//const {$host} = require("./index");
+require("dotenv").config();
+
 const axios = require("axios");
 
 const $host = axios.create({
