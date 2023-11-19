@@ -51,6 +51,7 @@ const getWorkerNotion = require("./botworker/common/getWorkerNotion");
 const addPassport = require("./botworker/common/addPassport");
 const addImage = require("./botworker/common/addImage");
 const updateWorker = require("./botworker/common/updateWorker");
+const getProjects = require("./botworker/common/getProjects");
 
 app.use(express.json());
 app.use(cors());
@@ -397,6 +398,11 @@ bot.on('message', async (msg) => {
             list.push(obj)
 
             await updateWorker(res[0].id, list)
+        }
+
+        if (text === '/saveprojects') {
+            const projects = await getProjects()
+            console.log(projects)
         }
 
 //------------------------------------------------------------------------------------------------
