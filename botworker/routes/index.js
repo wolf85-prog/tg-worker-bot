@@ -27,6 +27,8 @@ router.get("/projectsold", workerController.projectsOld);
 
 router.get("/project/:id", projectController.projectId);
 
+router.get("/projectscash", projectController.projectsCash)
+
 
 //get DATABASE (специалисты)
 router.get('/database/:id', databaseController.databaseId); //получить список работников

@@ -2,6 +2,7 @@ require("dotenv").config();
 const { Client } = require("@notionhq/client");
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
 const databaseId = process.env.NOTION_DATABASE_ID
+const Projectcash = require('../models/Projectcash')
 
 async function getProjects() {
     try {
@@ -160,6 +161,21 @@ async function getProjectCrmId(crmId) {
 }
 
 
+//получить проекты из БД (кэш)
+async function getProjectsCash() {
+    try {
+        const projects = await Projectcash.findAll({
+            order: [
+                ['id', 'DESC'],
+            ],
+        })
+        return res.status(200).json(projects);
+    } catch (error) {
+        return res.status(500).json(error.message);
+    }
+}
+
+
 class ProjectController {
     
     async projects(req, res) {
@@ -204,6 +220,17 @@ class ProjectController {
         const project = await getProjectCrmId(id);
         if(project){
             res.json(project);
+        }
+        else{
+            res.json({});
+        }
+    }
+
+
+    async projectsCash(req, res) {
+        const projects = await getProjectsCash();
+        if(projects){
+            res.json(projects);
         }
         else{
             res.json({});
