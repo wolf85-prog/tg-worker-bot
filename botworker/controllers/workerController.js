@@ -375,32 +375,33 @@ class WorkerController {
                 let arraySpec = []
                 const blockId = await getBlocks(project.id);
                 if (blockId) {  
-                    console.log("blockId: ", blockId)
+                    //console.log("blockId: ", blockId)
                     databaseBlock = await getDatabaseId(blockId); 
+                    console.log(JSON.stringify(databaseBlock))
                     //если бд ноушена доступна
-                    if (databaseBlock) {
-                        databaseBlock.map((db) => {
-                            if (db.fio_id) {
-                                const newSpec = {
-                                    id: db?.fio_id,
-                                    vid: db?.vid,
-                                    spec: db?.spec,
-                                    date: db?.date,
-                                }
-                                arraySpec.push(newSpec)
-                            }
-                        })
+                    // if (databaseBlock) {
+                    //     databaseBlock.map((db) => {
+                    //         if (db.fio_id) {
+                    //             const newSpec = {
+                    //                 id: db?.fio_id,
+                    //                 vid: db?.vid,
+                    //                 spec: db?.spec,
+                    //                 date: db?.date,
+                    //             }
+                    //             arraySpec.push(newSpec)
+                    //         }
+                    //     })
 
-                        const newProject = {
-                            id: project.id,
-                            title: project.title,
-                            date_start: project.date_start,
-                            date_end: project.date_end,
-                            status: project.status,
-                            specs: arraySpec,
-                        }
-                        arrayProject.push(newProject)
-                    }                   
+                    //     const newProject = {
+                    //         id: project.id,
+                    //         title: project.title,
+                    //         date_start: project.date_start,
+                    //         date_end: project.date_end,
+                    //         status: project.status,
+                    //         specs: arraySpec,
+                    //     }
+                    //     arrayProject.push(newProject)
+                    //}                   
                 } else {
                     console.log("База данных не найдена! Проект ID: " + project.title)
                 }	  
