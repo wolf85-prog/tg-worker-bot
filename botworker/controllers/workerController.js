@@ -371,7 +371,7 @@ class WorkerController {
 
         const projects = await getProjects();
         if (projects && projects.length > 0){
-            projects.map(async(project)=> {
+            projects.map(async(project, index)=> {
                 let arraySpec = []
                 const blockId = await getBlocks(project.id);
                 if (blockId) {  
@@ -400,14 +400,18 @@ class WorkerController {
                             status: project.status,
                             specs: arraySpec,
                         }
-                        arrayProject.push(newProject)
+                        arrayProject.push(newProject)                           
                     }                   
                 } else {
                     console.log("База данных не найдена! Проект ID: " + project.title)
-                }	  
+                }
+                
+                if (index === project.length-1) {
+                    res.json(arrayProject);
+                }
             })
-            console.log(arrayProject)
-            res.json(arrayProject);
+
+            //res.json(arrayProject);
         }
         else{
             res.json([]);
