@@ -407,7 +407,9 @@ class WorkerController {
                 }
                 
                 if (index === project.length-1) {
-                    res.json(arrayProject);
+                    setTimeout(()=> {
+                        res.json(arrayProject);
+                    }, 5000)     
                 }
             })
 
