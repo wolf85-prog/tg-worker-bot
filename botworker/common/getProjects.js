@@ -9,6 +9,7 @@ const getDatabaseId = require("../common/getDatabaseId");
 module.exports = async function getProjects() {
     let databaseBlock;
     let arrayProject = []
+    let responseResults
 
     try {
         //1
@@ -17,7 +18,7 @@ module.exports = async function getProjects() {
             page_size: 30,
         });
 
-        const responseResults = response.results.map((page) => {
+        responseResults = response.results.map((page) => {
             return {
                 id: page.id,
                 title: page.properties.Name.title[0]?.plain_text,
@@ -28,7 +29,7 @@ module.exports = async function getProjects() {
         });
 
         
-        return responseResults;
+        //return responseResults;
 
     } catch (error) {
         console.error(error.message)
