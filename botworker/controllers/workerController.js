@@ -162,14 +162,14 @@ async function getProjects() {
         //1
         const response = await notion.databases.query({
             database_id: databaseId,
-            page_size: 30,
-            // "filter": 
-            // {
-            //     "timestamp": "created_time",
-            //     "created_time": {
-            //         "after": "2023-09-30"
-            //     }
-            // }
+            //page_size: 30,
+            "filter": 
+            {
+                "timestamp": "created_time",
+                "created_time": {
+                    "after": "2023-09-30"
+                }
+            }
         });
 
         const responseResults = response.results.map((page) => {
