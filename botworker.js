@@ -51,7 +51,7 @@ const getWorkerNotion = require("./botworker/common/getWorkerNotion");
 const addPassport = require("./botworker/common/addPassport");
 const addImage = require("./botworker/common/addImage");
 const updateWorker = require("./botworker/common/updateWorker");
-const getProjects = require("./botworker/common/getProjects");
+//const getProjects = require("./botworker/common/getProjects");
 const getProjectsAll = require("./botworker/http/getProjectsAll");
 
 app.use(express.json());
