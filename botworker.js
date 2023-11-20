@@ -390,21 +390,25 @@ bot.on('message', async (msg) => {
             const list = res[0].spec
             console.log("Worklist: ", list)
 
-             //массив специалистов
-             let specArr = []
-
+            //массив специалистов
+            let specArr = []
             const obj = {
                      name: 'Звукорежиссер',
                  };
             list.push(obj)
-
             await updateWorker(res[0].id, list)
         }
+
 
         if (text === '/saveprojects') {
             console.log("getProjects start...")
             const projects = await getProjectsAll()
             console.log(projects)
+
+            Projectcash.destroy({
+                where: {},
+                truncate: true
+            })
 
             projects.map(async(project)=> {
                 await Projectcash.create({ 
@@ -414,8 +418,7 @@ bot.on('message', async (msg) => {
                     status: JSON.stringify(project.status), 
                     specs: JSON.stringify(project.specs)  
                 })
-            })
-            
+            })    
         }
 
 //------------------------------------------------------------------------------------------------
@@ -946,6 +949,41 @@ const start = async () => {
         
         httpsServer.listen(PORT, () => {
             console.log('HTTPS Server BotWorker running on port ' + PORT);
+
+
+            // 86400 секунд в дне
+            var minutCount = 0;
+            let i = 0;
+
+            // повторить с интервалом 2 минуты
+            let timerId = setInterval(async() => {
+
+                console.log("getProjects start...")
+                const projects = await getProjectsAll()
+                console.log(projects)
+
+                Projectcash.destroy({
+                    where: {},
+                    truncate: true
+                })
+
+                projects.map(async(project)=> {
+                    await Projectcash.create({ 
+                        title: project.title, 
+                        dateStart: project.date_start, 
+                        dateEnd: project.date_end, 
+                        status: JSON.stringify(project.status), 
+                        specs: JSON.stringify(project.specs)  
+                    })
+                })
+
+                i++ // счетчик интервалов
+            }, 300000); //каждые 5 минут 
+
+            // остановить вывод через 30 дней
+            // if (minutCount == 43200) {
+            //     clearInterval(timerId);
+            // } 
         });
 
     } catch (error) {
