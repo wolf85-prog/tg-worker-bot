@@ -962,13 +962,11 @@ const start = async () => {
                 const projects = await getProjectsAll()
                 console.log(projects)
 
-                Projectcash.destroy({
-                    where: {},
-                    truncate: true
-                })
+                await Projectcash.truncate();
 
                 projects.map(async(project)=> {
                     await Projectcash.create({ 
+                        projectId: project.id, 
                         title: project.title, 
                         dateStart: project.date_start, 
                         dateEnd: project.date_end, 
