@@ -33,7 +33,7 @@ async function getDatabaseId(baseId) {
             return {
                 date: page.properties["2. Дата"].date?.start,
                 fio_id: page.properties["4. ФИО"].relation[0]?.id,
-                vid: page.properties["3. Вид работ"].multi_select[0]?.name,
+                vid: page.properties["3. Вид работ"]?.multi_select[0]?.name,
                 spec: page.properties["5. Специализация"].multi_select[0]?.name                
             };
         });
