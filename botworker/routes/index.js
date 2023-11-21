@@ -5,6 +5,7 @@ const workerController = require('../controllers/workerController')
 const databaseController = require('../controllers/databaseController')
 const blockController = require('../controllers/blockController')
 const projectController = require('../controllers/projectController')
+const smetaController = require('../controllers/smetaController')
 
 //get WORKERS
 router.get("/workers", workerController.workers);
@@ -44,5 +45,10 @@ router.get('/block/:id', blockController.blockId); // получить данн�
 
 //get Pretendent from project
 router.get("/pretendents/:projectId", workerController.pretendents);
+
+//-----------------СМЕТЫ-------------------------
+//get SMETS
+router.get('/smeta', smetaController.smeta)
+router.get('/smeta/:id', smetaController.smetaId)
 
 module.exports = router

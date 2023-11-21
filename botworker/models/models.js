@@ -59,7 +59,7 @@ const Pretendent = sequelize.define('pretendent', {
 })
 
 const Projectcash = sequelize.define('projectcash', {
-    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true}, 
+    id: {type: DataTypes.STRING, primaryKey: true}, // id проекта
     title: {type: DataTypes.STRING},  //название проекта
     dateStart: {type: DataTypes.STRING}, //начало
     dateEnd: {type: DataTypes.STRING}, //конец
