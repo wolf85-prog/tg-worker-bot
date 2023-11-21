@@ -78,6 +78,26 @@ async function getDatabaseEquipmentId(baseId) {
     }
 }
 
+//получить данные блока Персональные сметы по заданному ID
+async function getDbSmetaId(baseId) {
+    try {
+        const response = await notion.databases.query({
+            database_id: baseId
+        });
+
+        const responseResults = response.results.map((page) => {
+            return {
+                start: page.properties["06. Старт"].rich_text[0]?.plain_text ,
+                stop: page.properties["07. Стоп"].rich_text[0]?.plain_text ,              
+            };
+        });
+
+        return responseResults;
+    } catch (error) {
+        console.error(error.message)
+    }
+}
+
 
 class DatabaseController {
 
@@ -129,6 +149,19 @@ class DatabaseController {
     async database1(req, res) {
         const projects = await getDatabase();
         res.json(projects);
+    }
+
+//сметы
+    async dbSmetaId(req, res) {
+        const id = req.params.id; // получаем id
+        const base = await getDbSmetaId(id);
+    
+        if(base){
+            res.json(base);
+        }
+        else{
+            res.json({});
+        }
     }
 }
 

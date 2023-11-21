@@ -55,4 +55,7 @@ router.get('/smeta/:id', smetaController.smetaId)
 //get BLOCK (сметы)
 router.get('/blockssmeta/:id', blockController.blocksSmetaId); //получить id таблицы/блока "Персональные сметы"
 
+//get DATABASE (специалисты)
+router.get('/dbsmeta/:id', databaseController.dbSmetaId); //получить таблицу Персональные сметы
+
 module.exports = router
