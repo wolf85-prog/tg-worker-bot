@@ -409,7 +409,7 @@ bot.on('message', async (msg) => {
 
             projects.map(async(project)=> {
                 await Projectcash.create({ 
-                    projectId: project.id, 
+                    id: project.id, 
                     title: project.title, 
                     dateStart: project.date_start, 
                     dateEnd: project.date_end, 
