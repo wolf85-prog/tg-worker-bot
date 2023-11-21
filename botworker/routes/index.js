@@ -49,6 +49,7 @@ router.get("/pretendents/:projectId", workerController.pretendents);
 //-----------------СМЕТЫ-------------------------
 //get SMETS
 router.get('/smeta', smetaController.smeta)
+router.get('/smeta/all', smetaController.smetaAll)
 router.get('/smeta/:id', smetaController.smetaId)
 
 module.exports = router

@@ -10,12 +10,24 @@ async function getSmeta() {
         });
 
         const responseResults = response.results.map((page) => {
-            // return {
-            //     id: page.id,
-            //     project: page.properties["Проект"].relation[0]?.id,
-            //     final: page.properties["Финал. смета"].status.id,
-            //     pre: page.properties["Пред. смета"].status.id,
-            // };
+            return {
+                id: page.id,
+                project: page.properties["Проект"].relation[0]?.id,
+                // final: page.properties["Финал. смета"].status.id,
+                // pre: page.properties["Пред. смета"].status.id,
+            };
+        });
+
+        return responseResults;
+    } catch (error) {
+        console.error(error.message)
+    }
+}
+
+async function getSmetaAll() {
+    try {
+        const response = await notion.databases.query({
+            database_id: databaseSmetaId
         });
 
         return response;
@@ -47,6 +59,11 @@ class SmetaController {
     
     async smeta(req, res) {
         const smeta = await getSmeta();
+        res.json(smeta);
+    }
+
+    async smetaAll(req, res) {
+        const smeta = await getSmetaAll();
         res.json(smeta);
     }
 
