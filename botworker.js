@@ -405,13 +405,11 @@ bot.on('message', async (msg) => {
             const projects = await getProjectsAll()
             console.log(projects)
 
-            Projectcash.destroy({
-                where: {},
-                truncate: true
-            })
+            await Projectcash.truncate();
 
             projects.map(async(project)=> {
                 await Projectcash.create({ 
+                    projectId: project.id, 
                     title: project.title, 
                     dateStart: project.date_start, 
                     dateEnd: project.date_end, 
@@ -960,15 +958,13 @@ const start = async () => {
 
                 console.log("getProjects start...")
                 const projects = await getProjectsAll()
-                console.log(projects)
+                //console.log(projects)
 
-                Projectcash.destroy({
-                    where: {},
-                    truncate: true
-                })
+                await Projectcash.truncate();
 
                 projects.map(async(project)=> {
                     await Projectcash.create({ 
+                        id: project.id, 
                         title: project.title, 
                         dateStart: project.date_start, 
                         dateEnd: project.date_end, 
