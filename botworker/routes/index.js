@@ -47,9 +47,12 @@ router.get('/block/:id', blockController.blockId); // получить данн�
 router.get("/pretendents/:projectId", workerController.pretendents);
 
 //-----------------СМЕТЫ-------------------------
-//get SMETS
+//get SMETS 
 router.get('/smeta', smetaController.smeta)
 router.get('/smeta/all', smetaController.smetaAll)
 router.get('/smeta/:id', smetaController.smetaId)
+
+//get BLOCK (сметы)
+router.get('/blockssmeta/:id', blockController.blocksSmetaId); //получить id таблицы/блока "Персональные сметы"
 
 module.exports = router

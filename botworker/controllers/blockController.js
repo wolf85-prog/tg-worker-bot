@@ -572,6 +572,30 @@ async function getPage(pageId) {
 }
 
 
+//
+//получить id блока "Персональные сметы" заданной страницы по id
+async function getBlocksSmetaId(blockId) {
+    try {
+        const response = await notion.blocks.children.list({
+            block_id: blockId,
+        });
+
+        let count = 0;
+        let res;
+
+        const responseResults = response.results.map((block) => {
+            if (block.child_database?.title === "Персональные сметы"){
+               res = block.id 
+            }
+        });     
+
+        return res;
+    } catch (error) {
+        console.error(error.message)
+    }
+}
+
+
 class BlockController {
 
     async blocksId(req, res) {
@@ -634,6 +658,18 @@ class BlockController {
         const id = req.params.id; // получаем id
         const page = await getPage(id);
         res.json(page);
+    }
+
+
+    async blocksSmetaId(req, res) {
+        const id = req.params.id; // получаем id
+        const blocks = await getBlocksSmetaId(id);
+        if(blocks){
+            res.json(blocks);
+        }
+        else{
+            res.json({});
+        }
     }
 }
 

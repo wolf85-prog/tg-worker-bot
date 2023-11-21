@@ -956,7 +956,7 @@ const start = async () => {
             // повторить с интервалом 2 минуты
             let timerId = setInterval(async() => {
 
-                console.log("getProjects start...")
+                console.log("START GET PROJECTS ALL...")
                 const projects = await getProjectsAll()
                 //console.log(projects)
 
