@@ -87,8 +87,10 @@ async function getDbSmetaId(baseId) {
 
         const responseResults = response.results.map((page) => {
             return {
-                start: page.properties["06. Старт"].rich_text[0]?.plain_text ,
-                stop: page.properties["07. Стоп"].rich_text[0]?.plain_text ,              
+                start: page.properties["06. Старт"].rich_text[0]?.plain_text,
+                stop: page.properties["07. Стоп"].rich_text[0]?.plain_text, 
+                stavka: page.properties["09. Ставка"].number,   
+                pererabotka: page.properties["11. Переработка"].number,              
             };
         });
 
