@@ -958,7 +958,7 @@ const start = async () => {
 
                 console.log("getProjects start...")
                 const projects = await getProjectsAll()
-                console.log(projects)
+                //console.log(projects)
 
                 await Projectcash.truncate();
 
