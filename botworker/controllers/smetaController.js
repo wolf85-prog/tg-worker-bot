@@ -74,6 +74,65 @@ class SmetaController {
         res.json(page);
     }
 
+
+    async smetsAll(req, res) {
+        let databaseBlock;
+        let arraySmeta = []
+
+        const smets = await getSmeta();
+        if (smets && smets.length > 0){
+            smets.map(async(smeta, index)=> {
+                let arrayPerson = []
+                const blockId = await getBlocks(project.id);
+                if (blockId) {  
+                    //console.log("blockId: ", blockId)
+                    databaseBlock = await getDatabaseId(blockId); 
+                    //console.log(JSON.stringify(databaseBlock))
+                    //если бд ноушена доступна
+                    if (databaseBlock) {
+                        databaseBlock.map((db) => {
+                            if (db.fio_id) {
+                                const newPerson = {
+                                    id: db?.fio_id,
+                                    vid: db?.vid,
+                                    spec: db?.spec,
+                                    date: db?.date,
+                                }
+                                arrayPerson.push(newPerson)
+                            }
+                        })
+
+                        const newSmeta = {
+                            id: smeta.id,
+                            title: smeta.title,
+                            date_start: smeta.date_start,
+                            date_end: smeta.date_end,
+                            status: smeta.status,
+                            specs: arraySpec,
+                        }
+                        arraySmeta.push(newSmeta)                           
+                    }                   
+                } else {
+                    console.log("База данных не найдена! Смета ID: " + smeta.title)
+                }
+                
+                // if (index === project.length-1) {
+                //     setTimeout(()=> {
+                //         res.json(arrayProject);
+                //     }, 5000)     
+                // }
+            })
+
+            //res.json(arrayProject);
+            setTimeout(()=> {
+                res.json(arrayProject);
+            }, 10000) 
+        }
+        else{
+            res.json([]);
+        }
+    }
+
 }
 
 module.exports = new SmetaController()
