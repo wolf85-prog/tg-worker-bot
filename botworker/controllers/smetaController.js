@@ -112,6 +112,8 @@ class SmetaController {
                             if (db.fio_id) {
                                 const newPerson = {
                                     fio_id: db?.fio_id,
+                                    start: db?.start,
+                                    stop: db?.stop,
                                     stavka: db?.stavka,
                                     pererabotka: db?.pererabotka,
                                     gsm: db?.gsm,
