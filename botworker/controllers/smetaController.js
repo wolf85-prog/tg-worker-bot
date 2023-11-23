@@ -4,6 +4,7 @@ const getBlocksNew = require("../common/getBlocksNew");
 const getDatabaseSmeta = require("../common/getDatabaseSmeta");
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
 const databaseSmetaId = process.env.NOTION_DATABASE_SMETA_ID
+const {Smetacash} = require('../models/models')
 
 async function getSmeta() {
     try {
@@ -57,6 +58,21 @@ async function getSmetaId(id) {
         console.error(error.message)
     }
 }
+
+//получить сметы из БД (кэш)
+async function getSmetsCash() {
+    try {
+        const smets = await Smetacash.findAll({
+            order: [
+                ['id', 'DESC'],
+            ],
+        })
+        return smets;
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
 
 class SmetaController {
     
@@ -125,6 +141,18 @@ class SmetaController {
         }
         else{
             res.json([]);
+        }
+    }
+
+
+
+    async smetsCash(req, res) {
+        const smets = await getSmetsCash();
+        if(smets){
+            res.json(smets);
+        }
+        else{
+            res.json({});
         }
     }
 

@@ -54,7 +54,7 @@ router.get('/smeta/:id', smetaController.smetaId) // одна смета по id
 
 router.get('/smetsall', smetaController.smetsAll) //все сметы с дополнительной информацией
 
-//router.get("/smetscash", smetaController.smetsCash) //кеш всех смет в БД
+router.get("/smetscash", smetaController.smetsCash) //кеш всех смет в БД
 
 //get BLOCK (сметы)
 router.get('/blockssmeta/:id', blockController.blocksSmetaId); //получить id таблицы/блока "Персональные сметы"
