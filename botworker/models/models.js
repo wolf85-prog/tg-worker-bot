@@ -68,7 +68,8 @@ const Projectcash = sequelize.define('projectcash', {
 })
 
 const Smetacash = sequelize.define('smetacash', {
-    id: {type: DataTypes.STRING, primaryKey: true}, // id проекта
+    id: {type: DataTypes.STRING, primaryKey: true}, // id сметы
+    projectId: {type: DataTypes.STRING}, // id проекта
     title: {type: DataTypes.STRING},  //название сметы (проекта)
     dop: {type: DataTypes.STRING},
     // dateStart: {type: DataTypes.STRING}, //начало

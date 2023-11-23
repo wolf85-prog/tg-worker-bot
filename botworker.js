@@ -429,7 +429,8 @@ bot.on('message', async (msg) => {
 
             smets.map(async(smeta)=> {
                 await Smetacash.create({ 
-                    id: smeta.projectId, 
+                    id: smeta.id, 
+                    projectId: smeta.projectId, 
                     title: smeta.title, 
                     dop: JSON.stringify(smeta.dop)  
                 })
