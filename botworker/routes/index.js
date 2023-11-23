@@ -48,13 +48,13 @@ router.get("/pretendents/:projectId", workerController.pretendents);
 
 //-----------------СМЕТЫ-------------------------
 //get SMETS 
-router.get('/smeta', smetaController.smeta)
-router.get('/smeta/all', smetaController.smetaAll)
-router.get('/smeta/:id', smetaController.smetaId)
+router.get('/smeta', smetaController.smeta) //все сметы с краткой информацией
+router.get('/smeta/all', smetaController.smetaAll) //все сметы с полной информацией
+router.get('/smeta/:id', smetaController.smetaId) // одна смета по id проекта
 
-router.get('/smetsall', smetaController.smetsAll)
+router.get('/smetsall', smetaController.smetsAll) //все сметы с дополнительной информацией
 
-//router.get("/smetscash", smetaController.smetsCash)
+//router.get("/smetscash", smetaController.smetsCash) //кеш всех смет в БД
 
 //get BLOCK (сметы)
 router.get('/blockssmeta/:id', blockController.blocksSmetaId); //получить id таблицы/блока "Персональные сметы"

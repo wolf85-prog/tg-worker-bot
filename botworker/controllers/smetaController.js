@@ -1,5 +1,7 @@
 require("dotenv").config();
 const { Client } = require("@notionhq/client");
+const getBlocksNew = require("../common/getBlocksNew");
+const getDatabaseSmeta = require("../common/getDatabaseSmeta");
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
 const databaseSmetaId = process.env.NOTION_DATABASE_SMETA_ID
 
@@ -83,20 +85,21 @@ class SmetaController {
         if (smets && smets.length > 0){
             smets.map(async(smeta, index)=> {
                 let arrayPerson = []
-                const blockId = await getBlocks(project.id);
+                const blockId = await getBlocksNew(smeta.id, "Персональные сметы");
                 if (blockId) {  
                     //console.log("blockId: ", blockId)
-                    databaseBlock = await getDatabaseId(blockId); 
+                    databaseBlock = await getDatabaseSmeta(blockId); 
                     //console.log(JSON.stringify(databaseBlock))
                     //если бд ноушена доступна
                     if (databaseBlock) {
                         databaseBlock.map((db) => {
                             if (db.fio_id) {
                                 const newPerson = {
-                                    id: db?.fio_id,
-                                    vid: db?.vid,
-                                    spec: db?.spec,
-                                    date: db?.date,
+                                    fio_id: db?.fio_id,
+                                    stavka: db?.stavka,
+                                    pererabotka: db?.pererabotka,
+                                    gsm: db?.gsm,
+                                    transport: db?.transport,
                                 }
                                 arrayPerson.push(newPerson)
                             }
@@ -104,28 +107,20 @@ class SmetaController {
 
                         const newSmeta = {
                             id: smeta.id,
-                            title: smeta.title,
-                            date_start: smeta.date_start,
-                            date_end: smeta.date_end,
-                            status: smeta.status,
-                            specs: arraySpec,
+                            title: smeta.name,
+                            projectId: smeta.projectId,
+                            dop: arrayPerson
                         }
                         arraySmeta.push(newSmeta)                           
                     }                   
                 } else {
                     console.log("База данных не найдена! Смета ID: " + smeta.title)
                 }
-                
-                // if (index === project.length-1) {
-                //     setTimeout(()=> {
-                //         res.json(arrayProject);
-                //     }, 5000)     
-                // }
             })
 
             //res.json(arrayProject);
             setTimeout(()=> {
-                res.json(arrayProject);
+                res.json(arraySmeta);
             }, 10000) 
         }
         else{
