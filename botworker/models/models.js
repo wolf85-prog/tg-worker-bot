@@ -67,14 +67,16 @@ const Projectcash = sequelize.define('projectcash', {
     specs: {type: DataTypes.TEXT}, // специалисты
 })
 
-// const Projfilecash = sequelize.define('profilecash', {
-//     id: {type: DataTypes.STRING, primaryKey: true}, // id специалиста
-//     fio: {type: DataTypes.STRING},  //название проекта
-//     city: {type: DataTypes.STRING}, //начало
-//     dateEnd: {type: DataTypes.STRING}, //конец
-//     status: {type: DataTypes.TEXT}, //стытус проекта
-//     specs: {type: DataTypes.TEXT}, // специалисты
-// })
+const Smetacash = sequelize.define('smetacash', {
+    id: {type: DataTypes.STRING, primaryKey: true}, // id проекта
+    title: {type: DataTypes.STRING},  //название сметы (проекта)
+    dateStart: {type: DataTypes.STRING}, //начало
+    dateEnd: {type: DataTypes.STRING}, //конец
+    stavka: {type: DataTypes.STRING}, //
+    pererabotka: {type: DataTypes.STRING}, // 
+    gsm: {type: DataTypes.STRING}, // ГСМ
+    transport: {type: DataTypes.STRING}, // Общ. транспорт
+})
 
 module.exports = {
     UserBot, 
