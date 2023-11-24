@@ -989,6 +989,23 @@ const start = async () => {
                         specs: JSON.stringify(project.specs)  
                     })
                 })
+                
+                //-----------------------------------------------------
+
+                console.log("START GET SMETA ALL...")
+                const smets = await getSmetaAll()
+                //console.log(smets)
+
+                await Smetacash.truncate();
+
+                smets.map(async(smeta)=> {
+                    await Smetacash.create({ 
+                        id: smeta.id, 
+                        projectId: smeta.projectId, 
+                        title: smeta.title, 
+                        dop: JSON.stringify(smeta.dop)  
+                    })
+                })  
 
                 i++ // счетчик интервалов
             }, 300000); //каждые 5 минут 
