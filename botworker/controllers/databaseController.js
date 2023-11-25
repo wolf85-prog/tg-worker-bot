@@ -89,8 +89,14 @@ async function getDbSmetaId(baseId) {
             return {
                 start: page.properties["06. Старт"].rich_text[0]?.plain_text,
                 stop: page.properties["07. Стоп"].rich_text[0]?.plain_text, 
+                chasi: page.properties["08. Часы"].rich_text[0]?.plain_text, 
                 stavka: page.properties["09. Ставка"].number,   
-                pererabotka: page.properties["11. Переработка"].number,              
+                smena: page.properties["10. Смена"].number,
+                pererabotka: page.properties["11. Переработка"].number,     
+                taxi: page.properties["12. Такси"].number, 
+                gsm: page.properties["13. ГСМ"].number,  
+                transport: page.properties["14. Транспорт"].number,   
+                specialist: page.properties["16. Специалист"].number,                
             };
         });
 
