@@ -114,10 +114,14 @@ class SmetaController {
                                     fio_id: db?.fio_id,
                                     start: db?.start,
                                     stop: db?.stop,
+                                    chasi: db?.chasi,
                                     stavka: db?.stavka,
+                                    smena: db?.smena,
                                     pererabotka: db?.pererabotka,
+                                    taxi: db?.taxi,
                                     gsm: db?.gsm,
                                     transport: db?.transport,
+                                    specialist: db?.specialist,
                                 }
                                 arrayPerson.push(newPerson)
                             }
