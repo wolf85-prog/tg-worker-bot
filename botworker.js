@@ -973,22 +973,22 @@ const start = async () => {
             // повторить с интервалом 2 минуты
             let timerId = setInterval(async() => {
 
-                console.log("START GET PROJECTS ALL...")
-                const projects = await getProjectsAll()
-                //console.log(projects)
+                // console.log("START GET PROJECTS ALL...")
+                // const projects = await getProjectsAll()
+                // //console.log(projects)
 
-                await Projectcash.truncate();
+                // await Projectcash.truncate();
 
-                projects.map(async(project)=> {
-                    await Projectcash.create({ 
-                        id: project.id, 
-                        title: project.title, 
-                        dateStart: project.date_start, 
-                        dateEnd: project.date_end, 
-                        status: JSON.stringify(project.status), 
-                        specs: JSON.stringify(project.specs)  
-                    })
-                })
+                // projects.map(async(project)=> {
+                //     await Projectcash.create({ 
+                //         id: project.id, 
+                //         title: project.title, 
+                //         dateStart: project.date_start, 
+                //         dateEnd: project.date_end, 
+                //         status: JSON.stringify(project.status), 
+                //         specs: JSON.stringify(project.specs)  
+                //     })
+                // })
                 
                 //-----------------------------------------------------
 
