@@ -414,8 +414,9 @@ bot.on('message', async (msg) => {
                     title: project.title, 
                     dateStart: project.date_start, 
                     dateEnd: project.date_end, 
+                    tgURLchat: project.tgURL_chat,
                     status: JSON.stringify(project.status), 
-                    specs: JSON.stringify(project.specs)  
+                    specs: JSON.stringify(project.specs) 
                 })
             })    
         }
