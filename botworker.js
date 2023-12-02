@@ -985,6 +985,7 @@ const start = async () => {
                         title: project.title, 
                         dateStart: project.date_start, 
                         dateEnd: project.date_end, 
+                        tgURLchat: project.tgURL_chat,
                         status: JSON.stringify(project.status), 
                         specs: JSON.stringify(project.specs)  
                     })
