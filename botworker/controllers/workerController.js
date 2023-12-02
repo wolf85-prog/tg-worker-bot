@@ -400,6 +400,7 @@ class WorkerController {
                             date_start: project.date_start,
                             date_end: project.date_end,
                             status: project.status,
+                            tgURL_chat: project.tgURL_chat,
                             specs: arraySpec,
                         }
                         arrayProject.push(newProject)                           
