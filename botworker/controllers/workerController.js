@@ -179,7 +179,7 @@ async function getProjects() {
                 date_start: page.properties["Дата"].date?.start,
                 date_end: page.properties["Дата"].date?.end,
                 status: page.properties["Статус проекта"].select,
-                tgURL_chat: page.properties.TG_URL_chat,
+                tgURL_chat: page.properties.TG_URL_chat.rich_text[0]?.plain_text,
             };
         });
 
