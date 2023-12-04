@@ -433,6 +433,7 @@ bot.on('message', async (msg) => {
                     id: smeta.id, 
                     projectId: smeta.projectId, 
                     title: smeta.title, 
+                    final: smeta.final,
                     dop: JSON.stringify(smeta.dop)  
                 })
             })    
@@ -1005,6 +1006,7 @@ const start = async () => {
                         id: smeta.id, 
                         projectId: smeta.projectId, 
                         title: smeta.title, 
+                        final: smeta.final,
                         dop: JSON.stringify(smeta.dop)  
                     })
                 })  
