@@ -17,7 +17,7 @@ async function getSmeta() {
                 id: page.id,
                 projectId: page.properties["Проект"].relation[0]?.id,
                 name: page.properties.Name.title[0]?.plain_text,
-                // final: page.properties["Финал. смета"].status.id,
+                final: page.properties["Финал. смета"].status.name,
                 // pre: page.properties["Пред. смета"].status.id,
             };
         });
