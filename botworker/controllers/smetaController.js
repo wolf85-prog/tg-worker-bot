@@ -131,6 +131,7 @@ class SmetaController {
                             id: smeta.id,
                             title: smeta.name,
                             projectId: smeta.projectId,
+                            final: smeta.final,
                             dop: arrayPerson
                         }
                         arraySmeta.push(newSmeta)                           
