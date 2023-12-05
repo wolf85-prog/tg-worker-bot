@@ -438,16 +438,15 @@ bot.on('message', async (msg) => {
             await Smetacash.truncate();
 
             let arraySpecs = []
+
             smets.map(async(smeta)=> {
                 const projObjetc = projects.find((proj)=> proj.id === smeta.projectId)
-                //console.log("projObjetc: ", projObjetc)
+
                 if (projObjetc.specs.length > 0) {
                     projects.map(async(spec) => {
-                        console.log(spec)
 
-                        //console.log(smeta.projectId, spec.rowId)
-
-                        //const predStavka = await getStavka(smeta.projectId, spec.rowId)
+                        const predStavka = await getStavka(smeta.projectId, spec.rowId)
+                        console.log("predStavka: ", predStavka)
 
                         // try {
                         //     const predStavka = await fetch(
