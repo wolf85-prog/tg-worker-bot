@@ -9,7 +9,7 @@ const $host_stavka = axios.create({
 module.exports = async function getStavka(projectId, staffId) {
 //export const getStavka = async (projectId, staffId) =>{
     try {
-       let response = await $host_stavka.get(`pre-payment/${projectId}/${staffId}`);
+       let response = await $host_stavka.get(`pre-payment/${projectId}/${staffId}`, {proxy: false});
        //console.log(response)
        return response.data;
     } catch (error) {

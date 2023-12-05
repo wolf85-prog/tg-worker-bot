@@ -440,8 +440,9 @@ bot.on('message', async (msg) => {
             let arraySpecs = []
             smets.map(async(smeta)=> {
                 const projObjetc = projects.find((proj)=> proj.id === smeta.projectId)
-                if (projObjetc.specs) {
-                    projects.map(async(spec) => {
+                console.log("projObjetc: ", projObjetc)
+                //if (projObjetc.specs) {
+                    //projects.map(async(spec) => {
 
 
                         //console.log(smeta.projectId, spec.rowId)
@@ -461,8 +462,8 @@ bot.on('message', async (msg) => {
                         //     predStavka: predStavka, 
                         // }
                         // arraySpecs.push(obj)
-                    })
-                }
+                   // })
+                //}
                 
                     
                     // setTimeout(async()=> {
