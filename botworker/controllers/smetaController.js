@@ -95,6 +95,17 @@ async function addStavka(id, stavka) {
     }
 }
 
+//get stavka
+async function getSpecStavka(id) {
+    try {
+        const foundItem = await Specscash.findOne({ where: {specId: id} });
+
+        return res.status(200).json("Stavka has been get successfully");
+    } catch (error) {
+        return res.status(500).json(error.message);
+    }
+}
+
 class SmetaController {
 
     async predStavka(req, res) {
@@ -102,6 +113,12 @@ class SmetaController {
         const stavka = req.params.stavka; // получаем id
         const stavka2 = await addStavka(id, stavka);
         res.json(stavka2);
+    }
+
+    async specStavka(req, res) {
+        const id = req.params.id; // получаем id
+        const spec = await getSpecStavka(id);
+        res.json(spec);
     }
     
     async smeta(req, res) {
