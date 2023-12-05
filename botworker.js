@@ -426,13 +426,26 @@ bot.on('message', async (msg) => {
             const smets = await getSmetaAll()
             console.log(smets)
 
+            const projects = await getProjectsAll()
+
             await Smetacash.truncate();
 
             smets.map(async(smeta)=> {
+
+                projects.find((proj)=> proj.id === smeta.projectId).specs.map(async(spec) => {
+                    const predStavka = await getStavka(smeta.projectId, spec.rowId)
+                    const obj = {
+                        specId: spec.id,
+                        predStavka: predStavka, 
+                    }
+                    arraySpecs.push(obj)
+                })
+
                 await Smetacash.create({ 
                     id: smeta.id, 
                     projectId: smeta.projectId, 
                     title: smeta.title, 
+                    predStavka: '',
                     final: smeta.final,
                     dop: JSON.stringify(smeta.dop)  
                 })
@@ -1002,13 +1015,26 @@ const start = async () => {
                 await Smetacash.truncate();
 
                 smets.map(async(smeta)=> {
-                    await Smetacash.create({ 
-                        id: smeta.id, 
-                        projectId: smeta.projectId, 
-                        title: smeta.title, 
-                        final: smeta.final,
-                        dop: JSON.stringify(smeta.dop)  
+                    projects.find((proj)=> proj.id === smeta.projectId).specs.map(async(spec) => {
+                        const predStavka = await getStavka(smeta.projectId, spec.rowId)
+                        const obj = {
+                            specId: spec.id,
+                            predStavka: predStavka, 
+                        }
+                        arraySpecs.push(obj)
                     })
+                    
+                    setTimeout(async()=> {
+                        await Smetacash.create({ 
+                            id: smeta.id, 
+                            projectId: smeta.projectId, 
+                            title: smeta.title, 
+                            predStavka: arraySpecs,
+                            final: smeta.final,
+                            dop: JSON.stringify(smeta.dop)  
+                        })
+                    }, 7000)
+                    
                 })  
 
                 i++ // счетчик интервалов

@@ -72,6 +72,7 @@ const Smetacash = sequelize.define('smetacash', {
     id: {type: DataTypes.STRING, primaryKey: true}, // id сметы
     projectId: {type: DataTypes.STRING}, // id проекта
     title: {type: DataTypes.STRING},  //название сметы (проекта)
+    predStavka: {type: DataTypes.TEXT}, //предварительная сумма генерирумая API
     final: {type: DataTypes.STRING},  //финал. смета - статус
     dop: {type: DataTypes.TEXT},
     // dateStart: {type: DataTypes.STRING}, //начало
