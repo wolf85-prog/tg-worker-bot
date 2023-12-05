@@ -441,8 +441,11 @@ bot.on('message', async (msg) => {
             smets.map(async(smeta)=> {
 
                 projects.find((proj)=> proj.id === smeta.projectId).specs?.map(async(spec) => {
-                    //let predStavka
-                    const predStavka = await getStavka(smeta.projectId, spec.rowId)
+
+
+                    console.log(spec)
+
+                    //const predStavka = await getStavka(smeta.projectId, spec.rowId)
                     // try {
                     //     const predStavka = await fetch(
                     //         `${process.env.REACT_APP_API_URL_STAVKA}pre-payment/${smeta.projectId}/${spec.rowId}`
@@ -451,23 +454,23 @@ bot.on('message', async (msg) => {
                     //     console.log(error.message)
                     // }
                     
-                    const obj = {
-                        specId: spec.id,
-                        predStavka: predStavka, 
-                    }
-                    arraySpecs.push(obj)
+                    // const obj = {
+                    //     specId: spec.id,
+                    //     predStavka: predStavka, 
+                    // }
+                    // arraySpecs.push(obj)
                 })
                     
-                    setTimeout(async()=> {
-                        await Smetacash.create({ 
-                            id: smeta.id, 
-                            projectId: smeta.projectId, 
-                            title: smeta.title, 
-                            predStavka: arraySpecs,
-                            final: smeta.final,
-                            dop: JSON.stringify(smeta.dop)  
-                        })
-                    }, 7000)
+                    // setTimeout(async()=> {
+                    //     await Smetacash.create({ 
+                    //         id: smeta.id, 
+                    //         projectId: smeta.projectId, 
+                    //         title: smeta.title, 
+                    //         predStavka: arraySpecs,
+                    //         final: smeta.final,
+                    //         dop: JSON.stringify(smeta.dop)  
+                    //     })
+                    // }, 7000)
 
                 // await Smetacash.create({ 
                 //     id: smeta.id, 
