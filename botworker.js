@@ -441,54 +441,42 @@ bot.on('message', async (msg) => {
             let predStavka
 
             smets.map(async(smeta)=> {
-                const projObjetc = projects.find((proj)=> proj.id === smeta.projectId)
+                // const projObjetc = projects.find((proj)=> proj.id === smeta.projectId)
 
-                if (projObjetc) {
-                    projObjetc.specs.map(async(spec) => {
-                        // const predStavka = await getStavka(smeta.projectId, spec.rowId)
+                // if (projObjetc) {
+                //     projObjetc.specs.map(async(spec) => {
+                //         // const predStavka = await getStavka(smeta.projectId, spec.rowId)
 
-                        try {
-                            predStavka = await fetch(
-                                `${process.env.REACT_APP_API_URL_STAVKA}pre-payment/${smeta.projectId}/${spec.rowId}`
-                            );
-                        } catch (error) {
-                            console.log(error.message)
-                        }
+                //         try {
+                //             predStavka = await fetch(
+                //                 `${process.env.REACT_APP_API_URL_STAVKA}pre-payment/${smeta.projectId}/${spec.rowId}`
+                //             );
+                //         } catch (error) {
+                //             console.log(error.message)
+                //         }
 
                         
-                        await delay(6000);                                                        
-                        console.log("predStavka: ", predStavka.data)
+                //         await delay(6000);                                                        
+                //         console.log("predStavka: ", predStavka.data)
                         
-                        const obj = {
-                            specId: spec.id,
-                            predStavka: predStavka, 
-                        }
-                        arraySpecs.push(obj)
-                    })
-                }
+                //         const obj = {
+                //             specId: spec.id,
+                //             predStavka: predStavka, 
+                //         }
+                //         arraySpecs.push(obj)
+                //     })
+                // }
 
-                console.log("arraySpecs: ", arraySpecs)
-                
-                    
-                    // setTimeout(async()=> {
-                    //     await Smetacash.create({ 
-                    //         id: smeta.id, 
-                    //         projectId: smeta.projectId, 
-                    //         title: smeta.title, 
-                    //         predStavka: arraySpecs,
-                    //         final: smeta.final,
-                    //         dop: JSON.stringify(smeta.dop)  
-                    //     })
-                    // }, 7000)
+                // console.log("arraySpecs: ", arraySpecs)
 
-                // await Smetacash.create({ 
-                //     id: smeta.id, 
-                //     projectId: smeta.projectId, 
-                //     title: smeta.title, 
-                //     predStavka: '',
-                //     final: smeta.final,
-                //     dop: JSON.stringify(smeta.dop)  
-                // })
+                await Smetacash.create({ 
+                    id: smeta.id, 
+                    projectId: smeta.projectId, 
+                    title: smeta.title, 
+                    predStavka: '',
+                    final: smeta.final,
+                    dop: JSON.stringify(smeta.dop)  
+                })
             })    
         }
 //------------------------------------------------------------------------------------------------
@@ -1056,34 +1044,21 @@ const start = async () => {
                 //-----------------------------------------------------
 
                 console.log("START GET SMETA ALL...")
-                //const smets = await getSmetaAll()
+                const smets = await getSmetaAll()
 
                 //очистить таблицу
-                // await Smetacash.truncate();
+                await Smetacash.truncate();
                 
-                // let arraySpecs = []
-                // smets.map(async(smeta)=> {
-                //     projects.find((proj)=> proj.id === smeta.projectId).specs.map(async(spec) => {
-                //         const predStavka = await getStavka(smeta.projectId, spec.rowId)
-                //         const obj = {
-                //             specId: spec.id,
-                //             predStavka: predStavka, 
-                //         }
-                //         arraySpecs.push(obj)
-                //     })
-                    
-                //     setTimeout(async()=> {
-                //         await Smetacash.create({ 
-                //             id: smeta.id, 
-                //             projectId: smeta.projectId, 
-                //             title: smeta.title, 
-                //             predStavka: arraySpecs,
-                //             final: smeta.final,
-                //             dop: JSON.stringify(smeta.dop)  
-                //         })
-                //     }, 7000)
-                    
-                // })  
+                smets.map(async(smeta)=> {
+                    await Smetacash.create({ 
+                        id: smeta.id, 
+                        projectId: smeta.projectId, 
+                        title: smeta.title, 
+                        predStavka: '',
+                        final: smeta.final,
+                        dop: JSON.stringify(smeta.dop)  
+                    })
+                })  
 
                 i++ // счетчик интервалов
             }, 600000); //каждые 10 минут 
