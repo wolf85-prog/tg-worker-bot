@@ -448,21 +448,23 @@ bot.on('message', async (msg) => {
                         // const predStavka = await getStavka(smeta.projectId, spec.rowId)
                         console.log("spec.rowId: ", spec.rowId)
 
-                        // try {
-                        //     const predStavka = await fetch(
-                        //         `${process.env.REACT_APP_API_URL_STAVKA}pre-payment/${smeta.projectId}/${spec.rowId}`
-                        //     );
-                        // } catch (error) {
-                        //     console.log(error.message)
-                        // }
+                        try {
+                            const predStavka = await fetch(
+                                `${process.env.REACT_APP_API_URL_STAVKA}pre-payment/${smeta.projectId}/${spec.rowId}`
+                            );
+                        } catch (error) {
+                            console.log(error.message)
+                        }
                         
-                        // const obj = {
-                        //     specId: spec.id,
-                        //     predStavka: predStavka, 
-                        // }
-                        // arraySpecs.push(obj)
+                        const obj = {
+                            specId: spec.id,
+                            predStavka: predStavka, 
+                        }
+                        arraySpecs.push(obj)
                     })
                 }
+
+                console.log("arraySpecs: ", arraySpecs)
                 
                     
                     // setTimeout(async()=> {
