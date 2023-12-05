@@ -439,27 +439,29 @@ bot.on('message', async (msg) => {
 
             let arraySpecs = []
             smets.map(async(smeta)=> {
+                if (projects.find((proj)=> proj.id === smeta.projectId).specs) {
+                    projects.find((proj)=> proj.id === smeta.projectId).specs?.map(async(spec) => {
 
-                projects.find((proj)=> proj.id === smeta.projectId).specs?.map(async(spec) => {
 
+                        console.log(smeta.projectId, spec.rowId)
 
-                    console.log(spec)
-
-                    //const predStavka = await getStavka(smeta.projectId, spec.rowId)
-                    // try {
-                    //     const predStavka = await fetch(
-                    //         `${process.env.REACT_APP_API_URL_STAVKA}pre-payment/${smeta.projectId}/${spec.rowId}`
-                    //     );
-                    // } catch (error) {
-                    //     console.log(error.message)
-                    // }
-                    
-                    // const obj = {
-                    //     specId: spec.id,
-                    //     predStavka: predStavka, 
-                    // }
-                    // arraySpecs.push(obj)
-                })
+                        //const predStavka = await getStavka(smeta.projectId, spec.rowId)
+                        // try {
+                        //     const predStavka = await fetch(
+                        //         `${process.env.REACT_APP_API_URL_STAVKA}pre-payment/${smeta.projectId}/${spec.rowId}`
+                        //     );
+                        // } catch (error) {
+                        //     console.log(error.message)
+                        // }
+                        
+                        // const obj = {
+                        //     specId: spec.id,
+                        //     predStavka: predStavka, 
+                        // }
+                        // arraySpecs.push(obj)
+                    })
+                }
+                
                     
                     // setTimeout(async()=> {
                     //     await Smetacash.create({ 
