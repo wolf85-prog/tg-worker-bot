@@ -73,7 +73,6 @@ const Smetacash = sequelize.define('smetacash', {
     projectId: {type: DataTypes.STRING}, // id проекта
     title: {type: DataTypes.STRING},  //название сметы (проекта)
     final: {type: DataTypes.STRING},  //финал. смета - статус
-    predStavka: {type: DataTypes.TEXT}, //предварительная сумма генерирумая API
     dop: {type: DataTypes.TEXT},
     // dateStart: {type: DataTypes.STRING}, //начало
     // dateEnd: {type: DataTypes.STRING}, //конец
@@ -81,6 +80,14 @@ const Smetacash = sequelize.define('smetacash', {
     // pererabotka: {type: DataTypes.STRING}, // 
     // gsm: {type: DataTypes.STRING}, // ГСМ
     // transport: {type: DataTypes.STRING}, // Общ. транспорт
+})
+
+const Speccash = sequelize.define('speccash', {
+    id: {type: DataTypes.STRING, primaryKey: true}, // id сметы
+    specId: {type: DataTypes.STRING}, // id специалиста
+    predStavka: {type: DataTypes.STRING},  //предварительная ставка
+    factStavka: {type: DataTypes.STRING},  //предварительная ставка
+    podtverStavka: {type: DataTypes.STRING},  //предварительная ставка
 })
 
 module.exports = {
@@ -91,6 +98,7 @@ module.exports = {
     Distributionw,
     Pretendent,
     Projectcash,
-    Smetacash
+    Smetacash,
+    Speccash,
 }
 

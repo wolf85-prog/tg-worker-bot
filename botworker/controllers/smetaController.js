@@ -4,7 +4,7 @@ const getBlocksNew = require("../common/getBlocksNew");
 const getDatabaseSmeta = require("../common/getDatabaseSmeta");
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
 const databaseSmetaId = process.env.NOTION_DATABASE_SMETA_ID
-const {Smetacash} = require('../models/models')
+const {Specscash} = require('../models/models')
 
 async function getSmeta() {
     try {
@@ -73,8 +73,36 @@ async function getSmetsCash() {
     }
 }
 
+//update stavka
+async function addStavka(id, stavka) {
+    try {
+        // First try to find the record
+        const foundItem = await Specscash.findOne({ where: {specId: id} });
+        //console.log(foundItem)
+
+        if (!foundItem) {
+            // Item not found, create a new one
+            const newStavka = await Specscash.create({id, stavka})
+            return res.status(200).json(newStavka);
+        }
+
+        // Found an item, update it
+        const item = await Specscash.update({predStavka: stavka},{where: {specId: id}});
+
+        return res.status(200).json("Stavka has been update successfully");
+    } catch (error) {
+        return res.status(500).json(error.message);
+    }
+}
 
 class SmetaController {
+
+    async predStavka(req, res) {
+        const id = req.params.id; // получаем id
+        const stavka = req.params.stavka; // получаем id
+        const stavka2 = await addStavka(id, stavka);
+        res.json(stavka2);
+    }
     
     async smeta(req, res) {
         const smeta = await getSmeta();
