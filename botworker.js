@@ -443,7 +443,7 @@ bot.on('message', async (msg) => {
                 const projObjetc = projects.find((proj)=> proj.id === smeta.projectId)
 
                 if (projObjetc) {
-                    projects.map(async(spec) => {
+                    projObjetc.specs.map(async(spec) => {
 
                         // const predStavka = await getStavka(smeta.projectId, spec.rowId)
                         console.log("spec.rowId: ", spec.rowId)
