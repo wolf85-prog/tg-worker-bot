@@ -83,7 +83,7 @@ const Smetacash = sequelize.define('smetacash', {
 })
 
 const Speccash = sequelize.define('speccash', {
-    id: {type: DataTypes.STRING, primaryKey: true}, // id сметы
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},  // id
     specId: {type: DataTypes.STRING}, // id специалиста
     predStavka: {type: DataTypes.STRING},  //предварительная ставка
     factStavka: {type: DataTypes.STRING},  //предварительная ставка
