@@ -425,7 +425,7 @@ bot.on('message', async (msg) => {
         if (text === '/savesmets') {
             console.log("getSmets start...")
             const smets = await getSmetaAll()
-            console.log(smets)
+            //console.log(smets)
 
             const projects = await getProjectsAll()
 
@@ -435,7 +435,7 @@ bot.on('message', async (msg) => {
             let arraySpecs = []
             smets.map(async(smeta)=> {
 
-                projects.find((proj)=> proj.id === smeta.projectId).specs.map(async(spec) => {
+                projects.find((proj)=> proj.id === smeta.projectId).specs?.map(async(spec) => {
                     const predStavka = await getStavka(smeta.projectId, spec.rowId)
                     const obj = {
                         specId: spec.id,
