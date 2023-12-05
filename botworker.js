@@ -456,8 +456,8 @@ bot.on('message', async (msg) => {
                         }
 
                         
-                        await delay(4000);                                                        
-                        console.log("predStavka: ", predStavka)
+                        await delay(6000);                                                        
+                        console.log("predStavka: ", predStavka.data)
                         
                         const obj = {
                             specId: spec.id,
