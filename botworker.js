@@ -423,7 +423,7 @@ bot.on('message', async (msg) => {
         }
 
         if (text === '/testgetstavka') {
-            const predStavka = await getStavka('66ed5727-1912-47d8-b27d-348bc167b9a2', '4f180ec3-d2dc-4a1a-b3a8-f2f939e98542')
+            const predStavka = await getStavka('44206718-a2cf-4bc3-b1d0-3eb5f5414324', 'c37e0f70-e3f2-4ca8-b41c-b68a5d5abd3a')
             console.log("predStavka: ", predStavka)
         }
 
