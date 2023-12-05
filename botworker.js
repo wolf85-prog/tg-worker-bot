@@ -54,7 +54,7 @@ const updateWorker = require("./botworker/common/updateWorker");
 //const getProjects = require("./botworker/common/getProjects");
 const getProjectsAll = require("./botworker/http/getProjectsAll");
 const getSmetaAll = require("./botworker/http/getSmetaAll");
-const getStavka = require("./stavkaAPI");
+const getStavka = require("./botworker/http/stavkaAPI");
 
 app.use(express.json());
 app.use(cors());
@@ -436,15 +436,15 @@ bot.on('message', async (msg) => {
             smets.map(async(smeta)=> {
 
                 projects.find((proj)=> proj.id === smeta.projectId).specs?.map(async(spec) => {
-                    let predStavka
-                    //const predStavka = await getStavka(smeta.projectId, spec.rowId)
-                    try {
-                        const predStavka = await fetch(
-                            `${process.env.REACT_APP_API_URL_STAVKA}pre-payment/${smeta.projectId}/${spec.rowId}`
-                        );
-                    } catch (error) {
-                        console.log(error.message)
-                    }
+                    //let predStavka
+                    const predStavka = await getStavka(smeta.projectId, spec.rowId)
+                    // try {
+                    //     const predStavka = await fetch(
+                    //         `${process.env.REACT_APP_API_URL_STAVKA}pre-payment/${smeta.projectId}/${spec.rowId}`
+                    //     );
+                    // } catch (error) {
+                    //     console.log(error.message)
+                    // }
                     
                     const obj = {
                         specId: spec.id,
