@@ -438,23 +438,26 @@ bot.on('message', async (msg) => {
             await Smetacash.truncate();
 
             let arraySpecs = []
+            let predStavka
 
             smets.map(async(smeta)=> {
                 const projObjetc = projects.find((proj)=> proj.id === smeta.projectId)
 
                 if (projObjetc) {
                     projObjetc.specs.map(async(spec) => {
-
                         // const predStavka = await getStavka(smeta.projectId, spec.rowId)
-                        console.log("spec.rowId: ", spec.rowId)
 
                         try {
-                            const predStavka = await fetch(
+                            predStavka = await fetch(
                                 `${process.env.REACT_APP_API_URL_STAVKA}pre-payment/${smeta.projectId}/${spec.rowId}`
                             );
                         } catch (error) {
                             console.log(error.message)
                         }
+
+                        
+                        await delay(4000);                                                        
+                        console.log("predStavka: ", predStavka)
                         
                         const obj = {
                             specId: spec.id,
@@ -1004,6 +1007,13 @@ bot.on('message', async (msg) => {
     }
 
   });
+
+//функция задержки
+const delay = async(ms) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(resolve, ms);
+    });
+}
 
 
 //-------------------------------------------------------------------------------------------------------------------------------
