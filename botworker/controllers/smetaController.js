@@ -4,7 +4,7 @@ const getBlocksNew = require("../common/getBlocksNew");
 const getDatabaseSmeta = require("../common/getDatabaseSmeta");
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
 const databaseSmetaId = process.env.NOTION_DATABASE_SMETA_ID
-const {Specscash} = require('../models/models')
+const {Speccash, Smetacash} = require('../models/models')
 
 async function getSmeta() {
     try {
@@ -98,7 +98,7 @@ async function addStavka(id, stavka) {
 //get stavka
 async function getSpecStavka(id) {
     try {
-        const foundItem = await Specscash.findOne({ where: {specId: id} });
+        const foundItem = await Speccash.findOne({ where: {specId: id} });
 
         return res.status(200).json("Stavka has been get successfully");
     } catch (error) {
