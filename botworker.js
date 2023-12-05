@@ -440,7 +440,7 @@ bot.on('message', async (msg) => {
                     //const predStavka = await getStavka(smeta.projectId, spec.rowId)
                     try {
                         const predStavka = await fetch(
-                            `${process.env.REACT_APP_API_URL_STAVKA}/pre-payment/${smeta.projectId}/${spec.rowId}`
+                            `${process.env.REACT_APP_API_URL_STAVKA}pre-payment/${smeta.projectId}/${spec.rowId}`
                         );
                     } catch (error) {
                         console.log(error.message)
