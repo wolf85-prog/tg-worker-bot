@@ -439,13 +439,15 @@ bot.on('message', async (msg) => {
 
             let arraySpecs = []
             smets.map(async(smeta)=> {
-                if (projects.find((proj)=> proj.id === smeta.projectId).specs) {
-                    projects.find((proj)=> proj.id === smeta.projectId).specs?.map(async(spec) => {
+                const projObjetc = projects.find((proj)=> proj.id === smeta.projectId)
+                if (projObjetc.specs) {
+                    projObjetc.map(async(spec) => {
 
 
-                        console.log(smeta.projectId, spec.rowId)
+                        //console.log(smeta.projectId, spec.rowId)
 
-                        //const predStavka = await getStavka(smeta.projectId, spec.rowId)
+                        const predStavka = await getStavka(smeta.projectId, spec.rowId)
+
                         // try {
                         //     const predStavka = await fetch(
                         //         `${process.env.REACT_APP_API_URL_STAVKA}pre-payment/${smeta.projectId}/${spec.rowId}`
