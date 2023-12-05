@@ -1012,34 +1012,34 @@ const start = async () => {
                 //-----------------------------------------------------
 
                 console.log("START GET SMETA ALL...")
-                const smets = await getSmetaAll()
+                //const smets = await getSmetaAll()
 
                 //очистить таблицу
-                await Smetacash.truncate();
+                // await Smetacash.truncate();
                 
-                let arraySpecs = []
-                smets.map(async(smeta)=> {
-                    projects.find((proj)=> proj.id === smeta.projectId).specs.map(async(spec) => {
-                        const predStavka = await getStavka(smeta.projectId, spec.rowId)
-                        const obj = {
-                            specId: spec.id,
-                            predStavka: predStavka, 
-                        }
-                        arraySpecs.push(obj)
-                    })
+                // let arraySpecs = []
+                // smets.map(async(smeta)=> {
+                //     projects.find((proj)=> proj.id === smeta.projectId).specs.map(async(spec) => {
+                //         const predStavka = await getStavka(smeta.projectId, spec.rowId)
+                //         const obj = {
+                //             specId: spec.id,
+                //             predStavka: predStavka, 
+                //         }
+                //         arraySpecs.push(obj)
+                //     })
                     
-                    setTimeout(async()=> {
-                        await Smetacash.create({ 
-                            id: smeta.id, 
-                            projectId: smeta.projectId, 
-                            title: smeta.title, 
-                            predStavka: arraySpecs,
-                            final: smeta.final,
-                            dop: JSON.stringify(smeta.dop)  
-                        })
-                    }, 7000)
+                //     setTimeout(async()=> {
+                //         await Smetacash.create({ 
+                //             id: smeta.id, 
+                //             projectId: smeta.projectId, 
+                //             title: smeta.title, 
+                //             predStavka: arraySpecs,
+                //             final: smeta.final,
+                //             dop: JSON.stringify(smeta.dop)  
+                //         })
+                //     }, 7000)
                     
-                })  
+                // })  
 
                 i++ // счетчик интервалов
             }, 600000); //каждые 10 минут 
