@@ -445,16 +445,16 @@ bot.on('message', async (msg) => {
                 if (projObjetc.specs.length > 0) {
                     projects.map(async(spec) => {
 
-                        const predStavka = await getStavka(smeta.projectId, spec.rowId)
-                        console.log("predStavka: ", predStavka)
+                        // const predStavka = await getStavka(smeta.projectId, spec.rowId)
+                        // console.log("predStavka: ", predStavka)
 
-                        // try {
-                        //     const predStavka = await fetch(
-                        //         `${process.env.REACT_APP_API_URL_STAVKA}pre-payment/${smeta.projectId}/${spec.rowId}`
-                        //     );
-                        // } catch (error) {
-                        //     console.log(error.message)
-                        // }
+                        try {
+                            const predStavka = await fetch(
+                                `${process.env.REACT_APP_API_URL_STAVKA}pre-payment/${smeta.projectId}/${spec.rowId}`
+                            );
+                        } catch (error) {
+                            console.log(error.message)
+                        }
                         
                         // const obj = {
                         //     specId: spec.id,
