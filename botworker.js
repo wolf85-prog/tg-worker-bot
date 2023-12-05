@@ -447,7 +447,7 @@ bot.on('message', async (msg) => {
 
                         //console.log(smeta.projectId, spec.rowId)
 
-                        const predStavka = await getStavka(smeta.projectId, spec.rowId)
+                        //const predStavka = await getStavka(smeta.projectId, spec.rowId)
 
                         // try {
                         //     const predStavka = await fetch(
