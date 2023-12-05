@@ -457,15 +457,26 @@ bot.on('message', async (msg) => {
                     }
                     arraySpecs.push(obj)
                 })
+                    
+                    setTimeout(async()=> {
+                        await Smetacash.create({ 
+                            id: smeta.id, 
+                            projectId: smeta.projectId, 
+                            title: smeta.title, 
+                            predStavka: arraySpecs,
+                            final: smeta.final,
+                            dop: JSON.stringify(smeta.dop)  
+                        })
+                    }, 7000)
 
-                await Smetacash.create({ 
-                    id: smeta.id, 
-                    projectId: smeta.projectId, 
-                    title: smeta.title, 
-                    predStavka: '',
-                    final: smeta.final,
-                    dop: JSON.stringify(smeta.dop)  
-                })
+                // await Smetacash.create({ 
+                //     id: smeta.id, 
+                //     projectId: smeta.projectId, 
+                //     title: smeta.title, 
+                //     predStavka: '',
+                //     final: smeta.final,
+                //     dop: JSON.stringify(smeta.dop)  
+                // })
             })    
         }
 //------------------------------------------------------------------------------------------------
