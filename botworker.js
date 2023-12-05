@@ -422,6 +422,11 @@ bot.on('message', async (msg) => {
             })    
         }
 
+        if (text === 'testgetstavka') {
+            const predStavka = await getStavka('66ed5727-1912-47d8-b27d-348bc167b9a2', '4f180ec3-d2dc-4a1a-b3a8-f2f939e98542')
+            console.log("predStavka: ", predStavka)
+        }
+
         if (text === '/savesmets') {
             console.log("getSmets start...")
             const smets = await getSmetaAll()
