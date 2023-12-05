@@ -54,7 +54,7 @@ const updateWorker = require("./botworker/common/updateWorker");
 //const getProjects = require("./botworker/common/getProjects");
 const getProjectsAll = require("./botworker/http/getProjectsAll");
 const getSmetaAll = require("./botworker/http/getSmetaAll");
-const getStavka = require("./botworker/http/stavkaAPI");
+const getStavka = require("./stavkaAPI");
 
 app.use(express.json());
 app.use(cors());
