@@ -441,7 +441,7 @@ bot.on('message', async (msg) => {
             smets.map(async(smeta)=> {
                 const projObjetc = projects.find((proj)=> proj.id === smeta.projectId)
                 if (projObjetc.specs) {
-                    projObjetc.map(async(spec) => {
+                    projects.map(async(spec) => {
 
 
                         //console.log(smeta.projectId, spec.rowId)
