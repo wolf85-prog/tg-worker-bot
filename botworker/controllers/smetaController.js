@@ -100,9 +100,9 @@ async function getSpecStavka(id) {
     try {
         const foundItem = await Speccash.findOne({ where: {specId: id} });
 
-        return res.status(200).json("Stavka has been get successfully");
+        return foundItem;
     } catch (error) {
-        return res.status(500).json(error.message);
+        console.error(error.message);
     }
 }
 
