@@ -119,7 +119,7 @@ class SmetaController {
     async specStavka(req, res) {
         const id = req.params.id; // получаем id
         const projid = req.params.projid; // получаем id
-        const spec = await getSpecStavka(projid);
+        const spec = await getSpecStavka(id, projid);
         res.json(spec);
     }
     
