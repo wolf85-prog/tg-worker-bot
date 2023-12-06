@@ -141,7 +141,7 @@ class SmetaController {
     async factStavka(req, res) {
         const id = req.params.id; // получаем id
         const projId = req.params.projid; // получаем id
-        const stavka = req.params.stavka; // получаем id
+        const stavka = req.params.fact; // получаем id
         const stavka2 = await addFactStavka(id, projId, stavka);
         res.json(stavka2);
     }
