@@ -56,8 +56,8 @@ router.get('/smetsall', smetaController.smetsAll) //все сметы с доп�
 
 router.get("/smetscash", smetaController.smetsCash) //кеш всех смет в БД
 
-router.get("/specs/stavka/add/:id/:stavka", smetaController.predStavka) //добавить вкеш специалиста с его ставкой
-router.get("/specs/stavka/get/:id/", smetaController.specStavka) //кеш специалиста с его ставкой
+router.get("/specs/stavka/add/:id/:projid/:stavka", smetaController.predStavka) //добавить вкеш специалиста с его ставкой
+router.get("/specs/stavka/get/:id/:projid", smetaController.specStavka) //кеш специалиста с его ставкой
 
 //get BLOCK (сметы)
 router.get('/blockssmeta/:id', blockController.blocksSmetaId); //получить id таблицы/блока "Персональные сметы"
