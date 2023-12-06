@@ -74,20 +74,20 @@ async function getSmetsCash() {
 }
 
 //update stavka
-async function addStavka(id, stavka) {
+async function addStavka(id, projId, stavka) {
     try {
         // First try to find the record
-        const foundItem = await Speccash.findOne({ where: {specId: id} });
+        const foundItem = await Speccash.findOne({ where: {specId: id, projectId: projId} });
         //console.log(foundItem)
 
         if (!foundItem) {
             // Item not found, create a new one
-            const newStavka = await Speccash.create({specId: id, predStavka: stavka})
+            const newStavka = await Speccash.create({specId: id, projectId: projId, predStavka: stavka})
             return newStavka;
         }
 
         // Found an item, update it
-        const item = await Speccash.update({predStavka: stavka},{where: {specId: id}});
+        const item = await Speccash.update({predStavka: stavka},{where: {specId: id, projectId: projId}});
 
         return item;
     } catch (error) {
@@ -96,9 +96,9 @@ async function addStavka(id, stavka) {
 }
 
 //get stavka
-async function getSpecStavka(id) {
+async function getSpecStavka(id, projId) {
     try {
-        const foundItem = await Speccash.findOne({ where: {specId: id} });
+        const foundItem = await Speccash.findOne({ where: {specId: id, projectId: projId} });
 
         return foundItem;
     } catch (error) {
