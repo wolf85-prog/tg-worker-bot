@@ -77,17 +77,17 @@ async function getSmetsCash() {
 async function addStavka(id, stavka) {
     try {
         // First try to find the record
-        const foundItem = await Specscash.findOne({ where: {specId: id} });
+        const foundItem = await Speccash.findOne({ where: {specId: id} });
         //console.log(foundItem)
 
         if (!foundItem) {
             // Item not found, create a new one
-            const newStavka = await Specscash.create({id, stavka})
+            const newStavka = await Speccash.create({id, stavka})
             return res.status(200).json(newStavka);
         }
 
         // Found an item, update it
-        const item = await Specscash.update({predStavka: stavka},{where: {specId: id}});
+        const item = await Speccash.update({predStavka: stavka},{where: {specId: id}});
 
         return res.status(200).json("Stavka has been update successfully");
     } catch (error) {
