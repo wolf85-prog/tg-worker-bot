@@ -89,9 +89,9 @@ async function addStavka(id, stavka) {
         // Found an item, update it
         const item = await Speccash.update({predStavka: stavka},{where: {specId: id}});
 
-        return res.status(200).json("Stavka has been update successfully");
+        return item;
     } catch (error) {
-        return res.status(500).json(error.message);
+        console.error(error.message);
     }
 }
 
