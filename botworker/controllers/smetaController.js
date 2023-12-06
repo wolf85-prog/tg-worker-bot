@@ -83,7 +83,7 @@ async function addStavka(id, stavka) {
         if (!foundItem) {
             // Item not found, create a new one
             const newStavka = await Speccash.create({id, stavka})
-            return res.status(200).json(newStavka);
+            return newStavka;
         }
 
         // Found an item, update it
