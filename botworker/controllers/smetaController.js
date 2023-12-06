@@ -95,6 +95,28 @@ async function addStavka(id, projId, stavka) {
     }
 }
 
+//update stavka
+async function addFactStavka(id, projId, stavka) {
+    try {
+        // First try to find the record
+        const foundItem = await Speccash.findOne({ where: {specId: id, projectId: projId} });
+        //console.log(foundItem)
+
+        if (!foundItem) {
+            // Item not found, create a new one
+            const newStavka = await Speccash.create({specId: id, projectId: projId, factStavka: stavka})
+            return newStavka;
+        }
+
+        // Found an item, update it
+        const item = await Speccash.update({factStavka: stavka},{where: {specId: id, projectId: projId}});
+
+        return item;
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
 //get stavka
 async function getSpecStavka(id, projId) {
     try {
@@ -113,6 +135,14 @@ class SmetaController {
         const projId = req.params.projid; // получаем id
         const stavka = req.params.stavka; // получаем id
         const stavka2 = await addStavka(id, projId, stavka);
+        res.json(stavka2);
+    }
+
+    async factStavka(req, res) {
+        const id = req.params.id; // получаем id
+        const projId = req.params.projid; // получаем id
+        const stavka = req.params.stavka; // получаем id
+        const stavka2 = await addFactStavka(id, projId, stavka);
         res.json(stavka2);
     }
 
