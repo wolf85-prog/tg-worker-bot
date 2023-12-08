@@ -11,6 +11,7 @@ module.exports = async function getDatabaseSmeta(baseId) {
 
         const responseResults = response.results.map((page) => {
             return {
+                date: page.properties["02. Дата"].date?.start,
                 fio_id: page.properties["04. ФИО"].relation[0]?.id,
                 start: page.properties["06. Старт"].rich_text[0]?.plain_text,
                 stop: page.properties["07. Стоп"].rich_text[0]?.plain_text, 

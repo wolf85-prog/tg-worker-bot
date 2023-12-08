@@ -188,6 +188,7 @@ class SmetaController {
                         databaseBlock.map((db) => {
                             if (db.fio_id) {
                                 const newPerson = {
+                                    date: db?.date,
                                     fio_id: db?.fio_id,
                                     start: db?.start,
                                     stop: db?.stop,
