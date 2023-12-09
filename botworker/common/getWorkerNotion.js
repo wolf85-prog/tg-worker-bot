@@ -12,7 +12,7 @@ module.exports = async function getWorkerNotion(chatId) {
             "filter": {
                 "property": "Telegram",
                 "number": {
-                    "equals": parseInt(chatId)
+                    "equals": chatId ? parseInt(chatId) : 0
                 }
             },
             "sorts": [{ 
