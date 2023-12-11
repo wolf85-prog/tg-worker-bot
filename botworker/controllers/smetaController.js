@@ -74,20 +74,20 @@ async function getSmetsCash() {
 }
 
 //update stavka
-async function addStavka(id, projId, stavka) {
+async function addStavka(id, projId, stavka, date) {
     try {
         // First try to find the record
-        const foundItem = await Speccash.findOne({ where: {specId: id, projectId: projId} });
+        const foundItem = await Speccash.findOne({ where: {specId: id, projectId: projId, date} });
         //console.log(foundItem)
 
         if (!foundItem) {
             // Item not found, create a new one
-            const newStavka = await Speccash.create({specId: id, projectId: projId, predStavka: stavka})
+            const newStavka = await Speccash.create({specId: id, projectId: projId, predStavka: stavka, date})
             return newStavka;
         }
 
         // Found an item, update it
-        const item = await Speccash.update({predStavka: stavka},{where: {specId: id, projectId: projId}});
+        const item = await Speccash.update({predStavka: stavka},{where: {specId: id, projectId: projId, date}});
 
         return item;
     } catch (error) {
@@ -96,20 +96,20 @@ async function addStavka(id, projId, stavka) {
 }
 
 //update stavka
-async function addFactStavka(id, projId, stavka) {
+async function addFactStavka(id, projId, stavka, date) {
     try {
         // First try to find the record
-        const foundItem = await Speccash.findOne({ where: {specId: id, projectId: projId} });
+        const foundItem = await Speccash.findOne({ where: {specId: id, projectId: projId, date} });
         //console.log(foundItem)
 
         if (!foundItem) {
             // Item not found, create a new one
-            const newStavka = await Speccash.create({specId: id, projectId: projId, factStavka: stavka})
+            const newStavka = await Speccash.create({specId: id, projectId: projId, factStavka: stavka, date})
             return newStavka;
         }
 
         // Found an item, update it
-        const item = await Speccash.update({factStavka: stavka},{where: {specId: id, projectId: projId}});
+        const item = await Speccash.update({factStavka: stavka},{where: {specId: id, projectId: projId, date}});
 
         return item;
     } catch (error) {
@@ -118,9 +118,9 @@ async function addFactStavka(id, projId, stavka) {
 }
 
 //get stavka
-async function getSpecStavka(id, projId) {
+async function getSpecStavka(id, projId, date) {
     try {
-        const foundItem = await Speccash.findOne({ where: {specId: id, projectId: projId} });
+        const foundItem = await Speccash.findOne({ where: {specId: id, projectId: projId, date} });
 
         return foundItem;
     } catch (error) {
@@ -134,7 +134,8 @@ class SmetaController {
         const id = req.params.id; // получаем id
         const projId = req.params.projid; // получаем id
         const stavka = req.params.stavka; // получаем id
-        const stavka2 = await addStavka(id, projId, stavka);
+        const date = req.params.date; // получаем id
+        const stavka2 = await addStavka(id, projId, stavka, date);
         res.json(stavka2);
     }
 
@@ -142,14 +143,16 @@ class SmetaController {
         const id = req.params.id; // получаем id
         const projId = req.params.projid; // получаем id
         const stavka = req.params.fact; // получаем id
-        const stavka2 = await addFactStavka(id, projId, stavka);
+        const date = req.params.date; // получаем id
+        const stavka2 = await addFactStavka(id, projId, stavka, date);
         res.json(stavka2);
     }
 
     async specStavka(req, res) {
         const id = req.params.id; // получаем id
         const projid = req.params.projid; // получаем id
-        const spec = await getSpecStavka(id, projid);
+        const date = req.params.date; // получаем id
+        const spec = await getSpecStavka(id, projid, date);
         res.json(spec);
     }
     
