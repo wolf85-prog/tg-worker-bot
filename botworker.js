@@ -416,6 +416,7 @@ bot.on('message', async (msg) => {
                     dateStart: project.date_start, 
                     dateEnd: project.date_end, 
                     tgURLchat: project.tgURL_chat,
+                    manager: project.managerId,
                     status: JSON.stringify(project.status), 
                     specs: JSON.stringify(project.specs) 
                 })
@@ -1035,6 +1036,7 @@ const start = async () => {
                         dateStart: project.date_start, 
                         dateEnd: project.date_end, 
                         tgURLchat: project.tgURL_chat,
+                        manager: project.managerId,
                         status: JSON.stringify(project.status), 
                         specs: JSON.stringify(project.specs)  
                     })

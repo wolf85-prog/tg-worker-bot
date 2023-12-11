@@ -180,6 +180,7 @@ async function getProjects() {
                 date_end: page.properties["Дата"].date?.end,
                 status: page.properties["Статус проекта"].select,
                 tgURL_chat: page.properties.TG_URL_chat.rich_text[0]?.plain_text,
+                manager: page.properties["Менеджер"].relation[0]?.id,
             };
         });
 
@@ -401,6 +402,7 @@ class WorkerController {
                             date_end: project.date_end,
                             status: project.status,
                             tgURL_chat: project.tgURL_chat,
+                            managerId: project.manager,
                             specs: arraySpec,
                         }
                         arrayProject.push(newProject)                           
