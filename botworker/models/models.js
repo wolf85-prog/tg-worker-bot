@@ -64,6 +64,7 @@ const Projectcash = sequelize.define('projectcash', {
     dateStart: {type: DataTypes.STRING}, //начало
     dateEnd: {type: DataTypes.STRING}, //конец
     tgURLchat: {type: DataTypes.STRING}, //ссылка на чат
+    manager: {type: DataTypes.STRING}, //id менеджера
     status: {type: DataTypes.TEXT}, //стытус проекта
     specs: {type: DataTypes.TEXT}, // специалисты
 })
