@@ -862,15 +862,17 @@ bot.on('message', async (msg) => {
             },
         });           
 
-        const blockId = await getBlocksP(user.projectId);  
-        
-        // текущая дата
-        const date = Date.now() + 10800000; //+3 часа
-        const dateNow =new Date(date)
-        console.log("dateNow: ", dateNow)
-        
-        //Добавить специалиста в таблицу Претенденты (Ноушен)
-        await addPretendent(blockId, user.workerId, dateNow);
+        if (user.projectId) {
+           const blockId = await getBlocksP(user.projectId); 
+           
+           // текущая дата
+            const date = Date.now() + 10800000; //+3 часа
+            const dateNow =new Date(date)
+            console.log("dateNow: ", dateNow)
+            
+            //Добавить специалиста в таблицу Претенденты (Ноушен)
+            await addPretendent(blockId, user.workerId, dateNow);
+        }
 
         //отправить сообщение в админ-панель
         const convId = await sendMyMessage('Пользователь нажал кнопку "Принять" в рассылке', "text", chatId)
