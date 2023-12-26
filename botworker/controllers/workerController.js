@@ -383,7 +383,7 @@ class WorkerController {
                     //если бд ноушена доступна
                     if (databaseBlock) {
                         databaseBlock.map((db) => {
-                            if (db.fio_id) {
+                            if (db.id) {
                                 const newSpec = {
                                     rowId: db?.id,
                                     id: db?.fio_id,
