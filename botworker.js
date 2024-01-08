@@ -757,13 +757,7 @@ bot.on('message', async (msg) => {
                     
 // Увидимся на наших проектах! 😈`)
 
-                    await bot.sendPhoto(chatId, 'https://proj.uley.team/upload/2024-01-08T09:27:52.916Z.jpg', {
-                        reply_markup: ({
-                            inline_keyboard:[
-                                [{text: 'Поехали!', web_app: {url: webAppUrl}}],
-                            ]
-                        })
-                    })
+                    await bot.sendPhoto(chatId, 'https://proj.uley.team/upload/2024-01-08T09:27:52.916Z.jpg')
 
                 } catch (error) {
                     console.log(error.message)
