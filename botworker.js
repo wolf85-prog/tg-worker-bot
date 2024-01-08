@@ -102,7 +102,7 @@ app.post('/web-data', async (req, res) => {
             // stag2 = stag
             // companys2 = companys
             Worklist = worklist 
-            console.log("Сохранение данных завершено: ", workerFam)
+            console.log("Сохранение данных завершено: ", workerFam, workerName2, phone2, dateBorn, city2, Worklist)
             
             await bot.answerWebAppQuery(queryId, {
                 type: 'article',
