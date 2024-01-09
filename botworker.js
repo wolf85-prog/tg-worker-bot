@@ -25,7 +25,7 @@ const databaseId = process.env.NOTION_DATABASE_ID
 const databaseWorkersId = process.env.NOTION_DATABASE_WORKERS_ID
 const chatTelegramId = process.env.CHAT_ID
 
-let workerId, workerFam, workerName2, phone2, dateBorn, Worklist, city2, stag2, companys2;
+let workerId, workerFam, workerName2, phone2, dateBorn, Worklist, city2, stag2, companys2, friend2;
 
 //functions
 const getBlocksP = require('./botworker/common/getBlocksP')
@@ -83,7 +83,7 @@ const httpsServer = https.createServer(credentials, app);
 //создание страницы (проекта) базы данных проектов
 app.post('/web-data', async (req, res) => {
     const {queryId, workerfamily, workerName, phone, worklist, 
-        city, dateborn} = req.body;
+        city, dateborn, friend} = req.body;
     //const d = new Date(dateborn);
     //const year = d.getFullYear();
     //const month = String(d.getMonth()+1).padStart(2, "0");
@@ -101,6 +101,7 @@ app.post('/web-data', async (req, res) => {
             city2 = city
             // stag2 = stag
             // companys2 = companys
+            friend2 = friend
             Worklist = worklist 
             console.log("Сохранение данных завершено: ", workerFam, workerName2, phone2, dateBorn, city2, Worklist)
             
@@ -118,6 +119,7 @@ app.post('/web-data', async (req, res) => {
 <b>Телефон:</b> ${phone} 
 <b>Год рождения:</b> ${dateborn}
 <b>Город:</b> ${city} 
+<b>TelegramID друга:</b> ${friend} 
   
 <b>Специальности:</b> 
 ${worklist.map(item =>' - ' + item.spec).join('\n')}`
