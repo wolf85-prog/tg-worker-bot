@@ -119,7 +119,7 @@ app.post('/web-data', async (req, res) => {
 <b>Телефон:</b> ${phone} 
 <b>Год рождения:</b> ${dateborn}
 <b>Город:</b> ${city} 
-<b>TelegramID друга:</b> ${friend} 
+<b>Promo ID:</b> ${friend} 
   
 <b>Специальности:</b> 
 ${worklist.map(item =>' - ' + item.spec).join('\n')}`
