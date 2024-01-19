@@ -98,6 +98,7 @@ async function getWorkerId(tgId) {
                 comteg: page.properties["КомТег"].multi_select,
                 rank: page.properties.Rank.number,
                 passport: page.properties.Passport.rich_text[0]?.plain_text,
+                skill: page.properties.Skill.multi_select,
             };
         });
 
