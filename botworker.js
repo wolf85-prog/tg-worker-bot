@@ -76,7 +76,7 @@ const credentials = {
 
 const httpsServer = https.createServer(credentials, app);
 
-const specData = require('./botworker/data/specData');
+const {specData} = require('./botworker/data/specData');
 
 
 //--------------------------------------------------------------------------------------------------------
