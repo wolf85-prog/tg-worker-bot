@@ -411,7 +411,7 @@ bot.on('message', async (msg) => {
 
             workers.map(async(worker)=> {
                 //получить данные специалиста по его id
-                const spec = getWorkerNotion(worker.chatId)
+                const spec = await getWorkerNotion(worker.chatId)
                 
 
                 setTimeout(async()=> {
