@@ -417,19 +417,19 @@ bot.on('message', async (msg) => {
                 
                 setTimeout(async()=> {
 
-                specData.map((category)=> {
-                    category.models.map((spec)=> {
-                        spec[0].spec.map(item => {
-                            if (spec.name === item.name){
-                                const obj = {
-                                    spec: item.name,
-                                    cat: category.name,
+                    specData.map((category)=> {
+                        category.models.map((work)=> {
+                            spec[0].spec.map((item) => {
+                                if (work.name === item.name){
+                                    const obj = {
+                                        spec: item.name,
+                                        cat: category.name,
+                                    }
+                                    specArr.push(obj)
                                 }
-                                specArr.push(obj)
-                            }
+                            })
                         })
                     })
-                })
 
                     //обновить бд
                     const res = await Worker.update({ 
