@@ -55,6 +55,7 @@ const updateWorker = require("./botworker/common/updateWorker");
 const getProjectsAll = require("./botworker/http/getProjectsAll");
 const getSmetaAll = require("./botworker/http/getSmetaAll");
 const getStavka = require("./botworker/http/stavkaAPI");
+const getWorkersAll = require("./botworker/http/getWorkersAll");
 
 app.use(express.json());
 app.use(cors());
@@ -401,6 +402,25 @@ bot.on('message', async (msg) => {
                  };
             list.push(obj)
             await updateWorker(res[0].id, list)
+        }
+
+        if (text === '/getworkers') {
+            console.log("START GET WORKERS ALL...")
+            const workers = await getWorkersAll()
+            console.log("workers: ", workers)
+
+                // workers.map(async(worker)=> {
+                //     //получить данные специалиста по его id
+                //     const spec = getWorkerNotion(worker.chatId)
+
+                //     //обновить бд
+                //     await Worker.update({ 
+                //         worklist: JSON.stringify(spec.spec)  
+                //     },
+                //     { 
+                //         where: {chatId: worker.chatId} 
+                //     })
+                // }) 
         }
 
 
@@ -1065,6 +1085,22 @@ const start = async () => {
                         dop: JSON.stringify(smeta.dop)  
                     })
                 })  
+
+                // console.log("START GET WORKERS ALL...")
+                // const workers = await getWorkersAll()
+
+                // workers.map(async(worker)=> {
+                //     //получить данные специалиста по его id
+                //     const spec = getWorkerNotion(worker.chatId)
+
+                //     //обновить бд
+                //     await Worker.update({ 
+                //         worklist: JSON.stringify(spec.spec)  
+                //     },
+                //     { 
+                //         where: {chatId: worker.chatId} 
+                //     })
+                // }) 
 
                 i++ // счетчик интервалов
             }, 600000); //каждые 10 минут 
