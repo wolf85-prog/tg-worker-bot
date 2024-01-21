@@ -415,7 +415,8 @@ bot.on('message', async (msg) => {
                 
 
                 setTimeout(async()=> {
-                    console.log("spec: ", spec)
+                    console.log("chatId: ", worker.chatId)
+                    console.log("worklist: ", JSON.stringify(spec.spec) )
 
                     //обновить бд
                     const res = await Worker.update({ 
@@ -424,7 +425,7 @@ bot.on('message', async (msg) => {
                     { 
                         where: {chatId: worker.chatId} 
                     })
-                    console.log(res)
+                    //console.log(res)
                 }, 6000)   
             }) 
         }
