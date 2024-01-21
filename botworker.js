@@ -409,22 +409,21 @@ bot.on('message', async (msg) => {
         if (text === '/getworkers') {
             console.log("START GET WORKERS ALL...")
             const workers = await getWorkersAll()
-            //console.log("workers: ", workers)
-            let specArr = []
+            //console.log("workers: ", workers)  
 
             workers.map(async(worker)=> {
                 //получить данные специалиста по его id
                 const spec = await getWorkerNotion(worker.chatId)
-                
-                setTimeout(async()=> {
+                let specArr = []
 
-                    specData.map((category)=> {
-                        category.models.map((work)=> {
-                            spec[0].spec.map((item) => {
+                setTimeout(async()=> {  
+                    spec[0].spec.map((item) => {
+                        specData.map((category)=> {
+                            category.models.map((work)=> {
                                 if (work.name === item.name){
                                     const obj = {
                                         spec: item.name,
-                                        cat: category.name,
+                                        cat: category.icon,
                                     }
                                     specArr.push(obj)
                                 }
