@@ -425,7 +425,7 @@ bot.on('message', async (msg) => {
                         where: {chatId: worker.chatId} 
                     })
                     console.log(res)
-                }, 3000)   
+                }, 6000)   
             }) 
         }
 
