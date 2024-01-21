@@ -407,20 +407,23 @@ bot.on('message', async (msg) => {
         if (text === '/getworkers') {
             console.log("START GET WORKERS ALL...")
             const workers = await getWorkersAll()
-            console.log("workers: ", workers)
+            //console.log("workers: ", workers)
 
-                // workers.map(async(worker)=> {
-                //     //получить данные специалиста по его id
-                //     const spec = getWorkerNotion(worker.chatId)
+            workers.map(async(worker)=> {
+                //получить данные специалиста по его id
+                const spec = getWorkerNotion(worker.chatId)
 
-                //     //обновить бд
-                //     await Worker.update({ 
-                //         worklist: JSON.stringify(spec.spec)  
-                //     },
-                //     { 
-                //         where: {chatId: worker.chatId} 
-                //     })
-                // }) 
+                setTimeout(async()=> {
+                    //обновить бд
+                    const res = await Worker.update({ 
+                        worklist: JSON.stringify(spec.spec)  
+                    },
+                    { 
+                        where: {chatId: worker.chatId} 
+                    })
+                    console.log(res)
+                }, 2000)   
+            }) 
         }
 
 
