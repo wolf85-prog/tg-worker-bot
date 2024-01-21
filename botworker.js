@@ -410,6 +410,7 @@ bot.on('message', async (msg) => {
             console.log("START GET WORKERS ALL...")
             const workers = await getWorkersAll()
             //console.log("workers: ", workers)
+            let specArr = []
 
             workers.map(async(worker)=> {
                 //получить данные специалиста по его id
