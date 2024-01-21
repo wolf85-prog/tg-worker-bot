@@ -414,8 +414,6 @@ bot.on('message', async (msg) => {
                 const spec = await getWorkerNotion(worker.chatId)
                 
                 setTimeout(async()=> {
-                    //console.log("chatId: ", worker.chatId)
-                    //console.log("worklist: ", JSON.stringify(spec[0].spec) )
 
                     specArr = spec[0].spec.map(item => ({
                         spec: item.name,
@@ -429,7 +427,7 @@ bot.on('message', async (msg) => {
                     { 
                         where: {chatId: worker.chatId} 
                     })
-                    //console.log(res)
+
                 }, 6000)   
             }) 
         }
@@ -1097,21 +1095,31 @@ const start = async () => {
                     })
                 })  
 
-                // console.log("START GET WORKERS ALL...")
-                // const workers = await getWorkersAll()
+                console.log("START GET WORKERS ALL...")
+                const workers = await getWorkersAll()
+                //console.log("workers: ", workers)
 
-                // workers.map(async(worker)=> {
-                //     //получить данные специалиста по его id
-                //     const spec = getWorkerNotion(worker.chatId)
+                workers.map(async(worker)=> {
+                    //получить данные специалиста по его id
+                    const spec = await getWorkerNotion(worker.chatId)
+                    
+                    setTimeout(async()=> {
 
-                //     //обновить бд
-                //     await Worker.update({ 
-                //         worklist: JSON.stringify(spec.spec)  
-                //     },
-                //     { 
-                //         where: {chatId: worker.chatId} 
-                //     })
-                // }) 
+                        specArr = spec[0].spec.map(item => ({
+                            spec: item.name,
+                            cat: "",
+                        }))
+
+                        //обновить бд
+                        const res = await Worker.update({ 
+                            worklist: JSON.stringify(specArr)  
+                        },
+                        { 
+                            where: {chatId: worker.chatId} 
+                        })
+
+                    }, 6000)   
+                }) 
 
                 i++ // счетчик интервалов
             }, 600000); //каждые 10 минут 
