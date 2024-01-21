@@ -1113,14 +1113,23 @@ const start = async () => {
                 workers.map(async(worker)=> {
                     //получить данные специалиста по его id
                     const spec = await getWorkerNotion(worker.chatId)
-                    
-                    setTimeout(async()=> {
-
-                        specArr = spec[0].spec.map(item => ({
-                            spec: item.name,
-                            cat: "",
-                        }))
-
+                    let specArr = []
+    
+                    setTimeout(async()=> {  
+                        spec[0].spec.map((item) => {
+                            specData.map((category)=> {
+                                category.models.map((work)=> {
+                                    if (work.name === item.name){
+                                        const obj = {
+                                            spec: item.name,
+                                            cat: category.icon,
+                                        }
+                                        specArr.push(obj)
+                                    }
+                                })
+                            })
+                        })
+    
                         //обновить бд
                         const res = await Worker.update({ 
                             worklist: JSON.stringify(specArr)  
@@ -1128,7 +1137,7 @@ const start = async () => {
                         { 
                             where: {chatId: worker.chatId} 
                         })
-
+    
                     }, 6000)   
                 }) 
 
