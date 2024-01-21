@@ -413,7 +413,7 @@ bot.on('message', async (msg) => {
                 //получить данные специалиста по его id
                 const spec = await getWorkerNotion(worker.chatId)
 
-                console.log(spec.spec)
+                console.log(spec)
                 
 
                 setTimeout(async()=> {
