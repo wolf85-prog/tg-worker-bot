@@ -4,7 +4,7 @@ const { Client } = require("@notionhq/client");
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
 const databaseWorkersId = process.env.NOTION_DATABASE_WORKERS_ID
 
-module.exports = async function addWorker(title, tg_id, age, phone, worklist, citylist) {
+module.exports = async function addWorker(title, tg_id, age, phone, worklist, citylist, promoId) {
     try {
         const response = await notion.pages.create({
             parent: { database_id: databaseWorkersId },
@@ -47,7 +47,11 @@ module.exports = async function addWorker(title, tg_id, age, phone, worklist, ci
                             }
                         }
                     ]
-                }
+                },
+                "Промокод ID": {
+                    "type": "number",
+                    "number": promoId
+                },
             }
         })
 

@@ -773,15 +773,16 @@ bot.on('message', async (msg) => {
                         //stag: stag2,                      
                         worklist: JSON.stringify(specArr),
                         chatId: chatId,
+                        promoId: friend2,
                     })
 
                     const fio = workerFam + ' '+ workerName2 + ' [Workhub]'
                     const age = `${dateBorn}-01-01`
 
-                    console.log(fio, chatId, age, phone2, specArr2, city2)
+                    console.log(fio, chatId, age, phone2, specArr2, city2, friend2)
 
                     //сохраниь в бд ноушен
-                    await addWorker(fio, chatId, age, phone2, specArr2, city2)
+                    await addWorker(fio, chatId, age, phone2, specArr2, city2, friend2)
 
                     //очистить переменные
                     console.log("Очищаю переменные...")
@@ -790,6 +791,7 @@ bot.on('message', async (msg) => {
                     phone2 = '';
                     dateBorn = '';
                     city2 = '';
+                    friend2 = '';
  
                     console.log('Специалист успешно добавлен в БД! Worker: ' + res.username)
 
