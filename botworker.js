@@ -412,17 +412,19 @@ bot.on('message', async (msg) => {
             workers.map(async(worker)=> {
                 //получить данные специалиста по его id
                 const spec = await getWorkerNotion(worker.chatId)
-
-                console.log(spec)
                 
-
                 setTimeout(async()=> {
-                    console.log("chatId: ", worker.chatId)
-                    console.log("worklist: ", JSON.stringify(spec[0].spec) )
+                    //console.log("chatId: ", worker.chatId)
+                    //console.log("worklist: ", JSON.stringify(spec[0].spec) )
+
+                    specArr = spec[0].spec.map(item => ({
+                        spec: item.name,
+                        cat: "",
+                    }))
 
                     //обновить бд
                     const res = await Worker.update({ 
-                        worklist: JSON.stringify(spec[0].spec)  
+                        worklist: JSON.stringify(specArr)  
                     },
                     { 
                         where: {chatId: worker.chatId} 
