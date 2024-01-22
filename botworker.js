@@ -521,6 +521,18 @@ bot.on('message', async (msg) => {
                 })
             })    
         }
+
+        if (text.startsWith('/delworker')) {
+            const workerId = text.split(' ');
+            console.log(workerId[1])
+
+            const res = await Worker.destroy({
+                where: {
+                  chatId: workerId[1]
+                },
+            });
+            console.log(res)
+        }
 //------------------------------------------------------------------------------------------------
 //обработка контактов
         if (msg.contact) {
