@@ -788,7 +788,7 @@ bot.on('message', async (msg) => {
                         promoId: friend2,
                     })
 
-                    const fio = workerFam + ' '+ workerName2 + ' [Workhub]'
+                    const fio = workerFam + ' '+ workerName2
                     const age = `${dateBorn}-01-01`
 
                     console.log(fio, chatId, age, phone2, specArr2, city2, friend2)
