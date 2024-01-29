@@ -524,6 +524,18 @@ bot.on('message', async (msg) => {
                 })
             })    
         }
+
+        if (text.startsWith('/delworker')) {
+            const workerId = text.split(' ');
+            console.log(workerId[1])
+
+            const res = await Worker.destroy({
+                where: {
+                  chatId: workerId[1]
+                },
+            });
+            console.log(res)
+        }
 //------------------------------------------------------------------------------------------------
 //обработка контактов
         if (msg.contact) {
@@ -779,7 +791,7 @@ bot.on('message', async (msg) => {
                         promoId: friend2,
                     })
 
-                    const fio = workerFam + ' '+ workerName2 + ' [Workhub]'
+                    const fio = workerFam + ' '+ workerName2
                     const age = `${dateBorn}-01-01`
 
                     console.log(fio, chatId, age, phone2, specArr2, city2, friend2)
