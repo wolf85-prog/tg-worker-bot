@@ -349,14 +349,14 @@ bot.on('message', async (msg) => {
                 try {
                     //добавление специалиста в БД
                     const res2 = await Worker.create({
-                        userfamily: res.fio, 
-                        username: '', 
-                        phone: res.phone, 
-                        dateborn: res.age,
-                        city: res.city, 
+                        userfamily: res[0].fio.split(' ')[0], 
+                        username: res[0].fio.split(' ')[0],
+                        phone: res[0].phone, 
+                        dateborn: res[0].age,
+                        city: res[0].city, 
                         //companys: companys2,
                         //stag: stag2,                      
-                        worklist: JSON.stringify(res.spec),
+                        worklist: JSON.stringify(res[0].spec),
                         chatId: chatId,
                         promoId: 0,
                     })
