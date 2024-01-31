@@ -342,6 +342,33 @@ bot.on('message', async (msg) => {
                 });
             }
 
+            //поиск пользователя в notion
+            const res = await getWorkerNotion(chatId)
+            if (res) {
+                try {
+                    //добавление специалиста в БД
+                    const res2 = await Worker.create({
+                        userfamily: res.fio.split(' ')[0], 
+                        username: res.fio.split(' ')[1], 
+                        phone: res.phone, 
+                        dateborn: res.age,
+                        city: res.city, 
+                        //companys: companys2,
+                        //stag: stag2,                      
+                        worklist: JSON.stringify(res.spec),
+                        chatId: chatId,
+                        promoId: 0,
+                    })
+
+ 
+                    console.log('Специалист из Notion успешно добавлен в БД! Worker: ' + res2.username)
+
+
+                } catch (error) {
+                    console.log(error.message)
+                }
+            }
+
 //             await bot.sendMessage(chatId, `Привет! Я Workhub бот!
 // Присоединяйся к нашей дружной команде профессионалов!`, {
 //                     reply_markup: ({
