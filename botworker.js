@@ -344,12 +344,13 @@ bot.on('message', async (msg) => {
 
             //поиск пользователя в notion
             const res = await getWorkerNotion(chatId)
+            console.log('res: ', res)
             if (res) {
                 try {
                     //добавление специалиста в БД
                     const res2 = await Worker.create({
-                        userfamily: res.fio.split(' ')[0], 
-                        username: res.fio.split(' ')[1], 
+                        userfamily: res.fio, 
+                        username: '', 
                         phone: res.phone, 
                         dateborn: res.age,
                         city: res.city, 
