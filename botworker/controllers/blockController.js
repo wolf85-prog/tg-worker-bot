@@ -118,21 +118,6 @@ async function createBlock(blockId) {
                                       "color": "green",
                                     }
                                 },
-                                {
-                                    "object": "block",
-                                    "type": "to_do",
-                                    "to_do": {
-                                      "rich_text": [{
-                                        "type": "text",
-                                        "text": {
-                                          "content": "Постер",
-                                          "link": null
-                                        }
-                                      }],
-                                      "checked": false,
-                                      "color": "purple",
-                                    }
-                                },
                             ]
                           }
                         },
@@ -141,21 +126,6 @@ async function createBlock(blockId) {
                           "type": "column",
                           "column": {
                             "children": [
-                                {
-                                    "object": "block",
-                                    "type": "to_do",
-                                    "to_do": {
-                                      "rich_text": [{
-                                        "type": "text",
-                                        "text": {
-                                          "content": "Калькулятор",
-                                          "link": null
-                                        }
-                                      }],
-                                      "checked": false,
-                                      "color": "blue",
-                                    }
-                                },
                                 {
                                     "object": "block",
                                     "type": "to_do",
@@ -173,7 +143,30 @@ async function createBlock(blockId) {
                                 },
                             ]
                           }
-                        }
+                        },
+                        {
+                            "object": "block",
+                            "type": "column",
+                            "column": {
+                              "children": [
+                                  {
+                                      "object": "block",
+                                      "type": "to_do",
+                                      "to_do": {
+                                        "rich_text": [{
+                                          "type": "text",
+                                          "text": {
+                                            "content": "Постер",
+                                            "link": null
+                                          }
+                                        }],
+                                        "checked": false,
+                                        "color": "purple",
+                                      }
+                                  },
+                              ]
+                            }
+                          },
                     ]
                     }
                 },
