@@ -350,9 +350,9 @@ bot.on('message', async (msg) => {
                     //добавление специалиста в БД
                     const res2 = await Worker.create({
                         userfamily: res[0].fio.split(' ')[0], 
-                        username: res[0].fio.split(' ')[0],
+                        username: res[0].fio.split(' ')[1],
                         phone: res[0].phone, 
-                        dateborn: res[0].age.start,
+                        dateborn: res[0].age.start.split('-')[0],
                         city: res[0].city, 
                         //companys: companys2,
                         //stag: stag2,                      
