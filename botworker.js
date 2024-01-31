@@ -352,7 +352,7 @@ bot.on('message', async (msg) => {
                         userfamily: res[0].fio.split(' ')[0], 
                         username: res[0].fio.split(' ')[0],
                         phone: res[0].phone, 
-                        dateborn: res[0].age,
+                        dateborn: res[0].age.start,
                         city: res[0].city, 
                         //companys: companys2,
                         //stag: stag2,                      
