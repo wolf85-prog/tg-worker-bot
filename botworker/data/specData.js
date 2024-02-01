@@ -6,10 +6,12 @@ module.exports = {
            icon: 'Sound',
            models: [
                {id: 1, name: 'Звукорежиссер',},
-               {id: 2, name: 'RF-Менеджер',},
-               {id: 3, name: 'Backline',},
-               {id: 4, name: 'Roadie',},
-               {id: 5, name: 'Техник по звуку',},
+               {id: 2, name: 'Системный инженер',},
+               {id: 3, name: 'RF-Менеджер',},
+               {id: 4, name: 'Backline',},
+               {id: 5, name: 'Roadie',},
+               {id: 6, name: 'Техник по звуку',},
+               {id: 7, name: 'RF-менеджер',},
            ]
        },
        {
@@ -21,6 +23,7 @@ module.exports = {
                {id: 2, name: 'Оператор световой пушки',},
                {id: 3, name: 'Гафер',},
                {id: 4, name: 'Техник по свету',},
+               {id: 5, name: 'Гаффер',},
            ]
        },
        {
@@ -35,6 +38,7 @@ module.exports = {
                {id: 5, name: 'Техник монтажа',},
                {id: 6, name: 'IT-специалист',},
                {id: 7, name: 'Оператор-постановщик',},
+               {id: 8, name: 'Оператор [Cameraman]',},
            ]
        },
        {

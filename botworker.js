@@ -376,6 +376,7 @@ bot.on('message', async (msg) => {
                         worklist: JSON.stringify(specArr),
                         chatId: chatId,
                         promoId: 0,
+                        from: 'Notion',
                     })
 
  
