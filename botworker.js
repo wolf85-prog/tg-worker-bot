@@ -361,6 +361,13 @@ bot.on('message', async (msg) => {
                                     specArr.push(obj)
                                 }
                             })
+                            if (category.icon === item.name) {
+                                const obj = {
+                                    spec: item.name,
+                                    cat: category.icon,
+                                }
+                                specArr.push(obj) 
+                            }
                         })
                     })
 
