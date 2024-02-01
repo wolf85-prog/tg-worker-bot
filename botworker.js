@@ -342,11 +342,28 @@ bot.on('message', async (msg) => {
                 });
             }
 
+
             //поиск пользователя в notion
             const res = await getWorkerNotion(chatId)
             console.log('res: ', res)
+            let specArr = []
+
             if (res) {
                 try {
+                    res[0].spec.map((item) => {
+                        specData.map((category)=> {
+                            category.models.map((work)=> {
+                                if (work.name === item.name){
+                                    const obj = {
+                                        spec: item.name,
+                                        cat: category.icon,
+                                    }
+                                    specArr.push(obj)
+                                }
+                            })
+                        })
+                    })
+
                     //добавление специалиста в БД
                     const res2 = await Worker.create({
                         userfamily: res[0].fio.split(' ')[0], 
@@ -356,7 +373,7 @@ bot.on('message', async (msg) => {
                         city: res[0].city, 
                         //companys: companys2,
                         //stag: stag2,                      
-                        worklist: JSON.stringify(res[0].spec),
+                        worklist: JSON.stringify(specArr),
                         chatId: chatId,
                         promoId: 0,
                     })
