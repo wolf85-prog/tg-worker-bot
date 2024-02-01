@@ -99,50 +99,42 @@ async function createBlock(blockId) {
                     "column_list": {
                       "children": [
                         {
-                          "object": "block",
-                          "type": "column",
-                          "column": {
-                            "children": [
-                                {
-                                    "object": "block",
-                                    "type": "to_do",
-                                    "to_do": {
-                                      "rich_text": [{
-                                        "type": "text",
-                                        "text": {
-                                          "content": "Предварительная смета",
-                                          "link": null
-                                        }
-                                      }],
-                                      "checked": false,
-                                      "color": "green",
-                                    }
-                                },
-                            ]
-                          }
-                        },
-                        {
-                          "object": "block",
-                          "type": "column",
-                          "column": {
-                            "children": [
-                                {
-                                    "object": "block",
-                                    "type": "to_do",
-                                    "to_do": {
-                                      "rich_text": [{
-                                        "type": "text",
-                                        "text": {
-                                          "content": "Финальная смета",
-                                          "link": null
-                                        }
-                                      }],
-                                      "checked": false,
-                                      "color": "pink",
-                                    }
-                                },
-                            ]
-                          }
+                            "object": "block",
+                            "type": "column",
+                            "column": {
+                              "children": [
+                                  {
+                                      "object": "block",
+                                      "type": "to_do",
+                                      "to_do": {
+                                        "rich_text": [{
+                                          "type": "text",
+                                          "text": {
+                                            "content": "Предварительная смета",
+                                            "link": null
+                                          }
+                                        }],
+                                        "checked": false,
+                                        "color": "green",
+                                      }
+                                  },
+                                  {
+                                      "object": "block",
+                                      "type": "to_do",
+                                      "to_do": {
+                                        "rich_text": [{
+                                          "type": "text",
+                                          "text": {
+                                            "content": "Финальная смета",
+                                            "link": null
+                                          }
+                                        }],
+                                        "checked": false,
+                                        "color": "blue",
+                                      }
+                                  },
+                              ]
+                            }
                         },
                         {
                             "object": "block",
@@ -164,9 +156,24 @@ async function createBlock(blockId) {
                                         "color": "purple",
                                       }
                                   },
+                                  {
+                                      "object": "block",
+                                      "type": "to_do",
+                                      "to_do": {
+                                        "rich_text": [{
+                                          "type": "text",
+                                          "text": {
+                                            "content": "Без звуковых оповещений",
+                                            "link": null
+                                          }
+                                        }],
+                                        "checked": false,
+                                        "color": "pink",
+                                      }
+                                  },
                               ]
                             }
-                          },
+                        },
                     ]
                     }
                 },
