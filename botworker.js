@@ -450,7 +450,7 @@ bot.on('message', async (msg) => {
                 //console.log(JSON.stringify(res0))
 
                 userbots.map(async(item)=> {
-                    const user = await Worker.findOne({where:{chatId: chatId.toString()}})
+                    const user = await Worker.findOne({where:{chatId: item.chatId.toString()}})
                     if (!user) {
                         await Worker.create({
                             userfamily: 'Неизвестный', 
