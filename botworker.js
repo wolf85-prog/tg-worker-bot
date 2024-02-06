@@ -416,9 +416,19 @@ bot.on('message', async (msg) => {
 
                 //регистрация как Неизвестный специалист после отсутствия в бд
                 setTimeout(async()=> {
-                    const user = await UserBot.findOne({where:{chatId: chatId.toString()}})
+                    const user = await Worker.findOne({where:{chatId: chatId.toString()}})
                     if (!user) {
-                        await UserBot.create({ firstname: '', lastname: 'Неизвестный специалист', chatId: chatId, username: username })
+                        await Worker.create({ 
+                            username: '',
+                            userfamily: 'Неизвестный специалист', 
+                            phone: '', 
+                            dateborn: '',
+                            city: '', 
+                            companys: '',
+                            stag: '',                      
+                            worklist: JSON.stringify([{}]),
+                            chatId: chatId 
+                        })
                         console.log('Пользователь добавлен в БД')
                     } else {
                         console.log('Отмена добавления в БД. Пользователь уже существует')
@@ -434,8 +444,28 @@ bot.on('message', async (msg) => {
 
         if (text === '/addspec') {
             try {
-                const res0 = await getUserbotsAll() 
+                const userbots = await getUserbotsAll() 
                 console.log(JSON.stringify(res0))
+
+                userbots.map(async(item)=> {
+                    const user = await Worker.findOne({where:{chatId: chatId.toString()}})
+                    if (!user) {
+                        await Worker.create({ 
+                            username: '',
+                            userfamily: 'Неизвестный специалист', 
+                            phone: '', 
+                            dateborn: '',
+                            city: '', 
+                            companys: '',
+                            stag: '',                      
+                            worklist: JSON.stringify([{}]),
+                            chatId: chatId 
+                        })
+                        console.log('Пользователь добавлен в БД: ', chatId)
+                    } else {
+                        console.log('Отмена добавления в БД. Пользователь уже существует')
+                    }
+                })
 
                 //создание специалиста в БД
                 // const res = await Worker.create({
