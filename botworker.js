@@ -443,6 +443,28 @@ bot.on('message', async (msg) => {
 
         }
 
+        if (text === '/updatespec') {
+            try {
+                const workers = await getWorkersAll() 
+                //console.log(JSON.stringify(res0))
+
+                workers.map(async(item)=> {
+                    //обновить бд
+                    const res = await Worker.update({ 
+                        worklist: JSON.stringify({
+                            spec: 'Вне категории',
+                            cat: 'NoTag'
+                        })  
+                    },
+                    { 
+                        where: {chatId: item.chatId, userfamily: 'Неизвестный'} 
+                    })
+                })
+            } catch (error) {
+                console.log(error.message)
+            }
+        }
+
 
         if (text === '/addspec') {
             try {
