@@ -857,7 +857,14 @@ bot.on('message', async (msg) => {
                     console.log(fio, chatId, age, phone2, specArr2, city2, friend2)
 
                     //сохраниь в бд ноушен
-                    await addWorker(fio, chatId, age, phone2, specArr2, city2, friend2)
+                    const notion = getWorkerNotion(chatId)
+                    console.log("notion specialist: ", notion)
+                    if (!notion) {
+                        await addWorker(fio, chatId, age, phone2, specArr2, city2, friend2)
+                        console.log('Специалист успешно добавлен в Notion!')
+                    } else {
+                        console.log('Специалист уже существует в Notion!')
+                    }
 
                     //очистить переменные
                     console.log("Очищаю переменные...")
