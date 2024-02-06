@@ -419,8 +419,8 @@ bot.on('message', async (msg) => {
                     const user = await Worker.findOne({where:{chatId: chatId.toString()}})
                     if (!user) {
                         await Worker.create({ 
-                            username: '',
-                            userfamily: 'Неизвестный специалист', 
+                            userfamily: 'Неизвестный', 
+                            username: 'специалист',  
                             phone: '', 
                             dateborn: '',
                             city: '', 
@@ -447,14 +447,14 @@ bot.on('message', async (msg) => {
         if (text === '/addspec') {
             try {
                 const userbots = await getUserbotsAll() 
-                console.log(JSON.stringify(res0))
+                //console.log(JSON.stringify(res0))
 
                 userbots.map(async(item)=> {
                     const user = await Worker.findOne({where:{chatId: chatId.toString()}})
                     if (!user) {
-                        await Worker.create({ 
-                            username: '',
-                            userfamily: 'Неизвестный специалист', 
+                        await Worker.create({
+                            userfamily: 'Неизвестный', 
+                            username: 'специалист',  
                             phone: '', 
                             dateborn: '',
                             city: '', 
