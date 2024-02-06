@@ -15,3 +15,13 @@ module.exports = async function getWorkersAll() {
         console.log("error while calling getWorkersAll api", error.message);
     }
 }
+
+
+module.exports = async function getUserbotsAll() {
+        try {
+            let response = await $host.get('api/userbots/get');
+            return response.data;
+        } catch (error) {
+            console.log("error while calling getUserbotsAll api", error.message);
+        }
+    }

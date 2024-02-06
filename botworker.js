@@ -55,7 +55,7 @@ const updateWorker = require("./botworker/common/updateWorker");
 const getProjectsAll = require("./botworker/http/getProjectsAll");
 const getSmetaAll = require("./botworker/http/getSmetaAll");
 const getStavka = require("./botworker/http/stavkaAPI");
-const getWorkersAll = require("./botworker/http/getWorkersAll");
+const {getWorkersAll, getUserbotsAll} = require("./botworker/http/getWorkersAll");
 
 app.use(express.json());
 app.use(cors());
@@ -433,20 +433,23 @@ bot.on('message', async (msg) => {
 
         if (text === '/addspec') {
             try {
-                //создание проекта в БД
-                const res = await Worker.create({
-                   userfamily: 'иванов', 
-                   username: 'сергей', 
-                   phone: '', 
-                   dateborn: '',
-                   city: '', 
-                   companys: '',
-                   stag: '',                      
-                   worklist: JSON.stringify([{}]),
-                   chatId: chatId
-                })
+                const res0 = await getUserbotsAll() 
+                console.log(JSON.stringify(res0))
 
-                console.log('Специалист успешно добавлен в БД! Worker: ' + res.username)
+                //создание специалиста в БД
+                // const res = await Worker.create({
+                //    userfamily: 'Неизвестный', 
+                //    username: 'специалист', 
+                //    phone: '', 
+                //    dateborn: '',
+                //    city: '', 
+                //    companys: '',
+                //    stag: '',                      
+                //    worklist: JSON.stringify([{}]),
+                //    chatId: chatId
+                // })
+
+                // console.log('Специалист успешно добавлен в БД! Worker: ' + res.username)
 
                } catch (error) {
                    console.log(error.message)
