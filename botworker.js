@@ -393,7 +393,7 @@ bot.on('message', async (msg) => {
                 } catch (error) {
                     console.log(error.message)
                 }
-            }
+            } 
 
 //             await bot.sendMessage(chatId, `Привет! Я Workhub бот!
 // Присоединяйся к нашей дружной команде профессионалов!`, {
@@ -411,6 +411,18 @@ bot.on('message', async (msg) => {
                         ]
                     })
                 })
+
+
+                //регистрация как Неизвестный специалист после отсутствия в бд
+                setTimeout(async()=> {
+                    const user = await UserBot.findOne({where:{chatId: chatId.toString()}})
+                    if (!user) {
+                        await UserBot.create({ firstname: '', lastname: 'Неизвестный специалист', chatId: chatId, username: username })
+                        console.log('Пользователь добавлен в БД')
+                    } else {
+                        console.log('Отмена добавления в БД. Пользователь уже существует')
+                    }
+                }, 600000) // 10 минут
         }
 
 
