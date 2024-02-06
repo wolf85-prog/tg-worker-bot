@@ -426,7 +426,10 @@ bot.on('message', async (msg) => {
                             city: '', 
                             companys: '',
                             stag: '',                      
-                            worklist: JSON.stringify([{}]),
+                            worklist: JSON.stringify({
+                                spec: 'Вне категории',
+                                cat: 'NoTag'
+                            }),
                             chatId: chatId,
                             promoId: '',
                             from: '' 
