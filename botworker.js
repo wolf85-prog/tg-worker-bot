@@ -426,10 +426,10 @@ bot.on('message', async (msg) => {
                             city: '', 
                             companys: '',
                             stag: '',                      
-                            worklist: JSON.stringify({
+                            worklist: JSON.stringify([{
                                 spec: 'Вне категории',
                                 cat: 'NoTag'
-                            }),
+                            }]),
                             chatId: chatId,
                             promoId: '',
                             from: '' 
@@ -454,10 +454,10 @@ bot.on('message', async (msg) => {
                 workers.map(async(item)=> {
                     //обновить бд
                     const res = await Worker.update({ 
-                        worklist: JSON.stringify({
+                        worklist: JSON.stringify([{
                             spec: 'Вне категории',
                             cat: 'NoTag'
-                        })  
+                        }])  
                     },
                     { 
                         where: {chatId: item.chatId, userfamily: 'Неизвестный'} 
