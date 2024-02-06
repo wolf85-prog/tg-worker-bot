@@ -426,8 +426,10 @@ bot.on('message', async (msg) => {
                             city: '', 
                             companys: '',
                             stag: '',                      
-                            worklist: JSON.stringify([{}]),
-                            chatId: chatId 
+                            worklist: [{}],
+                            chatId: chatId,
+                            promoId: '',
+                            from: '' 
                         })
                         console.log('Пользователь добавлен в БД')
                     } else {
@@ -458,8 +460,10 @@ bot.on('message', async (msg) => {
                             city: '', 
                             companys: '',
                             stag: '',                      
-                            worklist: JSON.stringify([{}]),
-                            chatId: chatId 
+                            worklist: [{}],
+                            chatId: chatId,
+                            promoId: '',
+                            from: '' 
                         })
                         console.log('Пользователь добавлен в БД: ', chatId)
                     } else {
