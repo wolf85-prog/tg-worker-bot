@@ -452,19 +452,19 @@ bot.on('message', async (msg) => {
                 userbots.map(async(item)=> {
                     const user = await Worker.findOne({where:{chatId: item.chatId.toString()}})
                     if (!user) {
-                        // await Worker.create({
-                        //     userfamily: 'Неизвестный', 
-                        //     username: 'специалист',  
-                        //     phone: '', 
-                        //     dateborn: '',
-                        //     city: '', 
-                        //     companys: '',
-                        //     stag: '',                      
-                        //     worklist: JSON.stringify([{}]),
-                        //     chatId: chatId,
-                        //     promoId: '',
-                        //     from: '' 
-                        // })
+                        await Worker.create({
+                            userfamily: 'Неизвестный', 
+                            username: 'специалист',  
+                            phone: '', 
+                            dateborn: '',
+                            city: '', 
+                            companys: '',
+                            stag: '',                      
+                            worklist: JSON.stringify([{}]),
+                            chatId: item.chatId,
+                            promoId: '',
+                            from: '' 
+                        })
                         console.log('Пользователь добавлен в БД: ', item.chatId)
                     } else {
                         console.log('Отмена добавления в БД. Пользователь уже существует')
