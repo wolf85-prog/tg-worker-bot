@@ -481,7 +481,7 @@ bot.on('message', async (msg) => {
                     const spec = await getWorkerChildren(worker.chatId)
                     console.log(spec)
 
-                    setTimeout(async()=> {  
+                    //setTimeout(async()=> {  
                         // spec[0].spec.map((item) => {
                         //     specData.map((category)=> {
                         //         category.models.map((work)=> {
@@ -504,14 +504,14 @@ bot.on('message', async (msg) => {
                         // })
 
                         //обновить бд
-                        const res = await Worker.update({ 
-                            avatar: spec,
-                        },
-                        { 
-                            where: {chatId: worker.chatId} 
-                        })
+                        // const res = await Worker.update({ 
+                        //     avatar: spec,
+                        // },
+                        // { 
+                        //     where: {chatId: worker.chatId} 
+                        // })
 
-                    }, 6000)   
+                    //}, 6000)   
                 }) 
             } catch (error) {
                 console.log(error.message)
