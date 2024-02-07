@@ -501,7 +501,7 @@ bot.on('message', async (msg) => {
                                 userfamily: notion[0].fio.split(" ")[0],
                                 username: notion[0].fio.split(" ")[1],
                                 phone: notion[0].phone,
-                                dateborn: notion[0].age.start.split('-')[0],
+                                dateborn: notion[0].age?.start.split('-')[0],
                                 city: res[0].city,                    
                                 from: 'Notion',
                             },
@@ -512,7 +512,7 @@ bot.on('message', async (msg) => {
                             console.log("Специалист не найден в Notion!") 
                         }              
 
-                    }, 5000 * ++i)   
+                    }, 1000 * ++i)   
                 }) 
             } catch (error) {
                 console.log(error.message)
