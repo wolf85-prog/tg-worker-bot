@@ -1127,7 +1127,7 @@ bot.on('message', async (msg) => {
 
     //нажатие на кнопку "Принять"
     if (data.startsWith('/accept')) {
-        const pretendentId = data.split('t');
+        const pretendentId = data.split(' ');
         console.log("pretendentId: ", data)
         const id = pretendentId[1]
 
