@@ -476,10 +476,10 @@ bot.on('message', async (msg) => {
                 const workers = await getWorkersAll()
                 console.log("workers: ", workers)  
 
-                // workers.map(async(worker)=> {
-                //     //получить данные специалиста по его id
-                //     const spec = await getWorkerChildren(worker.chatId)
-                //     console.log(spec)
+                workers.map(async(worker)=> {
+                    //получить данные специалиста по его id
+                    const spec = await getWorkerChildren(worker.chatId)
+                    console.log(spec)
 
                     //setTimeout(async()=> {  
                         // spec[0].spec.map((item) => {
@@ -512,7 +512,7 @@ bot.on('message', async (msg) => {
                         // })
 
                     //}, 6000)   
-                //}) 
+                }) 
             } catch (error) {
                 console.log(error.message)
             }
