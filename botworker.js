@@ -470,6 +470,7 @@ bot.on('message', async (msg) => {
         //update worker from notion
         if (text === '/profile') {
             try {
+                let specArr = []
                 console.log("START GET WORKERS ALL...")
                 const workers = await getWorkersAll()
                 //console.log("workers: ", workers)  
