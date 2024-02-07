@@ -477,18 +477,20 @@ bot.on('message', async (msg) => {
                 //console.log("workers: ", workers)  
 
                 workers.map(async(worker)=> {
-                    //получить данные специалиста по его id
-                    const notion = await getWorkerNotion(worker.chatId)
-                    if (notion) {
-                       const spec = await getWorkerChildren(notion[0]?.id) 
-                       console.log(spec)
-                    } else {
-                        console.log("Специалист не найден в Notion!") 
-                    }
+                    
                     
                     
 
-                    //setTimeout(async()=> {  
+                    setTimeout(async()=> {  
+                        //получить данные специалиста по его id
+                        const notion = await getWorkerNotion(worker.chatId)
+                        if (notion) {
+                            const spec = await getWorkerChildren(notion[0]?.id) 
+                            console.log("avatar: ", spec[0].image)
+                        } else {
+                            console.log("Специалист не найден в Notion!") 
+                        }
+
                         // spec[0].spec.map((item) => {
                         //     specData.map((category)=> {
                         //         category.models.map((work)=> {
@@ -518,7 +520,7 @@ bot.on('message', async (msg) => {
                         //     where: {chatId: worker.chatId} 
                         // })
 
-                    //}, 6000)   
+                    }, 20000)   
                 }) 
             } catch (error) {
                 console.log(error.message)
