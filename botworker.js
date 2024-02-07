@@ -459,7 +459,7 @@ bot.on('message', async (msg) => {
                         }])  
                     },
                     { 
-                        where: {chatId: item.chatId, worklist: '[]'} 
+                        where: {chatId: item.chatId, worklist: JSON.stringify([])} 
                     })
                 })
             } catch (error) {
