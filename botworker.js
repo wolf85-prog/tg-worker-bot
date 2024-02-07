@@ -78,6 +78,7 @@ const credentials = {
 const httpsServer = https.createServer(credentials, app);
 
 const {specData} = require('./botworker/data/specData');
+const getWorkerChildren = require("./botworker/common/getWorkerChildren");
 
 
 //--------------------------------------------------------------------------------------------------------
@@ -468,6 +469,55 @@ bot.on('message', async (msg) => {
             }
         }
 
+        //update worker from notion
+        if (text === '/updateworker') {
+            try {
+                console.log("START GET WORKERS ALL...")
+                const workers = await getWorkersAll()
+                //console.log("workers: ", workers)  
+
+                workers.map(async(worker)=> {
+                    //получить данные специалиста по его id
+                    const spec = await getWorkerChildren(worker.chatId)
+                    console.log(spec)
+
+                    setTimeout(async()=> {  
+                        // spec[0].spec.map((item) => {
+                        //     specData.map((category)=> {
+                        //         category.models.map((work)=> {
+                        //             if (work.name === item.name){
+                        //                 const obj = {
+                        //                     spec: item.name,
+                        //                     cat: category.icon,
+                        //                 }
+                        //                 specArr.push(obj)
+                        //             }
+                        //         })
+                        //         if (category.icon === item.name) {
+                        //             const obj = {
+                        //                 spec: item.name,
+                        //                 cat: category.icon,
+                        //             }
+                        //             specArr.push(obj) 
+                        //         }
+                        //     })
+                        // })
+
+                        //обновить бд
+                        const res = await Worker.update({ 
+                            avatar: spec,
+                        },
+                        { 
+                            where: {chatId: worker.chatId} 
+                        })
+
+                    }, 6000)   
+                }) 
+            } catch (error) {
+                console.log(error.message)
+            }
+        }
+
 
         if (text === '/addspec') {
             try {
@@ -495,21 +545,6 @@ bot.on('message', async (msg) => {
                         console.log('Отмена добавления в БД. Пользователь уже существует')
                     }
                 })
-
-                //создание специалиста в БД
-                // const res = await Worker.create({
-                //    userfamily: 'Неизвестный', 
-                //    username: 'специалист', 
-                //    phone: '', 
-                //    dateborn: '',
-                //    city: '', 
-                //    companys: '',
-                //    stag: '',                      
-                //    worklist: JSON.stringify([{}]),
-                //    chatId: chatId
-                // })
-
-                // console.log('Специалист успешно добавлен в БД! Worker: ' + res.username)
 
                } catch (error) {
                    console.log(error.message)
