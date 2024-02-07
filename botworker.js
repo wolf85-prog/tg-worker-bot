@@ -470,13 +470,12 @@ bot.on('message', async (msg) => {
         //update worker from notion
         if (text === '/profile') {
             try {
-                let specArr = []
                 console.log("START GET WORKERS ALL...")
                 const workers = await getWorkersAll()
                 //console.log("workers: ", workers)  
 
                 workers.map(async(worker, i)=> {
-                    
+                    let specArr = []
                     setTimeout(async()=> {  
                         //получить данные специалиста по его id
                         const notion = await getWorkerNotion(worker.chatId)
@@ -1128,7 +1127,7 @@ bot.on('message', async (msg) => {
 
     //нажатие на кнопку "Принять"
     if (data.startsWith('/accept')) {
-        const pretendentId = data.split(' ');
+        const pretendentId = data.split('t');
         console.log("pretendentId: ", data)
         const id = pretendentId[1]
 
@@ -1172,7 +1171,7 @@ bot.on('message', async (msg) => {
 
     //нажатие на кнопку "Отклонить"
     if (data.startsWith('/cancel')) {
-        const pretendentId = data.split(' ');
+        const pretendentId = data.split('l');
         console.log("pretendentId: ", data)
         const id = pretendentId[1]
 
