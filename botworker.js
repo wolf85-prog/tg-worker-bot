@@ -512,6 +512,18 @@ bot.on('message', async (msg) => {
                                     where: {chatId: worker.chatId} 
                                 })
                                 console.log("Список специальностей обновлен! ", worker.chatId, i) 
+                            } else {
+                                //обновить бд
+                                const res = await Worker.update({ 
+                                    worklist: JSON.stringify([{
+                                        spec: 'Вне категории',
+                                        cat: 'NoTag'
+                                    }]) 
+                                },
+                                { 
+                                    where: {chatId: worker.chatId} 
+                                })
+                                console.log("Список специальностей обновлен! ", worker.chatId, i) 
                             }
 
                             //получить аватарку
