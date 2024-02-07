@@ -511,25 +511,25 @@ bot.on('message', async (msg) => {
                                 { 
                                     where: {chatId: worker.chatId} 
                                 })
+                                console.log("Список специальностей обновлен! ", worker.chatId, i) 
                             }
 
                             //получить аватарку
-                            const spec = await getWorkerChildren(notion[0]?.id) 
-                            if (spec.length > 0) {
-                               console.log("avatar: ", spec[0].image) 
-                               //обновить бд
-                                const res = await Worker.update({ 
-                                    avatar: spec[0].image,
-                                },
-                                { 
-                                    where: {chatId: worker.chatId} 
-                                })
-                            } else {
-                                console.log("Аватар не найден в Notion!") 
-                            }
+                            // const spec = await getWorkerChildren(notion[0]?.id) 
+                            // if (spec.length > 0) {
+                            //    console.log("avatar: ", spec[0].image) 
+                            //    //обновить бд
+                            //     const res = await Worker.update({ 
+                            //         avatar: spec[0].image,
+                            //     },
+                            //     { 
+                            //         where: {chatId: worker.chatId} 
+                            //     })
+                            // } else {
+                            //     console.log("Аватар не найден в Notion!") 
+                            // }
 
                             //обновить фио
-                            //обновить бд
                             const res = await Worker.update({ 
                                 userfamily: notion[0].fio.split(" ")[0],
                                 username: notion[0].fio.split(" ")[1],
@@ -542,11 +542,11 @@ bot.on('message', async (msg) => {
                                 where: {chatId: worker.chatId} 
                             })
                             if (res) {
-                               console.log("Специалист обновлен! ", worker.chatId) 
+                               console.log("Специалист обновлен! ", worker.chatId, i) 
                             }
                             
                         } else {
-                            console.log("Специалист не найден в Notion!") 
+                            console.log("Специалист не найден в Notion!", i) 
                         }              
 
                     }, 500 * ++i)   
@@ -1171,7 +1171,7 @@ bot.on('message', async (msg) => {
 
     //нажатие на кнопку "Отклонить"
     if (data.startsWith('/cancel')) {
-        const pretendentId = data.split('l');
+        const pretendentId = data.split(' ');
         console.log("pretendentId: ", data)
         const id = pretendentId[1]
 
