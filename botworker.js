@@ -473,8 +473,8 @@ bot.on('message', async (msg) => {
         if (text === '/updateworker') {
             try {
                 console.log("START GET WORKERS ALL...")
-                //const workers = await getWorkersAll()
-                //console.log("workers: ", workers)  
+                const workers = await getWorkersAll()
+                console.log("workers: ", workers)  
 
                 // workers.map(async(worker)=> {
                 //     //получить данные специалиста по его id
