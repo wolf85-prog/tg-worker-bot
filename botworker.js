@@ -485,6 +485,13 @@ bot.on('message', async (msg) => {
                             const spec = await getWorkerChildren(notion[0]?.id) 
                             if (spec.length > 0) {
                                console.log("avatar: ", spec[0].image) 
+                               //обновить бд
+                                const res = await Worker.update({ 
+                                    avatar: spec[0].image,
+                                },
+                                { 
+                                    where: {chatId: worker.chatId} 
+                                })
                             } else {
                                 console.log("Аватар не найден в Notion!") 
                             }
@@ -513,13 +520,7 @@ bot.on('message', async (msg) => {
                         //     })
                         // })
 
-                        //обновить бд
-                        // const res = await Worker.update({ 
-                        //     avatar: spec,
-                        // },
-                        // { 
-                        //     where: {chatId: worker.chatId} 
-                        // })
+                        
 
                     }, 20000)   
                 }) 
