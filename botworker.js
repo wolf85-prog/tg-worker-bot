@@ -468,7 +468,7 @@ bot.on('message', async (msg) => {
         }
 
         //update worker from notion
-        if (text === '/updateworker') {
+        if (text === '/profile') {
             try {
                 console.log("START GET WORKERS ALL...")
                 const workers = await getWorkersAll()
@@ -479,7 +479,40 @@ bot.on('message', async (msg) => {
                     setTimeout(async()=> {  
                         //получить данные специалиста по его id
                         const notion = await getWorkerNotion(worker.chatId)
+
                         if (notion.length > 0) {
+                            //список специалистов
+                            notion[0].spec.map((item) => {
+                                specData.map((category)=> {
+                                    category.models.map((work)=> {
+                                        if (work.name === item.name){
+                                            const obj = {
+                                                spec: item.name,
+                                                cat: category.icon,
+                                            }
+                                            specArr.push(obj)
+                                        }
+                                    })
+                                    if (category.icon === item.name) {
+                                        const obj = {
+                                            spec: item.name,
+                                            cat: category.icon,
+                                        }
+                                        specArr.push(obj) 
+                                    }
+                                })
+                            })
+        
+                            if (specArr.length > 0) {
+                                //обновить бд
+                                const res = await Worker.update({ 
+                                    worklist: JSON.stringify(specArr)  
+                                },
+                                { 
+                                    where: {chatId: worker.chatId} 
+                                })
+                            }
+
                             //получить аватарку
                             const spec = await getWorkerChildren(notion[0]?.id) 
                             if (spec.length > 0) {
@@ -1267,7 +1300,7 @@ const start = async () => {
             var minutCount = 0;
             let i = 0;
 
-            // повторить с интервалом 2 минуты
+            // повторить с интервалом 10 минут
             let timerId = setInterval(async() => {
 
                 console.log("START GET PROJECTS ALL...")
@@ -1307,17 +1340,24 @@ const start = async () => {
                     })
                 })  
 
+
+                i++ // счетчик интервалов
+            }, 600000); //каждые 10 минут
+
+            // повторить с интервалом 24 часа
+            let timerId2 = setInterval(async() => {
+
                 console.log("START GET WORKERS ALL...")
                 const workers = await getWorkersAll()
                 //console.log("workers: ", workers)
 
                 workers.map(async(worker, i)=> {
                     //получить данные специалиста по его id
-                    const spec = await getWorkerNotion(worker.chatId)
-                    let specArr = []
+                    //const notion = await getWorkerNotion(worker.chatId)
+                    //let specArr = []
     
                     // setTimeout(async()=> {  
-                    //     spec[0].spec.map((item) => {
+                    //     notion[0].spec.map((item) => {
                     //         specData.map((category)=> {
                     //             category.models.map((work)=> {
                     //                 if (work.name === item.name){
@@ -1347,13 +1387,51 @@ const start = async () => {
                     //             where: {chatId: worker.chatId} 
                     //         })
                     //     }
+
+
+                        // if (notion.length > 0) {
+                        //     //получить аватарку
+                        //     const spec = await getWorkerChildren(notion[0]?.id) 
+                        //     if (spec.length > 0) {
+                        //        console.log("avatar: ", spec[0].image) 
+                        //        //обновить бд
+                        //         const res = await Worker.update({ 
+                        //             avatar: spec[0].image,
+                        //         },
+                        //         { 
+                        //             where: {chatId: worker.chatId} 
+                        //         })
+                        //     } else {
+                        //         console.log("Аватар не найден в Notion!") 
+                        //     }
+
+                        //     //обновить фио
+                        //     //обновить бд
+                        //     const res = await Worker.update({ 
+                        //         userfamily: notion[0].fio.split(" ")[0],
+                        //         username: notion[0].fio.split(" ")[1],
+                        //         phone: notion[0].phone,
+                        //         dateborn: notion[0].age?.start.split('-')[0],
+                        //         city: notion[0].city,                    
+                        //         from: 'Notion',
+                        //     },
+                        //     { 
+                        //         where: {chatId: worker.chatId} 
+                        //     })
+                        //     if (res) {
+                        //        console.log("Специалист обновлен! ", chatId) 
+                        //     }
+                            
+                        // } else {
+                        //     console.log("Специалист не найден в Notion!") 
+                        // }    
                         
     
                     // }, 2000 * ++i)   
                 }) 
 
                 i++ // счетчик интервалов
-            }, 600000); //каждые 10 минут 
+            }, 86400000); //каждые 24 часа
 
             // остановить вывод через 30 дней
             // if (minutCount == 43200) {
