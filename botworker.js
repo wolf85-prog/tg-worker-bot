@@ -1338,13 +1338,16 @@ const start = async () => {
                             })
                         })
     
-                        //обновить бд
-                        const res = await Worker.update({ 
-                            worklist: JSON.stringify(specArr)  
-                        },
-                        { 
-                            where: {chatId: worker.chatId} 
-                        })
+                        if (specArr.length > 0) {
+                            //обновить бд
+                            const res = await Worker.update({ 
+                                worklist: JSON.stringify(specArr)  
+                            },
+                            { 
+                                where: {chatId: worker.chatId} 
+                            })
+                        }
+                        
     
                     }, 5000 * ++i)   
                 }) 
