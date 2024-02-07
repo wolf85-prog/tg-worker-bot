@@ -1316,40 +1316,40 @@ const start = async () => {
                     const spec = await getWorkerNotion(worker.chatId)
                     let specArr = []
     
-                    setTimeout(async()=> {  
-                        spec[0].spec.map((item) => {
-                            specData.map((category)=> {
-                                category.models.map((work)=> {
-                                    if (work.name === item.name){
-                                        const obj = {
-                                            spec: item.name,
-                                            cat: category.icon,
-                                        }
-                                        specArr.push(obj)
-                                    }
-                                })
-                                if (category.icon === item.name) {
-                                    const obj = {
-                                        spec: item.name,
-                                        cat: category.icon,
-                                    }
-                                    specArr.push(obj) 
-                                }
-                            })
-                        })
+                    // setTimeout(async()=> {  
+                    //     spec[0].spec.map((item) => {
+                    //         specData.map((category)=> {
+                    //             category.models.map((work)=> {
+                    //                 if (work.name === item.name){
+                    //                     const obj = {
+                    //                         spec: item.name,
+                    //                         cat: category.icon,
+                    //                     }
+                    //                     specArr.push(obj)
+                    //                 }
+                    //             })
+                    //             if (category.icon === item.name) {
+                    //                 const obj = {
+                    //                     spec: item.name,
+                    //                     cat: category.icon,
+                    //                 }
+                    //                 specArr.push(obj) 
+                    //             }
+                    //         })
+                    //     })
     
-                        if (specArr.length > 0) {
-                            //обновить бд
-                            const res = await Worker.update({ 
-                                worklist: JSON.stringify(specArr)  
-                            },
-                            { 
-                                where: {chatId: worker.chatId} 
-                            })
-                        }
+                    //     if (specArr.length > 0) {
+                    //         //обновить бд
+                    //         const res = await Worker.update({ 
+                    //             worklist: JSON.stringify(specArr)  
+                    //         },
+                    //         { 
+                    //             where: {chatId: worker.chatId} 
+                    //         })
+                    //     }
                         
     
-                    }, 2000 * ++i)   
+                    // }, 2000 * ++i)   
                 }) 
 
                 i++ // счетчик интервалов
