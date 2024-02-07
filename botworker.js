@@ -474,11 +474,11 @@ bot.on('message', async (msg) => {
             try {
                 console.log("START GET WORKERS ALL...")
                 const workers = await getWorkersAll()
-                console.log("workers: ", workers)  
+                //console.log("workers: ", workers)  
 
                 workers.map(async(worker)=> {
                     //получить данные специалиста по его id
-                    const spec = await getWorkerChildren(worker.chatId)
+                    const spec = await getWorkerChildren(Number(worker.chatId))
                     console.log(spec)
 
                     //setTimeout(async()=> {  
