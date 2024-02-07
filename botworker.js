@@ -386,6 +386,7 @@ bot.on('message', async (msg) => {
                         chatId: chatId,
                         promoId: 0,
                         from: 'Notion',
+                        avatar: '',
                     })
 
  
@@ -443,10 +444,7 @@ bot.on('message', async (msg) => {
         }
 
 
-        if (text.startsWith('/updpretendent')) {
-
-        }
-
+        //обновить список специальностей
         if (text === '/updatespec') {
             try {
                 const workers = await getWorkersAll() 
@@ -476,12 +474,13 @@ bot.on('message', async (msg) => {
                 const workers = await getWorkersAll()
                 //console.log("workers: ", workers)  
 
-                workers.map(async(worker)=> {
+                workers.map(async(worker, i)=> {
                     
                     setTimeout(async()=> {  
                         //получить данные специалиста по его id
                         const notion = await getWorkerNotion(worker.chatId)
                         if (notion.length > 0) {
+                            //получить аватарку
                             const spec = await getWorkerChildren(notion[0]?.id) 
                             if (spec.length > 0) {
                                console.log("avatar: ", spec[0].image) 
@@ -495,34 +494,25 @@ bot.on('message', async (msg) => {
                             } else {
                                 console.log("Аватар не найден в Notion!") 
                             }
+
+                            //обновить фио
+                            //обновить бд
+                            const res = await Worker.update({ 
+                                userfamily: notion[0].fio.split(" ")[0],
+                                username: notion[0].fio.split(" ")[1],
+                                phone: notion[0].phone,
+                                dateborn: notion[0].age.start.split('-')[0],
+                                city: res[0].city,                    
+                                from: 'Notion',
+                            },
+                            { 
+                                where: {chatId: worker.chatId} 
+                            })
                         } else {
                             console.log("Специалист не найден в Notion!") 
-                        }
+                        }              
 
-                        // spec[0].spec.map((item) => {
-                        //     specData.map((category)=> {
-                        //         category.models.map((work)=> {
-                        //             if (work.name === item.name){
-                        //                 const obj = {
-                        //                     spec: item.name,
-                        //                     cat: category.icon,
-                        //                 }
-                        //                 specArr.push(obj)
-                        //             }
-                        //         })
-                        //         if (category.icon === item.name) {
-                        //             const obj = {
-                        //                 spec: item.name,
-                        //                 cat: category.icon,
-                        //             }
-                        //             specArr.push(obj) 
-                        //         }
-                        //     })
-                        // })
-
-                        
-
-                    }, 20000)   
+                    }, 5000 * ++i)   
                 }) 
             } catch (error) {
                 console.log(error.message)
@@ -615,13 +605,15 @@ bot.on('message', async (msg) => {
                         })
                     })
 
-                    //обновить бд
-                    const res = await Worker.update({ 
-                        worklist: JSON.stringify(specArr)  
-                    },
-                    { 
-                        where: {chatId: worker.chatId} 
-                    })
+                    if (worker.worklist.find(item=> item.cat !== 'NoTag')) {
+                        //обновить бд
+                        const res = await Worker.update({ 
+                            worklist: JSON.stringify(specArr)  
+                        },
+                        { 
+                            where: {chatId: worker.chatId} 
+                        })
+                    }        
 
                 }, 6000)   
             }) 
@@ -1315,7 +1307,7 @@ const start = async () => {
                 const workers = await getWorkersAll()
                 //console.log("workers: ", workers)
 
-                workers.map(async(worker)=> {
+                workers.map(async(worker, i)=> {
                     //получить данные специалиста по его id
                     const spec = await getWorkerNotion(worker.chatId)
                     let specArr = []
@@ -1350,7 +1342,7 @@ const start = async () => {
                             where: {chatId: worker.chatId} 
                         })
     
-                    }, 6000)   
+                    }, 5000 * ++i)   
                 }) 
 
                 i++ // счетчик интервалов
