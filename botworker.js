@@ -508,11 +508,15 @@ bot.on('message', async (msg) => {
                             { 
                                 where: {chatId: worker.chatId} 
                             })
+                            if (res) {
+                               console.log("Специалист обновлен! ", chatId) 
+                            }
+                            
                         } else {
                             console.log("Специалист не найден в Notion!") 
                         }              
 
-                    }, 1000 * ++i)   
+                    }, 500 * ++i)   
                 }) 
             } catch (error) {
                 console.log(error.message)
