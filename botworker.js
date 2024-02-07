@@ -543,7 +543,7 @@ bot.on('message', async (msg) => {
                                 where: {chatId: worker.chatId} 
                             })
                             if (res) {
-                               console.log("Специалист обновлен! ", chatId) 
+                               console.log("Специалист обновлен! ", worker.chatId) 
                             }
                             
                         } else {
