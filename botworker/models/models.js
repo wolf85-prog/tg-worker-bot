@@ -23,6 +23,7 @@ const Worker = sequelize.define('worker', {
     chatId: {type: DataTypes.STRING},
     promoId: {type: DataTypes.STRING},
     from: {type: DataTypes.STRING},
+    avatar: {type: DataTypes.STRING},
 })
 
 const Message = sequelize.define('wmessage', {
