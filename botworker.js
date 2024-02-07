@@ -502,7 +502,7 @@ bot.on('message', async (msg) => {
                                 username: notion[0].fio.split(" ")[1],
                                 phone: notion[0].phone,
                                 dateborn: notion[0].age?.start.split('-')[0],
-                                city: res[0].city,                    
+                                city: notion[0].city,                    
                                 from: 'Notion',
                             },
                             { 
