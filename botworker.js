@@ -478,15 +478,16 @@ bot.on('message', async (msg) => {
 
                 workers.map(async(worker)=> {
                     
-                    
-                    
-
                     setTimeout(async()=> {  
                         //получить данные специалиста по его id
                         const notion = await getWorkerNotion(worker.chatId)
-                        if (notion) {
+                        if (notion.length > 0) {
                             const spec = await getWorkerChildren(notion[0]?.id) 
-                            console.log("avatar: ", spec[0].image)
+                            if (spec.length > 0) {
+                               console.log("avatar: ", spec[0].image) 
+                            } else {
+                                console.log("Аватар не найден в Notion!") 
+                            }
                         } else {
                             console.log("Специалист не найден в Notion!") 
                         }
