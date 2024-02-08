@@ -389,8 +389,11 @@ bot.on('message', async (msg) => {
                         avatar: '',
                     })
 
- 
-                    console.log('Специалист из Notion успешно добавлен в БД! Worker: ' + res2.username)
+                    if (res2) {
+                       console.log('Специалист из Notion успешно добавлен в БД! Worker: ' + res2.chatId) 
+                    } else {
+                        console.log("res2: ", res2)
+                    }
 
 
                 } catch (error) {
@@ -435,6 +438,26 @@ bot.on('message', async (msg) => {
             }, 36000000) // 10 минут
         }
 
+        //обновить список специальностей я и Белов
+        if (text === '/updateme') {
+            try {
+                const res = await getWorkerNotion(chatId)
+                console.log(res)
+                
+                //обновить бд
+                // const res = await Worker.update({ 
+                //     worklist: JSON.stringify([{
+                //         spec: 'Вне категории',
+                //         cat: 'NoTag'
+                //     }])  
+                // },
+                // { 
+                //     where: {chatId: item.chatId, worklist: JSON.stringify([])} 
+                // })
+            } catch (error) {
+                console.log(error.message)
+            }
+        }
 
         //обновить список специальностей
         if (text === '/updatespec') {
