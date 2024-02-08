@@ -476,55 +476,56 @@ bot.on('message', async (msg) => {
 
                 workers.map(async(worker, i)=> {
                     let specArr = []
-                    setTimeout(async()=> {  
+                    //setTimeout(async()=> {  
                         //получить данные специалиста по его id
                         const notion = await getWorkerNotion(worker.chatId)
+                        console.log(JSON.stringify(notion))
 
                         if (notion.length > 0) {
                             //список специалистов
-                            notion[0].spec.map((item) => {
-                                specData.map((category)=> {
-                                    category.models.map((work)=> {
-                                        if (work.name === item.name){
-                                            const obj = {
-                                                spec: item.name,
-                                                cat: category.icon,
-                                            }
-                                            specArr.push(obj)
-                                        }
-                                    })
-                                    if (category.icon === item.name) {
-                                        const obj = {
-                                            spec: item.name,
-                                            cat: category.icon,
-                                        }
-                                        specArr.push(obj) 
-                                    }
-                                })
-                            })
+                            // notion[0].spec.map((item) => {
+                            //     specData.map((category)=> {
+                            //         category.models.map((work)=> {
+                            //             if (work.name === item.name){
+                            //                 const obj = {
+                            //                     spec: item.name,
+                            //                     cat: category.icon,
+                            //                 }
+                            //                 specArr.push(obj)
+                            //             }
+                            //         })
+                            //         if (category.icon === item.name) {
+                            //             const obj = {
+                            //                 spec: item.name,
+                            //                 cat: category.icon,
+                            //             }
+                            //             specArr.push(obj) 
+                            //         }
+                            //     })
+                            // })
         
-                            if (specArr.length > 0) {
-                                //обновить бд
-                                const res = await Worker.update({ 
-                                    worklist: JSON.stringify(specArr)  
-                                },
-                                { 
-                                    where: {chatId: worker.chatId} 
-                                })
-                                console.log("Список специальностей обновлен! ", worker.chatId, i) 
-                            } else {
-                                //обновить бд
-                                const res = await Worker.update({ 
-                                    worklist: JSON.stringify([{
-                                        spec: 'Вне категории',
-                                        cat: 'NoTag'
-                                    }]) 
-                                },
-                                { 
-                                    where: {chatId: worker.chatId} 
-                                })
-                                console.log("Список специальностей обновлен! ", worker.chatId, i) 
-                            }
+                            // if (specArr.length > 0) {
+                            //     //обновить бд
+                            //     const res = await Worker.update({ 
+                            //         worklist: JSON.stringify(specArr)  
+                            //     },
+                            //     { 
+                            //         where: {chatId: worker.chatId} 
+                            //     })
+                            //     console.log("Список специальностей обновлен! ", worker.chatId, i) 
+                            // } else {
+                            //     //обновить бд
+                            //     const res = await Worker.update({ 
+                            //         worklist: JSON.stringify([{
+                            //             spec: 'Вне категории',
+                            //             cat: 'NoTag'
+                            //         }]) 
+                            //     },
+                            //     { 
+                            //         where: {chatId: worker.chatId} 
+                            //     })
+                            //     console.log("Список специальностей обновлен! ", worker.chatId, i) 
+                            // }
 
                             //получить аватарку
                             // const spec = await getWorkerChildren(notion[0]?.id) 
@@ -555,13 +556,15 @@ bot.on('message', async (msg) => {
                             })
                             if (res) {
                                console.log("Специалист обновлен! ", worker.chatId, i) 
+                            }else {
+                                console.log("Ошибка обновления! ", worker.chatId, i) 
                             }
                             
                         } else {
-                            console.log("Специалист не найден в Notion!", i) 
+                            console.log("Специалист не найден в Notion!", worker.chatId, i) 
                         }              
 
-                    }, 1500 * ++i)   
+                    //}, 1500 * ++i)   
                 }) 
             } catch (error) {
                 console.log(error.message)
