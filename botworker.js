@@ -561,7 +561,7 @@ bot.on('message', async (msg) => {
                             console.log("Специалист не найден в Notion!", i) 
                         }              
 
-                    }, 500 * ++i)   
+                    }, 1500 * ++i)   
                 }) 
             } catch (error) {
                 console.log(error.message)
