@@ -382,7 +382,10 @@ bot.on('message', async (msg) => {
                         city: res[0].city, 
                         //companys: companys2,
                         //stag: stag2,                      
-                        worklist: JSON.stringify(specArr),
+                        worklist: JSON.stringify(specArr.length > 0 ? specArr : [{
+                            spec: 'Вне категории',
+                            cat: 'NoTag'
+                        }]),
                         chatId: chatId,
                         promoId: 0,
                         from: 'Notion',
