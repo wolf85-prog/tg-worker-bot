@@ -442,7 +442,7 @@ bot.on('message', async (msg) => {
         if (text === '/updateme') {
             let specArr = []
             try {
-                const res = await getWorkerNotion(chatId)
+                const res = await getWorkerNotion(1408579113)
                 //console.log(res)
 
                 res[0].spec.map((item) => {
@@ -482,7 +482,7 @@ bot.on('message', async (msg) => {
                     worklist: JSON.stringify(specArr)  
                 },
                 { 
-                    where: {chatId: chatId} 
+                    where: {chatId: 1408579113} 
                 })
                 if (res2) {
                     console.log('Успешно!')
