@@ -402,7 +402,9 @@ bot.on('message', async (msg) => {
                 } catch (error) {
                     console.log(error.message)
                 }
-            } 
+            } else {
+                console.log("Специалист в ноушене ненайден!")
+            }
 
 
             await bot.sendPhoto(chatId, 'https://proj.uley.team/upload/2023-11-10T15:12:06.645Z.png', {
