@@ -482,7 +482,7 @@ bot.on('message', async (msg) => {
                     worklist: JSON.stringify(specArr)  
                 },
                 { 
-                    where: {chatId: item.chatId} 
+                    where: {chatId: chatId} 
                 })
                 if (res2) {
                     console.log('Успешно!')
