@@ -337,20 +337,14 @@ bot.on('message', async (msg) => {
                 console.log('Пользователь добавлен в БД')
             } else {
                 console.log('Отмена добавления в БД. Пользователь уже существует')
-                // await UserBot.update({ username: username }, {
-                //     where: {
-                //       chatId: chatId.toString(),
-                //     },
-                // });
             }
-
 
             //поиск пользователя в notion
             const res = await getWorkerNotion(chatId)
-            console.log('res: ', res)
+            //console.log('res: ', res)
             let specArr = []
 
-            if (res) {
+            if (res.length > 0) {
                 try {
                     res[0].spec.map((item) => {
                         specData.map((category)=> {
@@ -403,7 +397,7 @@ bot.on('message', async (msg) => {
                     console.log(error.message)
                 }
             } else {
-                console.log("Специалист в ноушене ненайден!")
+                console.log("Специалист в ноушене не найден!")
             }
 
 
@@ -443,7 +437,7 @@ bot.on('message', async (msg) => {
                 } else {
                         console.log('Отмена добавления в БД. Пользователь уже существует')
                 }
-            }, 60000) // 60 минут 36000000
+            }, 36000000) // 60 минут 36000000
         }
 
         //обновить список специальностей я и Белов
