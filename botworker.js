@@ -476,7 +476,7 @@ bot.on('message', async (msg) => {
 
                 workers.map(async(worker, i)=> {
                     let specArr = []
-                    //setTimeout(async()=> {  
+                    setTimeout(async()=> {  
                         //получить данные специалиста по его id
                         const notion = await getWorkerNotion(worker.chatId)
                         console.log(JSON.stringify(notion))
@@ -544,11 +544,11 @@ bot.on('message', async (msg) => {
 
                             //обновить фио
                             const res = await Worker.update({ 
-                                userfamily: notion[0].fio.split(" ")[0],
-                                username: notion[0].fio.split(" ")[1],
-                                phone: notion[0].phone,
-                                dateborn: notion[0].age?.start.split('-')[0],
-                                city: notion[0].city,                    
+                                userfamily: notion[0]?.fio.split(" ")[0],
+                                username: notion[0]?.fio.split(" ")[1],
+                                phone: notion[0]?.phone,
+                                //dateborn: notion[0].age?.start.split('-')[0],
+                                //city: notion[0].city,                    
                                 from: 'Notion',
                             },
                             { 
@@ -564,7 +564,7 @@ bot.on('message', async (msg) => {
                             console.log("Специалист не найден в Notion!", worker.chatId, i) 
                         }              
 
-                    //}, 1500 * ++i)   
+                    }, 500 * ++i)   
                 }) 
             } catch (error) {
                 console.log(error.message)
