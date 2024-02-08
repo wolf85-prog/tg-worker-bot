@@ -496,6 +496,12 @@ bot.on('message', async (msg) => {
             }
         }
 
+        //отправить расслку неизвестным специалистам
+        if (text === '/sendDistrib') {
+            const res = await bot.sendMessage(chatId, 'Мы свяжемся с вами в ближайшее время.')
+            console.log("res send: ", res)
+        }
+
         //обновить список специальностей
         if (text === '/updatespec') {
             try {
