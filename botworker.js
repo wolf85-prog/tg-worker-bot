@@ -1111,7 +1111,7 @@ bot.on('message', async (msg) => {
                     console.log(fio, chatId, age, phone2, specArr2, city2, friend2)
 
                     //сохраниь в бд ноушен
-                    const notion = getWorkerNotion(chatId)
+                    const notion = await getWorkerNotion(chatId)
                     console.log("notion specialist: ", notion)
                     if (!notion) {
                         await addWorker(fio, chatId, age, phone2, specArr2, city2, friend2)
@@ -1129,7 +1129,7 @@ bot.on('message', async (msg) => {
                     city2 = '';
                     friend2 = '';
  
-                    console.log('Специалист успешно добавлен в БД! Worker: ' + res.username)
+                    console.log('Специалист успешно добавлен в БД! Worker: ')
 
 //                     await bot.sendMessage(chatId, `Отлично, ${res.username}!
 // Внимательно следи за этим чатом.
