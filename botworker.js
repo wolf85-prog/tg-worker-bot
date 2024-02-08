@@ -328,6 +328,101 @@ bot.on('message', async (msg) => {
     //console.log("text: ", text)
 
     try {
+        if (text === '/pusk') {
+            //добавить пользователя в бд
+            const user = await UserBot.findOne({where:{chatId: chatId.toString()}})
+            if (!user) {
+                await UserBot.create({ firstname: firstname, lastname: lastname, chatId: chatId, username: username })
+                console.log('Пользователь добавлен в БД')
+            } else {
+                console.log('Отмена добавления в БД. Пользователь уже существует')
+            }
+
+            //поиск пользователя в notion
+            const res = await getWorkerNotion(chatId)
+            console.log('res: ', res)
+            let specArr = []
+
+            if (res) {
+                try {
+                    res[0].spec.map((item) => {
+                        specData.map((category)=> {
+                            category.models.map((work)=> {
+                                if (work.name === item.name){
+                                    const obj = {
+                                        spec: item.name,
+                                        cat: category.icon,
+                                    }
+                                    specArr.push(obj)
+                                }
+                            })
+                            if (category.icon === item.name) {
+                                const obj = {
+                                    spec: item.name,
+                                    cat: category.icon,
+                                }
+                                specArr.push(obj) 
+                            }
+                        })
+                    })
+
+                    //добавление специалиста в БД
+                    const res2 = {
+                        userfamily: res[0].fio.split(' ')[0], 
+                        username: res[0].fio.split(' ')[1],
+                        phone: res[0].phone, 
+                        dateborn: res[0].age.start.split('-')[0],
+                        city: res[0].city, 
+                        //companys: companys2,
+                        //stag: stag2,                      
+                        worklist: JSON.stringify(specArr),
+                        chatId: chatId,
+                        promoId: 0,
+                        from: 'Notion',
+                        avatar: '',
+                    }
+
+
+                    if (res2) {
+                       console.log('Специалист из Notion успешно добавлен в БД! Worker: ' + res2) 
+                    } else {
+                        console.log("res2: ", res2)
+                    }
+
+
+                } catch (error) {
+                    console.log(error.message)
+                }
+            }
+
+            //регистрация как Неизвестный специалист после отсутствия в бд
+            setTimeout(async()=> {
+                const user = await Worker.findOne({where:{chatId: chatId.toString()}})
+                if (!user) {
+                    await Worker.create({ 
+                        userfamily: 'Неизвестный', 
+                        username: 'специалист',  
+                        phone: '', 
+                        dateborn: '',
+                        city: '', 
+                        companys: '',
+                        stag: '',                      
+                        worklist: JSON.stringify([{
+                            spec: 'Вне категории',
+                            cat: 'NoTag'
+                        }]),
+                        chatId: chatId,
+                        promoId: '',
+                        from: '' 
+                    })
+                    console.log('Пользователь добавлен в БД')
+                } else {
+                        console.log('Отмена добавления в БД. Пользователь уже существует')
+                }
+            }, 120000) // 2 минута
+            
+        }
+
         // команда Старт
         if (text === '/start') {
             //добавить пользователя в бд
@@ -410,6 +505,9 @@ bot.on('message', async (msg) => {
                     })
             })
 
+            setTimeout(async()=> {
+                await bot.sendPhoto(chatId, 'https://proj.uley.team/upload/2024-02-08T15:00:05.841Z.jpg')              
+            }, 300000) // 5 минут
 
             //регистрация как Неизвестный специалист после отсутствия в бд
             setTimeout(async()=> {
@@ -435,7 +533,7 @@ bot.on('message', async (msg) => {
                 } else {
                         console.log('Отмена добавления в БД. Пользователь уже существует')
                 }
-            }, 36000000) // 10 минут
+            }, 36000000) // 60 минут
         }
 
         //обновить список специальностей я и Белов
