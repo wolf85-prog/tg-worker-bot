@@ -337,11 +337,11 @@ bot.on('message', async (msg) => {
                 console.log('Пользователь добавлен в БД')
             } else {
                 console.log('Отмена добавления в БД. Пользователь уже существует')
-                await UserBot.update({ username: username }, {
-                    where: {
-                      chatId: chatId.toString(),
-                    },
-                });
+                // await UserBot.update({ username: username }, {
+                //     where: {
+                //       chatId: chatId.toString(),
+                //     },
+                // });
             }
 
 
@@ -398,49 +398,41 @@ bot.on('message', async (msg) => {
                 }
             } 
 
-//             await bot.sendMessage(chatId, `Привет! Я Workhub бот!
-// Присоединяйся к нашей дружной команде профессионалов!`, {
-//                     reply_markup: ({
-//                         inline_keyboard:[
-//                             [{text: 'Поехали!', web_app: {url: webAppUrl}}],
-//                         ]
-//                     })
-//             })   
 
-                await bot.sendPhoto(chatId, 'https://proj.uley.team/upload/2023-11-10T15:12:06.645Z.png', {
+            await bot.sendPhoto(chatId, 'https://proj.uley.team/upload/2023-11-10T15:12:06.645Z.png', {
                     reply_markup: ({
                         inline_keyboard:[
                             [{text: 'Поехали!', web_app: {url: webAppUrl}}],
                         ]
                     })
-                })
+            })
 
 
-                //регистрация как Неизвестный специалист после отсутствия в бд
-                setTimeout(async()=> {
-                    const user = await Worker.findOne({where:{chatId: chatId.toString()}})
-                    if (!user) {
-                        await Worker.create({ 
-                            userfamily: 'Неизвестный', 
-                            username: 'специалист',  
-                            phone: '', 
-                            dateborn: '',
-                            city: '', 
-                            companys: '',
-                            stag: '',                      
-                            worklist: JSON.stringify([{
-                                spec: 'Вне категории',
-                                cat: 'NoTag'
-                            }]),
-                            chatId: chatId,
-                            promoId: '',
-                            from: '' 
-                        })
-                        console.log('Пользователь добавлен в БД')
-                    } else {
+            //регистрация как Неизвестный специалист после отсутствия в бд
+            setTimeout(async()=> {
+                const user = await Worker.findOne({where:{chatId: chatId.toString()}})
+                if (!user) {
+                    await Worker.create({ 
+                        userfamily: 'Неизвестный', 
+                        username: 'специалист',  
+                        phone: '', 
+                        dateborn: '',
+                        city: '', 
+                        companys: '',
+                        stag: '',                      
+                        worklist: JSON.stringify([{
+                            spec: 'Вне категории',
+                            cat: 'NoTag'
+                        }]),
+                        chatId: chatId,
+                        promoId: '',
+                        from: '' 
+                    })
+                    console.log('Пользователь добавлен в БД')
+                } else {
                         console.log('Отмена добавления в БД. Пользователь уже существует')
-                    }
-                }, 600000) // 10 минут
+                }
+            }, 36000000) // 10 минут
         }
 
 
