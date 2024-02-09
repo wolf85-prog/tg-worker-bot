@@ -448,17 +448,17 @@ bot.on('message', async (msg) => {
 
                 workers.map(async(item)=> {
                     //добавить пользователя в бд
-                    if (item.chatId === '6143011220') {
+                    //if (item.chatId === '6143011220') {
                         const user = await UserBot.findOne({where:{chatId: item.chatId.toString()}})
                         if (!user) {
                             await UserBot.create({ firstname: item.username, lastname: item.userfamily, chatId: item.chatId, username: '' })
-                            console.log('Пользователь добавлен в БД')
+                            console.log('Пользователь добавлен в БД ', item.chatId)
                         } else {
                             console.log('Отмена добавления в БД. Пользователь уже существует')
                         }
-                    } else {
-                        console.log('Ошибка: ', item.chatId)
-                    }
+                   // } else {
+                    //    console.log('Ошибка: ', item.chatId)
+                   // }
                     
                 })
             } catch (error) {
