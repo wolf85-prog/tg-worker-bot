@@ -439,12 +439,33 @@ bot.on('message', async (msg) => {
                 }
             }, 36000000) // 60 минут 36000000
         }
-
+//------------------------------------------------------------------------------------------------
         //добавить в таблицу userbots
         if (text === '/addtable') {
+            try {
+                const workers = await getWorkersAll() 
+                //console.log(JSON.stringify(res0))
 
+                workers.map(async(item)=> {
+                    //добавить пользователя в бд
+                    if (item.chatId === '6143011220') {
+                        const user = await UserBot.findOne({where:{chatId: item.chatId.toString()}})
+                        if (!user) {
+                            await UserBot.create({ firstname: item.username, lastname: item.userfamily, chatId: item.chatId, username: '' })
+                            console.log('Пользователь добавлен в БД')
+                        } else {
+                            console.log('Отмена добавления в БД. Пользователь уже существует')
+                        }
+                    } else {
+                        console.log('Ошибка: ', item.chatId)
+                    }
+                    
+                })
+            } catch (error) {
+                console.log(error.message)
+            }
         }
-
+//-------------------------------------------------------------------------------------------------
         //обновить список специальностей я и Белов
         if (text === '/updateme') {
             let specArr = []
@@ -500,13 +521,13 @@ bot.on('message', async (msg) => {
                 console.log(error.message)
             }
         }
-
+//-------------------------------------------------------------------------------------------------
         //отправить расслку неизвестным специалистам
         if (text === '/sendDistrib') {
             const res = await bot.sendMessage(chatId, 'Мы свяжемся с вами в ближайшее время.')
             console.log("res send: ", res)
         }
-
+//-------------------------------------------------------------------------------------------------
         //обновить список специальностей
         if (text === '/updatespec') {
             try {
@@ -529,7 +550,7 @@ bot.on('message', async (msg) => {
                 console.log(error.message)
             }
         }
-
+//---------------------------------------------------------------------------------------
         //update worker from notion
         if (text === '/profile') {
             try {
