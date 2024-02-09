@@ -439,6 +439,26 @@ bot.on('message', async (msg) => {
                 }
             }, 36000000) // 60 минут 36000000
         }
+//-----------------------------------------------------------------------------------------------
+        if (text === '/sendpic') {
+            try {
+                const workers = await getWorkersAll() 
+                workers.map(async(item, i)=> {
+                    setTimeout(async()=> {
+                        if (item.worklist.find(it=>it.cat === 'NoTag')){
+                            const res = await bot.sendPhoto(chatId, 'https://proj.uley.team/upload/2024-02-08T15:00:05.841Z.jpg')
+                            if (res) {
+                            console.log("Успешно отправлено!", i) 
+                            } 
+                        }    
+                        
+                    }, 4000 * ++i)
+                })
+
+            } catch (error) {
+                console.log(error.message)
+            }
+        }
 //------------------------------------------------------------------------------------------------
         //добавить в таблицу userbots
         if (text === '/addtable') {
@@ -451,7 +471,23 @@ bot.on('message', async (msg) => {
                     //if (item.chatId === '6143011220') {
                         const user = await UserBot.findOne({where:{chatId: item.chatId.toString()}})
                         if (!user) {
-                            await UserBot.create({ firstname: item.username, lastname: item.userfamily, chatId: item.chatId, username: '' })
+                            await UserBot.create({ 
+                                userfamily: 'Неизвестный', 
+                                username: 'специалист',  
+                                phone: '', 
+                                dateborn: '',
+                                city: '', 
+                                companys: '',
+                                stag: '',                      
+                                worklist: JSON.stringify([{
+                                    spec: 'Вне категории',
+                                    cat: 'NoTag'
+                                }]),
+                                chatId: chatId,
+                                promoId: '',
+                                from: ''
+                                //firstname: item.username, lastname: item.userfamily, chatId: item.chatId, username: '' 
+                            })
                             console.log('Пользователь добавлен в БД ', item.chatId)
                         } else {
                             console.log('Отмена добавления в БД. Пользователь уже существует')
