@@ -465,6 +465,44 @@ bot.on('message', async (msg) => {
                 console.log(error.message)
             }
         }
+//------------------------------------------------------------------------------------------------
+        //добавить в таблицу workers
+        if (text === '/addworkers') {
+            try {
+                const userbots = await getUserbotsAll() 
+                console.log("workers size: ", workers.length)
+
+                userbots.map(async(item)=> {
+                    //добавить пользователя в бд
+                    //if (item.chatId === '6143011220') {
+                        const user = await Worker.findOne({where:{chatId: item.chatId.toString()}})
+                        if (!user) {
+                            await Worker.create({ userfamily: item.lastname, username: item.firstname, chatId: item.chatId, username: item.username })
+                            console.log('Пользователь добавлен в БД Workers ', item.chatId)
+                        } else {
+                            if (item.lastname === 'Неизвестный') {
+                                console.log('Отмена добавления в БД. Пользователь уже существует')
+                            } else {
+                                //обновить бд
+                                const res2 = await Worker.update({ 
+                                    userfamily: item.lastname,
+                                    username: item.firstname,
+                                },
+                                { 
+                                    where: {chatId: item.chatId} 
+                                })
+                            }
+                            
+                        }
+                // } else {
+                    //    console.log('Ошибка: ', item.chatId)
+                // }
+                    
+                })
+            } catch (error) {
+                console.log(error.message)
+            }
+        }
 //-------------------------------------------------------------------------------------------------
         //обновить список специальностей я и Белов
         if (text === '/updateme') {
