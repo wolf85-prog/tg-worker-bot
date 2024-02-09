@@ -440,11 +440,16 @@ bot.on('message', async (msg) => {
             }, 36000000) // 60 минут 36000000
         }
 
+        //добавить в таблицу userbots
+        if (text === '/addtable') {
+
+        }
+
         //обновить список специальностей я и Белов
         if (text === '/updateme') {
             let specArr = []
             try {
-                const res = await getWorkerNotion(1408579113)
+                const res = await getWorkerNotion(chatId)
                 //console.log(res)
 
                 res[0].spec.map((item) => {
@@ -484,7 +489,7 @@ bot.on('message', async (msg) => {
                     worklist: JSON.stringify(specArr)  
                 },
                 { 
-                    where: {chatId: 1408579113} 
+                    where: {chatId: chatId} 
                 })
                 if (res2) {
                     console.log('Успешно!')
