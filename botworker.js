@@ -665,7 +665,7 @@ bot.on('message', async (msg) => {
         
                             if (specArr.length > 0) {
                                 //обновить бд
-                                if (worker.chatId !== 1408579113 && worker.chatId !== 805436270) {
+                                if (worker.chatId !== '1408579113' && worker.chatId !== '805436270') {
                                     const res = await Worker.update({ 
                                         worklist: JSON.stringify(specArr)  
                                     },
@@ -708,10 +708,10 @@ bot.on('message', async (msg) => {
                             const res = await Worker.update({ 
                                 userfamily: notion[0]?.fio.split(" ")[0],
                                 username: notion[0]?.fio.split(" ")[1],
-                                phone: notion[0]?.phone,
+                                //phone: notion[0]?.phone ? notion[0]?.phone : '',
                                 //dateborn: notion[0].age?.start.split('-')[0],
-                                //city: notion[0].city,                    
-                                from: 'Notion',
+                                //city: notion[0].city ? notion[0].city : '',                    
+                                //from: 'Notion',
                             },
                             { 
                                 where: {chatId: worker.chatId} 
