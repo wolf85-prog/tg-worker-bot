@@ -470,7 +470,7 @@ bot.on('message', async (msg) => {
         if (text === '/addworkers') {
             try {
                 const userbots = await getUserbotsAll() 
-                console.log("workers size: ", workers.length)
+                console.log("workers size: ", userbots.length)
 
                 userbots.map(async(item)=> {
                     //добавить пользователя в бд
