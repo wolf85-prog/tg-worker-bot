@@ -444,15 +444,16 @@ bot.on('message', async (msg) => {
             try {
                 const workers = await getWorkersAll() 
                 workers.map(async(item, i)=> {
-                    setTimeout(async()=> {
-                        if (item.worklist.find(it=>it.cat === 'NoTag')){
-                            const res = await bot.sendPhoto(chatId, 'https://proj.uley.team/upload/2024-02-08T15:00:05.841Z.jpg')
-                            if (res) {
-                            console.log("Успешно отправлено!", i) 
-                            } 
-                        }    
+                    console.log(item.worklist)
+                    // setTimeout(async()=> {
+                    //     if (item.worklist.find(it=>it.cat === 'NoTag')){
+                    //         const res = await bot.sendPhoto(chatId, 'https://proj.uley.team/upload/2024-02-08T15:00:05.841Z.jpg')
+                    //         if (res) {
+                    //         console.log("Успешно отправлено!", i) 
+                    //         } 
+                    //     }    
                         
-                    }, 4000 * ++i)
+                    // }, 4000 * ++i)
                 })
 
             } catch (error) {
