@@ -447,7 +447,7 @@ bot.on('message', async (msg) => {
                     //console.log(JSON.parse(item.worklist))
                     setTimeout(async()=> {
                         if (JSON.parse(item.worklist).find(it=>it.cat === 'NoTag')){
-                            const res = await bot.sendPhoto(chatId, 'https://proj.uley.team/upload/2024-02-08T15:00:05.841Z.jpg')
+                            const res = await bot.sendPhoto(item.chatId, 'https://proj.uley.team/upload/2024-02-08T15:00:05.841Z.jpg')
                             if (res) {
                             console.log("Успешно отправлено!", i) 
                             } 
