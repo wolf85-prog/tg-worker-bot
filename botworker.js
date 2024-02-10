@@ -1552,88 +1552,109 @@ const start = async () => {
             // повторить с интервалом 24 часа
             let timerId2 = setInterval(async() => {
 
-                console.log("START GET WORKERS ALL...")
-                const workers = await getWorkersAll()
-                //console.log("workers: ", workers)
-
-                workers.map(async(worker, i)=> {
-                    //получить данные специалиста по его id
-                    //const notion = await getWorkerNotion(worker.chatId)
-                    //let specArr = []
+                try {
+                    console.log("START GET WORKERS ALL...")
+                    const workers = await getWorkersAll()
+                    console.log("workers: ", workers.length)  
     
-                    // setTimeout(async()=> {  
-                    //     notion[0].spec.map((item) => {
-                    //         specData.map((category)=> {
-                    //             category.models.map((work)=> {
-                    //                 if (work.name === item.name){
-                    //                     const obj = {
-                    //                         spec: item.name,
-                    //                         cat: category.icon,
-                    //                     }
-                    //                     specArr.push(obj)
-                    //                 }
-                    //             })
-                    //             if (category.icon === item.name) {
-                    //                 const obj = {
-                    //                     spec: item.name,
-                    //                     cat: category.icon,
-                    //                 }
-                    //                 specArr.push(obj) 
-                    //             }
-                    //         })
-                    //     })
+                    workers.map(async(worker, i)=> {
+                        let specArr = []
+                        setTimeout(async()=> {  
+                            //получить данные специалиста по его id
+                            const notion = await getWorkerNotion(worker.chatId)
+                            console.log(JSON.stringify(notion))
     
-                    //     if (specArr.length > 0) {
-                    //         //обновить бд
-                    //         const res = await Worker.update({ 
-                    //             worklist: JSON.stringify(specArr)  
-                    //         },
-                    //         { 
-                    //             where: {chatId: worker.chatId} 
-                    //         })
-                    //     }
-
-
-                        // if (notion.length > 0) {
-                        //     //получить аватарку
-                        //     const spec = await getWorkerChildren(notion[0]?.id) 
-                        //     if (spec.length > 0) {
-                        //        console.log("avatar: ", spec[0].image) 
-                        //        //обновить бд
-                        //         const res = await Worker.update({ 
-                        //             avatar: spec[0].image,
-                        //         },
-                        //         { 
-                        //             where: {chatId: worker.chatId} 
-                        //         })
-                        //     } else {
-                        //         console.log("Аватар не найден в Notion!") 
-                        //     }
-
-                        //     //обновить фио
-                        //     //обновить бд
-                        //     const res = await Worker.update({ 
-                        //         userfamily: notion[0].fio.split(" ")[0],
-                        //         username: notion[0].fio.split(" ")[1],
-                        //         phone: notion[0].phone,
-                        //         dateborn: notion[0].age?.start.split('-')[0],
-                        //         city: notion[0].city,                    
-                        //         from: 'Notion',
-                        //     },
-                        //     { 
-                        //         where: {chatId: worker.chatId} 
-                        //     })
-                        //     if (res) {
-                        //        console.log("Специалист обновлен! ", chatId) 
-                        //     }
-                            
-                        // } else {
-                        //     console.log("Специалист не найден в Notion!") 
-                        // }    
-                        
+                            if (notion.length > 0) {
+                                //список специалистов
+                                notion[0].spec.map((item) => {
+                                    specData.map((category)=> {
+                                        category.models.map((work)=> {
+                                            if (work.name === item.name){
+                                                const obj = {
+                                                    spec: item.name,
+                                                    cat: category.icon,
+                                                }
+                                                specArr.push(obj)
+                                            }
+                                        })
+                                        if (category.icon === item.name) {
+                                            const obj = {
+                                                spec: item.name,
+                                                cat: category.icon,
+                                            }
+                                            specArr.push(obj) 
+                                        }
+                                    })
+                                })
+            
+                                if (specArr.length > 0) {
+                                    //обновить бд
+                                    if (worker.chatId !== 1408579113 && worker.chatId !== 805436270) {
+                                        const res = await Worker.update({ 
+                                            worklist: JSON.stringify(specArr)  
+                                        },
+                                        { 
+                                            where: {chatId: worker.chatId} 
+                                        })
+                                        console.log("Список специальностей обновлен! ", worker.chatId, i) 
+                                    }
+                                    
+                                } else {
+                                    //обновить бд
+                                    const res = await Worker.update({ 
+                                        worklist: JSON.stringify([{
+                                            spec: 'Вне категории',
+                                            cat: 'NoTag'
+                                        }]) 
+                                    },
+                                    { 
+                                        where: {chatId: worker.chatId} 
+                                    })
+                                    console.log("Список специальностей обновлен! ", worker.chatId, i) 
+                                }
     
-                    // }, 2000 * ++i)   
-                }) 
+                                //получить аватарку
+                                // const spec = await getWorkerChildren(notion[0]?.id) 
+                                // if (spec.length > 0) {
+                                //    console.log("avatar: ", spec[0].image) 
+                                //    //обновить бд
+                                //     const res = await Worker.update({ 
+                                //         avatar: spec[0].image,
+                                //     },
+                                //     { 
+                                //         where: {chatId: worker.chatId} 
+                                //     })
+                                // } else {
+                                //     console.log("Аватар не найден в Notion!") 
+                                // }
+    
+                                //обновить фио
+                                const res = await Worker.update({ 
+                                    userfamily: notion[0]?.fio.split(" ")[0],
+                                    username: notion[0]?.fio.split(" ")[1],
+                                    phone: notion[0]?.phone,
+                                    //dateborn: notion[0].age?.start.split('-')[0],
+                                    //city: notion[0].city,                    
+                                    from: 'Notion',
+                                },
+                                { 
+                                    where: {chatId: worker.chatId} 
+                                })
+                                if (res) {
+                                   console.log("Специалист обновлен! ", worker.chatId, i) 
+                                }else {
+                                    console.log("Ошибка обновления! ", worker.chatId, i) 
+                                }
+                                
+                            } else {
+                                console.log("Специалист не найден в Notion!", worker.chatId, i) 
+                            }              
+    
+                        }, 500 * ++i)   
+                    }) 
+                } catch (error) {
+                    console.log(error.message)
+                }
 
                 i++ // счетчик интервалов
             }, 86400000); //каждые 24 часа
