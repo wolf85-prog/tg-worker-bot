@@ -441,7 +441,7 @@ bot.on('message', async (msg) => {
         }
 //-----------------------------------------------------------------------------------------------
         if (text === '/sendpic') {
-            try {
+            //try {
                 const workers = await getWorkersAll() 
                 workers.map(async(item, i)=> {
                     //console.log(JSON.parse(item.worklist))
@@ -450,15 +450,17 @@ bot.on('message', async (msg) => {
                             const res = await bot.sendPhoto(item.chatId, 'https://proj.uley.team/upload/2024-02-11T12:02:27.932Z.jpg')
                             if (res) {
                             console.log("Успешно отправлено!", i, item.chatId) 
-                            } 
+                            } else {
+                                console.log("Ошибка отправки!", i, item.chatId)   
+                            }
                         }    
                         
-                    }, 2000 * ++i)
+                    }, 4000 * ++i)
                 })
 
-            } catch (error) {
-                console.log(error.message)
-            }
+            // } catch (error) {
+            //     console.log(error.message)
+            // }
         }
 //------------------------------------------------------------------------------------------------
         //добавить в таблицу userbots
