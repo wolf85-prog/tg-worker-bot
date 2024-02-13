@@ -935,8 +935,8 @@ bot.on('message', async (msg) => {
                 receiverId: '12222222',  
                 accept: false,      
             }
-            const pretendentId = await Pretendent.create(pretendent)
-            console.log("Претендент: ", pretendentId)
+            const res = await Pretendent.create(pretendent)
+            console.log("Претендент: ", res.data.id)
         }
 //------------------------------------------------------------------------------------------------
 //обработка контактов
