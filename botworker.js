@@ -927,7 +927,7 @@ bot.on('message', async (msg) => {
         }
 //-----------------------------------------------------------------------------------------------
 
-        if (text === 'addPretendent') {
+        if (text === '/addPretendent') {
             //новый претендент
             const pretendent = {
                 projectId: 'dfgdw223546werwer', 
