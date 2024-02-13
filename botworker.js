@@ -1353,21 +1353,8 @@ bot.on('message', async (msg) => {
         const project = data.split(' ');
         console.log("project: ", data)
         const projectId = project[1]
-        
-        // const pretendentId = data.split(' ');
-        // console.log("pretendentId: ", data)
-        // const id = pretendentId[1]
 
-        // const user = await Pretendent.findOne({where: {id}})
-
-        // //обновить поле accept на true (принял)
-        // await Pretendent.update({ accept: true }, {
-        //     where: {
-        //         id: id,
-        //     },
-        // }); 
-        
-        
+        //специалист
         const workerId = await getWorkerChatId(chatId)
 
         //новый претендент
@@ -1411,24 +1398,11 @@ bot.on('message', async (msg) => {
 
     //нажатие на кнопку "Отклонить"
     if (data.startsWith('/cancel')) {
-        // const pretendentId = data.split(' ');
-        // console.log("pretendentId: ", data)
-        // const id = pretendentId[1]
-
         const project = data.split(' ');
         console.log("project: ", data)
         const projectId = project[1]
 
-        //претендент
-        // const user = await Pretendent.findOne({where: {id}})
-
-        // //обновить поле accept на false (отклонил)
-        // await Pretendent.update({ accept: false }, {
-        //     where: {
-        //         id: id,
-        //     },
-        // });
-
+        //специалист
         const workerId = await getWorkerChatId(chatId)
 
         //новый претендент
