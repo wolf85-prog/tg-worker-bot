@@ -1350,30 +1350,47 @@ bot.on('message', async (msg) => {
 
     //нажатие на кнопку "Принять"
     if (data.startsWith('/accept')) {
-        const pretendentId = data.split(' ');
-        console.log("pretendentId: ", data)
-        const id = pretendentId[1]
+        const project = data.split(' ');
+        console.log("project: ", data)
+        const projectId = project[1]
+        
+        // const pretendentId = data.split(' ');
+        // console.log("pretendentId: ", data)
+        // const id = pretendentId[1]
 
-        const user = await Pretendent.findOne({where: {id}})
+        // const user = await Pretendent.findOne({where: {id}})
 
-        //обновить поле accept на true (принял)
-        await Pretendent.update({ accept: true }, {
-            where: {
-                id: id,
-            },
-        });           
+        // //обновить поле accept на true (принял)
+        // await Pretendent.update({ accept: true }, {
+        //     where: {
+        //         id: id,
+        //     },
+        // }); 
+        
+        
+        const workerId = await getWorkerChatId(chatId)
 
-        if (user.projectId) {
-           const blockId = await getBlocksP(user.projectId); 
+        //новый претендент
+        const pretendent = {
+                projectId: projectId, 
+                workerId: workerId, 
+                receiverId: chatId,  
+                accept: false,      
+        }
+        const res = await Pretendent.create(pretendent)
+        console.log("Претендент в БД: ", res.dataValues.id)
+
+
+        //if (user.projectId) {
+           const blockId = await getBlocksP(projectId); 
            
            // текущая дата
             const date = Date.now() + 10800000; //+3 часа
             const dateNow =new Date(date)
-            console.log("dateNow: ", dateNow)
             
             //Добавить специалиста в таблицу Претенденты (Ноушен)
-            await addPretendent(blockId, user.workerId, dateNow);
-        }
+            await addPretendent(blockId, workerId, dateNow);
+        //}
 
         //отправить сообщение в админ-панель
         const convId = await sendMyMessage('Пользователь нажал кнопку "Принять" в рассылке', "text", chatId)
@@ -1394,25 +1411,41 @@ bot.on('message', async (msg) => {
 
     //нажатие на кнопку "Отклонить"
     if (data.startsWith('/cancel')) {
-        const pretendentId = data.split(' ');
-        console.log("pretendentId: ", data)
-        const id = pretendentId[1]
+        // const pretendentId = data.split(' ');
+        // console.log("pretendentId: ", data)
+        // const id = pretendentId[1]
+
+        const project = data.split(' ');
+        console.log("project: ", data)
+        const projectId = project[1]
 
         //претендент
-        const user = await Pretendent.findOne({where: {id}})
+        // const user = await Pretendent.findOne({where: {id}})
 
-        //обновить поле accept на false (отклонил)
-        await Pretendent.update({ accept: false }, {
-            where: {
-                id: id,
-            },
-        });
+        // //обновить поле accept на false (отклонил)
+        // await Pretendent.update({ accept: false }, {
+        //     where: {
+        //         id: id,
+        //     },
+        // });
+
+        const workerId = await getWorkerChatId(chatId)
+
+        //новый претендент
+        const pretendent = {
+                projectId: projectId, 
+                workerId: workerId, 
+                receiverId: chatId,  
+                accept: false,      
+        }
+        const res = await Pretendent.create(pretendent)
+        console.log("Претендент в БД: ", res.dataValues.id)
                     
-        const blockId = await getBlocksP(user.projectId);  
-        console.log("blockId: ", blockId)  
+        const blockId = await getBlocksP(projectId);  
+        //console.log("blockId: ", blockId)  
             
         //претендент
-        const worker = await getWorkerPretendent(blockId, user.workerId)
+        const worker = await getWorkerPretendent(blockId, workerId)
             
         //обновить специалиста в таблице Претенденты
         await updatePretendent(worker[0].id);
