@@ -79,6 +79,7 @@ const httpsServer = https.createServer(credentials, app);
 
 const {specData} = require('./botworker/data/specData');
 const getWorkerChildren = require("./botworker/common/getWorkerChildren");
+const getWorkerChatId = require("./botworker/common/getWorkerChatId");
 
 
 //--------------------------------------------------------------------------------------------------------
@@ -928,10 +929,12 @@ bot.on('message', async (msg) => {
 //-----------------------------------------------------------------------------------------------
 
         if (text === '/addPretendent') {
+            const worker = await getWorkerChatId(chatId)
+
             //новый претендент
             const pretendent = {
                 projectId: 'dfgdw223546werwer', 
-                workerId: 'dfe343gdfgdgdhghgh', 
+                workerId: worker, 
                 receiverId: '12222222',  
                 accept: false,      
             }

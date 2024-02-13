@@ -11,6 +11,7 @@ const smetaController = require('../controllers/smetaController')
 router.get("/workers", workerController.workers);
 router.get("/workers2", workerController.workers2);
 router.get("/workers/:id", workerController.workerId);
+router.get("/workers/chat/:id", workerController.workersChatId);
 
 router.get('/workers/children/:id', workerController.workerChildrenId); // получить данные дочерних блоков
 

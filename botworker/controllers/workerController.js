@@ -312,6 +312,26 @@ async function getPretendents(id) {
     }
 }
 
+//получить id менеджера по его TelegramID
+async function getWorkerChatId(id) {
+    try {
+        const response = await notion.databases.query({
+            database_id: databaseWorkerId, 
+            "filter": {
+                "property": "Telegram",
+                "number": {
+                    "equals": parseInt(id)
+                },
+            }
+        });
+
+        return response.results[0]?.id; 
+        
+    } catch (error) {
+        console.error(error.message)
+    }
+}
+
 
 class WorkerController {
 
@@ -457,6 +477,17 @@ class WorkerController {
         }
         else{
             res.json([]);
+        }
+    }
+
+    async workersChatId(req, res) {
+        const id = req.params.id; // получаем id
+        const worker = await getWorkerChatId(id);
+        if(worker){
+            res.json(worker);
+        }
+        else{
+            res.json({});
         }
     }
 }
