@@ -1574,7 +1574,7 @@ const start = async () => {
             
                                 if (specArr.length > 0) {
                                     //обновить бд
-                                    if (worker.chatId !== 1408579113 && worker.chatId !== 805436270) {
+                                    if (worker.chatId !== '1408579113' && worker.chatId !== '805436270') {
                                         const res = await Worker.update({ 
                                             worklist: JSON.stringify(specArr)  
                                         },
