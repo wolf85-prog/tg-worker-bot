@@ -936,7 +936,7 @@ bot.on('message', async (msg) => {
                 accept: false,      
             }
             const res = await Pretendent.create(pretendent)
-            console.log("Претендент: ", res.data)
+            console.log("Претендент: ", res.dataValues.id)
         }
 //------------------------------------------------------------------------------------------------
 //обработка контактов
