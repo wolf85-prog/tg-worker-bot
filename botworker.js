@@ -767,13 +767,13 @@ bot.on('message', async (msg) => {
                    console.log(error.message)
                }
         }
-
+//---------------------------------------------------------------------------------------
         if (text === '/addImage') {
             const img = 'https://proj.uley.team/upload/2023-10-14T16:19:25.849Z.png'
             const pageId = '38eaccfbe06740d1a136e0d123905ebf'
             const res = await addImage(img, pageId)
         }
-
+//-----------------------------------------------------------------------------------------
         if (text === '/editspec') {
             const res = await getWorkerNotion(chatId)
           
@@ -788,7 +788,7 @@ bot.on('message', async (msg) => {
             list.push(obj)
             await updateWorker(res[0].id, list)
         }
-
+//----------------------------------------------------------------------------
         if (text === '/getworkers') {
             console.log("START GET WORKERS ALL...")
             const workers = await getWorkersAll()
@@ -924,6 +924,19 @@ bot.on('message', async (msg) => {
                 },
             });
             console.log(res)
+        }
+//-----------------------------------------------------------------------------------------------
+
+        if (text === 'addPretendent') {
+            //новый претендент
+            const pretendent = {
+                projectId: 'dfgdw223546werwer', 
+                workerId: 'dfe343gdfgdgdhghgh', 
+                receiverId: '12222222',  
+                accept: false,      
+            }
+            const pretendentId = await Pretendent.create(pretendent)
+            console.log("Претендент: ", pretendentId)
         }
 //------------------------------------------------------------------------------------------------
 //обработка контактов
@@ -1421,51 +1434,18 @@ bot.on('message', async (msg) => {
 
     //нажатие на кнопку "Отклонить"
     if (data === '/worker') {
-        //отправить сообщение в админ-панель
-        //const convId = await sendMyMessage('Вы уже зарегистрированы!', chatId)
-
         return bot.sendMessage(chatId, 'Вы уже зарегистрированы!')
     }
 
 
 
     if (data === '/passport2') {
-        //отправить сообщение в админ-панель
-        //const convId = await sendMyMessage('Согласен!', chatId)
-
-        // Подключаемся к серверу socket
-        // let socket = io(socketUrl);
-        // socket.emit("addUser", chatId)
-        // socket.emit("sendMessageSpec", {
-        //     senderId: chatId,
-        //     receiverId: chatTelegramId,
-        //     text: 'Пользователь нажал кнопку "Согласен"',
-        //     type: 'text',
-        //     convId: convId,
-        //     messageId: messageId,
-        // })
-
         return bot.sendMessage(chatId, `Ваш отказ принят.
 До встречи на следующем проекте!`)  
 
     }
 
     if (data === '/passport3') {
-        //отправить сообщение в админ-панель
-        //const convId = await sendMyMessage('Согласен!', chatId)
-
-        // Подключаемся к серверу socket
-        // let socket = io(socketUrl);
-        // socket.emit("addUser", chatId)
-        // socket.emit("sendMessageSpec", {
-        //     senderId: chatId,
-        //     receiverId: chatTelegramId,
-        //     text: 'Пользователь нажал кнопку "Согласен"',
-        //     type: 'text',
-        //     convId: convId,
-        //     messageId: messageId,
-        // })
-
         bot.sendMessage(chatId, "Иногда заказчики требуют персональные данные  специалистов приглашенных на проект, в этом случае участие в нем возможно только после предоставления необходимых данных.", {
             reply_markup: ({
                 inline_keyboard: [
