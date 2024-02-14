@@ -554,57 +554,59 @@ bot.on('message', async (msg) => {
 
                 workers.map(async(worker, i)=> {
                     let specArr = []
-                    if (worker.chatId === '1408579113' && worker.chatId === '805436270') {
+                    if (worker.chatId === '1408579113' || worker.chatId === '805436270') {
                         //получить данные специалиста по его id
-                        const notion = await getWorkerNotion(worker.chatId)
-                        console.log(JSON.stringify(notion))
+                        // const notion = await getWorkerNotion(worker.chatId)
+                        // console.log(JSON.stringify(notion))
 
-                        if (notion.length > 0) {
-                            //список специалистов
-                            notion[0].spec.map((item) => {
-                                specData.map((category)=> {
-                                    category.models.map((work)=> {
-                                        if (work.name === item.name){
-                                            const obj = {
-                                                spec: item.name,
-                                                cat: category.icon,
-                                            }
-                                            specArr.push(obj)
-                                        }
-                                    })
-                                    if (category.icon === item.name) {
-                                        const obj = {
-                                            spec: item.name,
-                                            cat: category.icon,
-                                        }
-                                        specArr.push(obj) 
-                                    }
-                                })
-                            })
+                        // if (notion.length > 0) {
+                        //     //список специалистов
+                        //     notion[0].spec.map((item) => {
+                        //         specData.map((category)=> {
+                        //             category.models.map((work)=> {
+                        //                 if (work.name === item.name){
+                        //                     const obj = {
+                        //                         spec: item.name,
+                        //                         cat: category.icon,
+                        //                     }
+                        //                     specArr.push(obj)
+                        //                 }
+                        //             })
+                        //             if (category.icon === item.name) {
+                        //                 const obj = {
+                        //                     spec: item.name,
+                        //                     cat: category.icon,
+                        //                 }
+                        //                 specArr.push(obj) 
+                        //             }
+                        //         })
+                        //     })
         
-                                //обновить бд
+                        //         //обновить бд
                                 
-                                    newSpec = {
-                                        spec: 'Вне категории',
-                                        cat: 'NoTag'
-                                    }
-                                    newSpec2 = {
-                                        spec: 'Тест',
-                                        cat: 'Test'
-                                    }
-                                    specArr.push(newSpec)
-                                    specArr.push(newSpec2)
+                        //             newSpec = {
+                        //                 spec: 'Вне категории',
+                        //                 cat: 'NoTag'
+                        //             }
+                        //             newSpec2 = {
+                        //                 spec: 'Тест',
+                        //                 cat: 'Test'
+                        //             }
+                        //             specArr.push(newSpec)
+                        //             specArr.push(newSpec2)
 
-                                    const res = await Worker.update({ 
-                                        worklist: JSON.stringify(specArr)  
-                                    },
-                                    { 
-                                        where: {chatId: worker.chatId} 
-                                    })                              
+                        //             const res = await Worker.update({ 
+                        //                 worklist: JSON.stringify(specArr)  
+                        //             },
+                        //             { 
+                        //                 where: {chatId: worker.chatId} 
+                        //             })                              
                             
-                        } else {
-                            console.log("Специалист не найден в Notion!", worker.chatId, i) 
-                        }              
+                        // } else {
+                        //     console.log("Специалист не найден в Notion!", worker.chatId, i) 
+                        // }  
+                        
+                        console.log(worker.chatId)
 
                     } 
                 }) 
@@ -731,7 +733,7 @@ bot.on('message', async (msg) => {
                                 //обновить бд
                                 if (specArr.length > 0) {
                                     //обновить бд
-                                    if (worker.chatId === '1408579113' && worker.chatId === '805436270') {
+                                    if (worker.chatId === '1408579113' || worker.chatId === '805436270') {
                                         newSpec = {
                                             spec: 'Вне категории',
                                             cat: 'NoTag'
@@ -1675,7 +1677,7 @@ const start = async () => {
             
                                 if (specArr.length > 0) {
                                     //обновить бд
-                                    if (worker.chatId === '1408579113' && worker.chatId === '805436270') {
+                                    if (worker.chatId === '1408579113' || worker.chatId === '805436270') {
                                         newSpec = {
                                             spec: 'Вне категории',
                                             cat: 'NoTag'
