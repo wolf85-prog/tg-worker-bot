@@ -668,9 +668,42 @@ bot.on('message', async (msg) => {
         
                             if (specArr.length > 0) {
                                 //обновить бд
-                                if (worker.chatId !== '1408579113' && worker.chatId !== '805436270') {
+                                if (specArr.length > 0) {
+                                    //обновить бд
+                                    if (worker.chatId === '1408579113' && worker.chatId === '805436270') {
+                                        newSpec = {
+                                            spec: 'Вне категории',
+                                            cat: 'NoTag'
+                                        }
+                                        newSpec2 = {
+                                            spec: 'Тест',
+                                            cat: 'Test'
+                                        }
+                                        specArr.push(newSpec)
+                                        specArr.push(newSpec2)
+
+                                        const res = await Worker.update({ 
+                                            worklist: JSON.stringify(specArr)  
+                                        },
+                                        { 
+                                            where: {chatId: worker.chatId} 
+                                        })
+                                    } else {             
+                                        const res = await Worker.update({ 
+                                            worklist: JSON.stringify(specArr)  
+                                        },
+                                        { 
+                                            where: {chatId: worker.chatId} 
+                                        })
+                                        console.log("Список специальностей обновлен! ", worker.chatId, i) 
+                                    }                                
+                                } else {
+                                    //обновить бд
                                     const res = await Worker.update({ 
-                                        worklist: JSON.stringify(specArr)  
+                                        worklist: JSON.stringify([{
+                                            spec: 'Вне категории',
+                                            cat: 'NoTag'
+                                        }]) 
                                     },
                                     { 
                                         where: {chatId: worker.chatId} 
@@ -1581,7 +1614,26 @@ const start = async () => {
             
                                 if (specArr.length > 0) {
                                     //обновить бд
-                                    if (worker.chatId !== '1408579113' && worker.chatId !== '805436270') {
+                                    if (worker.chatId === '1408579113' && worker.chatId === '805436270') {
+                                        newSpec = {
+                                            spec: 'Вне категории',
+                                            cat: 'NoTag'
+                                        }
+                                        newSpec2 = {
+                                            spec: 'Тест',
+                                            cat: 'Test'
+                                        }
+                                        specArr.push(newSpec)
+                                        specArr.push(newSpec2)
+
+                                        const res = await Worker.update({ 
+                                            worklist: JSON.stringify(specArr)  
+                                        },
+                                        { 
+                                            where: {chatId: worker.chatId} 
+                                        })
+ 
+                                    } else {             
                                         const res = await Worker.update({ 
                                             worklist: JSON.stringify(specArr)  
                                         },
@@ -1589,8 +1641,7 @@ const start = async () => {
                                             where: {chatId: worker.chatId} 
                                         })
                                         console.log("Список специальностей обновлен! ", worker.chatId, i) 
-                                    }
-                                    
+                                    }                                
                                 } else {
                                     //обновить бд
                                     const res = await Worker.update({ 
