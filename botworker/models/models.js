@@ -24,6 +24,8 @@ const Worker = sequelize.define('worker', {
     promoId: {type: DataTypes.STRING},
     from: {type: DataTypes.STRING},
     avatar: {type: DataTypes.STRING},
+    comment: {type: DataTypes.TEXT}, 
+    rank: {type: DataTypes.INTEGER}, 
 })
 
 const Message = sequelize.define('wmessage', {
