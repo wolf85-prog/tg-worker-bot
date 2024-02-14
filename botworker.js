@@ -444,21 +444,19 @@ bot.on('message', async (msg) => {
         if (text === '/sendpic') {
             try {
                 const workers = await getWorkersAll() 
-                console.log("workers: ", workers)
+                console.log("workers: ", workers.length)
                 workers.map(async(item, i)=> {
-                    //console.log(JSON.parse(item.worklist))
+                    console.log(item.chatId)
                     setTimeout(async()=> {
                         if (JSON.parse(item.worklist).find(it=>it.cat === 'NoTag')){
-                            // const res = await bot.sendPhoto(item.chatId, 'https://proj.uley.team/upload/2024-02-08T15:00:05.841Z.jpg')
-                            // if (res) {
-                            //     console.log("Успешно отправлено!", i, item.chatId) 
-                            // } else {
-                            //     console.log("Ошибка отправки!", i, item.chatId)   
-                            // }
-                            console.log(item.chatId)
-                        }    
-                        
-                    }, 4000 * ++i)
+                            const res = await bot.sendPhoto(item.chatId, 'https://proj.uley.team/upload/2024-02-08T15:00:05.841Z.jpg')
+                            if (res) {
+                                console.log("Успешно отправлено!", i, item.chatId) 
+                            } else {
+                                console.log("Ошибка отправки!", i, item.chatId)   
+                            }
+                        }                     
+                    }, 10000 * ++i)
                 })
 
             } catch (error) {
