@@ -548,53 +548,114 @@ bot.on('message', async (msg) => {
         if (text === '/updateme') {
             let specArr = []
             try {
-                const res = await getWorkerNotion(chatId)
+                console.log("START GET WORKERS ALL...")
+                const workers = await getWorkersAll()
+                console.log("workers: ", workers.length)  
+
+                workers.map(async(worker, i)=> {
+                    let specArr = []
+                    if (worker.chatId === '1408579113' && worker.chatId === '805436270') {
+                        //получить данные специалиста по его id
+                        const notion = await getWorkerNotion(worker.chatId)
+                        console.log(JSON.stringify(notion))
+
+                        if (notion.length > 0) {
+                            //список специалистов
+                            notion[0].spec.map((item) => {
+                                specData.map((category)=> {
+                                    category.models.map((work)=> {
+                                        if (work.name === item.name){
+                                            const obj = {
+                                                spec: item.name,
+                                                cat: category.icon,
+                                            }
+                                            specArr.push(obj)
+                                        }
+                                    })
+                                    if (category.icon === item.name) {
+                                        const obj = {
+                                            spec: item.name,
+                                            cat: category.icon,
+                                        }
+                                        specArr.push(obj) 
+                                    }
+                                })
+                            })
+        
+                                //обновить бд
+                                
+                                    newSpec = {
+                                        spec: 'Вне категории',
+                                        cat: 'NoTag'
+                                    }
+                                    newSpec2 = {
+                                        spec: 'Тест',
+                                        cat: 'Test'
+                                    }
+                                    specArr.push(newSpec)
+                                    specArr.push(newSpec2)
+
+                                    const res = await Worker.update({ 
+                                        worklist: JSON.stringify(specArr)  
+                                    },
+                                    { 
+                                        where: {chatId: worker.chatId} 
+                                    })                              
+                            
+                        } else {
+                            console.log("Специалист не найден в Notion!", worker.chatId, i) 
+                        }              
+
+                    } 
+                }) 
+
+                //const res = await getWorkerNotion(chatId)
                 //console.log(res)
 
-                res[0].spec.map((item) => {
-                    specData.map((category)=> {
-                        category.models.map((work)=> {
-                            if (work.name === item.name){
-                                const obj = {
-                                    spec: item.name,
-                                    cat: category.icon,
-                                }
-                                specArr.push(obj)
-                            }
-                        })
-                        if (category.icon === item.name) {
-                            const obj = {
-                                spec: item.name,
-                                cat: category.icon,
-                            }
-                            specArr.push(obj) 
-                        }
-                    })
-                })
+                // res[0].spec.map((item) => {
+                //     specData.map((category)=> {
+                //         category.models.map((work)=> {
+                //             if (work.name === item.name){
+                //                 const obj = {
+                //                     spec: item.name,
+                //                     cat: category.icon,
+                //                 }
+                //                 specArr.push(obj)
+                //             }
+                //         })
+                //         if (category.icon === item.name) {
+                //             const obj = {
+                //                 spec: item.name,
+                //                 cat: category.icon,
+                //             }
+                //             specArr.push(obj) 
+                //         }
+                //     })
+                // })
 
-                newObj = {
-                    spec: 'Вне категории',
-                    cat: 'NoTag' 
-                }
-                newObj2 = {
-                    spec: 'Тест',
-                    cat: 'Test' 
-                }
-                specArr.push(newObj) 
-                specArr.push(newObj2) 
+                // newObj = {
+                //     spec: 'Вне категории',
+                //     cat: 'NoTag' 
+                // }
+                // newObj2 = {
+                //     spec: 'Тест',
+                //     cat: 'Test' 
+                // }
+                // specArr.push(newObj) 
+                // specArr.push(newObj2) 
 
-                //обновить бд
-                const res2 = await Worker.update({ 
-                    worklist: JSON.stringify(specArr)  
-                },
-                { 
-                    where: {chatId: chatId} 
-                })
-                if (res2) {
-                    console.log('Успешно!')
-                } else {
-                    console.log('Ошибка!')  
-                }
+                // //обновить бд
+                // const res2 = await Worker.update({ 
+                //     worklist: JSON.stringify(specArr)  
+                // },
+                // { 
+                //     where: {chatId: chatId} 
+                // })
+                // if (res2) {
+                //     console.log('Успешно!')
+                // } else {
+                //     console.log('Ошибка!')  
+                // }
             } catch (error) {
                 console.log(error.message)
             }
