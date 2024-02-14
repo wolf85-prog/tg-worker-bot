@@ -9,6 +9,7 @@ const smetaController = require('../controllers/smetaController')
 
 //get WORKERS
 router.get("/workers", workerController.workers);
+router.get("/workers100", workerController.workers100);
 router.get("/workers2", workerController.workers2);
 router.get("/workers/:id", workerController.workerId);
 router.get("/workers/chat/:id", workerController.workersChatId);

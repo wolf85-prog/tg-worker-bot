@@ -54,6 +54,33 @@ async function getWorkers() {
     }
 }
 
+//получить данные таблицы Специалисты
+async function getWorkers100() {
+    try {
+        let response = await notion.databases.query({
+            database_id: databaseWorkerId
+        });
+
+        const workers = response.results.map((page) => {
+            return {
+                id: page.id,
+                fio: page.properties.Name.title[0]?.plain_text,
+                tgId: page.properties.Telegram.number,
+                phone: page.properties.Phone.phone_number,
+                age: page.properties.Age.date,
+                city: page.properties.City[0]?.plain_text,
+                spec: page.properties.Specialization.multi_select,
+                //image: page.properties.["Files & media"].files[0]?.external.url
+            };
+        });
+
+        return workers;
+
+    } catch (error) {
+        console.error(error.message)
+    }
+}
+
 async function getWorkers2() {
     try {
         const response = await notion.databases.query({
@@ -337,6 +364,16 @@ class WorkerController {
 
     async workers(req, res) {
         const workers = await getWorkers();
+        if(workers){
+            res.json(workers);
+        }
+        else{
+            res.json({});
+        }
+    }
+
+    async workers100(req, res) {
+        const workers = await getWorkers100();
         if(workers){
             res.json(workers);
         }
