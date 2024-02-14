@@ -610,54 +610,6 @@ bot.on('message', async (msg) => {
 
                     } 
                 }) 
-
-                //const res = await getWorkerNotion(chatId)
-                //console.log(res)
-
-                // res[0].spec.map((item) => {
-                //     specData.map((category)=> {
-                //         category.models.map((work)=> {
-                //             if (work.name === item.name){
-                //                 const obj = {
-                //                     spec: item.name,
-                //                     cat: category.icon,
-                //                 }
-                //                 specArr.push(obj)
-                //             }
-                //         })
-                //         if (category.icon === item.name) {
-                //             const obj = {
-                //                 spec: item.name,
-                //                 cat: category.icon,
-                //             }
-                //             specArr.push(obj) 
-                //         }
-                //     })
-                // })
-
-                // newObj = {
-                //     spec: 'Вне категории',
-                //     cat: 'NoTag' 
-                // }
-                // newObj2 = {
-                //     spec: 'Тест',
-                //     cat: 'Test' 
-                // }
-                // specArr.push(newObj) 
-                // specArr.push(newObj2) 
-
-                // //обновить бд
-                // const res2 = await Worker.update({ 
-                //     worklist: JSON.stringify(specArr)  
-                // },
-                // { 
-                //     where: {chatId: chatId} 
-                // })
-                // if (res2) {
-                //     console.log('Успешно!')
-                // } else {
-                //     console.log('Ошибка!')  
-                // }
             } catch (error) {
                 console.log(error.message)
             }
