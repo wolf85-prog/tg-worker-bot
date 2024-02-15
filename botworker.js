@@ -762,7 +762,9 @@ bot.on('message', async (msg) => {
                                 //phone: notion[0]?.phone ? notion[0]?.phone : '',
                                 //dateborn: notion[0].age?.start.split('-')[0],
                                 //city: notion[0].city ? notion[0].city : '',                    
-                                //from: 'Notion',
+                                from: 'Notion',
+                                comment: notion[0]?.comment ? notion[0]?.comment : '',
+                                rank: notion[0]?.rank ? notion[0]?.rank : '',
                             },
                             { 
                                 where: {chatId: worker.chatId} 
@@ -1692,8 +1694,10 @@ const start = async () => {
                                     username: notion[0]?.fio.split(" ")[1],
                                     phone: notion[0]?.phone,
                                     //dateborn: notion[0].age?.start.split('-')[0],
-                                    //city: notion[0].city,                    
+                                    //city: notion[0].city ? notion[0].city : '',                    
                                     from: 'Notion',
+                                    comment: notion[0]?.comment ? notion[0]?.comment : '',
+                                    rank: notion[0]?.rank ? notion[0]?.rank : '',
                                 },
                                 { 
                                     where: {chatId: worker.chatId} 
