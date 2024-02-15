@@ -12,7 +12,7 @@ module.exports = async function getWorkerChatId(chatId) {
             "filter": {
                 "property": "Telegram",
                 "number": {
-                    "equals": parseInt(chatId)
+                    "equals": chatId ? parseInt(chatId) : 0
                 },
             }
         });

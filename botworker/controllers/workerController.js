@@ -361,7 +361,7 @@ async function getWorkerChatId(id) {
             "filter": {
                 "property": "Telegram",
                 "number": {
-                    "equals": parseInt(id)
+                    "equals": id ? parseInt(id) : 0
                 },
             }
         });
