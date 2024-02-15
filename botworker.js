@@ -764,7 +764,7 @@ bot.on('message', async (msg) => {
                                 //city: notion[0].city ? notion[0].city : '',                    
                                 from: 'Notion',
                                 comment: notion[0]?.comment ? notion[0]?.comment : '',
-                                rank: notion[0]?.rank ? notion[0]?.rank : '',
+                                rank: notion[0]?.rank ? notion[0]?.rank : null,
                             },
                             { 
                                 where: {chatId: worker.chatId} 
@@ -1697,7 +1697,7 @@ const start = async () => {
                                     //city: notion[0].city ? notion[0].city : '',                    
                                     from: 'Notion',
                                     comment: notion[0]?.comment ? notion[0]?.comment : '',
-                                    rank: notion[0]?.rank ? notion[0]?.rank : '',
+                                    rank: notion[0]?.rank ? notion[0]?.rank : null,
                                 },
                                 { 
                                     where: {chatId: worker.chatId} 
