@@ -401,6 +401,52 @@ bot.on('message', async (msg) => {
                 console.log("Специалист в ноушене не найден!")
             }
 
+            //создание чата специалиста
+            try {
+                let conversation_id
+
+                //найти беседу
+                const conversation = await Conversation.findOne({
+                    where: {
+                        members: {
+                            [Op.contains]: [chatId]
+                        }
+                    },
+                })   
+
+                //если нет беседы, то создать 
+                if (!conversation) {
+                    const conv = await Conversation.create(
+                    {
+                        members: [chatId, chatTelegramId],
+                    })
+                    console.log("Беседа успешно создана: ", conv) 
+                    console.log("conversationId: ", conv.id)
+                    
+                    conversation_id = conv.id
+                } else {
+                    console.log('Беседа уже создана в БД')  
+                    console.log("conversationId: ", conversation.id)  
+                    
+                    conversation_id = conversation.id
+                }
+
+                const messageDB = await Message.create(
+                {
+                    text: 'Пользователь нажал кнопку "Старт"', 
+                    senderId: chatId, 
+                    receiverId: chatTelegramId,
+                    type: 'text',
+                    conversationId: conversation_id,
+                    isBot: true,
+                    messageId: '',
+                    replyId: '',
+                })
+
+            } catch (error) {
+                console.log(error.message)
+            }
+
 
             await bot.sendPhoto(chatId, 'https://proj.uley.team/upload/2023-11-10T15:12:06.645Z.png', {
                     reply_markup: ({
