@@ -371,30 +371,29 @@ bot.on('message', async (msg) => {
                     })
 
                     //добавление специалиста в БД
-                    const res2 = await Worker.create({
-                        userfamily: res[0].fio.split(' ')[0], 
-                        username: res[0].fio.split(' ')[1],
-                        phone: res[0].phone, 
-                        dateborn: res[0].age ? res[0].age.start.split('-')[0] : '',
-                        city: res[0].city, 
-                        //companys: companys2,
-                        //stag: stag2,                      
-                        worklist: JSON.stringify(specArr.length > 0 ? specArr : [{
-                            spec: 'Вне категории',
-                            cat: 'NoTag'
-                        }]),
-                        chatId: chatId,
-                        promoId: 0,
-                        from: 'Notion',
-                        avatar: '',
-                    })
-
-                    if (res2) {
-                       console.log('Специалист из Notion успешно добавлен в БД! Worker: ' + res2.chatId) 
+                    const user = await Worker.findOne({where:{chatId: chatId.toString()}})
+                    if (!user) {
+                        await Worker.create({ 
+                            userfamily: res[0].fio.split(' ')[0], 
+                            username: res[0].fio.split(' ')[1],
+                            phone: res[0].phone, 
+                            dateborn: res[0].age ? res[0].age.start.split('-')[0] : '',
+                            city: res[0].city, 
+                            //companys: companys2,
+                            //stag: stag2,                      
+                            worklist: JSON.stringify(specArr.length > 0 ? specArr : [{
+                                spec: 'Вне категории',
+                                cat: 'NoTag'
+                            }]),
+                            chatId: chatId,
+                            promoId: 0,
+                            from: 'Notion',
+                            avatar: '', 
+                        })
+                        console.log('Пользователь добавлен в БД из Ноушен')
                     } else {
-                        console.log("Ошибка: ", res2)
+                            console.log('Отмена добавления в БД. Пользователь уже существует')
                     }
-
 
                 } catch (error) {
                     console.log(error.message)
