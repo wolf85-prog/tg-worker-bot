@@ -25,6 +25,8 @@ const databaseId = process.env.NOTION_DATABASE_ID
 const databaseWorkersId = process.env.NOTION_DATABASE_WORKERS_ID
 const chatTelegramId = process.env.CHAT_ID
 
+const { Op } = require('sequelize')
+
 let workerId, workerFam, workerName2, phone2, dateBorn, Worklist, city2, stag2, companys2, friend2;
 
 //functions
