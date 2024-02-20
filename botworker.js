@@ -1513,13 +1513,18 @@ bot.on('message', async (msg) => {
         console.log("Претендент в БД: ", res.dataValues.id)
                     
         const blockId = await getBlocksP(projectId);  
-        //console.log("blockId: ", blockId)  
+        console.log("blockId: ", blockId)  
             
-        //претендент
+        //найти претендента в ноушене
         const worker = await getWorkerPretendent(blockId, workerId)
+        console.log("worker: ", worker)
             
-        //обновить специалиста в таблице Претенденты
-        await updatePretendent(worker[0].id);
+        //обновить специалиста в таблице Претенденты если есть
+        if (worker.length > 0) {
+            await updatePretendent(worker[0]?.id);
+        } else {
+            console.log("Специалист отсутствует в таблице Претенденты: ") 
+        }
 
         //отправить сообщение в админ-панель
         const convId = await sendMyMessage('Пользователь нажал кнопку "Отклонить" в рассылке', "text", chatId)
