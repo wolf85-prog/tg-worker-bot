@@ -1461,8 +1461,19 @@ bot.on('message', async (msg) => {
                 receiverId: chatId,  
                 accept: false,      
         }
-        const res = await Pretendent.create(pretendent)
-        console.log("Претендент в БД: ", res.dataValues.id)
+
+        const exist = await Pretendent.findOne({
+            where: {
+                projectId: projectId,
+                workerId: workerId,
+            },
+        })
+        if (!exist) {
+            const res = await Pretendent.create(pretendent)
+            console.log("Претендент в БД: ", res.dataValues.id)
+        } else {
+            console.log('Претендент уже создан в БД для этого проекта!')  
+        }
 
 
         //if (user.projectId) {
@@ -1473,7 +1484,20 @@ bot.on('message', async (msg) => {
             const dateNow =new Date(date)
             
             //Добавить специалиста в таблицу Претенденты (Ноушен)
-            await addPretendent(blockId, workerId, dateNow);
+            //найти претендента в ноушене
+            if (blockId) {
+                const worker = await getWorkerPretendent(blockId, workerId)
+                console.log("worker: ", worker)
+                    
+                //обновить специалиста в таблице Претенденты если есть
+                if (worker.length > 0) {
+                    //await updatePretendent(worker[0]?.id);
+                    console.log("Специалист уже есть в таблице Претенденты!") 
+                } else {                 
+                    await addPretendent(blockId, workerId, dateNow);
+                } 
+            }
+            
         //}
 
         //отправить сообщение в админ-панель
@@ -1502,7 +1526,7 @@ bot.on('message', async (msg) => {
         //специалист
         const workerId = await getWorkerChatId(chatId)
 
-        //новый претендент
+        //новый претендент в бд
         const pretendent = {
                 projectId: projectId, 
                 workerId: workerId, 
@@ -1513,18 +1537,21 @@ bot.on('message', async (msg) => {
         console.log("Претендент в БД: ", res.dataValues.id)
                     
         const blockId = await getBlocksP(projectId);  
-        console.log("blockId: ", blockId)  
+        //console.log("blockId: ", blockId)  
             
         //найти претендента в ноушене
-        const worker = await getWorkerPretendent(blockId, workerId)
-        console.log("worker: ", worker)
-            
-        //обновить специалиста в таблице Претенденты если есть
-        if (worker.length > 0) {
-            await updatePretendent(worker[0]?.id);
-        } else {
-            console.log("Специалист отсутствует в таблице Претенденты: ") 
+        if (blockId) {
+           const worker = await getWorkerPretendent(blockId, workerId)
+            //console.log("worker: ", worker)
+                
+            //обновить специалиста в таблице Претенденты если есть
+            if (worker.length > 0) {
+                await updatePretendent(worker[0]?.id);
+            } else {
+                console.log("Специалист отсутствует в таблице Претенденты: ") 
+            } 
         }
+        
 
         //отправить сообщение в админ-панель
         const convId = await sendMyMessage('Пользователь нажал кнопку "Отклонить" в рассылке', "text", chatId)
