@@ -1526,13 +1526,24 @@ bot.on('message', async (msg) => {
         //специалист
         const workerId = await getWorkerChatId(chatId)
 
-        //новый претендент в бд
-        const pretendent = {
-                projectId: projectId, 
-                workerId: workerId, 
-                receiverId: chatId,  
-                accept: false,      
-        }
+        //найти претендента в БД
+        const exist = await Pretendent.findOne({
+            where: {
+                projectId: projectId,
+                workerId: workerId,
+            },
+        })
+        
+        if (exist) {
+            const res = await Pretendent.destroy({
+                where: {
+                    projectId: projectId,
+                    workerId: workerId,
+                },
+            })
+            console.log("Претендент удален из БД: ", res.dataValues.id)
+        } 
+
         const res = await Pretendent.create(pretendent)
         console.log("Претендент в БД: ", res.dataValues.id)
                     
