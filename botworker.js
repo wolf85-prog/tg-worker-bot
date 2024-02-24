@@ -1442,6 +1442,7 @@ bot.on('message', async (msg) => {
     const data = msg.data;
     const chatId = msg.message.chat.id;
     const messageId = msg.message.message_id;
+    let count = 0
 
     //⚠️
 
@@ -1450,6 +1451,8 @@ bot.on('message', async (msg) => {
         const project = data.split(' ');
         console.log("project: ", data)
         const projectId = project[1]
+        count++
+        console.log("count: ", count)
 
         //специалист
         const workerId = await getWorkerChatId(chatId)
