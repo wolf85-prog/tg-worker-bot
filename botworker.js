@@ -29,6 +29,7 @@ const { Op } = require('sequelize')
 
 let workerId, workerFam, workerName2, phone2, dateBorn, Worklist, city2, stag2, companys2, friend2;
 let count = 0
+let count2 = 0
 
 //functions
 const getBlocksP = require('./botworker/common/getBlocksP')
@@ -1530,6 +1531,9 @@ bot.on('message', async (msg) => {
         console.log("project: ", data)
         const projectId = project[1]
 
+        count2++
+        console.log("count2: ", count2)
+
         //специалист
         const workerId = await getWorkerChatId(chatId)
 
@@ -1542,13 +1546,16 @@ bot.on('message', async (msg) => {
         })
         
         if (exist) {
-            const res = await Pretendent.destroy({
-                where: {
-                    projectId: projectId,
-                    workerId: workerId,
+            const res = await Pretendent.update({ 
+                    accept: true  
                 },
+                {
+                    where: {
+                        projectId: projectId,
+                        workerId: workerId,
+                    },
             })
-            console.log("Претендент удален из БД: ", res.dataValues.id)
+            console.log("Претендент обновлен в БД: ", res.dataValues.id)
         } 
 
         const res = await Pretendent.create(pretendent)
@@ -1584,6 +1591,10 @@ bot.on('message', async (msg) => {
             convId: convId,
             messageId: messageId,
         })
+
+        if (count2 > 1) {
+            return bot.sendMessage(chatId, 'Вы ' + count2 +'-й раз нажали кнопку Отклонить') 
+        }
 
         return bot.sendMessage(chatId, 'Хорошо, тогда в следующий раз!')
     }
