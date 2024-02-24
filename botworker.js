@@ -1515,7 +1515,9 @@ bot.on('message', async (msg) => {
             
         //}
 
-        if (count < 2) {   
+        const i = count.find(item.project === projectId)
+
+        if (i.all < 2) {   
 
             //отправить сообщение в админ-панель
             const convId = await sendMyMessage('Пользователь нажал кнопку "Принять" в рассылке', "text", chatId)
@@ -1534,7 +1536,7 @@ bot.on('message', async (msg) => {
              
             return bot.sendMessage(chatId, 'Ваша заявка принята! Мы свяжемся с вами в ближайшее время.')
         }
-        return bot.sendMessage(chatId, 'Вы ' + count+'-й раз нажали кнопку Принять') 
+        return bot.sendMessage(chatId, 'Вы ' + i.all+'-й раз нажали кнопку Принять') 
         
     }
 
@@ -1544,8 +1546,18 @@ bot.on('message', async (msg) => {
         console.log("project: ", data)
         const projectId = project[1]
 
-        count2++
-        console.log("count2: ", count2)
+        const res= count2.find(item=>item.project === projectId)
+        if (res) {
+            res.all = res.all + 1
+            console.log("count: ", res)
+        } else {
+            const obj = {
+                all: 1,
+                project: projectId
+            }
+            count.push(obj)
+            console.log("count: ", count2)
+        }
 
         //специалист
         const workerId = await getWorkerChatId(chatId)
@@ -1597,8 +1609,10 @@ bot.on('message', async (msg) => {
                 console.log("Специалист отсутствует в таблице Претенденты: ") 
             } 
         }
+
+        const i = count2.find(item.project === projectId)
         
-        if (count2 < 2) {
+        if (i.all < 2) {
             //отправить сообщение в админ-панель
             const convId = await sendMyMessage('Пользователь нажал кнопку "Отклонить" в рассылке', "text", chatId)
 
@@ -1616,7 +1630,8 @@ bot.on('message', async (msg) => {
         
             return bot.sendMessage(chatId, 'Хорошо, тогда в следующий раз!')
         }
-        return bot.sendMessage(chatId, 'Вы ' + count2 +'-й раз нажали кнопку Отклонить')    
+        
+        return bot.sendMessage(chatId, 'Вы ' + i.all +'-й раз нажали кнопку Отклонить')    
     }
 
 
