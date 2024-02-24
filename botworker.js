@@ -1504,25 +1504,27 @@ bot.on('message', async (msg) => {
             
         //}
 
-        //отправить сообщение в админ-панель
-        const convId = await sendMyMessage('Пользователь нажал кнопку "Принять" в рассылке', "text", chatId)
+        if (count < 2) {   
 
-        // Подключаемся к серверу socket
-        let socket = io(socketUrl);
-        socket.emit("addUser", chatId)
-        socket.emit("sendMessageSpec", {
-            senderId: chatId,
-            receiverId: chatTelegramId,
-            text: 'Пользователь нажал кнопку "Принять" в рассылке',
-            convId: convId,
-            messageId: messageId,
-        })    
+            //отправить сообщение в админ-панель
+            const convId = await sendMyMessage('Пользователь нажал кнопку "Принять" в рассылке', "text", chatId)
+
+            // Подключаемся к серверу socket
+            let socket = io(socketUrl);
+            socket.emit("addUser", chatId)
+            socket.emit("sendMessageSpec", {
+                senderId: chatId,
+                receiverId: chatTelegramId,
+                text: 'Пользователь нажал кнопку "Принять" в рассылке',
+                convId: convId,
+                messageId: messageId,
+            })    
         
-        if (count > 1) {
-            return bot.sendMessage(chatId, 'Вы ' + count+'-й раз нажали кнопку Принять') 
+             
+            return bot.sendMessage(chatId, 'Ваша заявка принята! Мы свяжемся с вами в ближайшее время.')
         }
-
-        return bot.sendMessage(chatId, 'Ваша заявка принята! Мы свяжемся с вами в ближайшее время.')
+        return bot.sendMessage(chatId, 'Вы ' + count+'-й раз нажали кнопку Принять') 
+        
     }
 
     //нажатие на кнопку "Отклонить"
@@ -1536,6 +1538,14 @@ bot.on('message', async (msg) => {
 
         //специалист
         const workerId = await getWorkerChatId(chatId)
+
+        //новый претендент
+        const pretendent = {
+            projectId: projectId, 
+            workerId: workerId, 
+            receiverId: chatId,  
+            accept: true,      
+    }
 
         //найти претендента в БД
         const exist = await Pretendent.findOne({
@@ -1556,10 +1566,10 @@ bot.on('message', async (msg) => {
                     },
             })
             console.log("Претендент обновлен в БД: ", res.dataValues.id)
-        } 
-
-        const res = await Pretendent.create(pretendent)
-        console.log("Претендент в БД: ", res.dataValues.id)
+        } else {
+            const res = await Pretendent.create(pretendent)
+            console.log("Претендент в БД: ", res.dataValues.id)
+        }
                     
         const blockId = await getBlocksP(projectId);  
         //console.log("blockId: ", blockId)  
@@ -1577,26 +1587,25 @@ bot.on('message', async (msg) => {
             } 
         }
         
+        if (count2 < 2) {
+            //отправить сообщение в админ-панель
+            const convId = await sendMyMessage('Пользователь нажал кнопку "Отклонить" в рассылке', "text", chatId)
 
-        //отправить сообщение в админ-панель
-        const convId = await sendMyMessage('Пользователь нажал кнопку "Отклонить" в рассылке', "text", chatId)
+            // Подключаемся к серверу socket
+            let socket = io(socketUrl);
+            socket.emit("addUser", chatId)
+            socket.emit("sendMessageSpec", {
+                senderId: chatId,
+                receiverId: chatTelegramId,
+                text: 'Пользователь нажал кнопку "Отклонить" в рассылке',
+                convId: convId,
+                messageId: messageId,
+            })
 
-        // Подключаемся к серверу socket
-        let socket = io(socketUrl);
-        socket.emit("addUser", chatId)
-        socket.emit("sendMessageSpec", {
-            senderId: chatId,
-            receiverId: chatTelegramId,
-            text: 'Пользователь нажал кнопку "Отклонить" в рассылке',
-            convId: convId,
-            messageId: messageId,
-        })
-
-        if (count2 > 1) {
-            return bot.sendMessage(chatId, 'Вы ' + count2 +'-й раз нажали кнопку Отклонить') 
+        
+            return bot.sendMessage(chatId, 'Хорошо, тогда в следующий раз!')
         }
-
-        return bot.sendMessage(chatId, 'Хорошо, тогда в следующий раз!')
+        return bot.sendMessage(chatId, 'Вы ' + count2 +'-й раз нажали кнопку Отклонить')    
     }
 
 
