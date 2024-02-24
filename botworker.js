@@ -28,8 +28,8 @@ const chatTelegramId = process.env.CHAT_ID
 const { Op } = require('sequelize')
 
 let workerId, workerFam, workerName2, phone2, dateBorn, Worklist, city2, stag2, companys2, friend2;
-let count = 0
-let count2 = 0
+let count = []
+let count2 = []
 
 //functions
 const getBlocksP = require('./botworker/common/getBlocksP')
@@ -1452,8 +1452,19 @@ bot.on('message', async (msg) => {
         const project = data.split(' ');
         console.log("project: ", data)
         const projectId = project[1]
-        count++
-        console.log("count: ", count)
+        
+        const res= count.find(item=>item.project === projectId)
+        if (res) {
+            res.all = res.all + 1
+            console.log("count: ", res)
+        } else {
+            const obj = {
+                all: 1,
+                project: projectId
+            }
+            count.push(obj)
+            console.log("count: ", count)
+        }     
 
         //специалист
         const workerId = await getWorkerChatId(chatId)
