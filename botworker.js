@@ -1515,7 +1515,11 @@ bot.on('message', async (msg) => {
             text: 'Пользователь нажал кнопку "Принять" в рассылке',
             convId: convId,
             messageId: messageId,
-        })              
+        })    
+        
+        if (count > 1) {
+            return bot.sendMessage(chatId, 'Вы ' + count+'-й раз нажали кнопку Принять') 
+        }
 
         return bot.sendMessage(chatId, 'Ваша заявка принята! Мы свяжемся с вами в ближайшее время.')
     }
