@@ -1515,7 +1515,7 @@ bot.on('message', async (msg) => {
             
         //}
 
-        const i = count.find(item.project === projectId)
+        const i = count.find(item=>item.project === projectId)
 
         if (i.all < 2) {   
 
@@ -1610,7 +1610,7 @@ bot.on('message', async (msg) => {
             } 
         }
 
-        const i = count2.find(item.project === projectId)
+        const i = count2.find(item=>item.project === projectId)
         
         if (i.all < 2) {
             //отправить сообщение в админ-панель
