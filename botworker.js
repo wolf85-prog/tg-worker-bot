@@ -1565,7 +1565,7 @@ bot.on('message', async (msg) => {
                         workerId: workerId,
                     },
             })
-            console.log("Претендент обновлен в БД: ", res.dataValues.id)
+            console.log("Претендент обновлен в БД")
         } else {
             const res = await Pretendent.create(pretendent)
             console.log("Претендент в БД: ", res.dataValues.id)
