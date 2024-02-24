@@ -28,6 +28,7 @@ const chatTelegramId = process.env.CHAT_ID
 const { Op } = require('sequelize')
 
 let workerId, workerFam, workerName2, phone2, dateBorn, Worklist, city2, stag2, companys2, friend2;
+let count = 0
 
 //functions
 const getBlocksP = require('./botworker/common/getBlocksP')
@@ -1442,7 +1443,6 @@ bot.on('message', async (msg) => {
     const data = msg.data;
     const chatId = msg.message.chat.id;
     const messageId = msg.message.message_id;
-    let count = 0
 
     //⚠️
 
