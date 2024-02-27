@@ -1551,18 +1551,6 @@ bot.on('message', async (msg) => {
         console.log("project: ", data)
         const projectId = project[1]
 
-        const res= count2.find(item=>item.project === projectId)
-        if (res) {
-            res.all = res.all + 1
-            console.log("count: ", res)
-        } else {
-            const obj = {
-                all: 1,
-                project: projectId
-            }
-            count.push(obj)
-            console.log("count: ", count2)
-        }
 
         //специалист
         const workerId = await getWorkerChatId(chatId)
@@ -1572,7 +1560,8 @@ bot.on('message', async (msg) => {
             projectId: projectId, 
             workerId: workerId, 
             receiverId: chatId,  
-            accept: true,      
+            accept: true,  
+            cancel: 1    
     }
 
         //найти претендента в БД
@@ -1582,10 +1571,18 @@ bot.on('message', async (msg) => {
                 workerId: workerId,
             },
         })
+
         
         if (exist) {
+            let count = 0
+            if (exist.dataValues.cancel) {
+                count++
+            } else {
+                count = 1
+            }
             const res = await Pretendent.update({ 
-                    accept: true  
+                    accept: true,
+                    cancel: count 
                 },
                 {
                     where: {
@@ -1615,9 +1612,14 @@ bot.on('message', async (msg) => {
             } 
         }
 
-        const i = count2.find(item=>item.project === projectId)
-        
-        if (i.all < 2) {
+        const exist2 = await Pretendent.findOne({
+            where: {
+                projectId: projectId,
+                workerId: workerId,
+            },
+        })
+
+        if (exist2.dataValues.cancel < 2) {  
             //отправить сообщение в админ-панель
             const convId = await sendMyMessage('Пользователь нажал кнопку "Отклонить" в рассылке', "text", chatId)
 
@@ -1636,7 +1638,7 @@ bot.on('message', async (msg) => {
             return bot.sendMessage(chatId, 'Хорошо, тогда в следующий раз!')
         }
         
-        return bot.sendMessage(chatId, 'Вы ' + i.all +'-й раз нажали кнопку Отклонить')    
+        return bot.sendMessage(chatId, 'Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить')    
     }
 
 

@@ -62,6 +62,7 @@ const Pretendent = sequelize.define('pretendent', {
     receiverId: {type: DataTypes.STRING}, //чат-id получателя;
     accept: {type: DataTypes.BOOLEAN}, //принято
     otclick: {type: DataTypes.INTEGER}, //кол-во откликов (нажатий)
+    cancel: {type: DataTypes.INTEGER}, //кол-во отмен (нажатий)
 })
 
 const Projectcash = sequelize.define('projectcash', {
