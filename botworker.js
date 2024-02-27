@@ -1477,6 +1477,7 @@ bot.on('message', async (msg) => {
             console.log("Претендент в БД: ", res.dataValues.id)
         } else {
             console.log('Претендент уже создан в БД для этого проекта!') 
+            const count = exist.dataValues.otclick + 1
             await Pretendent.update(
                 {
                     where: {
@@ -1485,7 +1486,7 @@ bot.on('message', async (msg) => {
                     },
                 },
                 {
-                   otclick: exist.dataValues.otclick + 1
+                   otclick: count
                 }
             ) 
         }
