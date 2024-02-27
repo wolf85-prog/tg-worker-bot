@@ -1451,20 +1451,7 @@ bot.on('message', async (msg) => {
     if (data.startsWith('/accept')) {
         const project = data.split(' ');
         console.log("project: ", data)
-        const projectId = project[1]
-        
-        const res= count.find(item=>item.project === projectId)
-        if (res) {
-            res.all = res.all + 1
-            console.log("count: ", res)
-        } else {
-            const obj = {
-                all: 1,
-                project: projectId
-            }
-            count.push(obj)
-            console.log("count: ", count)
-        }     
+        const projectId = project[1]  
 
         //специалист
         const workerId = await getWorkerChatId(chatId)
@@ -1474,7 +1461,8 @@ bot.on('message', async (msg) => {
                 projectId: projectId, 
                 workerId: workerId, 
                 receiverId: chatId,  
-                accept: false,      
+                accept: false, 
+                otclick: 1     
         }
 
         const exist = await Pretendent.findOne({
@@ -1483,11 +1471,23 @@ bot.on('message', async (msg) => {
                 workerId: workerId,
             },
         })
+
         if (!exist) {
             const res = await Pretendent.create(pretendent)
             console.log("Претендент в БД: ", res.dataValues.id)
         } else {
-            console.log('Претендент уже создан в БД для этого проекта!')  
+            console.log('Претендент уже создан в БД для этого проекта!') 
+            await Pretendent.update(
+                {
+                    where: {
+                        projectId: projectId,
+                        workerId: workerId,
+                    },
+                },
+                {
+                   otclick: exist.dataValues.otclick + 1,
+                },
+            ) 
         }
 
 
@@ -1515,9 +1515,14 @@ bot.on('message', async (msg) => {
             
         //}
 
-        const i = count.find(item=>item.project === projectId)
+        const exist2 = await Pretendent.findOne({
+            where: {
+                projectId: projectId,
+                workerId: workerId,
+            },
+        })
 
-        if (i.all < 2) {   
+        if (exist2.dataValues.otclick < 2) {   
 
             //отправить сообщение в админ-панель
             const convId = await sendMyMessage('Пользователь нажал кнопку "Принять" в рассылке', "text", chatId)
@@ -1536,7 +1541,7 @@ bot.on('message', async (msg) => {
              
             return bot.sendMessage(chatId, 'Ваша заявка принята! Мы свяжемся с вами в ближайшее время.')
         }
-        return bot.sendMessage(chatId, 'Вы ' + i.all+'-й раз нажали кнопку Принять') 
+        return bot.sendMessage(chatId, 'Вы ' + exist2.dataValues.otclick + '-й раз нажали кнопку Принять') 
         
     }
 
