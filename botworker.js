@@ -1478,17 +1478,16 @@ bot.on('message', async (msg) => {
         } else {
             console.log('Претендент уже создан в БД для этого проекта!') 
             const count = exist.dataValues.otclick + 1
-            await Pretendent.update(
-                {
-                    where: {
-                        projectId: projectId,
-                        workerId: workerId,
-                    },
+
+            const res = await Pretendent.update({ 
+                otclick: count  
+            },
+            {
+                where: {
+                    projectId: projectId,
+                    workerId: workerId,
                 },
-                {
-                   otclick: count
-                }
-            ) 
+            })
         }
 
 
