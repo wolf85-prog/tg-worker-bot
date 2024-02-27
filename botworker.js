@@ -1476,18 +1476,18 @@ bot.on('message', async (msg) => {
             const res = await Pretendent.create(pretendent)
             console.log("Претендент в БД: ", res.dataValues.id)
         } else {
-            console.log('Претендент уже создан в БД для этого проекта!') 
-            await Pretendent.update(
-                {
-                    where: {
-                        projectId: projectId,
-                        workerId: workerId,
-                    },
-                },
-                {
-                   otclick: exist.dataValues.otclick + 1,
-                },
-            ) 
+            console.log('Претендент уже создан в БД для этого проекта!', exist) 
+            // await Pretendent.update(
+            //     {
+            //         where: {
+            //             projectId: projectId,
+            //             workerId: workerId,
+            //         },
+            //     },
+            //     {
+            //        otclick: exist.dataValues.otclick + 1,
+            //     },
+            // ) 
         }
 
 
