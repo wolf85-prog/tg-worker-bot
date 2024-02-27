@@ -1575,8 +1575,8 @@ bot.on('message', async (msg) => {
         
         if (exist) {
             let count = 0
-            if (exist.dataValues.cancel) {
-                count++
+            if (exist.dataValues.cancel !== null) {
+                count = exist.dataValues.cancel + 1
             } else {
                 count = 1
             }
