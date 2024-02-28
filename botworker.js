@@ -808,9 +808,9 @@ bot.on('message', async (msg) => {
                             const res = await Worker.update({ 
                                 userfamily: notion[0]?.fio.split(" ")[0],
                                 username: notion[0]?.fio.split(" ")[1],
-                                //phone: notion[0]?.phone ? notion[0]?.phone : '',
-                                //dateborn: notion[0].age?.start.split('-')[0],
-                                //city: notion[0].city ? notion[0].city : '',                    
+                                phone: notion[0]?.phone && notion[0]?.phone,
+                                dateborn: notion[0].age?.start.split('-')[0],
+                                city: notion[0].city && notion[0].city,                    
                                 from: 'Notion',
                                 comment: notion[0]?.comment ? notion[0]?.comment : '',
                                 rank: notion[0]?.rank ? notion[0]?.rank : null,
@@ -1446,8 +1446,9 @@ bot.on('message', async (msg) => {
     const messageId = msg.message.message_id;
 
     //⚠️
-
+//---------------------------------------------------------------------------
     //нажатие на кнопку "Принять"
+//---------------------------------------------------------------------------
     if (data.startsWith('/accept')) {
         const project = data.split(' ');
         console.log("project: ", data)
@@ -1544,8 +1545,9 @@ bot.on('message', async (msg) => {
         return bot.sendMessage(chatId, 'Вы ' + exist2.dataValues.otclick + '-й раз нажали кнопку Принять') 
         
     }
-
+//----------------------------------------------------------------
     //нажатие на кнопку "Отклонить"
+//----------------------------------------------------------------
     if (data.startsWith('/cancel')) {
         const project = data.split(' ');
         console.log("project: ", data)
@@ -1562,7 +1564,7 @@ bot.on('message', async (msg) => {
             receiverId: chatId,  
             accept: true,  
             cancel: 1    
-    }
+        }
 
         //найти претендента в БД
         const exist = await Pretendent.findOne({
@@ -1594,6 +1596,7 @@ bot.on('message', async (msg) => {
         } else {
             const res = await Pretendent.create(pretendent)
             console.log("Претендент в БД: ", res.dataValues.id)
+            console.log("Пользователь отклонил заявку!")
         }
                     
         const blockId = await getBlocksP(projectId);  
@@ -1842,9 +1845,9 @@ const start = async () => {
                                 const res = await Worker.update({ 
                                     userfamily: notion[0]?.fio.split(" ")[0],
                                     username: notion[0]?.fio.split(" ")[1],
-                                    phone: notion[0]?.phone,
-                                    //dateborn: notion[0].age?.start.split('-')[0],
-                                    //city: notion[0].city ? notion[0].city : '',                    
+                                    phone: notion[0]?.phone && notion[0]?.phone,
+                                    dateborn: notion[0].age?.start.split('-')[0],
+                                    city: notion[0].city && notion[0].city,                    
                                     from: 'Notion',
                                     comment: notion[0]?.comment ? notion[0]?.comment : '',
                                     rank: notion[0]?.rank ? notion[0]?.rank : null,
