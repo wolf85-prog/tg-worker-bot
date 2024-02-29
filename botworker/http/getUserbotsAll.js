@@ -8,7 +8,7 @@ const $host = axios.create({
 
 module.exports = async function getUserbotsAll() {
         try {
-            let response = await $host.get('api/userbots/get');
+            let response = await $host.get('api/wuserbots/get');
             return response.data;
         } catch (error) {
             console.log("error while calling getUserbotsAll api", error.message);

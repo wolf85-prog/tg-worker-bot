@@ -513,6 +513,19 @@ bot.on('message', async (msg) => {
             }
         }
 //------------------------------------------------------------------------------------------------
+        //удалить из таблицы wuserbots пользователей таблицы userbots
+        if (text === '/cleartable') {
+            try {
+                //const workers = await getWorkersAll()
+                const wuserbots = await getUserbotsAll() 
+
+                console.log("wuserbots size: ", wuserbots.length)
+
+            } catch (error) {
+                console.log(error.message)
+            } 
+        }
+//------------------------------------------------------------------------------------------------
         //добавить в таблицу userbots
         if (text === '/addtable') {
             try {
