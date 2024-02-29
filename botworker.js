@@ -533,16 +533,16 @@ bot.on('message', async (msg) => {
                         const url_send_msg = `https://api.telegram.org/bot${token}/getChat?chat_id=${user.chatId}`
                         const res = await fetch(url_send_msg)
                         //console.log(user.chatId, res?.status)
-                        if (res?.status === 400) {
+                        if (res?.status === 429) {
                             count++
-                            //console.log("count: ", index, user.chatId, res?.status, count)
+                            console.log("count: ", index, user.chatId, res?.status, count)
 
-                            const res = await UserBot.destroy({
-                                where: {
-                                    chatId: user.chatId
-                                },
-                            });
-                            console.log(res)
+                        //     const res = await UserBot.destroy({
+                        //         where: {
+                        //             chatId: user.chatId
+                        //         },
+                        //     });
+                        //     console.log(res)
                         }
                     }, 100 * ++index)                  
                 })
