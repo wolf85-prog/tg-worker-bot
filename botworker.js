@@ -530,7 +530,7 @@ bot.on('message', async (msg) => {
                 wuserbots.map(async(user)=> {
                     const url_send_msg = `https://api.telegram.org/bot${token}/getChat?chat_id=${user.chatId}`
                     const res = await fetch(url_send_msg)
-                    console.log(res?.status)
+                    console.log(user.chatId, res?.status)
                 })
 
                 
