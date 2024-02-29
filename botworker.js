@@ -566,29 +566,29 @@ bot.on('message', async (msg) => {
                 const wuserbots = await getUserbotsAll() 
                 console.log("wuserbots size: ", wuserbots.length)
 
-                wuserbots.map(async(item)=> {
+                wuserbots.map(async(item, index)=> {
                     //добавить пользователя в бд
-                    //if (item.chatId === '6143011220') {
+                    setTimeout(async()=>{
                         const user = await Worker.findOne({where:{chatId: item.chatId.toString()}})
                         if (!user) {
-                            count++
+                            //count++
                             //await Worker.create({ userfamily: item.lastname, username: item.firstname, chatId: item.chatId, username: item.username })
-                            // await Worker.create({ 
-                            //     userfamily: 'Неизвестный', 
-                            //     username: 'специалист',  
-                            //     phone: '', 
-                            //     dateborn: '',
-                            //     city: '', 
-                            //     companys: '',
-                            //     stag: '',                      
-                            //     worklist: JSON.stringify([{
-                            //         spec: 'Вне категории',
-                            //         cat: 'NoTag'
-                            //     }]),
-                            //     chatId: item.chatId.toString(),
-                            //     promoId: '',
-                            //     from: ''
-                            // })
+                            await Worker.create({ 
+                                userfamily: 'Неизвестный', 
+                                username: 'специалист',  
+                                phone: '', 
+                                dateborn: '',
+                                city: '', 
+                                companys: '',
+                                stag: '',                      
+                                worklist: JSON.stringify([{
+                                    spec: 'Вне категории',
+                                    cat: 'NoTag'
+                                }]),
+                                chatId: item.chatId.toString(),
+                                promoId: '',
+                                from: ''
+                            })
                             console.log('Пользователь добавлен в БД Workers ', item.chatId, count)
                         } else {
                             //if (item.lastname === 'Неизвестный') {
@@ -605,6 +605,7 @@ bot.on('message', async (msg) => {
                             // }
                             
                         }
+                    }, 100 * ++index)
                 })
             } catch (error) {
                 console.log(error.message)
