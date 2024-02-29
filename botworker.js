@@ -539,16 +539,16 @@ bot.on('message', async (msg) => {
                         //console.log(user.chatId, res?.status)
                         if (res?.status === 400) {
                            count++
-                           console.log("count: ", index, user.dataValues.members[0], res?.status, count)
+                           //console.log("count: ", index, user.dataValues.members[0], res?.status, count)
 
-                            // const res = await Conversation.destroy({
-                            //     where: {
-                            //         members: {
-                            //             [Op.contains]: [user.chatId]
-                            //         }
-                            //     },
-                            // });
-                            //console.log(res)
+                            const res = await Conversation.destroy({
+                                where: {
+                                    members: {
+                                        [Op.contains]: [user.dataValues.members[0]]
+                                    }
+                                },
+                            });
+                            console.log(res)
                         }
                     }, 100 * ++index)                  
                 })
