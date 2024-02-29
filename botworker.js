@@ -835,7 +835,7 @@ bot.on('message', async (msg) => {
             }
         }
 
-
+//------------------------------------------------------------------------------------------------------
         if (text === '/addspec') {
             try {
                 const userbots = await getUserbotsAll() 
@@ -934,7 +934,7 @@ bot.on('message', async (msg) => {
                 }, 6000)   
             }) 
         }
-
+//----------------------------------------------------------------------------------------
 
         if (text === '/saveprojects') {
             console.log("getProjects start...")
@@ -956,11 +956,7 @@ bot.on('message', async (msg) => {
                 })
             })    
         }
-
-        if (text === '/testgetstavka') {
-            const predStavka = await getStavka('44206718-a2cf-4bc3-b1d0-3eb5f5414324', 'c37e0f70-e3f2-4ca8-b41c-b68a5d5abd3a')
-            console.log("predStavka: ", predStavka)
-        }
+//----------------------------------------------------------------------------------------
 
         if (text === '/savesmets') {
             console.log("getSmets start...")
@@ -1025,21 +1021,7 @@ bot.on('message', async (msg) => {
             });
             console.log(res)
         }
-//-----------------------------------------------------------------------------------------------
 
-        if (text === '/addPretendent') {
-            const worker = await getWorkerChatId(chatId)
-
-            //новый претендент
-            const pretendent = {
-                projectId: 'dfgdw223546werwer', 
-                workerId: worker, 
-                receiverId: '12222222',  
-                accept: false,      
-            }
-            const res = await Pretendent.create(pretendent)
-            console.log("Претендент: ", res.dataValues.id)
-        }
 //------------------------------------------------------------------------------------------------
 //обработка контактов
         if (msg.contact) {
