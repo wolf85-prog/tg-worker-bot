@@ -17,6 +17,12 @@ const socketUrl = process.env.SOCKET_APP_URL
 //fetch api
 const fetch = require('node-fetch');
 
+const axios = require("axios");
+
+const $host = axios.create({
+    baseURL: process.env.REACT_APP_SERVER_URL
+})
+
 //notion api
 const { Client } = require("@notionhq/client");
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
