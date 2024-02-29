@@ -534,7 +534,7 @@ bot.on('message', async (msg) => {
                     //console.log(user.chatId, res?.status)
                     if (res?.status === 400) {
                         count++
-                        console.log("count: ", count)
+                        console.log("count: ", user.chatId, res?.status, count)
                     }
                 })
                 
