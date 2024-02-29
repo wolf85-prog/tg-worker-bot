@@ -523,15 +523,15 @@ bot.on('message', async (msg) => {
         if (text === '/cleartable') {
             try {
                 let count = 0
-                //const workers = await getWorkersAll()
-                const wuserbots = await getUserbotsAll() 
+                const workers = await getWorkersAll()
+                //const wuserbots = await getUserbotsAll() 
 
-                console.log("wuserbots size: ", wuserbots.length)
+                console.log("wuserbots size: ", workers.length)
 
-                wuserbots.map(async(user)=> {
+                workers.map(async(user)=> {
                     const url_send_msg = `https://api.telegram.org/bot${token}/getChat?chat_id=${user.chatId}`
                     const res = await fetch(url_send_msg)
-                    console.log(user.chatId, res?.status)
+                    //console.log(user.chatId, res?.status)
                     if (res?.status === 400) {
                         count++
                         console.log("count: ", count)
