@@ -529,28 +529,29 @@ bot.on('message', async (msg) => {
                 //найти беседу
                 const conversation = await Conversation.findAll() 
 
-                console.log("conversation size: ", conversation)
+                //console.log("conversation size: ", conversation.)
 
-                // conversation.map(async(user, index)=> {
-                //     setTimeout(async()=>{
-                //         const url_send_msg = `https://api.telegram.org/bot${token}/getChat?chat_id=${user.chatId}`
-                //         const res = await fetch(url_send_msg)
-                //         console.log(user.chatId, res?.status)
-                //         if (res?.status === 400) {
-                //            count++
-                //            console.log("count: ", index, user.chatId, res?.status, count)
+                conversation.map(async(user, index)=> {
+                    console.log(user.dataValues.members)
+                    // setTimeout(async()=>{
+                    //     const url_send_msg = `https://api.telegram.org/bot${token}/getChat?chat_id=${user.chatId}`
+                    //     const res = await fetch(url_send_msg)
+                    //     console.log(user.chatId, res?.status)
+                    //     if (res?.status === 400) {
+                    //        count++
+                    //        console.log("count: ", index, user.chatId, res?.status, count)
 
-                //             const res = await Conversation.destroy({
-                //                 where: {
-                //                     members: {
-                //                         [Op.contains]: [user.chatId]
-                //                     }
-                //                 },
-                //             });
-                //             console.log(res)
-                //         }
-                //     }, 100 * ++index)                  
-                // })
+                    //         const res = await Conversation.destroy({
+                    //             where: {
+                    //                 members: {
+                    //                     [Op.contains]: [user.chatId]
+                    //                 }
+                    //             },
+                    //         });
+                    //         console.log(res)
+                    //     }
+                    // }, 100 * ++index)                  
+                })
                 
             } catch (error) {
                 console.log(error.message)
