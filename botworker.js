@@ -529,7 +529,7 @@ bot.on('message', async (msg) => {
                 console.log("wuserbots size: ", wuserbots.length)
 
                 wuserbots.map(async(user, index)=> {
-                    setTimeout(async()=>{
+                    //setTimeout(async()=>{
                         const url_send_msg = `https://api.telegram.org/bot${token}/getChat?chat_id=${user.chatId}`
                         const res = await fetch(url_send_msg)
                         //console.log(user.chatId, res?.status)
@@ -544,7 +544,7 @@ bot.on('message', async (msg) => {
                             // });
                             // console.log(res)
                         }
-                    }, 10000)                  
+                    //}, 10000)                  
                 })
                 
             } catch (error) {
