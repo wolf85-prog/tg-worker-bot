@@ -524,28 +524,33 @@ bot.on('message', async (msg) => {
             try {
                 let count = 0
                 //const workers = await getWorkersAll()
-                const wuserbots = await getUserbotsAll() 
+                //const wuserbots = await getUserbotsAll() 
 
-                console.log("wuserbots size: ", wuserbots.length)
+                //найти беседу
+                const conversation = await Conversation.findAll() 
 
-                wuserbots.map(async(user, index)=> {
-                    setTimeout(async()=>{
-                        const url_send_msg = `https://api.telegram.org/bot${token}/getChat?chat_id=${user.chatId}`
-                        const res = await fetch(url_send_msg)
-                        console.log(user.chatId, res?.status)
-                        //if (res?.status === 429) {
-                        //    count++
-                        //    console.log("count: ", index, user.chatId, res?.status, count)
+                console.log("conversation size: ", conversation)
 
-                        //     const res = await UserBot.destroy({
-                        //         where: {
-                        //             chatId: user.chatId
-                        //         },
-                        //     });
-                        //     console.log(res)
-                        //}
-                    }, 100 * ++index)                  
-                })
+                // conversation.map(async(user, index)=> {
+                //     setTimeout(async()=>{
+                //         const url_send_msg = `https://api.telegram.org/bot${token}/getChat?chat_id=${user.chatId}`
+                //         const res = await fetch(url_send_msg)
+                //         console.log(user.chatId, res?.status)
+                //         if (res?.status === 400) {
+                //            count++
+                //            console.log("count: ", index, user.chatId, res?.status, count)
+
+                //             const res = await Conversation.destroy({
+                //                 where: {
+                //                     members: {
+                //                         [Op.contains]: [user.chatId]
+                //                     }
+                //                 },
+                //             });
+                //             console.log(res)
+                //         }
+                //     }, 100 * ++index)                  
+                // })
                 
             } catch (error) {
                 console.log(error.message)
