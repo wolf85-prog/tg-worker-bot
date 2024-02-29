@@ -606,29 +606,46 @@ bot.on('message', async (msg) => {
                 const wuserbots = await getUserbotsAll() 
                 console.log("wuserbots size: ", wuserbots.length)
 
-                // userbots.map(async(item)=> {
-                //     //добавить пользователя в бд
-                //     //if (item.chatId === '6143011220') {
-                //         const user = await Worker.findOne({where:{chatId: item.chatId.toString()}})
-                //         if (!user) {
-                //             await Worker.create({ userfamily: item.lastname, username: item.firstname, chatId: item.chatId, username: item.username })
-                //             console.log('Пользователь добавлен в БД Workers ', item.chatId)
-                //         } else {
-                //             if (item.lastname === 'Неизвестный') {
-                //                 console.log('Отмена добавления в БД. Пользователь уже существует')
-                //             } else {
-                //                 //обновить бд
-                //                 const res2 = await Worker.update({ 
-                //                     userfamily: item.lastname,
-                //                     username: item.firstname,
-                //                 },
-                //                 { 
-                //                     where: {chatId: item.chatId} 
-                //                 })
-                //             }
+                wuserbots.map(async(item)=> {
+                    //добавить пользователя в бд
+                    //if (item.chatId === '6143011220') {
+                        const user = await Worker.findOne({where:{chatId: item.chatId.toString()}})
+                        if (!user) {
+                            //await Worker.create({ userfamily: item.lastname, username: item.firstname, chatId: item.chatId, username: item.username })
+                            await Worker.create({ 
+                                userfamily: 'Неизвестный', 
+                                username: 'специалист',  
+                                phone: '', 
+                                dateborn: '',
+                                city: '', 
+                                companys: '',
+                                stag: '',                      
+                                worklist: JSON.stringify([{
+                                    spec: 'Вне категории',
+                                    cat: 'NoTag'
+                                }]),
+                                chatId: chatId,
+                                promoId: '',
+                                from: ''
+                                //firstname: item.username, lastname: item.userfamily, chatId: item.chatId, username: '' 
+                            })
+                            console.log('Пользователь добавлен в БД Workers ', item.chatId)
+                        } else {
+                            if (item.lastname === 'Неизвестный') {
+                                console.log('Отмена добавления в БД. Пользователь уже существует')
+                            } else {
+                                //обновить бд
+                                const res2 = await Worker.update({ 
+                                    userfamily: item.lastname,
+                                    username: item.firstname,
+                                },
+                                { 
+                                    where: {chatId: item.chatId} 
+                                })
+                            }
                             
-                //         }
-                // })
+                        }
+                })
             } catch (error) {
                 console.log(error.message)
             }
