@@ -537,9 +537,9 @@ bot.on('message', async (msg) => {
                             count++
                             //console.log("count: ", index, user.chatId, res?.status, count)
 
-                            const res = await Worker.destroy({
+                            const res = await UserBot.destroy({
                                 where: {
-                                chatId: user.chatId
+                                    chatId: user.chatId
                                 },
                             });
                             console.log(res)
