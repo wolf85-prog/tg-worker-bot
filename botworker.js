@@ -528,13 +528,13 @@ bot.on('message', async (msg) => {
 
                 console.log("wuserbots size: ", workers.length)
 
-                workers.map(async(user)=> {
+                workers.map(async(user, index)=> {
                     const url_send_msg = `https://api.telegram.org/bot${token}/getChat?chat_id=${user.chatId}`
                     const res = await fetch(url_send_msg)
                     //console.log(user.chatId, res?.status)
                     if (res?.status === 400) {
                         count++
-                        console.log("count: ", user.chatId, res?.status, count)
+                        console.log("count: ", index, user.chatId, res?.status, count)
                     }
                 })
                 
