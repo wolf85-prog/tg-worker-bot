@@ -544,7 +544,7 @@ bot.on('message', async (msg) => {
                             // });
                             // console.log(res)
                         }
-                    }, 2000)                  
+                    }, 10000)                  
                 })
                 
             } catch (error) {
