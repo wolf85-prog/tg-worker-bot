@@ -1697,7 +1697,13 @@ bot.on('message', async (msg) => {
         const target = data.split(' ');
         console.log("target: ", data)
         const targetUrl = target[1]
-        const res = await $host.get(targetUrl)
+        try {
+            const res = await $host.get(targetUrl)
+            console.log("res: ", res)
+        } catch (error) {
+            console.log(error.message)
+        }
+        
     }
 
 
