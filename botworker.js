@@ -752,7 +752,7 @@ bot.on('message', async (msg) => {
                                 //обновить бд
                                 if (specArr.length > 0) {
                                     //обновить бд
-                                    if (worker.chatId === '1408579113' || worker.chatId === '805436270') {
+                                    if (worker.chatId === '1408579113' || worker.chatId === '805436270' || worker.chatId === '639113098') {
                                         newSpec = {
                                             spec: 'Вне категории',
                                             cat: 'NoTag'
@@ -1027,7 +1027,7 @@ bot.on('message', async (msg) => {
                 })
             })    
         }
-
+//-----------------------------------------------------------------------------------------------
         if (text.startsWith('/delworker')) {
             const workerId = text.split(' ');
             console.log(workerId[1])
@@ -1038,6 +1038,48 @@ bot.on('message', async (msg) => {
                 },
             });
             console.log(res)
+        }
+//-----------------------------------------------------------------------------------------------
+        if (text.startsWith('/getblockuser')) {
+            const workersId = [5007383134,
+                807734040,
+                1125929878,
+                799516999,
+                5615615689,
+                6578902964,
+                402549103,
+                991675647,
+                5008645670,
+                213226741,
+                286722842,
+                1868958642,
+                1937902679,
+                1474685886,
+                644061409,
+                37015889,
+                674870519,
+                1838703878,
+                1953721108,
+                409505513,
+                800671513,
+                802114988,
+                1135808687,
+                203802063
+            ];
+
+            workersId.map(async(item)=> {
+                const res = await UserBot.update({ 
+                        block: true 
+                    },
+                    {
+                        where: {
+                            chatId: item
+                        },
+                    });
+                console.log(res)
+            })
+
+            
         }
 
 //------------------------------------------------------------------------------------------------
@@ -1792,7 +1834,7 @@ const start = async () => {
             
                                 if (specArr.length > 0) {
                                     //обновить бд
-                                    if (worker.chatId === '1408579113' || worker.chatId === '805436270') {
+                                    if (worker.chatId === '1408579113' || worker.chatId === '805436270' || worker.chatId === '639113098') {
                                         newSpec = {
                                             spec: 'Вне категории',
                                             cat: 'NoTag'
