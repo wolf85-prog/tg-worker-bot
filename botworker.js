@@ -1650,6 +1650,14 @@ bot.on('message', async (msg) => {
         return bot.sendMessage(chatId, 'Вы уже зарегистрированы!')
     }
 
+    //нажатие на кнопку "Кнопка"
+    if (data.startsWith('/report')) {
+        const target = data.split(' ');
+        console.log("target: ", data)
+        const targetUrl = target[1]
+        const res = await $host.get(targetUrl)
+    }
+
 
 
     if (data === '/passport2') {
