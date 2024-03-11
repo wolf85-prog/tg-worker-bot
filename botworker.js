@@ -1148,7 +1148,7 @@ bot.on('message', async (msg) => {
                 },
                 {
                     where: {
-                        projectId: projectId,
+                        projectId: '5d2ac571-c32d-4dbe-9c0a-c2a7395363ef',
                         workerId: workerId,
                     },
                 })
