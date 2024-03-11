@@ -315,14 +315,14 @@ app.post('/web-stavka', async (req, res) => {
                     workerId: workerId,
                 },
             })
-            console.log("ID: ", user.dataValues.id)
+            console.log("ID: ", user)
     
             if (!user) {
                 const res = await Pretendent.create(pretendent)
                 console.log("Претендент в БД: ", res.dataValues.id)
             } else {
                 console.log('Претендент уже создан в БД для этого проекта!') 
-                const count = exist.dataValues.otclick + 1
+                const count = user.dataValues.otclick + 1
     
                 const res = await Pretendent.update({ 
                     otclick: count  
@@ -335,7 +335,7 @@ app.post('/web-stavka', async (req, res) => {
                 })
             }
 
-            const blockId = await getBlocksP(user.projectId); 
+            const blockId = await getBlocksP(user.dataValues.projectId); 
             console.log("Ставка: ", blockId)   
 
             // текущая дата
@@ -344,7 +344,7 @@ app.post('/web-stavka', async (req, res) => {
             console.log("dateNow: ", dateNow)
         
             //Добавить специалиста в таблицу Претенденты со своей  ставкой
-            await addPretendentAlt(blockId, user.workerId, summaStavki, dateNow);
+            await addPretendentAlt(blockId, user.dataValues.workerId, summaStavki, dateNow);
 
         return res.status(200).json({});
     } catch (e) {
