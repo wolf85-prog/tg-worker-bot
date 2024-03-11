@@ -279,7 +279,7 @@ app.post('/web-passport', async (req, res) => {
 
 //альтернативна ставка
 app.post('/web-stavka', async (req, res) => {
-    const {queryId, summaStavki, id} = req.body;
+    const {queryId, summaStavki, id, userId} = req.body;
 
     try {
             await bot.answerWebAppQuery(queryId, {
@@ -292,19 +292,46 @@ app.post('/web-stavka', async (req, res) => {
 `Твоя ставка отправлена!`}})
 
             console.log("Начинаю сохранять данные в ноушене...", id)
+            console.log("chatId: ", userId)
 
-            console.log("ID: ", id)
+            //специалист
+            const workerId = await getWorkerChatId(userId)
+            
+            //новый претендент
+            const pretendent = {
+                projectId: id, 
+                workerId: workerId, 
+                receiverId: userId,  
+                accept: false, 
+                otclick: 1   
+            }
 
             //сохраниь в бд ноушен
 
-            const user = await Pretendent.findOne({where: {id}}) 
-            
-            //обновить поле accept на true (принял)
-            await Pretendent.update({ accept: true }, {
+            const user = await Pretendent.findOne({
                 where: {
-                    id: id,
+                    projectId: projectId,
+                    workerId: workerId,
                 },
-            }); 
+            })
+    
+            if (!user) {
+                const res = await Pretendent.create(pretendent)
+                console.log("Претендент в БД: ", res.dataValues.id)
+            } else {
+                console.log('Претендент уже создан в БД для этого проекта!') 
+                const count = exist.dataValues.otclick + 1
+    
+                const res = await Pretendent.update({ 
+                    otclick: count  
+                },
+                {
+                    where: {
+                        projectId: projectId,
+                        workerId: workerId,
+                    },
+                })
+            }
 
             const blockId = await getBlocksP(user.projectId); 
             console.log("Ставка: ", blockId)   
