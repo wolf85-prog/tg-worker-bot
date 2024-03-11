@@ -1119,7 +1119,7 @@ bot.on('message', async (msg) => {
             
             //новый претендент
             const pretendent = {
-                projectId: id, 
+                projectId: '5d2ac571-c32d-4dbe-9c0a-c2a7395363ef', 
                 workerId: workerId, 
                 receiverId: chatId,  
                 accept: false, 
@@ -1130,7 +1130,7 @@ bot.on('message', async (msg) => {
 
             const user = await Pretendent.findOne({
                 where: {
-                    projectId: id,
+                    projectId: '5d2ac571-c32d-4dbe-9c0a-c2a7395363ef',
                     workerId: workerId,
                 },
             })
