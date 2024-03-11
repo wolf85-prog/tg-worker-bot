@@ -296,6 +296,7 @@ app.post('/web-stavka', async (req, res) => {
 
             //специалист
             const workerId = await getWorkerChatId(userId)
+            console.log("workerId: ", workerId)
             
             //новый претендент
             const pretendent = {
