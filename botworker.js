@@ -1134,11 +1134,11 @@ bot.on('message', async (msg) => {
                     workerId: workerId,
                 },
             })
-            console.log("ID: ", user.dataValues.id)
+            console.log("ID: ", user)
 
             if (!user) {
                 const res = await Pretendent.create(pretendent)
-                console.log("Претендент в БД: ", res.dataValues.id)
+                console.log("Претендент в БД: ", res)
             } else {
                 console.log('Претендент уже создан в БД для этого проекта!') 
                 // const count = exist.dataValues.otclick + 1
