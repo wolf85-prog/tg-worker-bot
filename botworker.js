@@ -335,7 +335,7 @@ app.post('/web-stavka', async (req, res) => {
                 })
             }
 
-            const blockId = await getBlocksP(user.dataValues.projectId); 
+            const blockId = await getBlocksP(id); 
             console.log("Ставка: ", blockId)   
 
             // текущая дата
@@ -344,7 +344,7 @@ app.post('/web-stavka', async (req, res) => {
             console.log("dateNow: ", dateNow)
         
             //Добавить специалиста в таблицу Претенденты со своей  ставкой
-            await addPretendentAlt(blockId, user.dataValues.workerId, summaStavki, dateNow);
+            await addPretendentAlt(blockId, workerId, summaStavki, dateNow);
 
         return res.status(200).json({});
     } catch (e) {
