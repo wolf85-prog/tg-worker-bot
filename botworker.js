@@ -342,10 +342,23 @@ app.post('/web-stavka', async (req, res) => {
             const date = Date.now() + 10800000; //+3 часа
             const dateNow =new Date(date)
             console.log("dateNow: ", dateNow)
-        
-            //Добавить специалиста в таблицу Претенденты со своей  ставкой
-            await addPretendentAlt(blockId, workerId, summaStavki, dateNow);
 
+            //Добавить специалиста в таблицу Претенденты (Ноушен)
+            //найти претендента в ноушене
+            if (blockId) {
+                const worker = await getWorkerPretendent(blockId, workerId)
+                console.log("worker: ", worker)
+                    
+                //обновить специалиста в таблице Претенденты если есть
+                if (worker.length > 0) {
+                    //await updatePretendent(worker[0]?.id);
+                    console.log("Специалист уже есть в таблице Претенденты!") 
+                } else {                 
+                    //Добавить специалиста в таблицу Претенденты со своей  ставкой
+                    await addPretendentAlt(blockId, workerId, summaStavki, dateNow);
+                } 
+            }
+        
         return res.status(200).json({});
     } catch (e) {
         return res.status(500).json({})
