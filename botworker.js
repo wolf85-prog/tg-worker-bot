@@ -1111,6 +1111,50 @@ bot.on('message', async (msg) => {
             
         }
 
+        if (text.startsWith('/getpretendent')) {
+
+            //специалист
+            const workerId = await getWorkerChatId(chatId)
+            console.log("workerId: ", workerId)
+            
+            //новый претендент
+            const pretendent = {
+                projectId: id, 
+                workerId: workerId, 
+                receiverId: chatId,  
+                accept: false, 
+                otclick: 1   
+            }
+
+            //сохраниь в бд ноушен
+
+            const user = await Pretendent.findOne({
+                where: {
+                    projectId: id,
+                    workerId: workerId,
+                },
+            })
+            console.log("ID: ", user.dataValues.id)
+
+            if (!user) {
+                const res = await Pretendent.create(pretendent)
+                console.log("Претендент в БД: ", res.dataValues.id)
+            } else {
+                console.log('Претендент уже создан в БД для этого проекта!') 
+                // const count = exist.dataValues.otclick + 1
+    
+                // const res = await Pretendent.update({ 
+                //     otclick: count  
+                // },
+                // {
+                //     where: {
+                //         projectId: projectId,
+                //         workerId: workerId,
+                //     },
+                // })
+            }
+        }
+
 //------------------------------------------------------------------------------------------------
 //обработка контактов
         if (msg.contact) {
