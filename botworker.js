@@ -310,10 +310,11 @@ app.post('/web-stavka', async (req, res) => {
 
             const user = await Pretendent.findOne({
                 where: {
-                    projectId: projectId,
+                    projectId: id,
                     workerId: workerId,
                 },
             })
+            console.log("ID: ", user.dataValues.id)
     
             if (!user) {
                 const res = await Pretendent.create(pretendent)
