@@ -1141,17 +1141,17 @@ bot.on('message', async (msg) => {
                 console.log("Претендент в БД: ", res)
             } else {
                 console.log('Претендент уже создан в БД для этого проекта!') 
-                // const count = exist.dataValues.otclick + 1
+                const count = exist.dataValues.otclick + 1
     
-                // const res = await Pretendent.update({ 
-                //     otclick: count  
-                // },
-                // {
-                //     where: {
-                //         projectId: projectId,
-                //         workerId: workerId,
-                //     },
-                // })
+                const res = await Pretendent.update({ 
+                    otclick: count  
+                },
+                {
+                    where: {
+                        projectId: projectId,
+                        workerId: workerId,
+                    },
+                })
             }
         }
 
