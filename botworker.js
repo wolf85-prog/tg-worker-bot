@@ -1605,18 +1605,33 @@ bot.on('message', async (msg) => {
             const res = await Pretendent.create(pretendent)
             console.log("Претендент в БД: ", res.dataValues.id)
         } else {
-            console.log('Претендент уже создан в БД для этого проекта!') 
-            const count = exist.dataValues.otclick + 1
-
-            const res = await Pretendent.update({ 
-                otclick: count  
-            },
-            {
-                where: {
-                    projectId: projectId,
-                    workerId: workerId,
+            console.log('Претендент уже создан в БД для этого проекта!')
+            //проверяем отклонил ли специалист заявку
+            if (exist.dataValues.accept) {               
+                const res = await Pretendent.update({            
+                    accept:  false 
                 },
-            })
+                {
+                    where: {
+                        projectId: projectId,
+                        workerId: workerId,
+                    },
+                })
+            } else {
+                const count = exist.dataValues.otclick + 1
+                const res = await Pretendent.update({ 
+                    otclick: count,  
+                },
+                {
+                    where: {
+                        projectId: projectId,
+                        workerId: workerId,
+                    },
+                })
+            }
+            
+
+            
         }
 
 
