@@ -1606,10 +1606,11 @@ bot.on('message', async (msg) => {
             console.log("Претендент в БД: ", res.dataValues.id)
         } else {
             console.log('Претендент уже создан в БД для этого проекта!')
-            //проверяем отклонил ли специалист заявку
-            if (exist.dataValues.accept) {               
+            //проверяем отклонил ли специалист заявку в прошлый раз
+            if (exist.dataValues.accept) {            
                 const res = await Pretendent.update({            
-                    accept:  false 
+                    accept:  false,
+                    otclick:  1
                 },
                 {
                     where: {
@@ -1617,10 +1618,11 @@ bot.on('message', async (msg) => {
                         workerId: workerId,
                     },
                 })
+            //или было нажато принять
             } else {
                 const count = exist.dataValues.otclick + 1
                 const res = await Pretendent.update({ 
-                    otclick: count,  
+                    otclick: count  
                 },
                 {
                     where: {
@@ -1719,15 +1721,25 @@ bot.on('message', async (msg) => {
 
         
         if (exist) {
-            let count = 0
-            if (exist.dataValues.cancel !== null) {
-                count = exist.dataValues.cancel + 1
+            console.log('Претендент уже создан в БД для этого проекта!')
+
+            //проверяем отклонил ли специалист заявку в прошлый раз
+            if (exist.dataValues.accept) {
+                const count = exist.dataValues.cancel + 1
+                const res = await Pretendent.update({ 
+                    cancel: count  
+                },
+                {
+                    where: {
+                        projectId: projectId,
+                        workerId: workerId,
+                    },
+                })
+            //или было нажато принять
             } else {
-                count = 1
-            }
-            const res = await Pretendent.update({ 
+                const res = await Pretendent.update({ 
                     accept: true,
-                    cancel: count 
+                    cancel: 1 
                 },
                 {
                     where: {
@@ -1736,6 +1748,8 @@ bot.on('message', async (msg) => {
                     },
             })
             console.log("Претендент обновлен в БД")
+            }
+            
         } else {
             const res = await Pretendent.create(pretendent)
             console.log("Претендент в БД: ", res.dataValues.id)
