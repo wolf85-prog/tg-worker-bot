@@ -322,17 +322,31 @@ app.post('/web-stavka', async (req, res) => {
                 console.log("Претендент в БД: ", res.dataValues.id)
             } else {
                 console.log('Претендент уже создан в БД для этого проекта!') 
-                const count = user.dataValues.otclick + 1
-    
-                const res = await Pretendent.update({ 
-                    otclick: count  
-                },
-                {
-                    where: {
-                        projectId: projectId,
-                        workerId: workerId,
+                if (exist.dataValues.accept) {            
+                    const res = await Pretendent.update({            
+                        accept:  false,
+                        otclick:  1
                     },
-                })
+                    {
+                        where: {
+                            projectId: id,
+                            workerId: workerId,
+                        },
+                    })
+                //или было нажато принять
+                } else {
+                    const count = user.dataValues.otclick + 1
+    
+                    const res = await Pretendent.update({ 
+                        otclick: count  
+                    },
+                    {
+                        where: {
+                            projectId: id,
+                            workerId: workerId,
+                        },
+                    })
+                }
             }
 
             const blockId = await getBlocksP(id); 
@@ -1630,12 +1644,8 @@ bot.on('message', async (msg) => {
                         workerId: workerId,
                     },
                 })
-            }
-            
-
-            
+            }         
         }
-
 
         //if (user.projectId) {
            const blockId = await getBlocksP(projectId); 
