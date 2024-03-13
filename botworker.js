@@ -1596,6 +1596,9 @@ bot.on('message', async (msg) => {
         console.log("project: ", data)
         const projectId = project[1]  
 
+        const currentDate = new Date()
+        const progressDate = currentDate.getTime() + 3600000 //1 час
+
         //специалист
         const workerId = await getWorkerChatId(chatId)
 
@@ -1678,7 +1681,8 @@ bot.on('message', async (msg) => {
             },
         })
 
-        if (exist2.dataValues.otclick < 2) {   
+        if ((new Date(exist.dataValues.updatedAt).getTime()-new Date().getTime())>3600000) {
+        //if (exist2.dataValues.otclick < 2) {   
 
             //отправить сообщение в админ-панель
             const convId = await sendMyMessage('Пользователь нажал кнопку "Принять" в рассылке', "text", chatId)
