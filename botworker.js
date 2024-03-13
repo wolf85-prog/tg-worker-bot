@@ -1681,7 +1681,7 @@ bot.on('message', async (msg) => {
             },
         })
 
-        if ((new Date(exist.dataValues.updatedAt).getTime()-new Date().getTime())>3600000) {
+        if ((exist2.dataValues.otclick < 2) || (new Date(exist.dataValues.updatedAt).getTime()-new Date().getTime())>3600000) {
         //if (exist2.dataValues.otclick < 2) {   
 
             //отправить сообщение в админ-панель
