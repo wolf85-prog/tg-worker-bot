@@ -23,7 +23,7 @@ module.exports = async function updatePretendent2(pageId) {
                         {
                             type: 'text',
                             text: {
-                                content: "❌",
+                                content: "",
                             },
                             "annotations": {
                                 "bold": false,
@@ -33,7 +33,7 @@ module.exports = async function updatePretendent2(pageId) {
                                 "code": false,
                                 "color": "default"
                             },
-                            "plain_text": "❌",
+                            "plain_text": "",
                             "href": null
                         }
                     ],

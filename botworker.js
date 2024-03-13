@@ -44,6 +44,7 @@ const addPretendentAlt = require('./botworker/common/addPretendentAlt')
 const sendMyMessage = require('./botworker/common/sendMyMessage')
 const getWorkerPretendent = require('./botworker/common/getWorkerPretendent')
 const updatePretendent = require("./botworker/common/updatePretendent");
+const updatePretendent2 = require("./botworker/common/updatePretendent2");
 
 const express = require('express');
 const cors = require('cors');
@@ -1674,7 +1675,7 @@ bot.on('message', async (msg) => {
                     
                 //обновить специалиста в таблице Претенденты если есть
                 if (worker.length > 0) {
-                    //await updatePretendent(worker[0]?.id);
+                    await updatePretendent2(worker[0]?.id);
                     console.log("Специалист уже есть в таблице Претенденты!") 
                 } else {                 
                     await addPretendent(blockId, workerId, dateNow);
