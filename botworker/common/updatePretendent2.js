@@ -12,10 +12,10 @@ module.exports = async function updatePretendent2(pageId) {
         const response = await notion.pages.update({
             page_id: pageId,
             // parent: { database_id: blockId },
-            // icon: {
-            //     type: "emoji",
-            //     emoji: "➡️"
-            // },
+            icon: {
+                type: "emoji",
+                emoji: ""
+            },
             properties: {
                 "1. Ставка": {
                     type: "title",
