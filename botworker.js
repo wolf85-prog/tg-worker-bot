@@ -1699,6 +1699,21 @@ bot.on('message', async (msg) => {
              
             return bot.sendMessage(chatId, 'Ваша заявка принята! Мы свяжемся с вами в ближайшее время.')
         }
+
+        //отправить сообщение в админ-панель
+        const convId = await sendMyMessage('Вы ' + exist2.dataValues.otclick + '-й раз нажали кнопку Принять', "text", chatId)
+
+        // Подключаемся к серверу socket
+        let socket = io(socketUrl);
+        socket.emit("addUser", chatId)
+        socket.emit("sendMessageSpec", {
+            senderId: chatId,
+            receiverId: chatTelegramId,
+            text: 'Вы ' + exist2.dataValues.otclick + '-й раз нажали кнопку Принять',
+            convId: convId,
+            messageId: messageId,
+        }) 
+
         return bot.sendMessage(chatId, 'Вы ' + exist2.dataValues.otclick + '-й раз нажали кнопку Принять') 
         
     }
@@ -1809,6 +1824,20 @@ bot.on('message', async (msg) => {
         
             return bot.sendMessage(chatId, 'Хорошо, тогда в следующий раз!')
         }
+
+        //отправить сообщение в админ-панель
+        const convId = await sendMyMessage('Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить', "text", chatId)
+
+        // Подключаемся к серверу socket
+        let socket = io(socketUrl);
+        socket.emit("addUser", chatId)
+        socket.emit("sendMessageSpec", {
+            senderId: chatId,
+            receiverId: chatTelegramId,
+            text: 'Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить',
+            convId: convId,
+            messageId: messageId,
+        })
         
         return bot.sendMessage(chatId, 'Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить')    
     }
