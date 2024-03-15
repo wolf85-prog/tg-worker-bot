@@ -1675,7 +1675,8 @@ bot.on('message', async (msg) => {
                     
                 //обновить специалиста в таблице Претенденты если есть
                 if (worker.length > 0) {
-                    await updatePretendent2(worker[0]?.id);
+                    await updatePretendent2(worker[0]?.id); //удалить претендента
+                    await addPretendent(blockId, workerId, dateNow); //добавить претендента
                     console.log("Специалист уже есть в таблице Претенденты!") 
                 } else {                 
                     await addPretendent(blockId, workerId, dateNow);
