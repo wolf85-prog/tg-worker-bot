@@ -1723,7 +1723,7 @@ bot.on('message', async (msg) => {
             receiverId: chatTelegramId,
             text: 'Вы ' + exist2.dataValues.otclick + '-й раз нажали кнопку Принять',
             convId: convId,
-            messageId: messageId,
+            //messageId: messageId,
         }) 
 
         return bot.sendMessage(chatId, 'Вы ' + exist2.dataValues.otclick + '-й раз нажали кнопку Принять') 
@@ -1830,7 +1830,7 @@ bot.on('message', async (msg) => {
                 receiverId: chatTelegramId,
                 text: 'Пользователь нажал кнопку "Отклонить" в рассылке',
                 convId: convId,
-                messageId: messageId,
+                messageId,
                 isBot: true,
             })
 
@@ -1839,7 +1839,7 @@ bot.on('message', async (msg) => {
         }
 
         //отправить сообщение в админ-панель
-        const convId = await sendMyMessage('Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить', "text", chatId, messageId, null, true)
+        const convId = await sendMyMessage('Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить', "text", chatId, null, null, true)
 
         // Подключаемся к серверу socket
         let socket = io(socketUrl);
@@ -1849,7 +1849,7 @@ bot.on('message', async (msg) => {
             receiverId: chatTelegramId,
             text: 'Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить',
             convId: convId,
-            messageId: messageId,
+            messageId: null,
             isBot: true,
         })
         
