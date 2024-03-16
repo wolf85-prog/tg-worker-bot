@@ -1198,7 +1198,7 @@ bot.on('message', async (msg) => {
             console.log("Отправляю контакт в админ-панель...")
 
             //отправить сообщение о контакте в админ-панель
-            const convId = await sendMyMessage(text_contact, "text", chatId, messageId)
+            const convId = await sendMyMessage(text_contact, "text", chatId, messageId, null, false)
                 
                 // Подключаемся к серверу socket
                 let socket = io(socketUrl);
@@ -1212,6 +1212,7 @@ bot.on('message', async (msg) => {
                      type: 'text',
                      convId: convId,
                      messageId: messageId,
+                     isBot: false,
                  })
         }
 //--------------------------------------------------------------------------------------------------
@@ -1250,7 +1251,7 @@ bot.on('message', async (msg) => {
                         let convId;
                         if(msg.document) {
                             // сохранить отправленное боту сообщение пользователя в БД
-                            convId = await sendMyMessage(`${botApiUrl}/${msg.document.file_name}`.replaceAll(/\s/g, '_'), 'file', chatId, messageId)
+                            convId = await sendMyMessage(`${botApiUrl}/${msg.document.file_name}`.replaceAll(/\s/g, '_'), 'file', chatId, messageId, null, false)
                         }
 
                         // Подключаемся к серверу socket
@@ -1261,6 +1262,8 @@ bot.on('message', async (msg) => {
                             receiverId: chatTelegramId,
                             text: `${botApiUrl}/${msg.document.file_name}`.replaceAll(/\s/g, '_'),
                             convId: convId,
+                            messageId: messageId,
+                            isBot: false,
                         })
                     })
                 })
@@ -1298,7 +1301,7 @@ bot.on('message', async (msg) => {
                         console.log('Download Completed: ', path); 
                         
                         // сохранить отправленное боту сообщение пользователя в БД
-                        const convId = await sendMyMessage(`${botApiUrl}/${filename}.jpg`, 'image', chatId, messageId)
+                        const convId = await sendMyMessage(`${botApiUrl}/${filename}.jpg`, 'image', chatId, messageId, null, false)
 
                         // Подключаемся к серверу socket
                         let socket = io(socketUrl);
@@ -1314,6 +1317,8 @@ bot.on('message', async (msg) => {
                             text: `${botApiUrl}/${filename}.jpg`,
                             type: 'image',
                             convId: convId,
+                            messageId: messageId,
+                            isBot: false,
                         })
                     })
                 })            
@@ -1359,7 +1364,7 @@ bot.on('message', async (msg) => {
                 let convId;
                 if(msg.voice) {
                     // сохранить отправленное боту сообщение пользователя в БД
-                    convId = await sendMyMessage(`${botApiUrl}/${msg.voice.file_unique_id}.${ras[1]}`, 'file', chatId, messageId)
+                    convId = await sendMyMessage(`${botApiUrl}/${msg.voice.file_unique_id}.${ras[1]}`, 'file', chatId, messageId, null, false)
                 }
 
                 //Подключаемся к серверу socket
@@ -1370,6 +1375,8 @@ bot.on('message', async (msg) => {
                     receiverId: chatTelegramId,
                     text: `${botApiUrl}/${msg.voice.file_unique_id}.${ras[1]}`,
                     convId: convId,
+                    messageId,
+                    isBot: false,
                 })
             })
         })            
@@ -1392,7 +1399,7 @@ bot.on('message', async (msg) => {
                 console.log("Отправляю сообщение в админ-панель...")    
                 
                 //отправить сообщение о добавлении специалиста в бд в админ-панель
-                const convId = sendMyMessage(text, "text", chatId, parseInt(response.message_id)-1)
+                const convId = sendMyMessage(text, "text", chatId, parseInt(response.message_id)-1, null, false)
                 
                 // Подключаемся к серверу socket
                 let socket = io(socketUrl);
@@ -1406,6 +1413,7 @@ bot.on('message', async (msg) => {
                     type: 'text',
                     convId: convId,
                     messageId: parseInt(response.message_id)-1,
+                    isBot: false,
                 })
  
                 //массив специалистов
@@ -1506,7 +1514,7 @@ bot.on('message', async (msg) => {
 
             } else if (text.startsWith('Твоя ставка отправлена!')) {
                 //отправить сообщение в админ-панель
-                const convId = await sendMyMessage('Твоя ставка отправлена', "text", chatId)
+                const convId = await sendMyMessage('Твоя ставка отправлена', "text", chatId, messageId, null, false)
 
                 // Подключаемся к серверу socket
                 let socket = io(socketUrl);
@@ -1517,6 +1525,7 @@ bot.on('message', async (msg) => {
                     text: 'Твоя ставка отправлена',
                     convId: convId,
                     messageId: messageId,
+                    isBot: false,
                 })
             
             } else {
@@ -1549,7 +1558,7 @@ bot.on('message', async (msg) => {
                 }
 
                 // сохранить отправленное боту сообщение пользователя в БД
-                const convId = sendMyMessage(str_text, 'text', chatId, messageId, reply_id)
+                const convId = sendMyMessage(str_text, 'text', chatId, messageId, reply_id, false)
 
                 // Подключаемся к серверу socket
                 let socket = io(socketUrl);
@@ -1564,6 +1573,7 @@ bot.on('message', async (msg) => {
                     convId: convId,
                     messageId: messageId,
                     replyId: reply_id,
+                    isBot: false,
                 })
 
 
@@ -1683,7 +1693,7 @@ bot.on('message', async (msg) => {
             }
 
             //отправить сообщение в админ-панель
-            const convId = await sendMyMessage('Пользователь нажал кнопку "Принять" в рассылке', "text", chatId)
+            const convId = await sendMyMessage('Пользователь нажал кнопку "Принять" в рассылке', "text", chatId, messageId, null, false)
 
             // Подключаемся к серверу socket
             let socket = io(socketUrl);
@@ -1694,6 +1704,7 @@ bot.on('message', async (msg) => {
                 text: 'Пользователь нажал кнопку "Принять" в рассылке',
                 convId: convId,
                 messageId: messageId,
+                isBot: false,
             })    
         
              
@@ -1793,7 +1804,7 @@ bot.on('message', async (msg) => {
             }
 
             //отправить сообщение в админ-панель
-            const convId = await sendMyMessage('Пользователь нажал кнопку "Отклонить" в рассылке', "text", chatId)
+            const convId = await sendMyMessage('Пользователь нажал кнопку "Отклонить" в рассылке', "text", chatId, messageId, null, true)
 
             // Подключаемся к серверу socket
             let socket = io(socketUrl);
@@ -1804,6 +1815,7 @@ bot.on('message', async (msg) => {
                 text: 'Пользователь нажал кнопку "Отклонить" в рассылке',
                 convId: convId,
                 messageId: messageId,
+                isBot: true,
             })
 
         
