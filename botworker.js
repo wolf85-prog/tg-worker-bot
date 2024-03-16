@@ -1839,7 +1839,7 @@ bot.on('message', async (msg) => {
         }
 
         //отправить сообщение в админ-панель
-        const convId = await sendMyMessage('Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить', "text", chatId)
+        const convId = await sendMyMessage('Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить', "text", chatId, messageId, null, true)
 
         // Подключаемся к серверу socket
         let socket = io(socketUrl);
@@ -1850,6 +1850,7 @@ bot.on('message', async (msg) => {
             text: 'Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить',
             convId: convId,
             messageId: messageId,
+            isBot: true,
         })
         
         return bot.sendMessage(chatId, 'Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить')    
