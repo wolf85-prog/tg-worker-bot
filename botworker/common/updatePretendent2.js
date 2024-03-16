@@ -11,34 +11,7 @@ module.exports = async function updatePretendent2(pageId) {
     try {
         const response = await notion.pages.update({
             page_id: pageId,
-            // parent: { database_id: blockId },
-            // icon: {
-            //     type: "emoji",
-            //     emoji: "➡️"
-            // },
-            properties: {
-                "1. Ставка": {
-                    type: "title",
-                    title: [
-                        {
-                            type: 'text',
-                            text: {
-                                content: "",
-                            },
-                            "annotations": {
-                                "bold": false,
-                                "italic": false,
-                                "strikethrough": false,
-                                "underline": false,
-                                "code": false,
-                                "color": "default"
-                            },
-                            "plain_text": "",
-                            "href": null
-                        }
-                    ],
-                },
-            }
+            archived: true,
         })
         //console.log(response)
         if (response) {
