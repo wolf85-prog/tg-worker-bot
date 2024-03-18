@@ -6,7 +6,7 @@ const {Message, Conversation} = require('./../../botworker/models/models')
 const chatTelegramId = process.env.CHAT_ID
 const { Op } = require('sequelize')
 
-module.exports = async function sendMyMessage(text, typeText, chatId, messageId, replyId) {
+module.exports = async function sendMyMessage(text, typeText, chatId, messageId, replyId, isBot) {
     //создать беседу в админке в бд 
     //сохранить отправленное боту сообщение пользователя в БД
     let  conversation_id              
@@ -48,6 +48,7 @@ module.exports = async function sendMyMessage(text, typeText, chatId, messageId,
             conversationId: conversation_id,
             messageId: messageId,
             replyId: replyId,
+            isBot,
         })
 
         return conversation_id;

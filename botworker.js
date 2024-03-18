@@ -1198,7 +1198,7 @@ bot.on('message', async (msg) => {
             console.log("Отправляю контакт в админ-панель...")
 
             //отправить сообщение о контакте в админ-панель
-            const convId = await sendMyMessage(text_contact, "text", chatId, messageId)
+            const convId = await sendMyMessage(text_contact, "text", chatId, messageId, null, false)
                 
                 // Подключаемся к серверу socket
                 let socket = io(socketUrl);
@@ -1212,6 +1212,7 @@ bot.on('message', async (msg) => {
                      type: 'text',
                      convId: convId,
                      messageId: messageId,
+                     isBot: false,
                  })
         }
 //--------------------------------------------------------------------------------------------------
@@ -1659,7 +1660,7 @@ bot.on('message', async (msg) => {
             },
         })
 
-        if ((exist2.dataValues.otclick < 2) || (new Date(exist.dataValues.updatedAt).getTime()-new Date().getTime())>3600000) {
+        if ((exist2.dataValues.otclick < 2) || ( Math.abs(new Date(exist.dataValues.updatedAt).getTime()-new Date().getTime()) )>3600000) {
             //ноушен
             const blockId = await getBlocksP(projectId); 
            
@@ -1684,7 +1685,7 @@ bot.on('message', async (msg) => {
             }
 
             //отправить сообщение в админ-панель
-            const convId = await sendMyMessage('Пользователь нажал кнопку "Принять" в рассылке', "text", chatId)
+            const convId = await sendMyMessage('Пользователь нажал кнопку "Принять" в рассылке', "text", chatId, messageId, null, false)
 
             // Подключаемся к серверу socket
             let socket = io(socketUrl);
@@ -1702,7 +1703,7 @@ bot.on('message', async (msg) => {
         }
 
         //отправить сообщение в админ-панель
-        const convId = await sendMyMessage('Вы ' + exist2.dataValues.otclick + '-й раз нажали кнопку Принять', "text", chatId)
+        const convId = await sendMyMessage('Вы ' + exist2.dataValues.otclick + '-й раз нажали кнопку Принять', "text", chatId, null, null, false)
 
         // Подключаемся к серверу socket
         let socket = io(socketUrl);
@@ -1712,7 +1713,8 @@ bot.on('message', async (msg) => {
             receiverId: chatTelegramId,
             text: 'Вы ' + exist2.dataValues.otclick + '-й раз нажали кнопку Принять',
             convId: convId,
-            messageId: messageId,
+            messageId: null,
+            isBot: false,
         }) 
 
         return bot.sendMessage(chatId, 'Вы ' + exist2.dataValues.otclick + '-й раз нажали кнопку Принять') 
@@ -1791,7 +1793,7 @@ bot.on('message', async (msg) => {
             },
         })
 
-        if ((exist2.dataValues.cancel < 2) || (new Date(exist.dataValues.updatedAt).getTime()-new Date().getTime())>3600000) {
+        if ((exist2.dataValues.cancel < 2) || ( Math.abs(new Date(exist.dataValues.updatedAt).getTime()-new Date().getTime()) )>3600000) {
             //ноушен
             const blockId = await getBlocksP(projectId);  
                 
@@ -1809,7 +1811,7 @@ bot.on('message', async (msg) => {
             }
 
             //отправить сообщение в админ-панель
-            const convId = await sendMyMessage('Пользователь нажал кнопку "Отклонить" в рассылке', "text", chatId)
+            const convId = await sendMyMessage('Пользователь нажал кнопку "Отклонить" в рассылке', "text", chatId, messageId, null, true)
 
             // Подключаемся к серверу socket
             let socket = io(socketUrl);
@@ -1820,6 +1822,7 @@ bot.on('message', async (msg) => {
                 text: 'Пользователь нажал кнопку "Отклонить" в рассылке',
                 convId: convId,
                 messageId: messageId,
+                isBot: true,
             })
 
         
@@ -1827,7 +1830,7 @@ bot.on('message', async (msg) => {
         }
 
         //отправить сообщение в админ-панель
-        const convId = await sendMyMessage('Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить', "text", chatId)
+        const convId = await sendMyMessage('Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить', "text", chatId, null, null, true)
 
         // Подключаемся к серверу socket
         let socket = io(socketUrl);
@@ -1837,17 +1840,14 @@ bot.on('message', async (msg) => {
             receiverId: chatTelegramId,
             text: 'Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить',
             convId: convId,
-            messageId: messageId,
+            messageId: null,
+            isBot: true,
         })
         
         return bot.sendMessage(chatId, 'Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить')    
     }
 
 
-    //нажатие на кнопку "Отклонить"
-    if (data === '/worker') {
-        return bot.sendMessage(chatId, 'Вы уже зарегистрированы!')
-    }
 
     //нажатие на кнопку "Кнопка"
     if (data.startsWith('/report')) {
@@ -1859,8 +1859,7 @@ bot.on('message', async (msg) => {
             console.log("res: ", res)
         } catch (error) {
             console.log(error.message)
-        }
-        
+        }    
     }
 
 
