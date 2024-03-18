@@ -884,7 +884,7 @@ bot.on('message', async (msg) => {
                                 userfamily: notion[0]?.fio.split(" ")[0],
                                 username: notion[0]?.fio.split(" ")[1],
                                 phone: notion[0]?.phone && notion[0]?.phone,
-                                dateborn: notion[0].age?.start.split('-')[0],
+                                dateborn: notion[0].age?.start.split('/')[3],
                                 city: notion[0].city && notion[0].city,                    
                                 from: 'Notion',
                                 comment: notion[0]?.comment ? notion[0]?.comment : '',
@@ -1659,7 +1659,7 @@ bot.on('message', async (msg) => {
             },
         })
 
-        if ((exist2.dataValues.otclick < 2) || ( Math.abs(new Date(exist.dataValues.updatedAt).getTime()-new Date().getTime()) )>3600000) {
+        if ((exist2.dataValues.otclick < 2) || (new Date(exist.dataValues.updatedAt).getTime()-new Date().getTime())>3600000) {
             //ноушен
             const blockId = await getBlocksP(projectId); 
            
@@ -1791,7 +1791,7 @@ bot.on('message', async (msg) => {
             },
         })
 
-        if ((exist2.dataValues.cancel < 2) || ( Math.abs(new Date(exist.dataValues.updatedAt).getTime()-new Date().getTime()) )>3600000) {
+        if ((exist2.dataValues.cancel < 2) || (new Date(exist.dataValues.updatedAt).getTime()-new Date().getTime())>3600000) {
             //ноушен
             const blockId = await getBlocksP(projectId);  
                 
@@ -2059,7 +2059,7 @@ const start = async () => {
                                     userfamily: notion[0]?.fio.split(" ")[0],
                                     username: notion[0]?.fio.split(" ")[1],
                                     phone: notion[0]?.phone && notion[0]?.phone,
-                                    dateborn: notion[0].age?.start.split('-')[0],
+                                    dateborn: notion[0].age?.start.split('/')[3],
                                     city: notion[0].city && notion[0].city,                    
                                     from: 'Notion',
                                     comment: notion[0]?.comment ? notion[0]?.comment : '',
