@@ -1659,7 +1659,7 @@ bot.on('message', async (msg) => {
             },
         })
 
-        if ((exist2.dataValues.otclick < 2) || (new Date(exist.dataValues.updatedAt).getTime()-new Date().getTime())>3600000) {
+        if ((exist2.dataValues.otclick < 2) || ( Math.abs(new Date(exist.dataValues.updatedAt).getTime()-new Date().getTime()) )>3600000) {
             //ноушен
             const blockId = await getBlocksP(projectId); 
            
@@ -1791,7 +1791,7 @@ bot.on('message', async (msg) => {
             },
         })
 
-        if ((exist2.dataValues.cancel < 2) || (new Date(exist.dataValues.updatedAt).getTime()-new Date().getTime())>3600000) {
+        if ((exist2.dataValues.cancel < 2) || ( Math.abs(new Date(exist.dataValues.updatedAt).getTime()-new Date().getTime()) )>3600000) {
             //ноушен
             const blockId = await getBlocksP(projectId);  
                 
