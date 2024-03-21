@@ -91,6 +91,7 @@ const httpsServer = https.createServer(credentials, app);
 const {specData} = require('./botworker/data/specData');
 const getWorkerChildren = require("./botworker/common/getWorkerChildren");
 const getWorkerChatId = require("./botworker/common/getWorkerChatId");
+const updatePretendentAlt = require("./botworker/common/updatePretendentAlt");
 
 
 //--------------------------------------------------------------------------------------------------------
@@ -323,7 +324,7 @@ app.post('/web-stavka', async (req, res) => {
                 console.log("Претендент в БД: ", res.dataValues.id)
             } else {
                 console.log('Претендент уже создан в БД для этого проекта!') 
-                if (exist.dataValues.accept) {            
+                if (user.dataValues.accept) {            
                     const res = await Pretendent.update({            
                         accept:  false,
                         otclick:  1
@@ -358,7 +359,7 @@ app.post('/web-stavka', async (req, res) => {
                 },
             })
 
-            if ((exist2.dataValues.otclick < 2) || ( Math.abs(new Date(exist2.dataValues.updatedAt).getTime()-new Date().getTime()) )>3600000) {
+            //if ((exist2.dataValues.otclick < 2) || ( Math.abs(new Date(exist2.dataValues.updatedAt).getTime()-new Date().getTime()) )>3600000) {
                 //ноушен
                 const blockId = await getBlocksP(id); 
                 console.log("Ставка: ", blockId)   
@@ -376,49 +377,33 @@ app.post('/web-stavka', async (req, res) => {
                         
                     //обновить специалиста в таблице Претенденты если есть
                     if (worker.length > 0) {
-                        //await updatePretendent(worker[0]?.id);
+                        await updatePretendentAlt(blockId, workerId, summaStavki, dateNow);
                         console.log("Специалист уже есть в таблице Претенденты!") 
                     } else {                 
                         //Добавить специалиста в таблицу Претенденты со своей  ставкой
                         await addPretendentAlt(blockId, workerId, summaStavki, dateNow);
                     } 
                 }
-                //отправить сообщение в админ-панель
-                const convId = await sendMyMessage('Пользователь нажал кнопку "Альтернативная ставка" в рассылке', "text", chatId, null, null, false)
-
-                // Подключаемся к серверу socket
-                let socket = io(socketUrl);
-                socket.emit("addUser", chatId)
-                socket.emit("sendMessageSpec", {
-                    senderId: chatId,
-                    receiverId: chatTelegramId,
-                    text: 'Пользователь нажал кнопку "Альтернативная ставка" в рассылке',
-                    convId: convId,
-                    messageId: null,
-                })    
-        
-             
-                return bot.sendMessage(chatId, 'Ваша заявка принята! Мы свяжемся с вами в ближайшее время.')
-            }
+            //}
 
             //отправить сообщение в админ-панель
-            const convId = await sendMyMessage('Вы ' + exist2.dataValues.otclick + '-й раз откликнулись на заявку', "text", chatId, null, null, false)
+            //const convId = await sendMyMessage('Вы ' + exist2.dataValues.otclick + '-й раз откликнулись на заявку', "text", chatId, null, null, false)
 
             // Подключаемся к серверу socket
-            let socket = io(socketUrl);
-            socket.emit("addUser", chatId)
-            socket.emit("sendMessageSpec", {
-                senderId: chatId,
-                receiverId: chatTelegramId,
-                text: 'Вы ' + exist2.dataValues.otclick + '-й раз откликнулись на заявку',
-                convId: convId,
-                messageId: null,
-                isBot: false,
-            }) 
+            // let socket = io(socketUrl);
+            // socket.emit("addUser", chatId)
+            // socket.emit("sendMessageSpec", {
+            //     senderId: chatId,
+            //     receiverId: chatTelegramId,
+            //     text: 'Вы ' + exist2.dataValues.otclick + '-й раз откликнулись на заявку',
+            //     convId: convId,
+            //     messageId: null,
+            //     isBot: false,
+            // }) 
 
-            return bot.sendMessage(chatId, 'Вы ' + exist2.dataValues.otclick + '-й раз откликнулись на заявку') 
+            //return bot.sendMessage(chatId, 'Вы ' + exist2.dataValues.otclick + '-й раз откликнулись на заявку') 
             
-        //return res.status(200).json({});
+        return res.status(200).json({});
     } catch (e) {
         return res.status(500).json({})
     }
