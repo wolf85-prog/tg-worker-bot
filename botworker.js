@@ -350,31 +350,75 @@ app.post('/web-stavka', async (req, res) => {
                 }
             }
 
-            const blockId = await getBlocksP(id); 
-            console.log("Ставка: ", blockId)   
 
-            // текущая дата
-            const date = Date.now() + 10800000; //+3 часа
-            const dateNow =new Date(date)
-            console.log("dateNow: ", dateNow)
+            const exist2 = await Pretendent.findOne({
+                where: {
+                    projectId: id,
+                    workerId: workerId,
+                },
+            })
 
-            //Добавить специалиста в таблицу Претенденты (Ноушен)
-            //найти претендента в ноушене
-            if (blockId) {
-                const worker = await getWorkerPretendent(blockId, workerId)
-                console.log("worker: ", worker)
-                    
-                //обновить специалиста в таблице Претенденты если есть
-                if (worker.length > 0) {
-                    //await updatePretendent(worker[0]?.id);
-                    console.log("Специалист уже есть в таблице Претенденты!") 
-                } else {                 
-                    //Добавить специалиста в таблицу Претенденты со своей  ставкой
-                    await addPretendentAlt(blockId, workerId, summaStavki, dateNow);
-                } 
-            }
+            if ((exist2.dataValues.otclick < 2) || ( Math.abs(new Date(exist2.dataValues.updatedAt).getTime()-new Date().getTime()) )>3600000) {
+                //ноушен
+                const blockId = await getBlocksP(id); 
+                console.log("Ставка: ", blockId)   
+
+                // текущая дата
+                const date = Date.now() + 10800000; //+3 часа
+                const dateNow =new Date(date)
+                //console.log("dateNow: ", dateNow)
+
+                //Добавить специалиста в таблицу Претенденты (Ноушен)
+                //найти претендента в ноушене
+                if (blockId) {
+                    const worker = await getWorkerPretendent(blockId, workerId)
+                    console.log("worker: ", worker)
+                        
+                    //обновить специалиста в таблице Претенденты если есть
+                    if (worker.length > 0) {
+                        //await updatePretendent(worker[0]?.id);
+                        console.log("Специалист уже есть в таблице Претенденты!") 
+                    } else {                 
+                        //Добавить специалиста в таблицу Претенденты со своей  ставкой
+                        await addPretendentAlt(blockId, workerId, summaStavki, dateNow);
+                    } 
+                }
+                //отправить сообщение в админ-панель
+                const convId = await sendMyMessage('Пользователь нажал кнопку "Альтернативная ставка" в рассылке', "text", chatId, null, null, false)
+
+                // Подключаемся к серверу socket
+                let socket = io(socketUrl);
+                socket.emit("addUser", chatId)
+                socket.emit("sendMessageSpec", {
+                    senderId: chatId,
+                    receiverId: chatTelegramId,
+                    text: 'Пользователь нажал кнопку "Альтернативная ставка" в рассылке',
+                    convId: convId,
+                    messageId: null,
+                })    
         
-        return res.status(200).json({});
+             
+                return bot.sendMessage(chatId, 'Ваша заявка принята! Мы свяжемся с вами в ближайшее время.')
+            }
+
+            //отправить сообщение в админ-панель
+            const convId = await sendMyMessage('Вы ' + exist2.dataValues.otclick + '-й раз откликнулись на заявку', "text", chatId, null, null, false)
+
+            // Подключаемся к серверу socket
+            let socket = io(socketUrl);
+            socket.emit("addUser", chatId)
+            socket.emit("sendMessageSpec", {
+                senderId: chatId,
+                receiverId: chatTelegramId,
+                text: 'Вы ' + exist2.dataValues.otclick + '-й раз откликнулись на заявку',
+                convId: convId,
+                messageId: null,
+                isBot: false,
+            }) 
+
+            return bot.sendMessage(chatId, 'Вы ' + exist2.dataValues.otclick + '-й раз откликнулись на заявку') 
+            
+        //return res.status(200).json({});
     } catch (e) {
         return res.status(500).json({})
     }
@@ -1703,7 +1747,7 @@ bot.on('message', async (msg) => {
         }
 
         //отправить сообщение в админ-панель
-        const convId = await sendMyMessage('Вы ' + exist2.dataValues.otclick + '-й раз нажали кнопку Принять', "text", chatId, null, null, false)
+        const convId = await sendMyMessage('Вы ' + exist2.dataValues.otclick + '-й раз откликнулись на заявку', "text", chatId, null, null, false)
 
         // Подключаемся к серверу socket
         let socket = io(socketUrl);
@@ -1711,13 +1755,13 @@ bot.on('message', async (msg) => {
         socket.emit("sendMessageSpec", {
             senderId: chatId,
             receiverId: chatTelegramId,
-            text: 'Вы ' + exist2.dataValues.otclick + '-й раз нажали кнопку Принять',
+            text: 'Вы ' + exist2.dataValues.otclick + '-й раз откликнулись на заявку',
             convId: convId,
             messageId: null,
             isBot: false,
         }) 
 
-        return bot.sendMessage(chatId, 'Вы ' + exist2.dataValues.otclick + '-й раз нажали кнопку Принять') 
+        return bot.sendMessage(chatId, 'Вы ' + exist2.dataValues.otclick + '-й раз откликнулись на заявку') 
         
     }
 //----------------------------------------------------------------
