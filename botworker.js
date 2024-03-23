@@ -1169,7 +1169,27 @@ bot.on('message', async (msg) => {
         if (text === '/getNotion') {
             //получить данные специалиста по его id
             const notion = await getWorkerNotion('6143011220')
-            console.log(notion)
+            //console.log(notion)
+
+            //обновить фио
+            const res = await Worker.update({ 
+                userfamily: notion[0]?.fio.split(" ")[0],
+                username: notion[0]?.fio.split(" ")[1],
+                phone: notion[0]?.phone && notion[0]?.phone,
+                dateborn: notion[0].age?.start.split('-')[0],
+                city: notion[0].city && notion[0].city,                    
+                from: 'Notion',
+                comment: notion[0]?.comment ? notion[0]?.comment : '',
+                rank: notion[0]?.rank ? notion[0]?.rank : null,
+            },
+            { 
+                where: {chatId: '6143011220'} 
+            })
+            if (res) {
+               console.log("Специалист обновлен! ", '6143011220', i) 
+            }else {
+                console.log("Ошибка обновления! ", '6143011220', i) 
+            }
         }
 
         if (text.startsWith('/getpretendent')) {
