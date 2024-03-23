@@ -1163,9 +1163,13 @@ bot.on('message', async (msg) => {
                         },
                     });
                 console.log(res)
-            })
+            })     
+        }
 
-            
+        if (text === '/getNotion') {
+            //получить данные специалиста по его id
+            const notion = await getWorkerNotion('6143011220')
+            console.log(notion)
         }
 
         if (text.startsWith('/getpretendent')) {
