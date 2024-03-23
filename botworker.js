@@ -838,7 +838,7 @@ bot.on('message', async (msg) => {
                                 //обновить бд
                                 if (specArr.length > 0) {
                                     //обновить бд
-                                    if (worker.chatId === '1408579113' || worker.chatId === '805436270' || worker.chatId === '639113098') {
+                                    if (worker.chatId === '1408579113' || worker.chatId === '805436270' || worker.chatId === '639113098' || worker.chatId === '1300119841') {
                                         newSpec = {
                                             spec: 'Вне категории',
                                             cat: 'NoTag'
@@ -2049,7 +2049,7 @@ const start = async () => {
             
                                 if (specArr.length > 0) {
                                     //обновить бд
-                                    if (worker.chatId === '1408579113' || worker.chatId === '805436270' || worker.chatId === '639113098') {
+                                    if (worker.chatId === '1408579113' || worker.chatId === '805436270' || worker.chatId === '639113098' || worker.chatId === '1300119841') {
                                         newSpec = {
                                             spec: 'Вне категории',
                                             cat: 'NoTag'
