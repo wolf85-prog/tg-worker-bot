@@ -12,6 +12,7 @@ module.exports = async function updatePretendentAlt(blockId, workerId, stavka, d
                 type: "emoji",
                 emoji: "✅"
             },
+            page_id: workerId,
             properties: {
                 "1. Ставка": {
                     type: "title",

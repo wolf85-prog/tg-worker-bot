@@ -337,27 +337,27 @@ app.post('/web-stavka', async (req, res) => {
                     })
                 //или было нажато принять
                 } else {
-                    const count = user.dataValues.otclick + 1
+                    //const count = user.dataValues.otclick + 1
     
-                    const res = await Pretendent.update({ 
-                        otclick: count  
-                    },
-                    {
-                        where: {
-                            projectId: id,
-                            workerId: workerId,
-                        },
-                    })
+                    // const res = await Pretendent.update({ 
+                    //     otclick: count  
+                    // },
+                    // {
+                    //     where: {
+                    //         projectId: id,
+                    //         workerId: workerId,
+                    //     },
+                    // })
                 }
             }
 
 
-            const exist2 = await Pretendent.findOne({
-                where: {
-                    projectId: id,
-                    workerId: workerId,
-                },
-            })
+            // const exist2 = await Pretendent.findOne({
+            //     where: {
+            //         projectId: id,
+            //         workerId: workerId,
+            //     },
+            // })
 
             //if ((exist2.dataValues.otclick < 2) || ( Math.abs(new Date(exist2.dataValues.updatedAt).getTime()-new Date().getTime()) )>3600000) {
                 //ноушен
@@ -377,7 +377,7 @@ app.post('/web-stavka', async (req, res) => {
                         
                     //обновить специалиста в таблице Претенденты если есть
                     if (worker.length > 0) {
-                        await updatePretendentAlt(blockId, workerId, summaStavki, dateNow);
+                        await updatePretendentAlt(blockId, worker[0].id, summaStavki, dateNow);
                         console.log("Специалист уже есть в таблице Претенденты!") 
                     } else {                 
                         //Добавить специалиста в таблицу Претенденты со своей  ставкой
