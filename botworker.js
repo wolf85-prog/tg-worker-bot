@@ -552,7 +552,24 @@ bot.on('message', async (msg) => {
             })
 
             setTimeout(async()=> {
-                await bot.sendPhoto(chatId, 'https://proj.uley.team/upload/2024-02-08T15:00:05.841Z.jpg')              
+                const res = await bot.sendPhoto(chatId, 'https://proj.uley.team/upload/2024-02-08T15:00:05.841Z.jpg')  
+                console.log("res5: ", res)
+                
+                // сохранить отправленное боту сообщение пользователя в БД
+                const convId = await sendMyMessage('https://proj.uley.team/upload/2024-02-08T15:00:05.841Z.jpg', 'image', chatId, null)
+
+                // Подключаемся к серверу socket
+                let socket = io(socketUrl);
+
+                socket.emit("addUser", chatId)
+
+                socket.emit("sendMessageSpec", {
+                    senderId: chatId,
+                    receiverId: chatTelegramId,
+                    text: 'https://proj.uley.team/upload/2024-02-08T15:00:05.841Z.jpg',
+                    type: 'image',
+                    convId: convId,
+                })
             }, 300000) // 5 минут
 
             //регистрация как Неизвестный специалист после отсутствия в бд
