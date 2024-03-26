@@ -5,14 +5,14 @@ const notion = new Client({ auth: process.env.NOTION_API_KEY });
 const databaseWorkerId = process.env.NOTION_DATABASE_WORKERS_ID
 
 //получить id блока заданной страницы по tg_id
-module.exports = async function getWorkerNotion(chatId) {
+module.exports = async function getWorkerNotion(id) {
     try {
         const response = await notion.databases.query({
             database_id: databaseWorkerId, 
             "filter": {
                 "property": "Telegram",
                 "number": {
-                    "equals": chatId ? parseInt(chatId) : 0
+                    "equals": id ? parseInt(id) : 0
                 }
             },
             "sorts": [{ 
@@ -34,7 +34,7 @@ module.exports = async function getWorkerNotion(chatId) {
                 reyting: page.properties["Рейтинг"].rich_text[0]?.plain_text,
                 merch: page.properties.Merch.multi_select,
                 comteg: page.properties["КомТег"].multi_select,
-                rank: page.properties.Rank.number,
+                rank: page.properties["Ранг"].number,
                 passport: page.properties.Passport.rich_text[0]?.plain_text,
             };
         });

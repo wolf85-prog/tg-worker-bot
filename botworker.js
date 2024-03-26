@@ -879,7 +879,7 @@ bot.on('message', async (msg) => {
                         const notion = await getWorkerNotion(worker.chatId)
                         console.log(JSON.stringify(notion))
 
-                        if (notion.length > 0) {
+                        if (notion && notion.length > 0) {
                             //список специалистов
                             notion[0].spec.map((item) => {
                                 specData.map((category)=> {
@@ -1021,7 +1021,7 @@ bot.on('message', async (msg) => {
                         const notion = await getWorkerNotion(worker.chatId)
                         console.log(JSON.stringify(notion))
 
-                        if (notion.length > 0) {
+                        if (notion && notion.length > 0) {
                            
                             //получить аватарку
                             const spec = await getWorkerChildren(notion[0]?.id) 
