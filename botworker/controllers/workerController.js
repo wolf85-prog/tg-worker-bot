@@ -125,28 +125,28 @@ async function getWorkerId(id) {
             }]
         });
 
-        // const worker = response.results.map((page) => {
-        //     return {
-        //         id: page.id,
-        //         fio: page.properties.Name.title[0]?.plain_text,
-        //         tgId: page.properties.Telegram.number,
-        //         phone: page.properties.Phone.phone_number,
-        //         age: page.properties.Age.date,
-        //         city: page.properties.City.rich_text[0]?.plain_text,
-        //         spec: page.properties.Specialization.multi_select,
-        //         comment: page.properties["Комментарии"].rich_text[0]?.plain_text,
-        //         reyting: page.properties["Рейтинг"].rich_text[0]?.plain_text,
-        //         merch: page.properties.Merch.multi_select,
-        //         comteg: page.properties["КомТег"].multi_select,
-        //         rank: page.properties.Rank.number,
-        //         passport: page.properties.Passport.rich_text[0]?.plain_text,
-        //         skill: page.properties.Skill.multi_select,
-        //     };
-        // });
+        const worker = response.results.map((page) => {
+            return {
+                id: page.id,
+                fio: page.properties.Name.title[0]?.plain_text,
+                tgId: page.properties.Telegram.number,
+                phone: page.properties.Phone.phone_number,
+                age: page.properties.Age.date,
+                city: page.properties.City.rich_text[0]?.plain_text,
+                spec: page.properties.Specialization.multi_select,
+                comment: page.properties["Комментарии"].rich_text[0]?.plain_text,
+                reyting: page.properties["Рейтинг"].rich_text[0]?.plain_text,
+                merch: page.properties.Merch.multi_select,
+                comteg: page.properties["КомТег"].multi_select,
+                rank: page.properties["Ранг"].number,
+                passport: page.properties.Passport.rich_text[0]?.plain_text,
+                skill: page.properties.Skill.multi_select,
+            };
+        });
 
         //console.log(worker)
 
-        return response;
+        return worker;
     } catch (error) {
         console.error(error.message)
     }
