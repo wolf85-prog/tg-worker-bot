@@ -108,46 +108,45 @@ async function getWorkers2() {
 }
 
 //получить специалиста по его telegram id
-async function getWorkerId(tgId) {
+async function getWorkerId(id) {
+    console.log("tgId: ", id)
     try {
-        console.log("tgId: ", tgId)
         const response = await notion.databases.query({
             database_id: databaseWorkerId, 
             "filter": {
                 "property": "Telegram", //Telegram
                 "number": {
-                    "equals": tgId ? parseInt(tgId) : 0
+                    "equals": id ? parseInt(id) : 0
                 },
-            }
-            
-            // "sorts": [{ 
-            //     "timestamp": "created_time", 
-            //     "direction": "ascending" 
-            // }]
+            }, 
+            "sorts": [{ 
+                "timestamp": "created_time", 
+                "direction": "ascending" 
+            }]
         });
 
-        const worker = response.results.map((page) => {
-            return {
-                id: page.id,
-                fio: page.properties.Name.title[0]?.plain_text,
-                tgId: page.properties.Telegram.number,
-                phone: page.properties.Phone.phone_number,
-                age: page.properties.Age.date,
-                city: page.properties.City.rich_text[0]?.plain_text,
-                spec: page.properties.Specialization.multi_select,
-                comment: page.properties["Комментарии"].rich_text[0]?.plain_text,
-                reyting: page.properties["Рейтинг"].rich_text[0]?.plain_text,
-                merch: page.properties.Merch.multi_select,
-                comteg: page.properties["КомТег"].multi_select,
-                rank: page.properties.Rank.number,
-                passport: page.properties.Passport.rich_text[0]?.plain_text,
-                skill: page.properties.Skill.multi_select,
-            };
-        });
+        // const worker = response.results.map((page) => {
+        //     return {
+        //         id: page.id,
+        //         fio: page.properties.Name.title[0]?.plain_text,
+        //         tgId: page.properties.Telegram.number,
+        //         phone: page.properties.Phone.phone_number,
+        //         age: page.properties.Age.date,
+        //         city: page.properties.City.rich_text[0]?.plain_text,
+        //         spec: page.properties.Specialization.multi_select,
+        //         comment: page.properties["Комментарии"].rich_text[0]?.plain_text,
+        //         reyting: page.properties["Рейтинг"].rich_text[0]?.plain_text,
+        //         merch: page.properties.Merch.multi_select,
+        //         comteg: page.properties["КомТег"].multi_select,
+        //         rank: page.properties.Rank.number,
+        //         passport: page.properties.Passport.rich_text[0]?.plain_text,
+        //         skill: page.properties.Skill.multi_select,
+        //     };
+        // });
 
         //console.log(worker)
 
-        return worker;
+        return response;
     } catch (error) {
         console.error(error.message)
     }
