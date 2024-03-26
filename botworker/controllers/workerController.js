@@ -110,15 +110,16 @@ async function getWorkers2() {
 //получить специалиста по его telegram id
 async function getWorkerId(tgId) {
     try {
-        console.log("tgId: ", parseInt(tgId))
+        console.log("tgId: ", tgId)
         const response = await notion.databases.query({
             database_id: databaseWorkerId, 
             "filter": {
-                "property": "Telegram",
+                "property": "Telegram", //Telegram
                 "number": {
-                    "equals": parseInt(tgId)
-                }
+                    "equals": tgId ? parseInt(tgId) : 0
+                },
             },
+            
             "sorts": [{ 
                 "timestamp": "created_time", 
                 "direction": "ascending" 
