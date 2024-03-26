@@ -47,7 +47,7 @@ async function getWorkers() {
                 reyting: page.properties["Рейтинг"].rich_text[0]?.plain_text,
                 merch: page.properties.Merch.multi_select,
                 comteg: page.properties["КомТег"].multi_select,
-                rank: page.properties.Rank.number,
+                rank: page.properties["Ранг"].number,
                 passport: page.properties.Passport.rich_text[0]?.plain_text,
                 skill: page.properties.Skill.multi_select,
                 //image: page.properties.["Files & media"].files[0]?.external.url
@@ -81,7 +81,7 @@ async function getWorkers100() {
                 reyting: page.properties["Рейтинг"].rich_text[0]?.plain_text,
                 merch: page.properties.Merch.multi_select,
                 comteg: page.properties["КомТег"].multi_select,
-                rank: page.properties.Rank.number,
+                rank: page.properties["Ранг"].number,
                 passport: page.properties.Passport.rich_text[0]?.plain_text,
                 skill: page.properties.Skill.multi_select,
                 //image: page.properties.["Files & media"].files[0]?.external.url
@@ -108,16 +108,17 @@ async function getWorkers2() {
 }
 
 //получить специалиста по его telegram id
-async function getWorkerId(tgId) {
+async function getWorkerId(id) {
+    console.log("tgId: ", id)
     try {
         const response = await notion.databases.query({
             database_id: databaseWorkerId, 
             "filter": {
-                "property": "Telegram",
+                "property": "Telegram", //Telegram
                 "number": {
-                    "equals": tgId ? parseInt(tgId) : 0
-                }
-            },
+                    "equals": id ? parseInt(id) : 0
+                },
+            }, 
             "sorts": [{ 
                 "timestamp": "created_time", 
                 "direction": "ascending" 
@@ -137,7 +138,7 @@ async function getWorkerId(tgId) {
                 reyting: page.properties["Рейтинг"].rich_text[0]?.plain_text,
                 merch: page.properties.Merch.multi_select,
                 comteg: page.properties["КомТег"].multi_select,
-                rank: page.properties.Rank.number,
+                rank: page.properties["Ранг"].number,
                 passport: page.properties.Passport.rich_text[0]?.plain_text,
                 skill: page.properties.Skill.multi_select,
             };
@@ -355,6 +356,7 @@ async function getPretendents(id) {
 
 //получить id менеджера по его TelegramID
 async function getWorkerChatId(id) {
+    console.log("chat worker: ", id)
     try {
         const response = await notion.databases.query({
             database_id: databaseWorkerId, 

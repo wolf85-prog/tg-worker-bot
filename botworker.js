@@ -552,7 +552,24 @@ bot.on('message', async (msg) => {
             })
 
             setTimeout(async()=> {
-                await bot.sendPhoto(chatId, 'https://proj.uley.team/upload/2024-02-08T15:00:05.841Z.jpg')              
+                const res = await bot.sendPhoto(chatId, 'https://proj.uley.team/upload/2024-02-08T15:00:05.841Z.jpg')  
+                console.log("res5: ", res)
+                
+                // сохранить отправленное боту сообщение пользователя в БД
+                const convId = await sendMyMessage('https://proj.uley.team/upload/2024-02-08T15:00:05.841Z.jpg', 'image', chatId, null)
+
+                // Подключаемся к серверу socket
+                let socket = io(socketUrl);
+
+                socket.emit("addUser", chatId)
+
+                socket.emit("sendMessageSpec", {
+                    senderId: chatId,
+                    receiverId: chatTelegramId,
+                    text: 'https://proj.uley.team/upload/2024-02-08T15:00:05.841Z.jpg',
+                    type: 'image',
+                    convId: convId,
+                })
             }, 300000) // 5 минут
 
             //регистрация как Неизвестный специалист после отсутствия в бд
@@ -598,6 +615,57 @@ bot.on('message', async (msg) => {
                             }
                         }                     
                     }, 10000 * ++i)
+                })
+
+            } catch (error) {
+                console.log(error.message)
+            }
+        }
+
+//-----------------------------------------------------------------------------------------------
+        //добавить чат
+        if (text === '/addchat') {
+            const chatId = 84571366
+             //создание чата специалиста
+             try {
+                let conversation_id
+
+                //найти беседу
+                const conversation = await Conversation.findOne({
+                    where: {
+                        members: {
+                            [Op.contains]: [chatId]
+                        }
+                    },
+                })   
+
+                //если нет беседы, то создать 
+                if (!conversation) {
+                    const conv = await Conversation.create(
+                    {
+                        members: [chatId, chatTelegramId],
+                    })
+                    console.log("Беседа успешно создана: ", conv) 
+                    console.log("conversationId: ", conv.id)
+                    
+                    conversation_id = conv.id
+                } else {
+                    console.log('Беседа уже создана в БД')  
+                    console.log("conversationId: ", conversation.id)  
+                    
+                    conversation_id = conversation.id
+                }
+
+                const messageDB = await Message.create(
+                {
+                    text: 'Пользователь нажал кнопку "Старт"', 
+                    senderId: chatId, 
+                    receiverId: chatTelegramId,
+                    type: 'text',
+                    conversationId: conversation_id,
+                    isBot: true,
+                    messageId: '',
+                    replyId: '',
                 })
 
             } catch (error) {
