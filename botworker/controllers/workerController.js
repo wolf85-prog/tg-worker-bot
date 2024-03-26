@@ -357,6 +357,7 @@ async function getPretendents(id) {
 
 //получить id менеджера по его TelegramID
 async function getWorkerChatId(id) {
+    console.log("chat worker: ", id)
     try {
         const response = await notion.databases.query({
             database_id: databaseWorkerId, 
