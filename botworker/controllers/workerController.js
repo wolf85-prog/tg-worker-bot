@@ -47,7 +47,7 @@ async function getWorkers() {
                 reyting: page.properties["Рейтинг"].rich_text[0]?.plain_text,
                 merch: page.properties.Merch.multi_select,
                 comteg: page.properties["КомТег"].multi_select,
-                rank: page.properties.Rank.number,
+                rank: page.properties["Ранг"].number,
                 passport: page.properties.Passport.rich_text[0]?.plain_text,
                 skill: page.properties.Skill.multi_select,
                 //image: page.properties.["Files & media"].files[0]?.external.url
@@ -81,7 +81,7 @@ async function getWorkers100() {
                 reyting: page.properties["Рейтинг"].rich_text[0]?.plain_text,
                 merch: page.properties.Merch.multi_select,
                 comteg: page.properties["КомТег"].multi_select,
-                rank: page.properties.Rank.number,
+                rank: page.properties["Ранг"].number,
                 passport: page.properties.Passport.rich_text[0]?.plain_text,
                 skill: page.properties.Skill.multi_select,
                 //image: page.properties.["Files & media"].files[0]?.external.url
