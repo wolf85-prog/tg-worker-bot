@@ -1741,10 +1741,10 @@ bot.on('message', async (msg) => {
             },
         })
 
-        if (!exist) {
-            const res = await Pretendent.create(pretendent)
-            console.log("Претендент в БД: ", res.dataValues.id)
-        } else {
+        if (exist) {
+        //     const res = await Pretendent.create(pretendent)
+        //     console.log("Претендент в БД: ", res.dataValues.id)
+        // } else {
             console.log('Претендент уже создан в БД для этого проекта!')
             //проверяем отклонил ли специалист заявку в прошлый раз
             if (exist.dataValues.accept) {            
@@ -1782,6 +1782,10 @@ bot.on('message', async (msg) => {
         })
 
         if ((exist2.dataValues.otclick < 2) || ( Math.abs(new Date(exist.dataValues.updatedAt).getTime()-new Date().getTime()) )>3600000) {
+            //бд
+            const res = await Pretendent.create(pretendent)
+            console.log("Претендент в БД: ", res.dataValues.id)
+            
             //ноушен
             const blockId = await getBlocksP(projectId); 
            
