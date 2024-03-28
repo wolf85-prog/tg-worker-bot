@@ -1782,11 +1782,13 @@ bot.on('message', async (msg) => {
                 otclick: 1     
         }
 
-        const exist = await Pretendent.findOne({
+        const exist = await Pretendent.findAll({
+            limit: 1,
             where: {
                 projectId: projectId,
                 workerId: workerId,
             },
+            order: [ [ 'createdAt', 'DESC' ]]
         })
 
         if (exist) {
@@ -1794,6 +1796,7 @@ bot.on('message', async (msg) => {
         //     console.log("Претендент в БД: ", res.dataValues.id)
         // } else {
             console.log('Претендент уже создан в БД для этого проекта!')
+            
             //проверяем отклонил ли специалист заявку в прошлый раз
             if (exist.dataValues.accept) {            
                 const res = await Pretendent.update({            
@@ -1822,11 +1825,13 @@ bot.on('message', async (msg) => {
         }
 
 
-        const exist2 = await Pretendent.findOne({
+        const exist2 = await Pretendent.findAll({
+            limit: 1,
             where: {
                 projectId: projectId,
                 workerId: workerId,
             },
+            order: [ [ 'createdAt', 'DESC' ]]
         })
 
         if ((exist2.dataValues.otclick < 2) || ( Math.abs(new Date(exist.dataValues.updatedAt).getTime()-new Date().getTime()) )>3600000) {
@@ -1915,11 +1920,13 @@ bot.on('message', async (msg) => {
         }
 
         //найти претендента в БД
-        const exist = await Pretendent.findOne({
+        const exist = await Pretendent.findAll({
+            limit: 1,
             where: {
                 projectId: projectId,
                 workerId: workerId,
             },
+            order: [ [ 'createdAt', 'DESC' ]]
         })
 
         
@@ -1959,11 +1966,13 @@ bot.on('message', async (msg) => {
             console.log("Пользователь отклонил заявку!")
         }
 
-        const exist2 = await Pretendent.findOne({
+        const exist2 = await Pretendent.findAll({
+            limit: 1,
             where: {
                 projectId: projectId,
                 workerId: workerId,
             },
+            order: [ [ 'createdAt', 'DESC' ]]
         })
 
         if ((exist2.dataValues.cancel < 2) || ( Math.abs(new Date(exist.dataValues.updatedAt).getTime()-new Date().getTime()) )>3600000) {
