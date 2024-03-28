@@ -879,7 +879,7 @@ bot.on('message', async (msg) => {
                         const notion = await getWorkerNotion(worker.chatId)
                         console.log(JSON.stringify(notion))
 
-                        if (notion.length > 0) {
+                        if (notion && notion.length > 0) {
                             //список специалистов
                             notion[0].spec.map((item) => {
                                 specData.map((category)=> {
@@ -995,6 +995,54 @@ bot.on('message', async (msg) => {
                             }else {
                                 console.log("Ошибка обновления! ", worker.chatId, i) 
                             }
+                            
+                        } else {
+                            console.log("Специалист не найден в Notion!", worker.chatId, i) 
+                        }              
+
+                    }, 500 * ++i)   
+                }) 
+            } catch (error) {
+                console.log(error.message)
+            }
+        }
+
+        //update worker from notion
+        if (text === '/profilephoto') {
+            try {
+                console.log("START GET WORKERS ALL...")
+                const workers = await getWorkersAll()
+                console.log("workers: ", workers.length)  
+
+                workers.map(async(worker, i)=> {
+                    //let specArr = []
+                    setTimeout(async()=> {  
+                        //получить данные специалиста по его id
+                        const notion = await getWorkerNotion(worker.chatId)
+                        console.log(JSON.stringify(notion))
+
+                        if (notion && notion.length > 0) {
+                           
+                            //получить аватарку
+                            const spec = await getWorkerChildren(notion[0]?.id) 
+                            if (spec.length > 0) {
+                               console.log("avatar: ", spec[0].image) 
+                               //обновить бд
+                                const res = await Worker.update({ 
+                                    avatar: spec[0].image,
+                                },
+                                { 
+                                    where: {chatId: worker.chatId} 
+                                })
+
+                                if (res) {
+                                    console.log("Специалиста аватар обновлен! ", worker.chatId, i) 
+                                 }else {
+                                     console.log("Ошибка обновления! ", worker.chatId, i) 
+                                 }
+                            } else {
+                                console.log("Аватар не найден в Notion!") 
+                            }   
                             
                         } else {
                             console.log("Специалист не найден в Notion!", worker.chatId, i) 
