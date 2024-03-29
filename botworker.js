@@ -1013,7 +1013,7 @@ bot.on('message', async (msg) => {
 
         if (text === '/getavatar') {
             //получить данные специалиста по его id
-            const notion = await getWorkerNotion('805436270')
+            const notion = await getWorkerNotion('2132934549')
             console.log(JSON.stringify(notion))
 
             //получить аватарку
@@ -1023,7 +1023,7 @@ bot.on('message', async (msg) => {
 
                 try {
                     //сохранить фото на сервере
-                    const file = fs.createReadStream(`${host_server}/upload/avatar_805436270.jpg`);
+                    const file = fs.createWriteStream(`${host_server}/upload/avatar_2132934549.jpg`);
                     const request = https.get(spec[0].image, function(response) {
                         response.pipe(file);
 
@@ -1034,16 +1034,16 @@ bot.on('message', async (msg) => {
 
                             //обновить бд
                             const res = Worker.update({ 
-                                avatar: `${host}/upload/avatar_805436270.jpg`,
+                                avatar: `${host}/upload/avatar_2132934549.jpg`,
                             },
                             { 
-                                where: {chatId: '805436270'} 
+                                where: {chatId: '2132934549'} 
                             })
 
                             if (res) {
-                                console.log("Специалиста аватар обновлен! ", '805436270') 
+                                console.log("Специалиста аватар обновлен! ", '2132934549') 
                             }else {
-                                console.log("Ошибка обновления! ", '805436270') 
+                                console.log("Ошибка обновления! ", '2132934549') 
                             }
                         });
                     });
