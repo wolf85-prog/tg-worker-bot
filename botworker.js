@@ -1037,6 +1037,20 @@ bot.on('message', async (msg) => {
 
                 const upload = multer({storage:storage})
                 console.log("upload: ", JSON.stringify(upload))
+
+                //обновить бд
+                const res = await Worker.update({ 
+                    avatar: 'avatar_805436270.jpg',
+                },
+                { 
+                    where: {chatId: '805436270'} 
+                })
+
+                if (res) {
+                    console.log("Специалиста аватар обновлен! ", '805436270') 
+                 }else {
+                     console.log("Ошибка обновления! ", '805436270') 
+                 }
             }
         }
 
