@@ -1072,39 +1072,37 @@ bot.on('message', async (msg) => {
                             //получить аватарку
                             const spec = await getWorkerChildren(notion[0]?.id) 
                             if (spec.length > 0) {
-                               console.log("avatar: ", spec[0].image) 
+                               //console.log("avatar: ", spec[0].image) 
 
-                               const file = spec[0].image
-                               
-                               //сохранить фото на сервере
-                               const storage = multer.diskStorage({
-                                    destination(req, file, cd) {                                       
-                                        cd(null, `${host_server}/upload`)
-                                    },
-                                
-                                    //замена оригинального названия файла на название текущей даты в миллесекундах
-                                    filename(req, file, cb) {                              
-                                        const filename = 'avatar_' + worker.chatId + '.jpg' //Date.now()
-                                        cb(null, filename)
-                                    }
-                                })
-
-                                const upload = multer({storage:storage})
-                                console.log("upload: ", upload)
-
-                               //обновить бд
-                                const res = await Worker.update({ 
-                                    avatar: 'avatar_' + worker.chatId + '.jpg',
-                                },
-                                { 
-                                    where: {chatId: worker.chatId} 
-                                })
-
-                                if (res) {
-                                    console.log("Специалиста аватар обновлен! ", worker.chatId, i) 
-                                 }else {
-                                     console.log("Ошибка обновления! ", worker.chatId, i) 
-                                 }
+                               try {
+                                    //сохранить фото на сервере
+                                    const file = fs.createWriteStream('/var/www/proj.uley.team/upload/avatar_' + worker.chatId + '.jpg');
+                                    const request = https.get(spec[0].image, function(response) {
+                                        response.pipe(file);
+                
+                                        // after download completed close filestream
+                                        file.on("finish", () => {
+                                            file.close();
+                                            console.log("Download Completed");
+                
+                                            //обновить бд
+                                            const res = Worker.update({ 
+                                                avatar: `${host}/upload/avatar_` + worker.chatId + '.jpg',
+                                            },
+                                            { 
+                                                where: {chatId: worker.chatId} 
+                                            })
+                
+                                            if (res) {
+                                                console.log("Специалиста аватар обновлен! ", worker.chatId) 
+                                            }else {
+                                                console.log("Ошибка обновления! ", worker.chatId) 
+                                            }
+                                        });
+                                    });
+                                } catch (err) {
+                                    console.error(err);
+                                }
                             } else {
                                 console.log("Аватар не найден в Notion!") 
                             }   
