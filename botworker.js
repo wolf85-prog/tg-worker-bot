@@ -30,6 +30,7 @@ const token_fetch = 'Bearer ' + process.env.NOTION_API_KEY;
 const databaseId = process.env.NOTION_DATABASE_ID
 const databaseWorkersId = process.env.NOTION_DATABASE_WORKERS_ID
 const chatTelegramId = process.env.CHAT_ID
+const host_server = process.env.HOST_SERVER
 
 const { Op } = require('sequelize')
 
@@ -53,6 +54,7 @@ const fs = require('fs');
 const app = express();
 const router = require('./botworker/routes/index')
 const path = require('path')
+const multer  = require("multer")
 
 //подключение к БД PostreSQL
 const sequelize = require('./botworker/connections/db')
@@ -1027,9 +1029,28 @@ bot.on('message', async (msg) => {
                             const spec = await getWorkerChildren(notion[0]?.id) 
                             if (spec.length > 0) {
                                console.log("avatar: ", spec[0].image) 
+
+                               const file = spec[0].image
+                               
+                               //сохранить фото на сервере
+                               const storage = multer.diskStorage({
+                                    destination(req, file, cd) {                                       
+                                        cd(null, `${host_server}/upload`)
+                                    },
+                                
+                                    //замена оригинального названия файла на название текущей даты в миллесекундах
+                                    filename(req, file, cb) {                              
+                                        const filename = 'avatar_' + worker.chatId + '.jpg' //Date.now()
+                                        cb(null, filename)
+                                    }
+                                })
+
+                                const upload = multer({storage:storage})
+                                console.log("upload: ", upload)
+
                                //обновить бд
                                 const res = await Worker.update({ 
-                                    avatar: spec[0].image,
+                                    avatar: 'avatar_' + worker.chatId + '.jpg',
                                 },
                                 { 
                                     where: {chatId: worker.chatId} 
@@ -1782,21 +1803,18 @@ bot.on('message', async (msg) => {
                 otclick: 1     
         }
 
-        const exist = await Pretendent.findAll({
-            limit: 1,
+        const exist = await Pretendent.findOne({
             where: {
                 projectId: projectId,
                 workerId: workerId,
             },
-            order: [ [ 'createdAt', 'DESC' ]]
         })
 
-        if (exist) {
-        //     const res = await Pretendent.create(pretendent)
-        //     console.log("Претендент в БД: ", res.dataValues.id)
-        // } else {
+        if (!exist) {
+            const res = await Pretendent.create(pretendent)
+            console.log("Претендент в БД: ", res.dataValues.id)
+        } else {
             console.log('Претендент уже создан в БД для этого проекта!')
-            
             //проверяем отклонил ли специалист заявку в прошлый раз
             if (exist.dataValues.accept) {            
                 const res = await Pretendent.update({            
@@ -1825,20 +1843,14 @@ bot.on('message', async (msg) => {
         }
 
 
-        const exist2 = await Pretendent.findAll({
-            limit: 1,
+        const exist2 = await Pretendent.findOne({
             where: {
                 projectId: projectId,
                 workerId: workerId,
             },
-            order: [ [ 'createdAt', 'DESC' ]]
         })
 
         if ((exist2.dataValues.otclick < 2) || ( Math.abs(new Date(exist.dataValues.updatedAt).getTime()-new Date().getTime()) )>3600000) {
-            //бд
-            const res = await Pretendent.create(pretendent)
-            console.log("Претендент в БД: ", res.dataValues.id)
-            
             //ноушен
             const blockId = await getBlocksP(projectId); 
            
@@ -1920,13 +1932,11 @@ bot.on('message', async (msg) => {
         }
 
         //найти претендента в БД
-        const exist = await Pretendent.findAll({
-            limit: 1,
+        const exist = await Pretendent.findOne({
             where: {
                 projectId: projectId,
                 workerId: workerId,
             },
-            order: [ [ 'createdAt', 'DESC' ]]
         })
 
         
@@ -1966,13 +1976,11 @@ bot.on('message', async (msg) => {
             console.log("Пользователь отклонил заявку!")
         }
 
-        const exist2 = await Pretendent.findAll({
-            limit: 1,
+        const exist2 = await Pretendent.findOne({
             where: {
                 projectId: projectId,
                 workerId: workerId,
             },
-            order: [ [ 'createdAt', 'DESC' ]]
         })
 
         if ((exist2.dataValues.cancel < 2) || ( Math.abs(new Date(exist.dataValues.updatedAt).getTime()-new Date().getTime()) )>3600000) {
