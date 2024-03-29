@@ -1009,6 +1009,37 @@ bot.on('message', async (msg) => {
             }
         }
 
+
+        if (text === '/getavatar') {
+            //получить данные специалиста по его id
+            const notion = await getWorkerNotion('805436270')
+            console.log(JSON.stringify(notion))
+
+            //получить аватарку
+            const spec = await getWorkerChildren(notion[0]?.id) 
+            if (spec.length > 0) {
+                console.log("avatar: ", spec[0].image) 
+
+                const file = spec[0].image
+
+                //сохранить фото на сервере
+                const storage = multer.diskStorage({
+                    destination(req, file, cd) {                                       
+                        cd(null, `${host_server}/upload`)
+                    },
+                
+                    //замена оригинального названия файла на название текущей даты в миллесекундах
+                    filename(req, file, cb) {                              
+                        const filename = 'avatar_' + worker.chatId + '.jpg' //Date.now()
+                        cb(null, filename)
+                    }
+                })
+
+                const upload = multer({storage:storage})
+                console.log("upload: ", upload)
+            }
+        }
+
         //update worker from notion
         if (text === '/profilephoto') {
             try {
