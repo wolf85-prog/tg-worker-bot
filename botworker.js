@@ -1023,7 +1023,7 @@ bot.on('message', async (msg) => {
 
                 try {
                     //сохранить фото на сервере
-                    const file = fs.createWriteStream(`${host_server}/upload/avatar_2132934549.jpg`);
+                    const file = fs.createWriteStream('/var/www/proj.uley.team/upload/avatar_2132934549.jpg');
                     const request = https.get(spec[0].image, function(response) {
                         response.pipe(file);
 
