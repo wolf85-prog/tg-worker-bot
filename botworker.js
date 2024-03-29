@@ -1030,13 +1030,13 @@ bot.on('message', async (msg) => {
                 
                     //замена оригинального названия файла на название текущей даты в миллесекундах
                     filename(req, file, cb) {                              
-                        const filename = 'avatar_' + worker.chatId + '.jpg' //Date.now()
+                        const filename = 'avatar_805436270.jpg' //Date.now()
                         cb(null, filename)
                     }
                 })
 
                 const upload = multer({storage:storage})
-                console.log("upload: ", upload)
+                console.log("upload: ", JSON.stringify(upload))
             }
         }
 
