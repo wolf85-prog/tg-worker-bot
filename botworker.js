@@ -31,6 +31,7 @@ const databaseId = process.env.NOTION_DATABASE_ID
 const databaseWorkersId = process.env.NOTION_DATABASE_WORKERS_ID
 const chatTelegramId = process.env.CHAT_ID
 const host_server = process.env.HOST_SERVER
+const host = process.env.HOST
 
 const { Op } = require('sequelize')
 
