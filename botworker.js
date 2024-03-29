@@ -1020,37 +1020,48 @@ bot.on('message', async (msg) => {
             if (spec.length > 0) {
                 console.log("avatar: ", spec[0].image) 
 
-                const file = spec[0].image
+                //const file = spec[0].image
 
                 //сохранить фото на сервере
-                const storage = multer.diskStorage({
-                    destination(req, file, cd) {                                       
-                        cd(null, `${host_server}/upload`)
-                    },
-                
-                    //замена оригинального названия файла на название текущей даты в миллесекундах
-                    filename(req, file, cb) {                              
-                        const filename = 'avatar_805436270.jpg' //Date.now()
-                        cb(null, filename)
-                    }
-                })
+                const file = fs.createWriteStream("avatar_805436270.jpg");
+                const request = https.get(spec[0].image, function(response) {
+                    response.pipe(file);
 
-                const upload = multer({storage:storage})
-                console.log("upload: ", JSON.stringify(upload))
+                    // after download completed close filestream
+                    file.on("finish", () => {
+                        file.close();
+                        console.log("Download Completed");
+                    });
+                });
+
+                // const storage = multer.diskStorage({
+                //     destination(req, file, cd) {                                       
+                //         cd(null, `${host_server}/upload`)
+                //     },
+                
+                //     //замена оригинального названия файла на название текущей даты в миллесекундах
+                //     filename(req, file, cb) {                              
+                //         const filename = file //Date.now()
+                //         cb(null, filename)
+                //     }
+                // })
+
+                //const upload = multer({storage:storage})
+                //console.log("upload: ", JSON.stringify(upload))
 
                 //обновить бд
-                const res = await Worker.update({ 
-                    avatar: 'avatar_805436270.jpg',
-                },
-                { 
-                    where: {chatId: '805436270'} 
-                })
+                // const res = await Worker.update({ 
+                //     avatar: 'avatar_805436270.jpg',
+                // },
+                // { 
+                //     where: {chatId: '805436270'} 
+                // })
 
-                if (res) {
-                    console.log("Специалиста аватар обновлен! ", '805436270') 
-                 }else {
-                     console.log("Ошибка обновления! ", '805436270') 
-                 }
+                // if (res) {
+                //     console.log("Специалиста аватар обновлен! ", '805436270') 
+                // }else {
+                //      console.log("Ошибка обновления! ", '805436270') 
+                // }
             }
         }
 
