@@ -1081,12 +1081,12 @@ bot.on('message', async (msg) => {
                                         response.pipe(file);
                 
                                         // after download completed close filestream
-                                        file.on("finish", () => {
+                                        file.on("finish", async() => {
                                             file.close();
                                             console.log("Download Completed");
                 
                                             //обновить бд
-                                            const res = Worker.update({ 
+                                            const res = await Worker.update({ 
                                                 avatar: `${host}/upload/avatar_` + worker.chatId + '.jpg',
                                             },
                                             { 
@@ -1111,7 +1111,7 @@ bot.on('message', async (msg) => {
                             console.log("Специалист не найден в Notion!", worker.chatId, i) 
                         }              
 
-                    }, 500 * ++i)   
+                    }, 2500 * ++i)   
                 }) 
             } catch (error) {
                 console.log(error.message)
