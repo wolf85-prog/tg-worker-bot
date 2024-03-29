@@ -1020,19 +1020,21 @@ bot.on('message', async (msg) => {
             if (spec.length > 0) {
                 console.log("avatar: ", spec[0].image) 
 
-                //const file = spec[0].image
+                try {
+                    //сохранить фото на сервере
+                    const file = fs.createWriteStream(`${host_server}/upload/avatar_805436270.jpg`);
+                    const request = https.get(spec[0].image, function(response) {
+                        response.pipe(file);
 
-                //сохранить фото на сервере
-                const file = fs.createWriteStream("avatar_805436270.jpg");
-                const request = https.get(spec[0].image, function(response) {
-                    response.pipe(file);
-
-                    // after download completed close filestream
-                    file.on("finish", () => {
-                        file.close();
-                        console.log("Download Completed");
+                        // after download completed close filestream
+                        file.on("finish", () => {
+                            file.close();
+                            console.log("Download Completed");
+                        });
                     });
-                });
+                } catch (err) {
+                    console.error(err);
+                }
 
                 // const storage = multer.diskStorage({
                 //     destination(req, file, cd) {                                       
