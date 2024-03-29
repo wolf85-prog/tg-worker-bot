@@ -1033,7 +1033,7 @@ bot.on('message', async (msg) => {
 
                             //обновить бд
                             const res = Worker.update({ 
-                                avatar: 'avatar_805436270.jpg',
+                                avatar: `${host_server}/upload/avatar_805436270.jpg`,
                             },
                             { 
                                 where: {chatId: '805436270'} 
