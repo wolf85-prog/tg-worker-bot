@@ -1016,8 +1016,8 @@ bot.on('message', async (msg) => {
             console.log(workerId[1])
 
             //получить данные специалиста по его id
-            const notion = await getWorkerNotion(workerId)
-            console.log(JSON.stringify(notion))
+            const notion = await getWorkerNotion(workerId[1])
+            //console.log(JSON.stringify(notion))
 
             //получить аватарку
             const spec = await getWorkerChildren(notion[0]?.id) 
@@ -1026,7 +1026,7 @@ bot.on('message', async (msg) => {
 
                 try {
                     //сохранить фото на сервере
-                    const file = fs.createWriteStream('/var/www/proj.uley.team/upload/avatar_' + workerId + '.jpg');
+                    const file = fs.createWriteStream('/var/www/proj.uley.team/upload/avatar_' + workerId[1] + '.jpg');
                     const request = https.get(spec[0].image, function(response) {
                         response.pipe(file);
 
@@ -1037,16 +1037,16 @@ bot.on('message', async (msg) => {
 
                             //обновить бд
                             const res = Worker.update({ 
-                                avatar: `${host}/upload/avatar_` + workerId+ '.jpg',
+                                avatar: `${host}/upload/avatar_` + workerId[1]+ '.jpg',
                             },
                             { 
-                                where: {chatId: workerId} 
+                                where: {chatId: workerId[1]} 
                             })
 
                             if (res) {
-                                console.log("Специалиста аватар обновлен! ", workerId) 
+                                console.log("Специалиста аватар обновлен! ", workerId[1]) 
                             }else {
-                                console.log("Ошибка обновления! ", workerId) 
+                                console.log("Ошибка обновления! ", workerId[1]) 
                             }
                         });
                     });
