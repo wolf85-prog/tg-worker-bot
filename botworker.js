@@ -1011,9 +1011,12 @@ bot.on('message', async (msg) => {
         }
 
 
-        if (text === '/getavatar') {
+        if (text.startsWith('/getavatar')) {
+            const workerId = text.split(' ');
+            console.log(workerId[1])
+
             //получить данные специалиста по его id
-            const notion = await getWorkerNotion('2132934549')
+            const notion = await getWorkerNotion(workerId)
             console.log(JSON.stringify(notion))
 
             //получить аватарку
@@ -1023,7 +1026,7 @@ bot.on('message', async (msg) => {
 
                 try {
                     //сохранить фото на сервере
-                    const file = fs.createWriteStream('/var/www/proj.uley.team/upload/avatar_2132934549.jpg');
+                    const file = fs.createWriteStream('/var/www/proj.uley.team/upload/avatar_' + workerId + '.jpg');
                     const request = https.get(spec[0].image, function(response) {
                         response.pipe(file);
 
@@ -1034,16 +1037,16 @@ bot.on('message', async (msg) => {
 
                             //обновить бд
                             const res = Worker.update({ 
-                                avatar: `${host}/upload/avatar_2132934549.jpg`,
+                                avatar: `${host}/upload/avatar_` + workerId+ '.jpg',
                             },
                             { 
-                                where: {chatId: '2132934549'} 
+                                where: {chatId: workerId} 
                             })
 
                             if (res) {
-                                console.log("Специалиста аватар обновлен! ", '2132934549') 
+                                console.log("Специалиста аватар обновлен! ", workerId) 
                             }else {
-                                console.log("Ошибка обновления! ", '2132934549') 
+                                console.log("Ошибка обновления! ", workerId) 
                             }
                         });
                     });
