@@ -34,7 +34,7 @@ module.exports = async function addPretendentAlt(blockId, workerId, stavka, date
                         }
                     ],
                 },
-                "3. Дата": {
+                "2. Дата": {
                     type: 'date',                   
                     date: {
                         "start": dateNow,

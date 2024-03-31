@@ -30,7 +30,7 @@ module.exports = async function addPretendent(blockId, workerId, dateNow) {
                         }
                     ],
                 },
-                "3. Дата": {
+                "2. Дата": {
                     type: 'date',                   
                     date: {
                         "start": dateNow,
