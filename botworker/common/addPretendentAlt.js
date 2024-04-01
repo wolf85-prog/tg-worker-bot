@@ -13,7 +13,7 @@ module.exports = async function addPretendentAlt(blockId, workerId, stavka, date
                 emoji: "✅"
             },
             properties: {
-                "1. Ставка": {
+                "01. Чек-ин": {
                     type: "title",
                     title: [
                         {
@@ -34,7 +34,7 @@ module.exports = async function addPretendentAlt(blockId, workerId, stavka, date
                         }
                     ],
                 },
-                "2. Дата": {
+                "02. Дата": {
                     type: 'date',                   
                     date: {
                         "start": dateNow,
@@ -43,7 +43,14 @@ module.exports = async function addPretendentAlt(blockId, workerId, stavka, date
                     }
 
                 },
-                "4. ФИО": {
+                "03. Статус": {
+                    "type": "select",
+                    "select": {
+                        "name": "Не выбрано",
+                        "color": "blue"
+                    }
+                },
+                "04. ФИО": {
                     type: "relation",
                     relation: [
                         {

@@ -9,13 +9,13 @@ module.exports = async function addPretendent(blockId, workerId, dateNow) {
         const response = await notion.pages.create({
             parent: { database_id: blockId },
             properties: {
-                "1. Ставка": {
+                "01. Чек-ин": {
                     type: "title",
                     title: [
                         {
                             type: 'text',
                             text: {
-                                content: "",
+                                content: " ",
                             },
                             "annotations": {
                                 "bold": false,
@@ -25,12 +25,12 @@ module.exports = async function addPretendent(blockId, workerId, dateNow) {
                                 "code": false,
                                 "color": "default"
                             },
-                            "plain_text": "",
+                            "plain_text": " ",
                             "href": null
                         }
                     ],
                 },
-                "2. Дата": {
+                "02. Дата": {
                     type: 'date',                   
                     date: {
                         "start": dateNow,
@@ -39,7 +39,14 @@ module.exports = async function addPretendent(blockId, workerId, dateNow) {
                     }
 
                 },
-                "4. ФИО": {
+                "03. Статус": {
+                    type: "select",
+                    select: {
+                        "name": "Не выбрано",
+                        "color": "blue"
+                    }
+                },
+                "04. ФИО": {
                     type: "relation",
                     relation: [
                         {

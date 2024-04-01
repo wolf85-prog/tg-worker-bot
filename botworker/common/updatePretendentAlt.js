@@ -14,7 +14,7 @@ module.exports = async function updatePretendentAlt(blockId, workerId, stavka, d
             },
             page_id: workerId,
             properties: {
-                "1. Ставка": {
+                "01. Чек-ин": {
                     type: "title",
                     title: [
                         {
@@ -35,7 +35,7 @@ module.exports = async function updatePretendentAlt(blockId, workerId, stavka, d
                         }
                     ],
                 },
-                "2. Дата": {
+                "02. Дата": {
                     type: 'date',                   
                     date: {
                         "start": dateNow,

@@ -16,7 +16,7 @@ module.exports = async function updatePretendent(pageId) {
                 emoji: "❌"
             },
             properties: {
-                "1. Ставка": {
+                "01. Чек-ин": {
                     type: "title",
                     title: [
                         {
