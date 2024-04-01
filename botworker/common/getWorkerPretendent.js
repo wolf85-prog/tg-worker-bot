@@ -10,7 +10,7 @@ module.exports = async function getWorkerPretendent(blockId, workerId) {
         const response = await notion.databases.query({
             database_id: blockId,
             "filter": {
-                "property": "4. ФИО",
+                "property": "04. ФИО",
                 "relation": {
                     "contains": workerId
                 }
