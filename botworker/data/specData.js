@@ -6,10 +6,11 @@ module.exports = {
            icon: 'Sound',
            models: [
                {id: 1, name: 'Звукорежиссер',},
-               {id: 2, name: 'RF-Менеджер',},
-               {id: 3, name: 'Backline',},
-               {id: 4, name: 'Roadie',},
-               {id: 5, name: 'Техник по звуку',},
+               {id: 2, name: 'Системный инженер',},
+               {id: 3, name: 'RF-Менеджер',},
+               {id: 4, name: 'Backline',},
+               {id: 5, name: 'Roadie',},
+               {id: 6, name: 'Техник по звуку',},
            ]
        },
        {
