@@ -1633,7 +1633,7 @@ bot.on('message', async (msg) => {
             if (text.startsWith("Reply")) {           
                 await bot.sendMessage(text.substring(6, text.indexOf('.')), text.slice(text.indexOf('.') + 2)) 
 
-            // Проект успешно создан
+            // Специалист успешно создан
             } else if (text.startsWith('Данные успешно добавлены!')) {           
                 const response = await bot.sendMessage(chatTelegramId, `${text} \n \n от ${firstname} ${lastname} ${chatId}`)
 
@@ -1759,6 +1759,27 @@ bot.on('message', async (msg) => {
                 } catch (error) {
                     console.log(error.message)
                 }
+
+            } else if (text.startsWith('Специальность успешно добавлена')) {
+                //Отлично!
+                await bot.sendPhoto(chatId, 'https://proj.uley.team/upload/2024-04-02T12:04:15.826Z.jpg')
+
+                //отправить сообщение о добавлении специалиста в бд в админ-панель
+                const convId = sendMyMessage('https://proj.uley.team/upload/2024-04-02T12:04:15.826Z.jpg', "text", chatId, null)
+
+                // Подключаемся к серверу socket
+                let socket = io(socketUrl);
+                socket.emit("addUser", chatId)
+                
+                //отправить сообщение в админку
+                socket.emit("sendMessageSpec", {
+                    senderId: chatTelegramId,
+                    receiverId: chatId,
+                    text: 'https://proj.uley.team/upload/2024-04-02T12:04:15.826Z.jpg',
+                    type: 'text',
+                    convId: convId,
+                    messageId: null,
+                })
 
             } else if (text.startsWith('Твоя ставка отправлена!')) {
                 //отправить сообщение в админ-панель
