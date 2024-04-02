@@ -154,7 +154,7 @@ ${worklist.map(item =>' - ' + item.spec).join('\n')}`
     }
 })
 
-//добавление паспорта
+//добавление специальности
 app.post('/web-addspec', async (req, res) => {
     const {queryId, worklist, user} = req.body;
 
@@ -545,31 +545,43 @@ bot.on('message', async (msg) => {
                 console.log(error.message)
             }
 
-
-            await bot.sendPhoto(chatId, 'https://proj.uley.team/upload/2023-11-10T15:12:06.645Z.png', {
+            //Привет!
+            await bot.sendPhoto(chatId, 'https://proj.uley.team/upload/2024-04-02T06:20:12.952Z.jpg', {
                     reply_markup: ({
                         inline_keyboard:[
                             [{text: 'Поехали!', web_app: {url: webAppUrl}}],
                         ]
                     })
             })
+            // сохранить отправленное боту сообщение пользователя в БД
+            const convId = await sendMyMessage('https://proj.uley.team/upload/2024-04-02T06:20:12.952Z.jpg', 'image', chatId, null)
 
+            // Подключаемся к серверу socket
+            let socket = io(socketUrl);
+            socket.emit("addUser", chatId)
+
+            socket.emit("sendMessageSpec", {
+                senderId: chatTelegramId,
+                receiverId: chatId,
+                text: 'https://proj.uley.team/upload/2024-04-02T06:20:12.952Z.jpg',
+                type: 'image',
+                convId: convId,
+            })
+
+            //-------------------------------------------------------------------------------------------------------------------------
+
+            //Следи за балансом
             setTimeout(async()=> {
-                const res = await bot.sendPhoto(chatId, 'https://proj.uley.team/upload/2024-02-08T15:00:05.841Z.jpg')  
-                console.log("res5: ", res)
+                const res = await bot.sendPhoto(chatId, 'https://proj.uley.team/upload/2024-04-02T06:21:42.921Z.jpg')  
+                //console.log("res5: ", res)
                 
                 // сохранить отправленное боту сообщение пользователя в БД
-                const convId = await sendMyMessage('https://proj.uley.team/upload/2024-02-08T15:00:05.841Z.jpg', 'image', chatId, null)
-
-                // Подключаемся к серверу socket
-                let socket = io(socketUrl);
-
-                socket.emit("addUser", chatId)
+                const convId = await sendMyMessage('https://proj.uley.team/upload/2024-04-02T06:21:42.921Z.jpg', 'image', chatId, null)
 
                 socket.emit("sendMessageSpec", {
-                    senderId: chatId,
-                    receiverId: chatTelegramId,
-                    text: 'https://proj.uley.team/upload/2024-02-08T15:00:05.841Z.jpg',
+                    senderId: chatTelegramId,
+                    receiverId: chatId,
+                    text: 'https://proj.uley.team/upload/2024-04-02T06:21:42.921Z.jpg',
                     type: 'image',
                     convId: convId,
                 })
