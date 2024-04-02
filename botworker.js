@@ -1740,13 +1740,21 @@ bot.on('message', async (msg) => {
  
                     console.log('Специалист успешно добавлен в БД! Worker: ')
 
-//                     await bot.sendMessage(chatId, `Отлично, ${res.username}!
-// Внимательно следи за этим чатом.
-// Именно здесь будут размещаться весь поток поступающих заявок.
-                    
-// Увидимся на наших проектах! 😈`)
+                    //Отлично!
+                    await bot.sendPhoto(chatId, 'https://proj.uley.team/upload/2024-04-02T12:04:15.826Z.jpg')
 
-                    await bot.sendPhoto(chatId, 'https://proj.uley.team/upload/2024-01-08T09:27:52.916Z.jpg')
+                    //отправить сообщение о добавлении специалиста в бд в админ-панель
+                    const convId = sendMyMessage('https://proj.uley.team/upload/2024-04-02T12:04:15.826Z.jpg', "text", chatId, null)
+                    
+                    //отправить сообщение в админку
+                    socket.emit("sendMessageSpec", {
+                        senderId: chatTelegramId,
+                        receiverId: chatId,
+                        text: 'https://proj.uley.team/upload/2024-04-02T12:04:15.826Z.jpg',
+                        type: 'text',
+                        convId: convId,
+                        messageId: null,
+                    })
 
                 } catch (error) {
                     console.log(error.message)
