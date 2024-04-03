@@ -43,13 +43,13 @@ module.exports = async function addPretendentAlt(blockId, workerId, stavka, date
                     }
 
                 },
-                "03. Статус": {
-                    "type": "select",
-                    "select": {
-                        "name": "Не выбрано",
-                        "color": "blue"
-                    }
-                },
+                // "03. Статус": {
+                //     "type": "select",
+                //     "select": {
+                //         "name": "Не выбрано",
+                //         "color": "blue"
+                //     }
+                // },
                 "04. ФИО": {
                     type: "relation",
                     relation: [

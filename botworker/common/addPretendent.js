@@ -39,13 +39,13 @@ module.exports = async function addPretendent(blockId, workerId, dateNow) {
                     }
 
                 },
-                "03. Статус": {
-                    type: "select",
-                    select: {
-                        "name": "Не выбрано",
-                        "color": "blue"
-                    }
-                },
+                // "03. Статус": {
+                //     type: "select",
+                //     select: {
+                //         "name": "Не выбрано",
+                //         "color": "blue"
+                //     }
+                // },
                 "04. ФИО": {
                     type: "relation",
                     relation: [
