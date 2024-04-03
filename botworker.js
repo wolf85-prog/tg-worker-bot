@@ -1740,11 +1740,39 @@ bot.on('message', async (msg) => {
  
                     console.log('Специалист успешно добавлен в БД! Worker: ')
 
+                    setTimeout(async()=> {
+                        //Отлично!
+                        await bot.sendPhoto(chatId, 'https://proj.uley.team/upload/2024-04-02T12:04:15.826Z.jpg')
+
+                        //отправить сообщение о добавлении специалиста в бд в админ-панель
+                        const convId = sendMyMessage('https://proj.uley.team/upload/2024-04-02T12:04:15.826Z.jpg', "text", chatId, null)
+                        
+                        //отправить сообщение в админку
+                        socket.emit("sendMessageSpec", {
+                            senderId: chatTelegramId,
+                            receiverId: chatId,
+                            text: 'https://proj.uley.team/upload/2024-04-02T12:04:15.826Z.jpg',
+                            type: 'image',
+                            convId: convId,
+                            messageId: null,
+                        })
+                    }, 15000)
+
+                } catch (error) {
+                    console.log(error.message)
+                }
+
+            } else if (text.startsWith('Специальность успешно добавлена')) {
+                setTimeout(async()=> {
                     //Отлично!
                     await bot.sendPhoto(chatId, 'https://proj.uley.team/upload/2024-04-02T12:04:15.826Z.jpg')
 
                     //отправить сообщение о добавлении специалиста в бд в админ-панель
                     const convId = sendMyMessage('https://proj.uley.team/upload/2024-04-02T12:04:15.826Z.jpg', "text", chatId, null)
+
+                    // Подключаемся к серверу socket
+                    let socket = io(socketUrl);
+                    socket.emit("addUser", chatId)
                     
                     //отправить сообщение в админку
                     socket.emit("sendMessageSpec", {
@@ -1755,32 +1783,7 @@ bot.on('message', async (msg) => {
                         convId: convId,
                         messageId: null,
                     })
-
-                } catch (error) {
-                    console.log(error.message)
-                }
-
-            } else if (text.startsWith('Специальность успешно добавлена')) {
-                //Отлично!
-                await bot.sendPhoto(chatId, 'https://proj.uley.team/upload/2024-04-02T12:04:15.826Z.jpg')
-
-                //отправить сообщение о добавлении специалиста в бд в админ-панель
-                const convId = sendMyMessage('https://proj.uley.team/upload/2024-04-02T12:04:15.826Z.jpg', "text", chatId, null)
-
-                // Подключаемся к серверу socket
-                let socket = io(socketUrl);
-                socket.emit("addUser", chatId)
-                
-                //отправить сообщение в админку
-                socket.emit("sendMessageSpec", {
-                    senderId: chatTelegramId,
-                    receiverId: chatId,
-                    text: 'https://proj.uley.team/upload/2024-04-02T12:04:15.826Z.jpg',
-                    type: 'image',
-                    convId: convId,
-                    messageId: null,
-                })
-
+                }, 15000)
             } else if (text.startsWith('Твоя ставка отправлена!')) {
                 //отправить сообщение в админ-панель
                 const convId = await sendMyMessage('Твоя ставка отправлена', "text", chatId)
