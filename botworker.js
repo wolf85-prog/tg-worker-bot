@@ -1751,7 +1751,7 @@ bot.on('message', async (msg) => {
                         senderId: chatTelegramId,
                         receiverId: chatId,
                         text: 'https://proj.uley.team/upload/2024-04-02T12:04:15.826Z.jpg',
-                        type: 'text',
+                        type: 'image',
                         convId: convId,
                         messageId: null,
                     })
@@ -1776,7 +1776,7 @@ bot.on('message', async (msg) => {
                     senderId: chatTelegramId,
                     receiverId: chatId,
                     text: 'https://proj.uley.team/upload/2024-04-02T12:04:15.826Z.jpg',
-                    type: 'text',
+                    type: 'image',
                     convId: convId,
                     messageId: null,
                 })
@@ -1792,6 +1792,7 @@ bot.on('message', async (msg) => {
                     senderId: chatId,
                     receiverId: chatTelegramId,
                     text: 'Твоя ставка отправлена',
+                    type: 'text',
                     convId: convId,
                     messageId: messageId,
                 })
