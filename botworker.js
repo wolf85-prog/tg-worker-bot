@@ -1954,7 +1954,7 @@ bot.on('message', async (msg) => {
                 const worker = await getWorkerPretendent(blockId, workerId)
                 console.log("worker: ", worker)
                     
-                //обновить специалиста в таблице Претенденты если есть
+                //обновить специалиста в таблице Претенденты в Ноушене если есть
                 if (worker.length > 0) {
                     await updatePretendent2(worker[0]?.id); //удалить претендента
                     await addPretendent(blockId, workerId, dateNow); //добавить претендента
@@ -1962,6 +1962,12 @@ bot.on('message', async (msg) => {
                 } else {                 
                     await addPretendent(blockId, workerId, dateNow);
                 } 
+
+                // повторить с интервалом 2 минуту (проверка статуса претендента)
+                let timerId2 = setInterval(async() => {
+                    const worker = await getWorkerPretendent(blockId, workerId)
+                    console.log("worker status: ", worker)
+                }, 120000)
             }
 
             //отправить сообщение в админ-панель
