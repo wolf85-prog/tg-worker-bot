@@ -17,13 +17,13 @@ module.exports = async function getWorkerPretendent(blockId, workerId) {
             },
         });
 
-        console.log("response: ", JSON.stringify(response))
+        //console.log("response: ", JSON.stringify(response))
 
         const worker = response.results.map((page) => {
             return {
                 id: page.id,
                 //fioId: page.properties["4. ФИО"].relation,
-                status: page.properties["03. Статус"].select.name,
+                status: page.properties["03. Статус"].select?.name,
             };
         });
 

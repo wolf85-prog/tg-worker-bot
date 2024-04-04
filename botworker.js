@@ -1971,6 +1971,29 @@ bot.on('message', async (msg) => {
                     const worker = await getWorkerPretendent(blockId, workerId)
                     console.log("worker status: ", i, worker)
 
+                    if (worker && worker[0].status === "Отказано") {
+                        
+                        //отправить сообщение в админ-панель
+                        const text = `Добрый день! Спасибо, что откликнулись на проект. 
+В настоящий момент основной состав уже сформирован. Будем рады сотрудничеству с вами в будущем. 
+До встречи на новых проектах!`
+                        const convId = await sendMyMessage(text, "text", chatId, messageId, null, false)
+                        
+                        // Подключаемся к серверу socket
+                        let socket = io(socketUrl);
+                        socket.emit("addUser", chatId)
+                        socket.emit("sendMessageSpec", {
+                            senderId: chatTelegramId,
+                            receiverId: chatId,
+                            text: text,
+                            convId: convId,
+                            messageId: messageId,
+                        })  
+
+                        return bot.sendMessage(chatId, text)
+
+                    }
+
                     i++ //счетчик интервалов
                     minutCount = i
                 }, 120000)
