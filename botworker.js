@@ -1978,7 +1978,8 @@ bot.on('message', async (msg) => {
                     if (worker && worker[0].status === "Отказано") {
                         
                         //отправить сообщение в админ-панель
-                        const text = `Добрый день! Спасибо, что откликнулись на проект "${projectName.properties.Name.title[0].plain_text}". 
+                        const text = `Добрый день! 
+Спасибо, что откликнулись на проект «${projectName.properties.Name.title[0].plain_text}». 
 В настоящий момент основной состав уже сформирован. Будем рады сотрудничеству с вами в будущем. 
 До встречи на новых проектах!`
                         const convId = await sendMessageAdmin(text, "text", chatId, messageId, null, false)
