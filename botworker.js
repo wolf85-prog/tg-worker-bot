@@ -95,6 +95,8 @@ const {specData} = require('./botworker/data/specData');
 const getWorkerChildren = require("./botworker/common/getWorkerChildren");
 const getWorkerChatId = require("./botworker/common/getWorkerChatId");
 const updatePretendentAlt = require("./botworker/common/updatePretendentAlt");
+const getProjectName = require("./botworker/common/getProjectName");
+const sendMessageAdmin = require("./botworker/common/sendMessageAdmin");
 
 
 //--------------------------------------------------------------------------------------------------------
@@ -1971,13 +1973,15 @@ bot.on('message', async (msg) => {
                     const worker = await getWorkerPretendent(blockId, workerId)
                     console.log("worker status: ", i, worker)
 
+                    const projectName = await getProjectName(projectId)
+
                     if (worker && worker[0].status === "Отказано") {
                         
                         //отправить сообщение в админ-панель
-                        const text = `Добрый день! Спасибо, что откликнулись на проект. 
+                        const text = `Добрый день! Спасибо, что откликнулись на проект "${projectName.properties.Name.title[0].plain_text}". 
 В настоящий момент основной состав уже сформирован. Будем рады сотрудничеству с вами в будущем. 
 До встречи на новых проектах!`
-                        const convId = await sendMyMessage(text, "text", chatId, messageId, null, false)
+                        const convId = await sendMessageAdmin(text, "text", chatId, messageId, null, false)
                         
                         // Подключаемся к серверу socket
                         let socket = io(socketUrl);
@@ -2024,14 +2028,14 @@ bot.on('message', async (msg) => {
         }
 
         //отправить сообщение в админ-панель
-        const convId = await sendMyMessage('Вы ' + exist2.dataValues.otclick + '-й раз откликнулись на заявку', "text", chatId, null, null, false)
+        const convId = await sendMessageAdmin('Вы ' + exist2.dataValues.otclick + '-й раз откликнулись на заявку', "text", chatId, null, null, false)
 
         // Подключаемся к серверу socket
         let socket = io(socketUrl);
         socket.emit("addUser", chatId)
         socket.emit("sendMessageSpec", {
-            senderId: chatId,
-            receiverId: chatTelegramId,
+            senderId: chatTelegramId,
+            receiverId: chatId,
             text: 'Вы ' + exist2.dataValues.otclick + '-й раз откликнулись на заявку',
             convId: convId,
             messageId: null,
