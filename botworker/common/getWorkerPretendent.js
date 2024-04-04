@@ -17,7 +17,7 @@ module.exports = async function getWorkerPretendent(blockId, workerId) {
             },
         });
 
-        console.log("response: ", response.results[0].properties["03. Статус"])
+        console.log("response: ", JSON.stringify(response))
 
         const worker = response.results.map((page) => {
             return {
