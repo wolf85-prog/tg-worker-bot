@@ -1988,7 +1988,8 @@ bot.on('message', async (msg) => {
                             text: text,
                             convId: convId,
                             messageId: messageId,
-                        })  
+                        }) 
+                        clearInterval(timerId2); 
 
                         return bot.sendMessage(chatId, text)
 
