@@ -25,7 +25,7 @@ module.exports = async function getWorkerPretendent(blockId, workerId) {
             };
         });
 
-        return worker;
+        return results[0];
     } catch (error) {
         console.error(error.message)
     }
