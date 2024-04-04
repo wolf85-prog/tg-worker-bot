@@ -17,6 +17,8 @@ module.exports = async function getWorkerPretendent(blockId, workerId) {
             },
         });
 
+        console.log("response: ", response)
+
         const worker = response.results.map((page) => {
             return {
                 id: page.id,
@@ -25,7 +27,7 @@ module.exports = async function getWorkerPretendent(blockId, workerId) {
             };
         });
 
-        return results[0];
+        return worker;
     } catch (error) {
         console.error(error.message)
     }
