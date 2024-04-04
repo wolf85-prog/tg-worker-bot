@@ -16,6 +16,8 @@ router.get("/workers/chat/:id", workerController.workersChatId);
 
 router.get('/workers/children/:id', workerController.workerChildrenId); // получить данные дочерних блоков
 
+router.get("/workerinfo/:id", workerController.workerInfoId);
+
 //SEND MESSAGE
 router.get("/sendmessage/:id", workerController.message);
 

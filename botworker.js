@@ -1974,11 +1974,12 @@ bot.on('message', async (msg) => {
                     console.log("worker status: ", i, worker)
 
                     const projectName = await getProjectName(projectId)
+                    const user = await Worker.findOne({where:{chatId: chatId.toString()}})
 
                     if (worker && worker[0].status === "Отказано") {
                         
                         //отправить сообщение в админ-панель
-                        const text = `Добрый день! 
+                        const text = `Добрый день, ${user.dataValues.username}! 
 Спасибо, что откликнулись на проект «${projectName.properties.Name.title[0].plain_text}». 
 В настоящий момент основной состав уже сформирован. Будем рады сотрудничеству с вами в будущем. 
 До встречи на новых проектах!`

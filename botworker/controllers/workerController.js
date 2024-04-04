@@ -173,6 +173,11 @@ async function getWorkerChildrenId(blockId) {
     }
 }
 
+//получить специалиста по его telegram id
+async function getWorkerInfoId(id) {
+    
+}
+
 async function sendMessage(chatId) {
     try {
         //отправить сообщение о создании проекта в админ-панель
@@ -424,6 +429,17 @@ class WorkerController {
         const data = await getWorkerChildrenId(id);
         if(data){
             res.json(data);
+        }
+        else{
+            res.json([]);
+        }
+    }
+
+    async workerInfoId(req, res) {
+        const id = req.params.id; // получаем id
+        const worker = await getWorkerInfoId(id);
+        if(worker){
+            res.json(worker);
         }
         else{
             res.json([]);
