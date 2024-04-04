@@ -1986,7 +1986,7 @@ bot.on('message', async (msg) => {
                         // Подключаемся к серверу socket
                         let socket = io(socketUrl);
                         socket.emit("addUser", chatId)
-                        socket.emit("sendMessageSpec", {
+                        socket.emit("sendAdminSpec", {
                             senderId: chatTelegramId,
                             receiverId: chatId,
                             text: text,
@@ -2033,7 +2033,7 @@ bot.on('message', async (msg) => {
         // Подключаемся к серверу socket
         let socket = io(socketUrl);
         socket.emit("addUser", chatId)
-        socket.emit("sendMessageSpec", {
+        socket.emit("sendAdminSpec", {
             senderId: chatTelegramId,
             receiverId: chatId,
             text: 'Вы ' + exist2.dataValues.otclick + '-й раз откликнулись на заявку',
