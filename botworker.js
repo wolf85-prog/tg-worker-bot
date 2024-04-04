@@ -1963,11 +1963,22 @@ bot.on('message', async (msg) => {
                     await addPretendent(blockId, workerId, dateNow);
                 } 
 
+                var minutCount = 0;
+                let i = 0;
+
                 // повторить с интервалом 2 минуту (проверка статуса претендента)
                 let timerId2 = setInterval(async() => {
                     const worker = await getWorkerPretendent(blockId, workerId)
-                    console.log("worker status: ", worker)
+                    console.log("worker status: ", i, worker)
+
+                    i++ //счетчик интервалов
+                    minutCount = i
                 }, 120000)
+
+                // остановить вывод через 30 дней
+                if (minutCount == 43200) {
+                    clearInterval(timerId2);
+                } 
             }
 
             //отправить сообщение в админ-панель
