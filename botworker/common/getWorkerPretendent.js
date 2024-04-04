@@ -23,7 +23,7 @@ module.exports = async function getWorkerPretendent(blockId, workerId) {
             return {
                 id: page.id,
                 //fioId: page.properties["4. ФИО"].relation,
-                status: page.properties["03. Статус"].multi_select,
+                status: page.properties["03. Статус"].select.name,
             };
         });
 
