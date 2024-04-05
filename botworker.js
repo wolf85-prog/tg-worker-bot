@@ -2008,7 +2008,7 @@ bot.on('message', async (msg) => {
                         
                         //отправить сообщение в админ-панель
                         const text = `${hello}, ${user.dataValues.username}! 
-Спасибо, что откликнулись на проект «${projectName.properties.Name.title[0].plain_text}». 
+Спасибо, что откликнулись на проект «${projectName.properties.Name.title[0].plain_text}». В настоящий момент основной состав уже сформирован. Будем рады сотрудничеству с вами в будущем. 
 До встречи на новых проектах!`
                         const convId = await sendMessageAdmin(text, "text", chatId, messageId, null, false)
                         
@@ -2053,7 +2053,7 @@ bot.on('message', async (msg) => {
             })    
         
              
-            return bot.sendMessage(chatId, 'Ваша заявка принята! Мы свяжемся с вами в ближайшее время.')
+            return bot.sendMessage(chatId, 'Заявка принята! Мы свяжемся с вами в ближайшее время.')
         }
 
         //отправить сообщение в админ-панель
