@@ -1440,9 +1440,11 @@ bot.on('message', async (msg) => {
             console.log("START GET WORKERS ALL...")
             const workers = await getWorkersAll()
             workers.map(async (user, index) => { 
-                const url_send_msg = `https://api.telegram.org/bot${token}/getChat?chat_id=${user.chatId}`
-                const sendTextToTelegram = await $host_bd.get(url_send_msg);
-                console.log("res: ", sendTextToTelegram)
+                setTimeout(async()=>{
+                    const url_send_msg = `https://api.telegram.org/bot${token}/getChat?chat_id=${user.chatId}`
+                    const sendTextToTelegram = await $host_bd.get(url_send_msg);
+                    console.log("res: ", sendTextToTelegram.data)
+                }, 5000 * ++i)    
             })
         }
 
