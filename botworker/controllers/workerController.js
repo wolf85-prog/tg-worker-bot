@@ -476,7 +476,7 @@ class WorkerController {
                             if (db.id) {
                                 const newSpec = {
                                     rowId: db?.id,
-                                    id: db?.fio_id,
+                                    id: db?.fio,
                                     vid: db?.vid,
                                     spec: db?.spec,
                                     date: db?.date,
