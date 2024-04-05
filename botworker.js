@@ -1977,11 +1977,22 @@ bot.on('message', async (msg) => {
                     const user = await Worker.findOne({where:{chatId: chatId.toString()}})
 
                     if (worker && worker[0].status === "Отказано") {
+
+                        let hello = ''
+                        if (new Date().getHours() > 6 && new Date().getHours() < 12) {
+                            hello = 'Доброе утро'
+                        } else if (new Date().getHours() > 12 && new Date().getHours() < 18) {
+                            hello = 'Добрый день'
+                        } else if (new Date().getHours() > 0 && new Date().getHours() < 6) {
+                            hello = 'Доброй ночи'
+                        } else {
+                            hello = 'Добрый вечер'
+                        }
+
                         
                         //отправить сообщение в админ-панель
-                        const text = `Добрый день, ${user.dataValues.username}! 
+                        const text = `${hello}, ${user.dataValues.username}! 
 Спасибо, что откликнулись на проект «${projectName.properties.Name.title[0].plain_text}». 
-В настоящий момент основной состав уже сформирован. Будем рады сотрудничеству с вами в будущем. 
 До встречи на новых проектах!`
                         const convId = await sendMessageAdmin(text, "text", chatId, messageId, null, false)
                         
