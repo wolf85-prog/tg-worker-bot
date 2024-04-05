@@ -23,6 +23,10 @@ const $host = axios.create({
     baseURL: process.env.REACT_APP_API_URL
 })
 
+const $host_bd = axios.create({
+    baseURL: process.env.REACT_APP_SERVER_URL
+})
+
 //notion api
 const { Client } = require("@notionhq/client");
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
@@ -1437,7 +1441,7 @@ bot.on('message', async (msg) => {
             const workers = await getWorkersAll()
             workers.map(async (user, index) => { 
                 const url_send_msg = `https://api.telegram.org/bot${token}/getChat?chat_id=${user.chatId}`
-                const sendTextToTelegram = await $host.get(url_send_msg);
+                const sendTextToTelegram = await $host_bd.get(url_send_msg);
                 console.log("res: ", sendTextToTelegram)
             })
         }
