@@ -1448,6 +1448,21 @@ bot.on('message', async (msg) => {
             })
         }
 
+        if (text === '/gethello') {
+            console.log(new Date().getHours())
+            let hello = ''
+            if (new Date().getHours() > 6 && new Date().getHours() < 12) {
+                hello = 'Доброе утро'
+            } else if (new Date().getHours() > 12 && new Date().getHours() < 18) {
+                hello = 'Добрый день'
+            } else if (new Date().getHours() > 0 && new Date().getHours() < 6) {
+                hello = 'Доброй ночи'
+            } else {
+                hello = 'Добрый вечер'
+            }
+            console.log(hello)
+        }
+
 //------------------------------------------------------------------------------------------------
 //обработка контактов
         if (msg.contact) {
