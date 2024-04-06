@@ -1450,7 +1450,6 @@ bot.on('message', async (msg) => {
 
         if (text === '/gethello') {
             const currentHours = new Date(new Date().getTime()+10800000).getHours()
-            //console.log("2: ", new Date().toLocaleTimeString, new Date().toLocaleTimeString().split(':')[0])
             let hello = ''
             if (currentHours > 6 && currentHours < 12) {
                 hello = 'Доброе утро'
@@ -2010,12 +2009,13 @@ bot.on('message', async (msg) => {
 
                     if (worker && worker[0].status === "Отказано") {
 
+                        const currentHours = new Date(new Date().getTime()+10800000).getHours()
                         let hello = ''
-                        if (new Date().getHours() > 6 && new Date().getHours() < 12) {
+                        if (currentHours > 6 && currentHours < 12) {
                             hello = 'Доброе утро'
-                        } else if (new Date().getHours() > 12 && new Date().getHours() < 18) {
+                        } else if (currentHours > 12 && currentHours < 18) {
                             hello = 'Добрый день'
-                        } else if (new Date().getHours() > 0 && new Date().getHours() < 6) {
+                        } else if (currentHours > 0 && currentHours < 6) {
                             hello = 'Доброй ночи'
                         } else {
                             hello = 'Добрый вечер'
