@@ -1449,7 +1449,7 @@ bot.on('message', async (msg) => {
         }
 
         if (text === '/gethello') {
-            console.log(new Date().getHours())
+            console.log(new Date(), new Date().getHours())
             let hello = ''
             if (new Date().getHours() > 6 && new Date().getHours() < 12) {
                 hello = 'Доброе утро'
