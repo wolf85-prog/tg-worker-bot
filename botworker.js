@@ -2002,7 +2002,6 @@ bot.on('message', async (msg) => {
                 // повторить с интервалом 2 минуту (проверка статуса претендента)
                 let timerId2 = setInterval(async() => {
                     const worker = await getWorkerPretendent(blockId, workerId)
-                    console.log("worker status: ", i, worker)
 
                     const projectName = await getProjectName(projectId)
                     const user = await Worker.findOne({where:{chatId: chatId.toString()}})
@@ -2010,6 +2009,7 @@ bot.on('message', async (msg) => {
                     if (worker && worker[0].status === "Отказано") {
 
                         const currentHours = new Date(new Date().getTime()+10800000).getHours()
+                        console.log("worker status: ", i, currentHours)
                         let hello = ''
                         if (currentHours > 6 && currentHours < 12) {
                             hello = 'Доброе утро'
