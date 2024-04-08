@@ -1084,7 +1084,7 @@ bot.on('message', async (msg) => {
                 let arr = workers.filter((item)=>item.chatId === '805436270' || item.chatId === '1408579113' || item.chatId === '639113098' || item.chatId === '1300119841' || item.chatId === '276285228')
                 console.log("arr: ", arr.length)
 
-                arr.map(async(worker, i)=> {
+                workers.map(async(worker, i)=> {
                     setTimeout(async()=> {  
                         //получить данные специалиста по его id
                         //const notion = await getWorkerNotion(worker.chatId)               
