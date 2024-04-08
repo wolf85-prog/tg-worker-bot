@@ -893,12 +893,25 @@ bot.on('message', async (msg) => {
                 const workers = await getWorkersAll()
                 console.log("workers: ", workers.length)  
 
+                //let arr = workers.filter((item)=>item.chatId === '805436270' || item.chatId === '1408579113' || item.chatId === '639113098' || item.chatId === '1300119841' || item.chatId === '276285228')
+                //console.log("arr: ", arr.length)
+
+                workers.map(async(worker, i)=> {
+                    setTimeout(async()=> {  
+                        //получить данные специалиста по его id
+                        //const notion = await getWorkerNotion(worker.chatId)               
+
+                                    
+
+                    }, 3000 * ++i)   
+                }) 
+
                 workers.map(async(worker, i)=> {
                     let specArr = []
                     setTimeout(async()=> {  
                         //получить данные специалиста по его id
                         const notion = await getWorkerNotion(worker.chatId)
-                        console.log(JSON.stringify(notion))
+                        //console.log(JSON.stringify(notion))
 
                         if (notion && notion.length > 0) {
                             //список специалистов
@@ -981,21 +994,47 @@ bot.on('message', async (msg) => {
                                 })
                                 console.log("Список специальностей обновлен! ", worker.chatId, i) 
                             }
-
+                                
+                            console.log("ФИО: ", worker.id, notion[0]?.fio, i)
+                               
                             //получить аватарку
-                            // const spec = await getWorkerChildren(notion[0]?.id) 
-                            // if (spec.length > 0) {
-                            //    console.log("avatar: ", spec[0].image) 
-                            //    //обновить бд
-                            //     const res = await Worker.update({ 
-                            //         avatar: spec[0].image,
-                            //     },
-                            //     { 
-                            //         where: {chatId: worker.chatId} 
-                            //     })
-                            // } else {
-                            //     console.log("Аватар не найден в Notion!") 
-                            // }
+                            const spec = await getWorkerChildren(notion[0]?.id) 
+                                if (spec.length > 0) {
+                                  console.log("avatar: ", spec[0].image, worker.id) 
+    
+                                   try {
+                                        //сохранить фото на сервере
+                                        const file = fs.createWriteStream('/var/www/proj.uley.team/upload/avatar_' + worker.chatId + '.jpg');
+                                        const request = https.get(spec[0].image, function(response) {
+                                            response.pipe(file);
+                    
+                                            // after download completed close filestream
+                                            file.on("finish", async() => {
+                                                file.close();
+                                                console.log("Download Completed");
+                    
+                                                //обновить бд
+                                                const res = await Worker.update({ 
+                                                    avatar: `${host}/upload/avatar_` + worker.chatId + '.jpg',
+                                                },
+                                                { 
+                                                    where: {chatId: worker.chatId} 
+                                                })
+                    
+                                                if (res) {
+                                                    console.log("Специалиста аватар обновлен! ", worker.chatId) 
+                                                }else {
+                                                    console.log("Ошибка обновления! ", worker.chatId) 
+                                                }
+                                            });
+                                        });
+                                    } catch (err) {
+                                        console.error(err);
+                                    }
+                            } else {
+                                console.log("Аватар не найден в Notion!", worker.chatId, i) 
+                            }   
+  
 
                             //обновить фио
                             const res = await Worker.update({ 
@@ -1081,8 +1120,8 @@ bot.on('message', async (msg) => {
                 const workers = await getWorkersAll()
                 console.log("workers: ", workers.length)  
 
-                let arr = workers.filter((item)=>item.chatId === '805436270' || item.chatId === '1408579113' || item.chatId === '639113098' || item.chatId === '1300119841' || item.chatId === '276285228')
-                console.log("arr: ", arr.length)
+                //let arr = workers.filter((item)=>item.chatId === '805436270' || item.chatId === '1408579113' || item.chatId === '639113098' || item.chatId === '1300119841' || item.chatId === '276285228')
+                //console.log("arr: ", arr.length)
 
                 workers.map(async(worker, i)=> {
                     setTimeout(async()=> {  
