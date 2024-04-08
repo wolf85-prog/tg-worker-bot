@@ -101,7 +101,6 @@ const getWorkerChatId = require("./botworker/common/getWorkerChatId");
 const updatePretendentAlt = require("./botworker/common/updatePretendentAlt");
 const getProjectName = require("./botworker/common/getProjectName");
 const sendMessageAdmin = require("./botworker/common/sendMessageAdmin");
-const getWorkersAllNotion = require("./botworker/common/getWorkersAllNotion");
 
 
 //--------------------------------------------------------------------------------------------------------
@@ -1079,22 +1078,19 @@ bot.on('message', async (msg) => {
         if (text === '/profilephoto') {
             try {
                 console.log("START GET WORKERS ALL...")
-                //const workers = await getWorkersAll()
-                const workers = await getWorkersAllNotion()
-                //let arr = workers.filter(item => item.chatId === '805436270' && item.chatId === '1408579113')
+                const workers = await getWorkersAll()
                 console.log("workers: ", workers.length)  
 
                 workers.map(async(worker, i)=> {
-                    //let specArr = []
                     setTimeout(async()=> {  
                         //получить данные специалиста по его id
-                        //const notion = await getWorkerNotion(worker.chatId)     
+                        const notion = await getWorkerNotion(worker.chatId)               
 
                         if (notion && notion.length > 0) {
-                            console.log("ФИО: ", worker.tgId, worker.fio)
+                            console.log("ФИО: ", worker.id, notion[0].fio)
                            
                             //получить аватарку
-                            const spec = await getWorkerChildren(worker.tgId) 
+                            const spec = await getWorkerChildren(notion[0]?.id) 
                             if (spec.length > 0) {
                                console.log("avatar: ", spec[0].image, i) 
 
@@ -1128,14 +1124,14 @@ bot.on('message', async (msg) => {
                             //         console.error(err);
                             //     }
                             } else {
-                                console.log("Аватар не найден в Notion!", worker.tgId, i) 
+                                console.log("Аватар не найден в Notion!", worker.chatId, i) 
                             }   
                             
                         } else {
-                            console.log("Специалист не найден в Notion!", worker.tgId, i) 
+                            console.log("Специалист не найден в Notion!", worker.chatId, i) 
                         }              
 
-                    }, 500 * ++i)   
+                    }, 3000 * ++i)   
                 }) 
             } catch (error) {
                 console.log(error.message)
