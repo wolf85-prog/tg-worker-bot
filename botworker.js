@@ -990,8 +990,9 @@ bot.on('message', async (msg) => {
                                 console.log("avatar: ", spec[0].image, worker.id) 
     
                                 try {
-                                        //сохранить фото на сервере
-                                        const file = fs.createWriteStream('/var/www/proj.uley.team/upload/avatar_' + worker.chatId + '.jpg');
+                                    //сохранить фото на сервере
+                                    if (spec[0].image !== null) {  
+                                        const file = fs.createWriteStream('/var/www/proj.uley.team/upload/avatar_' + worker.chatId + '.jpg');  
                                         const request = https.get(spec[0].image, function(response) {
                                             response.pipe(file);
                     
@@ -1015,9 +1016,12 @@ bot.on('message', async (msg) => {
                                                 }
                                             });
                                         });
-                                    } catch (err) {
-                                        console.error(err);
+                                    } else {
+                                        console.log("Аватар не читается! ", worker.chatId, i)
                                     }
+                                } catch (err) {
+                                    console.error(err);
+                                }
                             } else {
                                 console.log("Аватар не найден в Notion!", worker.chatId, i) 
                             }   
