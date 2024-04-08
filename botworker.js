@@ -1084,62 +1084,60 @@ bot.on('message', async (msg) => {
                 workers.map(async(worker, i)=> {
                     setTimeout(async()=> {  
                         //получить данные специалиста по его id
-                        const notion = await getWorkerNotion(worker.chatId)               
+                        //const notion = await getWorkerNotion(worker.chatId)               
 
-                        if (notion && notion.length > 0) {
-                            console.log("ФИО: ", worker.id, notion[0].fio, notion[0]?.id)
-                            const res1 = await Worker.update({ 
-                                from: notion[0]?.id,
-                            },
-                            { 
-                                where: {chatId: worker.chatId} 
-                            })
-
-                            //console.log()
+                        if (worker.from !== null && worker.from !== '') {
+                            console.log("ФИО: ", worker.id, worker.userfamily, i)
+                            // const res1 = await Worker.update({ 
+                            //     from: notion[0]?.id,
+                            // },
+                            // { 
+                            //     where: {chatId: worker.chatId} 
+                            // })
                            
                             //получить аватарку
-                            //const spec = await getWorkerChildren(notion[0]?.id) 
-                            //if (spec.length > 0) {
-                            //   console.log("avatar: ", spec[0].image, worker.id) 
+                            const spec = await getWorkerChildren(worker.from) 
+                            if (spec.length > 0) {
+                              console.log("avatar: ", spec[0].image, worker.id) 
 
-                            //    try {
-                            //         //сохранить фото на сервере
-                            //         const file = fs.createWriteStream('/var/www/proj.uley.team/upload/avatar_' + worker.chatId + '.jpg');
-                            //         const request = https.get(spec[0].image, function(response) {
-                            //             response.pipe(file);
+                               try {
+                                    //сохранить фото на сервере
+                                    const file = fs.createWriteStream('/var/www/proj.uley.team/upload/avatar_' + worker.chatId + '.jpg');
+                                    const request = https.get(spec[0].image, function(response) {
+                                        response.pipe(file);
                 
-                            //             // after download completed close filestream
-                            //             file.on("finish", async() => {
-                            //                 file.close();
-                            //                 console.log("Download Completed");
+                                        // after download completed close filestream
+                                        file.on("finish", async() => {
+                                            file.close();
+                                            console.log("Download Completed");
                 
-                            //                 //обновить бд
-                            //                 const res = await Worker.update({ 
-                            //                     avatar: `${host}/upload/avatar_` + worker.chatId + '.jpg',
-                            //                 },
-                            //                 { 
-                            //                     where: {chatId: worker.chatId} 
-                            //                 })
+                                            //обновить бд
+                                            const res = await Worker.update({ 
+                                                avatar: `${host}/upload/avatar_` + worker.chatId + '.jpg',
+                                            },
+                                            { 
+                                                where: {chatId: worker.chatId} 
+                                            })
                 
-                            //                 if (res) {
-                            //                     console.log("Специалиста аватар обновлен! ", worker.chatId) 
-                            //                 }else {
-                            //                     console.log("Ошибка обновления! ", worker.chatId) 
-                            //                 }
-                            //             });
-                            //         });
-                            //     } catch (err) {
-                            //         console.error(err);
-                            //     }
-                            //} else {
-                              //  console.log("Аватар не найден в Notion!", worker.chatId, i) 
-                            //}   
+                                            if (res) {
+                                                console.log("Специалиста аватар обновлен! ", worker.chatId) 
+                                            }else {
+                                                console.log("Ошибка обновления! ", worker.chatId) 
+                                            }
+                                        });
+                                    });
+                                } catch (err) {
+                                    console.error(err);
+                                }
+                            } else {
+                               console.log("Аватар не найден в Notion!", worker.chatId, i) 
+                            }   
                             
                         } else {
                             console.log("Специалист не найден в Notion!", worker.chatId, i) 
                         }              
 
-                    }, 5000 * ++i)   
+                    }, 3000 * ++i)   
                 }) 
             } catch (error) {
                 console.log(error.message)
