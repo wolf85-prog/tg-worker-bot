@@ -927,7 +927,7 @@ bot.on('message', async (msg) => {
                                 //обновить бд
                                 if (specArr.length > 0) {
                                     //обновить бд
-                                    if (worker.chatId === '1408579113' || worker.chatId === '805436270' || worker.chatId === '639113098' || worker.chatId === '1300119841' || worker.chatId === '276285228') {
+                                    if (worker.chatId === '1408579113' || worker.chatId === '805436270' || worker.chatId === '639113098' || worker.chatId === '1300119841') {
                                         newSpec = {
                                             spec: 'Вне категории',
                                             cat: 'NoTag'
@@ -1079,9 +1079,10 @@ bot.on('message', async (msg) => {
             try {
                 console.log("START GET WORKERS ALL...")
                 const workers = await getWorkersAll()
-                console.log("workers: ", workers.length)  
+                let arr = workers.filter(item => item.chatId === '805436270' && item.chatId === '1408579113')
+                console.log("workers: ", arr.length)  
 
-                workers.map(async(worker, i)=> {
+                arr.map(async(worker, i)=> {
                     //let specArr = []
                     setTimeout(async()=> {  
                         //получить данные специалиста по его id
@@ -1097,7 +1098,7 @@ bot.on('message', async (msg) => {
 
                                try {
                                     //сохранить фото на сервере
-                                    const file = fs.createWriteStream('/var/www/proj.uley.team/upload/avatar_' + worker.chatId + '_' + new Date().toLocaleDateString() + '.jpg');
+                                    const file = fs.createWriteStream('/var/www/proj.uley.team/upload/avatar_' + worker.chatId + '.jpg');
                                     const request = https.get(spec[0].image, function(response) {
                                         response.pipe(file);
                 
@@ -1108,7 +1109,7 @@ bot.on('message', async (msg) => {
                 
                                             //обновить бд
                                             const res = await Worker.update({ 
-                                                avatar: `${host}/upload/avatar_` + worker.chatId + '_' + new Date().toLocaleDateString() + '.jpg',
+                                                avatar: `${host}/upload/avatar_` + worker.chatId + '.jpg',
                                             },
                                             { 
                                                 where: {chatId: worker.chatId} 
@@ -1448,21 +1449,6 @@ bot.on('message', async (msg) => {
             })
         }
 
-        if (text === '/gethello') {
-            const currentHours = new Date(new Date().getTime()+10800000).getHours()
-            let hello = ''
-            if (currentHours > 6 && currentHours < 12) {
-                hello = 'Доброе утро'
-            } else if (currentHours > 12 && currentHours < 18) {
-                hello = 'Добрый день'
-            } else if (currentHours > 0 && currentHours < 6) {
-                hello = 'Доброй ночи'
-            } else {
-                hello = 'Добрый вечер'
-            }
-            console.log(hello)
-        }
-
 //------------------------------------------------------------------------------------------------
 //обработка контактов
         if (msg.contact) {
@@ -1777,8 +1763,8 @@ bot.on('message', async (msg) => {
                         //Отлично!
                         await bot.sendPhoto(chatId, 'https://proj.uley.team/upload/2024-04-02T12:04:15.826Z.jpg')
 
-                        //отправить картинку Отлично в бд в админ-панель
-                        const convId = sendMessageAdmin('https://proj.uley.team/upload/2024-04-02T12:04:15.826Z.jpg', "image", chatId, null, null, false)
+                        //отправить сообщение о добавлении специалиста в бд в админ-панель
+                        const convId = sendMyMessage('https://proj.uley.team/upload/2024-04-02T12:04:15.826Z.jpg', "text", chatId, null)
                         
                         //отправить сообщение в админку
                         socket.emit("sendMessageSpec", {
@@ -2002,20 +1988,19 @@ bot.on('message', async (msg) => {
                 // повторить с интервалом 2 минуту (проверка статуса претендента)
                 let timerId2 = setInterval(async() => {
                     const worker = await getWorkerPretendent(blockId, workerId)
+                    console.log("worker status: ", i, worker)
 
                     const projectName = await getProjectName(projectId)
                     const user = await Worker.findOne({where:{chatId: chatId.toString()}})
 
                     if (worker && worker[0].status === "Отказано") {
 
-                        const currentHours = new Date(new Date().getTime()+10800000).getHours()
-                        console.log("worker status: ", i, currentHours)
                         let hello = ''
-                        if (currentHours > 6 && currentHours < 12) {
+                        if (new Date().getHours() > 6 && new Date().getHours() < 12) {
                             hello = 'Доброе утро'
-                        } else if (currentHours > 12 && currentHours < 18) {
+                        } else if (new Date().getHours() > 12 && new Date().getHours() < 18) {
                             hello = 'Добрый день'
-                        } else if (currentHours > 0 && currentHours < 6) {
+                        } else if (new Date().getHours() > 0 && new Date().getHours() < 6) {
                             hello = 'Доброй ночи'
                         } else {
                             hello = 'Добрый вечер'
@@ -2024,7 +2009,7 @@ bot.on('message', async (msg) => {
                         
                         //отправить сообщение в админ-панель
                         const text = `${hello}, ${user.dataValues.username}! 
-Спасибо, что откликнулись на проект «${projectName.properties.Name.title[0].plain_text}». В настоящий момент основной состав уже сформирован. Будем рады сотрудничеству с вами в будущем. 
+Спасибо, что откликнулись на проект «${projectName.properties.Name.title[0].plain_text}». 
 До встречи на новых проектах!`
                         const convId = await sendMessageAdmin(text, "text", chatId, messageId, null, false)
                         
@@ -2069,7 +2054,7 @@ bot.on('message', async (msg) => {
             })    
         
              
-            return bot.sendMessage(chatId, 'Заявка принята! Мы свяжемся с вами в ближайшее время.')
+            return bot.sendMessage(chatId, 'Ваша заявка принята! Мы свяжемся с вами в ближайшее время.')
         }
 
         //отправить сообщение в админ-панель
@@ -2366,7 +2351,7 @@ const start = async () => {
             
                                 if (specArr.length > 0) {
                                     //обновить бд
-                                    if (worker.chatId === '1408579113' || worker.chatId === '805436270' || worker.chatId === '639113098' || worker.chatId === '1300119841' || worker.chatId === '276285228') {
+                                    if (worker.chatId === '1408579113' || worker.chatId === '805436270' || worker.chatId === '639113098' || worker.chatId === '1300119841') {
                                         newSpec = {
                                             spec: 'Вне категории',
                                             cat: 'NoTag'
