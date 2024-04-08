@@ -1087,7 +1087,7 @@ bot.on('message', async (msg) => {
                     setTimeout(async()=> {  
                         //получить данные специалиста по его id
                         const notion = await getWorkerNotion(worker.chatId)
-                        console.log(JSON.stringify(notion))
+                        console.log("ФИО: ", worker.id, notion.fio)
 
                         if (notion && notion.length > 0) {
                            
