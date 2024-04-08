@@ -893,19 +893,6 @@ bot.on('message', async (msg) => {
                 const workers = await getWorkersAll()
                 console.log("workers: ", workers.length)  
 
-                //let arr = workers.filter((item)=>item.chatId === '805436270' || item.chatId === '1408579113' || item.chatId === '639113098' || item.chatId === '1300119841' || item.chatId === '276285228')
-                //console.log("arr: ", arr.length)
-
-                workers.map(async(worker, i)=> {
-                    setTimeout(async()=> {  
-                        //получить данные специалиста по его id
-                        //const notion = await getWorkerNotion(worker.chatId)               
-
-                                    
-
-                    }, 3000 * ++i)   
-                }) 
-
                 workers.map(async(worker, i)=> {
                     let specArr = []
                     setTimeout(async()=> {  
@@ -1060,7 +1047,7 @@ bot.on('message', async (msg) => {
                             console.log("Специалист не найден в Notion!", worker.chatId, i) 
                         }              
 
-                    }, 6000 * ++i)   
+                    }, 5000 * ++i)   
                 }) 
             } catch (error) {
                 console.log(error.message)
