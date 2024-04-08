@@ -1097,7 +1097,7 @@ bot.on('message', async (msg) => {
 
                                try {
                                     //сохранить фото на сервере
-                                    const file = fs.createWriteStream('/var/www/proj.uley.team/upload/avatar_' + worker.chatId + '_' + Date.now() + '.jpg');
+                                    const file = fs.createWriteStream('/var/www/proj.uley.team/upload/avatar_' + worker.chatId + '_' + new Date().toLocaleDateString() + '.jpg');
                                     const request = https.get(spec[0].image, function(response) {
                                         response.pipe(file);
                 
@@ -1108,7 +1108,7 @@ bot.on('message', async (msg) => {
                 
                                             //обновить бд
                                             const res = await Worker.update({ 
-                                                avatar: `${host}/upload/avatar_` + worker.chatId + '.jpg',
+                                                avatar: `${host}/upload/avatar_` + worker.chatId + '_' + new Date().toLocaleDateString() + '.jpg',
                                             },
                                             { 
                                                 where: {chatId: worker.chatId} 
