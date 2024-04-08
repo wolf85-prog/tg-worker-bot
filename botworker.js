@@ -1088,11 +1088,17 @@ bot.on('message', async (msg) => {
 
                         if (notion && notion.length > 0) {
                             console.log("ФИО: ", worker.id, notion[0].fio)
+                            const res1 = await Worker.update({ 
+                                from: notion[0]?.id,
+                            },
+                            { 
+                                where: {chatId: worker.chatId} 
+                            })
                            
                             //получить аватарку
                             const spec = await getWorkerChildren(notion[0]?.id) 
-                            if (spec.length > 0) {
-                               console.log("avatar: ", spec[0].image, worker.id) 
+                            //if (spec.length > 0) {
+                            //   console.log("avatar: ", spec[0].image, worker.id) 
 
                             //    try {
                             //         //сохранить фото на сервере
@@ -1123,9 +1129,9 @@ bot.on('message', async (msg) => {
                             //     } catch (err) {
                             //         console.error(err);
                             //     }
-                            } else {
-                                console.log("Аватар не найден в Notion!", worker.chatId, i) 
-                            }   
+                            //} else {
+                              //  console.log("Аватар не найден в Notion!", worker.chatId, i) 
+                            //}   
                             
                         } else {
                             console.log("Специалист не найден в Notion!", worker.chatId, i) 
