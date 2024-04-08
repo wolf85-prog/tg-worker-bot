@@ -927,7 +927,7 @@ bot.on('message', async (msg) => {
                                 //обновить бд
                                 if (specArr.length > 0) {
                                     //обновить бд
-                                    if (worker.chatId === '1408579113' || worker.chatId === '805436270' || worker.chatId === '639113098' || worker.chatId === '1300119841') {
+                                    if (worker.chatId === '1408579113' || worker.chatId === '805436270' || worker.chatId === '639113098' || worker.chatId === '1300119841' || worker.chatId === '276285228') {
                                         newSpec = {
                                             spec: 'Вне категории',
                                             cat: 'NoTag'
@@ -1081,7 +1081,7 @@ bot.on('message', async (msg) => {
                 const workers = await getWorkersAll()
                 console.log("workers: ", workers.length)  
 
-                let arr = workers.filter((item)=>item.chatId === '805436270')
+                let arr = workers.filter((item)=>item.chatId === '805436270' || item.chatId === '1408579113' || item.chatId === '639113098' || item.chatId === '1300119841' || item.chatId === '276285228')
                 console.log("arr: ", arr.length)
 
                 // workers.map(async(worker, i)=> {
@@ -2358,7 +2358,7 @@ const start = async () => {
             
                                 if (specArr.length > 0) {
                                     //обновить бд
-                                    if (worker.chatId === '1408579113' || worker.chatId === '805436270' || worker.chatId === '639113098' || worker.chatId === '1300119841') {
+                                    if (worker.chatId === '1408579113' || worker.chatId === '805436270' || worker.chatId === '639113098' || worker.chatId === '1300119841' || worker.chatId === '276285228') {
                                         newSpec = {
                                             spec: 'Вне категории',
                                             cat: 'NoTag'
