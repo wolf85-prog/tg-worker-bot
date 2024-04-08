@@ -1092,7 +1092,7 @@ bot.on('message', async (msg) => {
                             //получить аватарку
                             const spec = await getWorkerChildren(notion[0]?.id) 
                             if (spec.length > 0) {
-                               console.log("avatar: ", spec[0].image, i) 
+                               console.log("avatar: ", spec[0].image, worker.id) 
 
                             //    try {
                             //         //сохранить фото на сервере
