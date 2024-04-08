@@ -1079,10 +1079,10 @@ bot.on('message', async (msg) => {
             try {
                 console.log("START GET WORKERS ALL...")
                 const workers = await getWorkersAll()
-                let arr = workers.filter(item => item.chatId === '805436270' && item.chatId === '1408579113')
-                console.log("workers: ", arr.length)  
+                //let arr = workers.filter(item => item.chatId === '805436270' && item.chatId === '1408579113')
+                console.log("workers: ", workers.length)  
 
-                arr.map(async(worker, i)=> {
+                workers.map(async(worker, i)=> {
                     //let specArr = []
                     setTimeout(async()=> {  
                         //получить данные специалиста по его id
