@@ -999,10 +999,10 @@ bot.on('message', async (msg) => {
                                
                             //получить аватарку
                             const spec = await getWorkerChildren(notion[0]?.id) 
-                                if (spec.length > 0) {
-                                  console.log("avatar: ", spec[0].image, worker.id) 
+                            if (spec.length > 0) {
+                                console.log("avatar: ", spec[0].image, worker.id) 
     
-                                   try {
+                                try {
                                         //сохранить фото на сервере
                                         const file = fs.createWriteStream('/var/www/proj.uley.team/upload/avatar_' + worker.chatId + '.jpg');
                                         const request = https.get(spec[0].image, function(response) {
@@ -1060,7 +1060,7 @@ bot.on('message', async (msg) => {
                             console.log("Специалист не найден в Notion!", worker.chatId, i) 
                         }              
 
-                    }, 500 * ++i)   
+                    }, 2500 * ++i)   
                 }) 
             } catch (error) {
                 console.log(error.message)
