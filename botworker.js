@@ -1131,7 +1131,7 @@ bot.on('message', async (msg) => {
                             console.log("Специалист не найден в Notion!", worker.chatId, i) 
                         }              
 
-                    }, 3000 * ++i)   
+                    }, 5000 * ++i)   
                 }) 
             } catch (error) {
                 console.log(error.message)
