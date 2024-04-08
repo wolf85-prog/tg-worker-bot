@@ -1060,7 +1060,7 @@ bot.on('message', async (msg) => {
                             console.log("Специалист не найден в Notion!", worker.chatId, i) 
                         }              
 
-                    }, 5000 * ++i)   
+                    }, 6000 * ++i)   
                 }) 
             } catch (error) {
                 console.log(error.message)
@@ -2440,19 +2440,42 @@ const start = async () => {
                                 }
     
                                 //получить аватарку
-                                // const spec = await getWorkerChildren(notion[0]?.id) 
-                                // if (spec.length > 0) {
-                                //    console.log("avatar: ", spec[0].image) 
-                                //    //обновить бд
-                                //     const res = await Worker.update({ 
-                                //         avatar: spec[0].image,
-                                //     },
-                                //     { 
-                                //         where: {chatId: worker.chatId} 
-                                //     })
-                                // } else {
-                                //     console.log("Аватар не найден в Notion!") 
-                                // }
+                                const spec = await getWorkerChildren(notion[0]?.id) 
+                                if (spec.length > 0) {
+                                    console.log("avatar: ", spec[0].image, worker.id) 
+    
+                                    try {
+                                        //сохранить фото на сервере
+                                        const file = fs.createWriteStream('/var/www/proj.uley.team/upload/avatar_' + worker.chatId + '.jpg');
+                                        const request = https.get(spec[0].image, function(response) {
+                                            response.pipe(file);
+                    
+                                            // after download completed close filestream
+                                            file.on("finish", async() => {
+                                                file.close();
+                                                console.log("Download Completed");
+                    
+                                                //обновить бд
+                                                const res = await Worker.update({ 
+                                                    avatar: `${host}/upload/avatar_` + worker.chatId + '.jpg',
+                                                },
+                                                { 
+                                                    where: {chatId: worker.chatId} 
+                                                })
+                    
+                                                if (res) {
+                                                    console.log("Специалиста аватар обновлен! ", worker.chatId) 
+                                                }else {
+                                                    console.log("Ошибка обновления! ", worker.chatId) 
+                                                }
+                                            });
+                                        });
+                                    } catch (err) {
+                                        console.error(err);
+                                    }
+                                } else {
+                                    console.log("Аватар не найден в Notion!", worker.chatId, i) 
+                                } 
     
                                 //обновить фио
                                 const res = await Worker.update({ 
@@ -2478,7 +2501,7 @@ const start = async () => {
                                 console.log("Специалист не найден в Notion!", worker.chatId, i) 
                             }              
     
-                        }, 500 * ++i)   
+                        }, 5000 * ++i)   
                     }) 
                 } catch (error) {
                     console.log(error.message)
