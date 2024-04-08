@@ -2314,201 +2314,201 @@ const start = async () => {
             let i = 0;
 
             // повторить с интервалом 10 минут
-            let timerId = setInterval(async() => {
+            // let timerId = setInterval(async() => {
 
-                console.log("START GET PROJECTS ALL...")
-                const projects = await getProjectsAll()
-                //console.log(projects)
+            //     console.log("START GET PROJECTS ALL...")
+            //     const projects = await getProjectsAll()
+            //     //console.log(projects)
 
-                await Projectcash.truncate();
+            //     await Projectcash.truncate();
 
-                projects.map(async(project)=> {
-                    await Projectcash.create({ 
-                        id: project.id, 
-                        title: project.title, 
-                        dateStart: project.date_start, 
-                        dateEnd: project.date_end, 
-                        tgURLchat: project.tgURL_chat,
-                        manager: project.managerId,
-                        status: JSON.stringify(project.status), 
-                        specs: JSON.stringify(project.specs)  
-                    })
-                })
+            //     projects.map(async(project)=> {
+            //         await Projectcash.create({ 
+            //             id: project.id, 
+            //             title: project.title, 
+            //             dateStart: project.date_start, 
+            //             dateEnd: project.date_end, 
+            //             tgURLchat: project.tgURL_chat,
+            //             manager: project.managerId,
+            //             status: JSON.stringify(project.status), 
+            //             specs: JSON.stringify(project.specs)  
+            //         })
+            //     })
                 
-                //-----------------------------------------------------
+            //     //-----------------------------------------------------
 
-                console.log("START GET SMETA ALL...")
-                const smets = await getSmetaAll()
+            //     console.log("START GET SMETA ALL...")
+            //     const smets = await getSmetaAll()
 
-                //очистить таблицу
-                await Smetacash.truncate();
+            //     //очистить таблицу
+            //     await Smetacash.truncate();
                 
-                smets.map(async(smeta)=> {
-                    await Smetacash.create({ 
-                        id: smeta.id, 
-                        projectId: smeta.projectId, 
-                        title: smeta.title, 
-                        final: smeta.final,
-                        dop: JSON.stringify(smeta.dop)  
-                    })
-                })  
+            //     smets.map(async(smeta)=> {
+            //         await Smetacash.create({ 
+            //             id: smeta.id, 
+            //             projectId: smeta.projectId, 
+            //             title: smeta.title, 
+            //             final: smeta.final,
+            //             dop: JSON.stringify(smeta.dop)  
+            //         })
+            //     })  
 
 
-                i++ // счетчик интервалов
-            }, 600000); //каждые 10 минут
+            //     i++ // счетчик интервалов
+            // }, 600000); //каждые 10 минут
 
             // повторить с интервалом 24 часа
-            let timerId2 = setInterval(async() => {
+            // let timerId2 = setInterval(async() => {
 
-                try {
-                    console.log("START GET WORKERS ALL...")
-                    const workers = await getWorkersAll()
-                    console.log("workers: ", workers.length)  
+            //     try {
+            //         console.log("START GET WORKERS ALL...")
+            //         const workers = await getWorkersAll()
+            //         console.log("workers: ", workers.length)  
     
-                    workers.map(async(worker, i)=> {
-                        let specArr = []
-                        setTimeout(async()=> {  
-                            //получить данные специалиста по его id
-                            const notion = await getWorkerNotion(worker.chatId)
-                            console.log(JSON.stringify(notion))
+            //         workers.map(async(worker, i)=> {
+            //             let specArr = []
+            //             setTimeout(async()=> {  
+            //                 //получить данные специалиста по его id
+            //                 const notion = await getWorkerNotion(worker.chatId)
+            //                 console.log(JSON.stringify(notion))
     
-                            if (notion.length > 0) {
-                                //список специалистов
-                                notion[0].spec.map((item) => {
-                                    specData.map((category)=> {
-                                        category.models.map((work)=> {
-                                            if (work.name === item.name){
-                                                const obj = {
-                                                    spec: item.name,
-                                                    cat: category.icon,
-                                                }
-                                                specArr.push(obj)
-                                            }
-                                        })
-                                        if (category.icon === item.name) {
-                                            const obj = {
-                                                spec: item.name,
-                                                cat: category.icon,
-                                            }
-                                            specArr.push(obj) 
-                                        }
-                                    })
-                                })
+            //                 if (notion.length > 0) {
+            //                     //список специалистов
+            //                     notion[0].spec.map((item) => {
+            //                         specData.map((category)=> {
+            //                             category.models.map((work)=> {
+            //                                 if (work.name === item.name){
+            //                                     const obj = {
+            //                                         spec: item.name,
+            //                                         cat: category.icon,
+            //                                     }
+            //                                     specArr.push(obj)
+            //                                 }
+            //                             })
+            //                             if (category.icon === item.name) {
+            //                                 const obj = {
+            //                                     spec: item.name,
+            //                                     cat: category.icon,
+            //                                 }
+            //                                 specArr.push(obj) 
+            //                             }
+            //                         })
+            //                     })
             
-                                if (specArr.length > 0) {
-                                    //обновить бд
-                                    if (worker.chatId === '1408579113' || worker.chatId === '805436270' || worker.chatId === '639113098' || worker.chatId === '1300119841' || worker.chatId === '276285228') {
-                                        newSpec = {
-                                            spec: 'Вне категории',
-                                            cat: 'NoTag'
-                                        }
-                                        newSpec2 = {
-                                            spec: 'Тест',
-                                            cat: 'Test'
-                                        }
-                                        specArr.push(newSpec)
-                                        specArr.push(newSpec2)
+            //                     if (specArr.length > 0) {
+            //                         //обновить бд
+            //                         if (worker.chatId === '1408579113' || worker.chatId === '805436270' || worker.chatId === '639113098' || worker.chatId === '1300119841' || worker.chatId === '276285228') {
+            //                             newSpec = {
+            //                                 spec: 'Вне категории',
+            //                                 cat: 'NoTag'
+            //                             }
+            //                             newSpec2 = {
+            //                                 spec: 'Тест',
+            //                                 cat: 'Test'
+            //                             }
+            //                             specArr.push(newSpec)
+            //                             specArr.push(newSpec2)
 
-                                        const res = await Worker.update({ 
-                                            worklist: JSON.stringify(specArr)  
-                                        },
-                                        { 
-                                            where: {chatId: worker.chatId} 
-                                        })
+            //                             const res = await Worker.update({ 
+            //                                 worklist: JSON.stringify(specArr)  
+            //                             },
+            //                             { 
+            //                                 where: {chatId: worker.chatId} 
+            //                             })
  
-                                    } else {             
-                                        const res = await Worker.update({ 
-                                            worklist: JSON.stringify(specArr)  
-                                        },
-                                        { 
-                                            where: {chatId: worker.chatId} 
-                                        })
-                                        console.log("Список специальностей обновлен! ", worker.chatId, i) 
-                                    }                                
-                                } else {
-                                    //обновить бд
-                                    const res = await Worker.update({ 
-                                        worklist: JSON.stringify([{
-                                            spec: 'Вне категории',
-                                            cat: 'NoTag'
-                                        }]) 
-                                    },
-                                    { 
-                                        where: {chatId: worker.chatId} 
-                                    })
-                                    console.log("Список специальностей обновлен! ", worker.chatId, i) 
-                                }
+            //                         } else {             
+            //                             const res = await Worker.update({ 
+            //                                 worklist: JSON.stringify(specArr)  
+            //                             },
+            //                             { 
+            //                                 where: {chatId: worker.chatId} 
+            //                             })
+            //                             console.log("Список специальностей обновлен! ", worker.chatId, i) 
+            //                         }                                
+            //                     } else {
+            //                         //обновить бд
+            //                         const res = await Worker.update({ 
+            //                             worklist: JSON.stringify([{
+            //                                 spec: 'Вне категории',
+            //                                 cat: 'NoTag'
+            //                             }]) 
+            //                         },
+            //                         { 
+            //                             where: {chatId: worker.chatId} 
+            //                         })
+            //                         console.log("Список специальностей обновлен! ", worker.chatId, i) 
+            //                     }
     
-                                //получить аватарку
-                                const spec = await getWorkerChildren(notion[0]?.id) 
-                                if (spec.length > 0) {
-                                    console.log("avatar: ", spec[0].image, worker.id) 
+            //                     //получить аватарку
+            //                     const spec = await getWorkerChildren(notion[0]?.id) 
+            //                     if (spec.length > 0) {
+            //                         console.log("avatar: ", spec[0].image, worker.id) 
     
-                                    try {
-                                        //сохранить фото на сервере
-                                        const file = fs.createWriteStream('/var/www/proj.uley.team/upload/avatar_' + worker.chatId + '.jpg');
-                                        const request = https.get(spec[0].image, function(response) {
-                                            response.pipe(file);
+            //                         try {
+            //                             //сохранить фото на сервере
+            //                             const file = fs.createWriteStream('/var/www/proj.uley.team/upload/avatar_' + worker.chatId + '.jpg');
+            //                             const request = https.get(spec[0].image, function(response) {
+            //                                 response.pipe(file);
                     
-                                            // after download completed close filestream
-                                            file.on("finish", async() => {
-                                                file.close();
-                                                console.log("Download Completed");
+            //                                 // after download completed close filestream
+            //                                 file.on("finish", async() => {
+            //                                     file.close();
+            //                                     console.log("Download Completed");
                     
-                                                //обновить бд
-                                                const res = await Worker.update({ 
-                                                    avatar: `${host}/upload/avatar_` + worker.chatId + '.jpg',
-                                                },
-                                                { 
-                                                    where: {chatId: worker.chatId} 
-                                                })
+            //                                     //обновить бд
+            //                                     const res = await Worker.update({ 
+            //                                         avatar: `${host}/upload/avatar_` + worker.chatId + '.jpg',
+            //                                     },
+            //                                     { 
+            //                                         where: {chatId: worker.chatId} 
+            //                                     })
                     
-                                                if (res) {
-                                                    console.log("Специалиста аватар обновлен! ", worker.chatId) 
-                                                }else {
-                                                    console.log("Ошибка обновления! ", worker.chatId) 
-                                                }
-                                            });
-                                        });
-                                    } catch (err) {
-                                        console.error(err);
-                                    }
-                                } else {
-                                    console.log("Аватар не найден в Notion!", worker.chatId, i) 
-                                } 
+            //                                     if (res) {
+            //                                         console.log("Специалиста аватар обновлен! ", worker.chatId) 
+            //                                     }else {
+            //                                         console.log("Ошибка обновления! ", worker.chatId) 
+            //                                     }
+            //                                 });
+            //                             });
+            //                         } catch (err) {
+            //                             console.error(err);
+            //                         }
+            //                     } else {
+            //                         console.log("Аватар не найден в Notion!", worker.chatId, i) 
+            //                     } 
     
-                                //обновить фио
-                                const res = await Worker.update({ 
-                                    userfamily: notion[0]?.fio.split(" ")[0],
-                                    username: notion[0]?.fio.split(" ")[1],
-                                    phone: notion[0]?.phone && notion[0]?.phone,
-                                    dateborn: notion[0].age?.start.split('-')[0],
-                                    city: notion[0].city && notion[0].city,                    
-                                    from: 'Notion',
-                                    comment: notion[0]?.comment ? notion[0]?.comment : '',
-                                    rank: notion[0]?.rank ? notion[0]?.rank : null,
-                                },
-                                { 
-                                    where: {chatId: worker.chatId} 
-                                })
-                                if (res) {
-                                   console.log("Специалист обновлен! ", worker.chatId, i) 
-                                }else {
-                                    console.log("Ошибка обновления! ", worker.chatId, i) 
-                                }
+            //                     //обновить фио
+            //                     const res = await Worker.update({ 
+            //                         userfamily: notion[0]?.fio.split(" ")[0],
+            //                         username: notion[0]?.fio.split(" ")[1],
+            //                         phone: notion[0]?.phone && notion[0]?.phone,
+            //                         dateborn: notion[0].age?.start.split('-')[0],
+            //                         city: notion[0].city && notion[0].city,                    
+            //                         from: 'Notion',
+            //                         comment: notion[0]?.comment ? notion[0]?.comment : '',
+            //                         rank: notion[0]?.rank ? notion[0]?.rank : null,
+            //                     },
+            //                     { 
+            //                         where: {chatId: worker.chatId} 
+            //                     })
+            //                     if (res) {
+            //                        console.log("Специалист обновлен! ", worker.chatId, i) 
+            //                     }else {
+            //                         console.log("Ошибка обновления! ", worker.chatId, i) 
+            //                     }
                                 
-                            } else {
-                                console.log("Специалист не найден в Notion!", worker.chatId, i) 
-                            }              
+            //                 } else {
+            //                     console.log("Специалист не найден в Notion!", worker.chatId, i) 
+            //                 }              
     
-                        }, 5000 * ++i)   
-                    }) 
-                } catch (error) {
-                    console.log(error.message)
-                }
+            //             }, 5000 * ++i)   
+            //         }) 
+            //     } catch (error) {
+            //         console.log(error.message)
+            //     }
 
-                i++ // счетчик интервалов
-            }, 86400000); //каждые 24 часа
+            //     i++ // счетчик интервалов
+            // }, 86400000); //каждые 24 часа
 
             // остановить вывод через 30 дней
             // if (minutCount == 43200) {
