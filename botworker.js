@@ -1065,7 +1065,7 @@ bot.on('message', async (msg) => {
 
             //получить аватарку
             const spec = await getWorkerChildren(notion[0]?.id) 
-            if (spec.length > 0) {
+           // if (spec.length > 0) {
                 console.log("avatar: ", spec) 
 
                 // try {
@@ -1097,7 +1097,7 @@ bot.on('message', async (msg) => {
                 // } catch (err) {
                 //     console.error(err);
                 // }
-            }
+           // }
         }
 
         //update worker from notion
