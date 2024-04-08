@@ -1087,16 +1087,18 @@ bot.on('message', async (msg) => {
                         const notion = await getWorkerNotion(worker.chatId)               
 
                         if (notion && notion.length > 0) {
-                            console.log("ФИО: ", worker.id, notion[0].fio)
+                            console.log("ФИО: ", worker.id, notion[0].fio, notion[0]?.id)
                             const res1 = await Worker.update({ 
                                 from: notion[0]?.id,
                             },
                             { 
                                 where: {chatId: worker.chatId} 
                             })
+
+                            //console.log()
                            
                             //получить аватарку
-                            const spec = await getWorkerChildren(notion[0]?.id) 
+                            //const spec = await getWorkerChildren(notion[0]?.id) 
                             //if (spec.length > 0) {
                             //   console.log("avatar: ", spec[0].image, worker.id) 
 
