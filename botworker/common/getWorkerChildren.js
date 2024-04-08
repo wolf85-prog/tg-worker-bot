@@ -11,16 +11,16 @@ module.exports = async function getWorkerNotion(chatId) {
             block_id: chatId,
         });
 
-        // const worker = response.results.map((page) => {
-        //     return {
-        //         id: page.id,
-        //         //image: page.image?.file.url,
-        //         image: page.image,
-        //     };
-        // });
+        const worker = response.results.map((page) => {
+            return {
+                id: page.id,
+                image: page.image ? page.image?.file.url : null,
+                //image: page.image,
+            };
+        });
 
-        //return worker;
-        return response;
+        return worker;
+        //return response;
     } catch (error) {
         console.error(error.message)
     }
