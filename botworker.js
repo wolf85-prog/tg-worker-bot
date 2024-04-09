@@ -950,8 +950,8 @@ bot.on('message', async (msg) => {
                                     { 
                                         where: {chatId: worker.chatId} 
                                     })
-                                    console.log("Список специальностей обновлен! ", worker.chatId, i) 
-                                }                                          
+                                }   
+                                console.log("Список специальностей (есть) обновлен! ", worker.chatId, i)                                        
                             } else {
                                 //обновить бд
                                 if (worker.chatId === '1408579113' || worker.chatId === '805436270' || worker.chatId === '639113098' || worker.chatId === '1300119841' || worker.chatId === '276285228') {
@@ -983,7 +983,7 @@ bot.on('message', async (msg) => {
                                         where: {chatId: worker.chatId} 
                                     })
                                 }
-                                console.log("Список специальностей обновлен! ", worker.chatId, i) 
+                                console.log("Список специальностей (нет) обновлен! ", worker.chatId, i) 
                             }
                                 
                             console.log("ФИО: ", worker.id, notion[0]?.fio, i)
@@ -2279,9 +2279,9 @@ const start = async () => {
                 i++ // счетчик интервалов
             }, 600000); //каждые 10 минут
 
+            // ПРОФИЛЬ (обновить)
             // повторить с интервалом 24 часа
             let timerId2 = setInterval(async() => {
-
                 try {
                     console.log("START GET WORKERS ALL...")
                     const workers = await getWorkersAll()
@@ -2292,9 +2292,9 @@ const start = async () => {
                         setTimeout(async()=> {  
                             //получить данные специалиста по его id
                             const notion = await getWorkerNotion(worker.chatId)
-                            console.log(JSON.stringify(notion))
+                            //console.log(JSON.stringify(notion))
     
-                            if (notion.length > 0) {
+                            if (notion && notion.length > 0) {
                                 //список специалистов
                                 notion[0].spec.map((item) => {
                                     specData.map((category)=> {
@@ -2330,14 +2330,13 @@ const start = async () => {
                                         }
                                         specArr.push(newSpec)
                                         specArr.push(newSpec2)
-
+    
                                         const res = await Worker.update({ 
                                             worklist: JSON.stringify(specArr)  
                                         },
                                         { 
                                             where: {chatId: worker.chatId} 
                                         })
- 
                                     } else {             
                                         const res = await Worker.update({ 
                                             worklist: JSON.stringify(specArr)  
@@ -2345,36 +2344,86 @@ const start = async () => {
                                         { 
                                             where: {chatId: worker.chatId} 
                                         })
-                                        console.log("Список специальностей обновлен! ", worker.chatId, i) 
-                                    }                                
+                                    }   
+                                    console.log("Список специальностей (есть) обновлен! ", worker.chatId, i)                                        
                                 } else {
                                     //обновить бд
-                                    const res = await Worker.update({ 
-                                        worklist: JSON.stringify([{
+                                    if (worker.chatId === '1408579113' || worker.chatId === '805436270' || worker.chatId === '639113098' || worker.chatId === '1300119841' || worker.chatId === '276285228') {
+                                        newSpec = {
                                             spec: 'Вне категории',
                                             cat: 'NoTag'
-                                        }]) 
-                                    },
-                                    { 
-                                        where: {chatId: worker.chatId} 
-                                    })
-                                    console.log("Список специальностей обновлен! ", worker.chatId, i) 
-                                }
+                                        }
+                                        newSpec2 = {
+                                            spec: 'Тест',
+                                            cat: 'Test'
+                                        }
+                                        specArr.push(newSpec)
+                                        specArr.push(newSpec2)
     
+                                        const res = await Worker.update({ 
+                                            worklist: JSON.stringify(specArr)  
+                                        },
+                                        { 
+                                            where: {chatId: worker.chatId} 
+                                        })
+                                    } else {
+                                        const res = await Worker.update({ 
+                                            worklist: JSON.stringify([{
+                                                spec: 'Вне категории',
+                                                cat: 'NoTag'
+                                            }]) 
+                                        },
+                                        { 
+                                            where: {chatId: worker.chatId} 
+                                        })
+                                    }
+                                    console.log("Список специальностей (нет) обновлен! ", worker.chatId, i) 
+                                }
+                                    
+                                console.log("ФИО: ", worker.id, notion[0]?.fio, i)
+                                   
                                 //получить аватарку
-                                // const spec = await getWorkerChildren(notion[0]?.id) 
-                                // if (spec.length > 0) {
-                                //    console.log("avatar: ", spec[0].image) 
-                                //    //обновить бд
-                                //     const res = await Worker.update({ 
-                                //         avatar: spec[0].image,
-                                //     },
-                                //     { 
-                                //         where: {chatId: worker.chatId} 
-                                //     })
-                                // } else {
-                                //     console.log("Аватар не найден в Notion!") 
-                                // }
+                                const spec = await getWorkerChildren(notion[0]?.id) 
+                                if (spec.length > 0) {
+                                    console.log("avatar: ", spec[0].image, worker.id) 
+        
+                                        try {
+                                            //сохранить фото на сервере
+                                            if (spec[0].image) {  
+                                                const file = fs.createWriteStream('/var/www/proj.uley.team/upload/avatar_' + worker.chatId + '.jpg');
+                                                const request = https.get(spec[0].image, function(response) {
+                                                    response.pipe(file);
+                            
+                                                    // after download completed close filestream
+                                                    file.on("finish", async() => {
+                                                        file.close();
+                                                        console.log("Download Completed");
+                            
+                                                        //обновить бд
+                                                        const res = await Worker.update({ 
+                                                            avatar: `${host}/upload/avatar_` + worker.chatId + '.jpg',
+                                                        },
+                                                        { 
+                                                            where: {chatId: worker.chatId} 
+                                                        })
+                            
+                                                        if (res) {
+                                                            console.log("Специалиста аватар обновлен! ", worker.chatId) 
+                                                        }else {
+                                                            console.log("Ошибка обновления! ", worker.chatId) 
+                                                        }
+                                                    });
+                                                });
+                                            } else {
+                                                console.log("Аватар не читается! ", worker.chatId, i) 
+                                            }
+                                        } catch (err) {
+                                            console.error(err);
+                                        }
+                                } else {
+                                    console.log("Аватар не найден в Notion!", worker.chatId, i) 
+                                }   
+      
     
                                 //обновить фио
                                 const res = await Worker.update({ 
@@ -2400,7 +2449,7 @@ const start = async () => {
                                 console.log("Специалист не найден в Notion!", worker.chatId, i) 
                             }              
     
-                        }, 500 * ++i)   
+                        }, 3000 * ++i)   
                     }) 
                 } catch (error) {
                     console.log(error.message)
