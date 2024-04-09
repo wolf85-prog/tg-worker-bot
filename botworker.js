@@ -1415,6 +1415,7 @@ bot.on('message', async (msg) => {
 
         if (text === '/getdelete') {
             console.log("START GET WORKERS ALL...")
+            let i = 0;
             const workers = await getWorkersAll()
             workers.map(async (user, index) => { 
                 setTimeout(async()=>{
