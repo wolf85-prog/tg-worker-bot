@@ -60,6 +60,7 @@ const app = express();
 const router = require('./botworker/routes/index')
 const path = require('path')
 const multer  = require("multer")
+const sharp = require('sharp');
 
 //подключение к БД PostreSQL
 const sequelize = require('./botworker/connections/db')
@@ -997,8 +998,15 @@ bot.on('message', async (msg) => {
                                         //сохранить фото на сервере
                                         if (spec[0].image) {  
                                             const file = fs.createWriteStream('/var/www/proj.uley.team/upload/avatar_' + worker.chatId + '.jpg');
+                                            
+                                            const transformer = sharp()
+                                            .resize(300)
+                                            .on('info', ({ height }) => {
+                                                console.log(`Image height is ${height}`);
+                                            });
+                                            
                                             const request = https.get(spec[0].image, function(response) {
-                                                response.pipe(file);
+                                                response.pipe(transformer).pipe(file);
                         
                                                 // after download completed close filestream
                                                 file.on("finish", async() => {
