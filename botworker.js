@@ -1000,7 +1000,7 @@ bot.on('message', async (msg) => {
                                             const file = fs.createWriteStream('/var/www/proj.uley.team/upload/avatar_' + worker.chatId + '.jpg');
                                             
                                             const transformer = sharp()
-                                            .resize(300)
+                                            .resize(500)
                                             .on('info', ({ height }) => {
                                                 console.log(`Image height is ${height}`);
                                             });
@@ -1063,7 +1063,7 @@ bot.on('message', async (msg) => {
                             console.log("Специалист не найден в Notion!", worker.chatId, i) 
                         }              
 
-                    }, 5000 * ++i)   
+                    }, 6000 * ++i)   
                 }) 
             } catch (error) {
                 console.log(error.message)
