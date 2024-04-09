@@ -1415,14 +1415,13 @@ bot.on('message', async (msg) => {
 
         if (text === '/getdelete') {
             console.log("START GET WORKERS ALL...")
-            let i = 0;
             const workers = await getWorkersAll()
             workers.map(async (user, index) => { 
                 setTimeout(async()=>{
                     const url_send_msg = `https://api.telegram.org/bot${token}/getChat?chat_id=${user.chatId}`
                     const sendTextToTelegram = await $host_bd.get(url_send_msg);
-                    console.log("res: ", sendTextToTelegram.data)
-                }, 5000 * ++i)    
+                    console.log("res: ", sendTextToTelegram.data.ok, index)
+                }, 500 * ++index)    
             })
         }
 
