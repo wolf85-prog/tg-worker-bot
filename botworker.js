@@ -1740,7 +1740,7 @@ bot.on('message', async (msg) => {
                         await bot.sendPhoto(chatId, 'https://proj.uley.team/upload/2024-04-02T12:04:15.826Z.jpg')
 
                         //отправить сообщение о добавлении специалиста в бд в админ-панель
-                        const convId = sendMessageAdmin('https://proj.uley.team/upload/2024-04-02T12:04:15.826Z.jpg', "Image", chatId, null)
+                        const convId = sendMessageAdmin('https://proj.uley.team/upload/2024-04-02T12:04:15.826Z.jpg', "image", chatId, null)
                         
                         //отправить сообщение в админку
                         socket.emit("sendMessageSpec", {
@@ -1970,22 +1970,23 @@ bot.on('message', async (msg) => {
                     const user = await Worker.findOne({where:{chatId: chatId.toString()}})
 
                     if (worker && worker[0].status === "Отказано") {
+                        const currentHours = new Date(new Date().getTime()+10800000).getHours()
+                        console.log("worker status: ", i, currentHours)
 
                         let hello = ''
-                        if (new Date().getHours() > 6 && new Date().getHours() < 12) {
+                        if (currentHours > 6 && currentHours < 12) {
                             hello = 'Доброе утро'
-                        } else if (new Date().getHours() > 12 && new Date().getHours() < 18) {
+                        } else if (currentHours > 12 && currentHours < 18) {
                             hello = 'Добрый день'
-                        } else if (new Date().getHours() > 0 && new Date().getHours() < 6) {
+                        } else if (currentHours > 0 && currentHours < 6) {
                             hello = 'Доброй ночи'
                         } else {
                             hello = 'Добрый вечер'
                         }
 
-                        
                         //отправить сообщение в админ-панель
                         const text = `${hello}, ${user.dataValues.username}! 
-Спасибо, что откликнулись на проект «${projectName.properties.Name.title[0].plain_text}». 
+Спасибо, что откликнулись на проект «${projectName.properties.Name.title[0].plain_text}». В настоящий момент основной состав уже сформирован. Будем рады сотрудничеству с вами в будущем. 
 До встречи на новых проектах!`
                         const convId = await sendMessageAdmin(text, "text", chatId, messageId, null, false)
                         
