@@ -1425,6 +1425,23 @@ bot.on('message', async (msg) => {
             })
         }
 
+        if (text === '/gethours') {
+            const currentHours = new Date(new Date().getTime()+10800000).getHours()
+                        console.log("currentHours: ", currentHours)
+
+                        let hello = ''
+                        if (currentHours > 6 && currentHours < 12) {
+                            hello = 'Доброе утро'
+                        } else if (currentHours > 12 && currentHours < 18) {
+                            hello = 'Добрый день'
+                        } else if (currentHours > 0 && currentHours < 6) {
+                            hello = 'Доброй ночи'
+                        } else {
+                            hello = 'Добрый вечер'
+                        }
+                        console.log(hello)
+        }
+
 //------------------------------------------------------------------------------------------------
 //обработка контактов
         if (msg.contact) {
