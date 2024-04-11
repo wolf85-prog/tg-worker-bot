@@ -1922,20 +1922,28 @@ bot.on('message', async (msg) => {
                 otclick: 1     
         }
 
-        const exist = await Pretendent.findOne({
+        const exist = await Pretendent.findAll({
             where: {
                 projectId: projectId,
                 workerId: workerId,
             },
         })
 
+        console.log("exist: ", exist)
+
         if (!exist) {
             const res = await Pretendent.create(pretendent)
             console.log("Претендент в БД: ", res.dataValues.id)
+        } else if (Math.abs(new Date(exist[exist.length-1].dataValues.updatedAt).getTime()-new Date().getTime())>3600000) {
+            const res = await Pretendent.create(pretendent)
+            console.log("Претендент в БД: ", res.dataValues.id)
         } else {
+            //const res = await Pretendent.create(pretendent)
+            //console.log("Еще претендент в БД: ", res.dataValues.id)
             console.log('Претендент уже создан в БД для этого проекта!')
+            
             //проверяем отклонил ли специалист заявку в прошлый раз
-            if (exist.dataValues.accept) {            
+            if (exist[exist.length-1].dataValues.accept) {            
                 const res = await Pretendent.update({            
                     accept:  false,
                     otclick:  1
@@ -1948,7 +1956,7 @@ bot.on('message', async (msg) => {
                 })
             //или было нажато принять
             } else {
-                const count = exist.dataValues.otclick + 1
+                const count = exist[exist.length-1].dataValues.otclick + 1
                 const res = await Pretendent.update({ 
                     otclick: count  
                 },
@@ -1962,14 +1970,18 @@ bot.on('message', async (msg) => {
         }
 
 
-        const exist2 = await Pretendent.findOne({
+        const exist2 = await Pretendent.findAll({
             where: {
                 projectId: projectId,
                 workerId: workerId,
             },
         })
 
-        if ((exist2.dataValues.otclick < 2) || ( Math.abs(new Date(exist.dataValues.updatedAt).getTime()-new Date().getTime()) )>3600000) {
+        if ((exist2[exist2.length-1].dataValues.otclick < 2) || ( Math.abs(new Date(exist[exist.length-1].dataValues.updatedAt).getTime()-new Date().getTime()) )>3600000) {
+            //if (( Math.abs(new Date(exist[exist.length-1].dataValues.updatedAt).getTime()-new Date().getTime()) )>3600000) {
+            //БД
+            // const res = await Pretendent.create(pretendent)
+            
             //ноушен
             const blockId = await getBlocksP(projectId); 
            
