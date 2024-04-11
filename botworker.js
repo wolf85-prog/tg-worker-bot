@@ -1430,14 +1430,14 @@ bot.on('message', async (msg) => {
                         console.log("currentHours: ", currentHours)
 
                         let hello = ''
-                        if (currentHours > 6 && currentHours < 12) {
+                        if (currentHours >= 6 && currentHours < 12) {
                             hello = 'Доброе утро'
-                        } else if (currentHours > 12 && currentHours < 18) {
+                        } else if (currentHours >= 12 && currentHours < 18) {
                             hello = 'Добрый день'
-                        } else if (currentHours > 0 && currentHours < 6) {
+                        } else if (currentHours >= 0 && currentHours < 6) {
                             hello = 'Доброй ночи'
                         } else {
-                            hello = 'Добрый вечер'
+                            hello = 'Добрый вечер' //18-0
                         }
                         console.log(hello)
         }
@@ -1991,14 +1991,14 @@ bot.on('message', async (msg) => {
                         console.log("worker status: ", i, currentHours)
 
                         let hello = ''
-                        if (currentHours > 6 && currentHours < 12) {
+                        if (currentHours >= 6 && currentHours < 12) {
                             hello = 'Доброе утро'
-                        } else if (currentHours > 12 && currentHours < 18) {
+                        } else if (currentHours >= 12 && currentHours < 18) {
                             hello = 'Добрый день'
-                        } else if (currentHours > 0 && currentHours < 6) {
+                        } else if (currentHours >= 0 && currentHours < 6) {
                             hello = 'Доброй ночи'
                         } else {
-                            hello = 'Добрый вечер'
+                            hello = 'Добрый вечер' //18-0
                         }
 
                         //отправить сообщение в админ-панель
