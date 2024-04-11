@@ -1442,6 +1442,23 @@ bot.on('message', async (msg) => {
                         console.log(hello)
         }
 
+        if (text.startsWith('/otkaz')) {
+            const workerId = text.split(' ');
+            console.log(workerId[1])
+            const projectId = '2b974ded-f14f-4a34-9b6c-80f0bd285fa8'
+
+            //ноушен
+            const blockId = await getBlocksP(projectId); 
+
+            if (blockId) {
+                const worker = await getWorkerPretendent(blockId, workerId)
+                console.log("worker status: ", i, worker)
+                
+                //const projectName = await getProjectName(projectId)
+                //const user = await Worker.findOne({where:{chatId: chatId.toString()}})
+            }
+        }
+
 //------------------------------------------------------------------------------------------------
 //обработка контактов
         if (msg.contact) {
