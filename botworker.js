@@ -991,6 +991,7 @@ bot.on('message', async (msg) => {
                             console.log("ФИО: ", worker.id, notion[0]?.fio, i)
                                
                             //получить аватарку
+                            //...
 
                             //обновить фио
                             const res = await Worker.update({ 
@@ -1018,73 +1019,74 @@ bot.on('message', async (msg) => {
 
                     }, 1000 * ++i)   
                 }) 
-            //uppdate avatar
-                setTimeout(async()=> {  
-                    workers.map(async(worker, i)=> {
-                        let specArr = []
-                        setTimeout(async()=> {  
-                            //получить данные специалиста по его id
-                            const notion = await getWorkerNotion(worker.chatId)
-                            //console.log(JSON.stringify(notion))
+                
+                //uppdate avatar
+                // setTimeout(async()=> {  
+                //     workers.map(async(worker, i)=> {
+                //         let specArr = []
+                //         setTimeout(async()=> {  
+                //             //получить данные специалиста по его id
+                //             const notion = await getWorkerNotion(worker.chatId)
+                //             //console.log(JSON.stringify(notion))
 
-                            if (notion && notion.length > 0) {
+                //             if (notion && notion.length > 0) {
                                 
-                                //получить аватарку
-                                const spec = await getWorkerChildren(notion[0]?.id) 
-                                if (spec.length > 0) {
-                                    console.log("avatar: ", spec[0].image, worker.id) 
+                //                 //получить аватарку
+                //                 const spec = await getWorkerChildren(notion[0]?.id) 
+                //                 if (spec.length > 0) {
+                //                     console.log("avatar: ", spec[0].image, worker.id) 
         
-                                        try {
-                                            //сохранить фото на сервере
-                                            if (spec[0].image) {  
-                                                const file = fs.createWriteStream('/var/www/proj.uley.team/upload/avatar_' + worker.chatId + '.jpg');
+                //                         try {
+                //                             //сохранить фото на сервере
+                //                             if (spec[0].image) {  
+                //                                 const file = fs.createWriteStream('/var/www/proj.uley.team/upload/avatar_' + worker.chatId + '.jpg');
                                                 
-                                                const transformer = sharp()
-                                                .resize(500)
-                                                .on('info', ({ height }) => {
-                                                    console.log(`Image height is ${height}`);
-                                                });
+                //                                 const transformer = sharp()
+                //                                 .resize(500)
+                //                                 .on('info', ({ height }) => {
+                //                                     console.log(`Image height is ${height}`);
+                //                                 });
                                                 
-                                                const request = https.get(spec[0].image, function(response) {
-                                                    response.pipe(transformer).pipe(file);
+                //                                 const request = https.get(spec[0].image, function(response) {
+                //                                     response.pipe(transformer).pipe(file);
                             
-                                                    // after download completed close filestream
-                                                    file.on("finish", async() => {
-                                                        file.close();
-                                                        console.log("Download Completed");
+                //                                     // after download completed close filestream
+                //                                     file.on("finish", async() => {
+                //                                         file.close();
+                //                                         console.log("Download Completed");
                             
-                                                        //обновить бд
-                                                        const res = await Worker.update({ 
-                                                            avatar: `${host}/upload/avatar_` + worker.chatId + '.jpg',
-                                                        },
-                                                        { 
-                                                            where: {chatId: worker.chatId} 
-                                                        })
+                //                                         //обновить бд
+                //                                         const res = await Worker.update({ 
+                //                                             avatar: `${host}/upload/avatar_` + worker.chatId + '.jpg',
+                //                                         },
+                //                                         { 
+                //                                             where: {chatId: worker.chatId} 
+                //                                         })
                             
-                                                        if (res) {
-                                                            console.log("Специалиста аватар обновлен! ", worker.chatId) 
-                                                        }else {
-                                                            console.log("Ошибка обновления! ", worker.chatId) 
-                                                        }
-                                                    });
-                                                });
-                                            } else {
-                                                console.log("Аватар не читается! ", worker.chatId, i) 
-                                            }
-                                        } catch (err) {
-                                            console.error(err);
-                                        }
-                                } else {
-                                    console.log("Аватар не найден в Notion!", worker.chatId, i) 
-                                }   
+                //                                         if (res) {
+                //                                             console.log("Специалиста аватар обновлен! ", worker.chatId) 
+                //                                         }else {
+                //                                             console.log("Ошибка обновления! ", worker.chatId) 
+                //                                         }
+                //                                     });
+                //                                 });
+                //                             } else {
+                //                                 console.log("Аватар не читается! ", worker.chatId, i) 
+                //                             }
+                //                         } catch (err) {
+                //                             console.error(err);
+                //                         }
+                //                 } else {
+                //                     console.log("Аватар не найден в Notion!", worker.chatId, i) 
+                //                 }   
                                 
-                            } else {
-                                console.log("Специалист не найден в Notion!", worker.chatId, i) 
-                            }              
+                //             } else {
+                //                 console.log("Специалист не найден в Notion!", worker.chatId, i) 
+                //             }              
 
-                        }, 6000 * ++i)   
-                    })
-                }, 1200000) //20 минут
+                //         }, 6000 * ++i)   
+                //     })
+                // }, 1200000) //20 минут
             } catch (error) {
                 console.log(error.message)
             }
