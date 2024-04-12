@@ -1922,7 +1922,7 @@ bot.on('message', async (msg) => {
                 otclick: 1     
         }
 
-        const exist = await Pretendent.findAll({
+        const exist = await Pretendent.findOne({
             where: {
                 projectId: projectId,
                 workerId: workerId,
@@ -1934,16 +1934,17 @@ bot.on('message', async (msg) => {
         if (!exist) {
             const res = await Pretendent.create(pretendent)
             console.log("Претендент в БД: ", res.dataValues.id)
-        } else if (Math.abs(new Date(exist[exist.length-1].dataValues.updatedAt).getTime()-new Date().getTime())>3600000) {
-            const res = await Pretendent.create(pretendent)
-            console.log("Претендент в БД: ", res.dataValues.id)
+        //} else if (Math.abs(new Date(exist[exist.length-1]?.dataValues.updatedAt).getTime()-new Date().getTime())>3600000) {
+        //    const res = await Pretendent.create(pretendent)
+         //   console.log("Претендент в БД: ", res.dataValues.id)
         } else {
             //const res = await Pretendent.create(pretendent)
             //console.log("Еще претендент в БД: ", res.dataValues.id)
             console.log('Претендент уже создан в БД для этого проекта!')
             
             //проверяем отклонил ли специалист заявку в прошлый раз
-            if (exist[exist.length-1].dataValues.accept) {            
+            if (exist.dataValues.accept) {   
+            //if (exist[exist.length-1].dataValues.accept) {         
                 const res = await Pretendent.update({            
                     accept:  false,
                     otclick:  1
@@ -1956,7 +1957,8 @@ bot.on('message', async (msg) => {
                 })
             //или было нажато принять
             } else {
-                const count = exist[exist.length-1].dataValues.otclick + 1
+                //const count = exist[exist.length-1].dataValues.otclick + 1
+                const count = exist.dataValues.otclick + 1
                 const res = await Pretendent.update({ 
                     otclick: count  
                 },
@@ -1970,14 +1972,15 @@ bot.on('message', async (msg) => {
         }
 
 
-        const exist2 = await Pretendent.findAll({
+        const exist2 = await Pretendent.findOne({
             where: {
                 projectId: projectId,
                 workerId: workerId,
             },
         })
 
-        if ((exist2[exist2.length-1].dataValues.otclick < 2) || ( Math.abs(new Date(exist[exist.length-1].dataValues.updatedAt).getTime()-new Date().getTime()) )>3600000) {
+        if ((exist2.dataValues.otclick < 2) || ( Math.abs(new Date(exist.dataValues.updatedAt).getTime()-new Date().getTime()) )>3600000) {
+        //if ((exist2[exist2.length-1].dataValues.otclick < 2) || ( Math.abs(new Date(exist[exist.length-1].dataValues.updatedAt).getTime()-new Date().getTime()) )>3600000) {
             //if (( Math.abs(new Date(exist[exist.length-1].dataValues.updatedAt).getTime()-new Date().getTime()) )>3600000) {
             //БД
             // const res = await Pretendent.create(pretendent)
@@ -1996,15 +1999,15 @@ bot.on('message', async (msg) => {
                 console.log("worker: ", worker)
                     
                 //обновить специалиста в таблице Претенденты в Ноушене если есть
-                // if (worker.length > 0) {
-                //     await updatePretendent2(worker[0]?.id); //удалить претендента
-                //     await addPretendent(blockId, workerId, dateNow); //добавить претендента
-                //     console.log("Специалист уже есть в таблице Претенденты!") 
-                // } else {                 
-                //     await addPretendent(blockId, workerId, dateNow);
-                // } 
+                if (worker.length > 0) {
+                    await updatePretendent2(worker[0]?.id); //удалить претендента
+                    await addPretendent(blockId, workerId, dateNow); //добавить претендента
+                    console.log("Специалист уже есть в таблице Претенденты!") 
+                } else {                 
+                    await addPretendent(blockId, workerId, dateNow);
+                } 
 
-                await addPretendent(blockId, workerId, dateNow); //добавить претендента
+                //await addPretendent(blockId, workerId, dateNow); //добавить претендента
 
                 var minutCount = 0;
                 let i = 0;
