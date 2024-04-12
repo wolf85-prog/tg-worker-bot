@@ -1996,13 +1996,15 @@ bot.on('message', async (msg) => {
                 console.log("worker: ", worker)
                     
                 //обновить специалиста в таблице Претенденты в Ноушене если есть
-                if (worker.length > 0) {
-                    await updatePretendent2(worker[0]?.id); //удалить претендента
-                    await addPretendent(blockId, workerId, dateNow); //добавить претендента
-                    console.log("Специалист уже есть в таблице Претенденты!") 
-                } else {                 
-                    await addPretendent(blockId, workerId, dateNow);
-                } 
+                // if (worker.length > 0) {
+                //     await updatePretendent2(worker[0]?.id); //удалить претендента
+                //     await addPretendent(blockId, workerId, dateNow); //добавить претендента
+                //     console.log("Специалист уже есть в таблице Претенденты!") 
+                // } else {                 
+                //     await addPretendent(blockId, workerId, dateNow);
+                // } 
+
+                await addPretendent(blockId, workerId, dateNow); //добавить претендента
 
                 var minutCount = 0;
                 let i = 0;
