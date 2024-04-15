@@ -901,10 +901,10 @@ bot.on('message', async (msg) => {
 
                 console.log("Connect pm2...")
               
-                pm2.restart('botworker', (err, proc) => {
-                  pm2.disconnect();   // Disconnects from PM2
-                  //if (err) throw err
-                });
+                // pm2.restart('botworker', (err, proc) => {
+                //   pm2.disconnect();   // Disconnects from PM2
+                //   //if (err) throw err
+                // });
 
                 // pm2.list((err, list) => {
                 //     console.log(err, list)
