@@ -1902,19 +1902,30 @@ bot.on('message', async (msg) => {
         console.log("project: ", data)
         const projectId = project[1]  
 
-        const currentDate = new Date()
-        const progressDate = currentDate.getTime() + 3600000 //1 час
+        //отправить сообщение в админ-панель
+        const convId = await sendMyMessage('Пользователь нажал кнопку "Принять" в рассылке', "text", chatId, messageId, null, false)
 
-        //специалист
+        // Подключаемся к серверу socket
+        let socket = io(socketUrl);
+        socket.emit("addUser", chatId)
+        socket.emit("sendMessageSpec", {
+            senderId: chatId,
+            receiverId: chatTelegramId,
+            text: 'Пользователь нажал кнопку "Принять" в рассылке',
+            convId: convId,
+            messageId: messageId,
+        })  
+
+        //специалист ID
         const workerId = await getWorkerChatId(chatId)
 
         //новый претендент
         const pretendent = {
-                projectId: projectId, 
-                workerId: workerId, 
-                receiverId: chatId,  
-                accept: false, 
-                otclick: 1     
+            projectId: projectId, 
+            workerId: workerId, 
+            receiverId: chatId,  
+            accept: false, 
+            otclick: 1     
         }
 
         const exist = await Pretendent.findOne({
@@ -1975,7 +1986,7 @@ bot.on('message', async (msg) => {
         })
 
         if ((exist2.dataValues.otclick < 2) || ( Math.abs(new Date(exist.dataValues.updatedAt).getTime()-new Date().getTime()) )>3600000) {
-        //if ((exist2[exist2.length-1].dataValues.otclick < 2) || ( Math.abs(new Date(exist[exist.length-1].dataValues.updatedAt).getTime()-new Date().getTime()) )>3600000) {
+            //if ((exist2[exist2.length-1].dataValues.otclick < 2) || ( Math.abs(new Date(exist[exist.length-1].dataValues.updatedAt).getTime()-new Date().getTime()) )>3600000) {
             //if (( Math.abs(new Date(exist[exist.length-1].dataValues.updatedAt).getTime()-new Date().getTime()) )>3600000) {
             //БД
             // const res = await Pretendent.create(pretendent)
@@ -2061,39 +2072,26 @@ bot.on('message', async (msg) => {
                     clearInterval(timerId2);
                 } 
             }
-
+             
+            return bot.sendMessage(chatId, 'Ваша заявка принята! Мы свяжемся с вами в ближайшее время.')
+        } 
+        
+        if (exist2.dataValues.otclick > 1) {
             //отправить сообщение в админ-панель
-            const convId = await sendMyMessage('Пользователь нажал кнопку "Принять" в рассылке', "text", chatId, messageId, null, false)
+            const convId = await sendMessageAdmin('Вы ' + exist2.dataValues.otclick + '-й раз откликнулись на заявку', "text", chatId, null, null, false)
 
             // Подключаемся к серверу socket
             let socket = io(socketUrl);
             socket.emit("addUser", chatId)
-            socket.emit("sendMessageSpec", {
-                senderId: chatId,
-                receiverId: chatTelegramId,
-                text: 'Пользователь нажал кнопку "Принять" в рассылке',
+            socket.emit("sendAdminSpec", {
+                senderId: chatTelegramId,
+                receiverId: chatId,
+                text: 'Вы ' + exist2.dataValues.otclick + '-й раз откликнулись на заявку',
                 convId: convId,
-                messageId: messageId,
-            })    
-        
-             
-            return bot.sendMessage(chatId, 'Ваша заявка принята! Мы свяжемся с вами в ближайшее время.')
-        }
-
-        //отправить сообщение в админ-панель
-        const convId = await sendMessageAdmin('Вы ' + exist2.dataValues.otclick + '-й раз откликнулись на заявку', "text", chatId, null, null, false)
-
-        // Подключаемся к серверу socket
-        let socket = io(socketUrl);
-        socket.emit("addUser", chatId)
-        socket.emit("sendAdminSpec", {
-            senderId: chatTelegramId,
-            receiverId: chatId,
-            text: 'Вы ' + exist2.dataValues.otclick + '-й раз откликнулись на заявку',
-            convId: convId,
-            messageId: null,
-            isBot: false,
-        }) 
+                messageId: null,
+                isBot: false,
+            })
+        }   
 
         return bot.sendMessage(chatId, 'Вы ' + exist2.dataValues.otclick + '-й раз откликнулись на заявку') 
         
