@@ -891,18 +891,18 @@ bot.on('message', async (msg) => {
         //update worker from notion
         if (text === '/profile') {
 
-            console.log("Перезагрузка бота...")
-            pm2.connect(function(err) {
-                if (err) {
-                  console.error(err);
-                  process.exit(2);
-                }
+            // console.log("Перезагрузка бота...")
+            // pm2.connect(function(err) {
+            //     if (err) {
+            //       console.error(err);
+            //       process.exit(2);
+            //     }
               
-                pm2.restart('botworker.js', function(err) {
-                  pm2.disconnect();   // Disconnects from PM2
-                  if (err) throw err
-                });
-            });
+            //     pm2.restart('botworker.js', function(err) {
+            //       pm2.disconnect();   // Disconnects from PM2
+            //       if (err) throw err
+            //     });
+            // });
             
             try {
                 console.log("START GET WORKERS ALL...")
