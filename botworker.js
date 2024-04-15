@@ -2370,6 +2370,13 @@ const start = async () => {
                                             specArr.push(obj) 
                                         }
                                     })
+                                    if (item.name === 'Blacklist') {
+                                        const obj = {
+                                            spec: item.name,
+                                            cat: 'Blacklist',
+                                        }
+                                        specArr.push(obj) 
+                                    }
                                 })
             
                                 if (specArr.length > 0) {

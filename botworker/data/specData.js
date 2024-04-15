@@ -142,6 +142,5 @@ module.exports = {
         },  
    ]
    
-   }
+}
    
-   //export default { specData };
