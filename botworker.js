@@ -905,6 +905,15 @@ bot.on('message', async (msg) => {
                 //   pm2.disconnect();   // Disconnects from PM2
                 //   if (err) throw err
                 // });
+
+                pm2.list((err, list) => {
+                    console.log(err, list)
+              
+                    // pm2.restart('api', (err, proc) => {
+                    //   // Disconnects from PM2
+                    //   pm2.disconnect()
+                    // })
+                })
             });
          }
         //update worker from notion
