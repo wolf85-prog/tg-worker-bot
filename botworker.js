@@ -888,6 +888,20 @@ bot.on('message', async (msg) => {
             }
         }
 //---------------------------------------------------------------------------------------
+        if (text === '/restart') {
+            const chat_id = msg.chat.id;
+            let proc = match[1];
+            pm2.restart(proc, function(err, pr) {
+              if (err) {
+                error(err);
+              }
+              for (let proc of pr) {
+                bot.sendMessage(chat_id, `Process <i>${proc.name}</i> has been restarted`, {
+                  parse_mode: 'html'
+                });
+              }
+            });
+        }
 
         //update worker from notion
         if (text === '/profile') {
