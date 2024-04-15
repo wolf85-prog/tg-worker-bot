@@ -889,57 +889,8 @@ bot.on('message', async (msg) => {
         }
 //---------------------------------------------------------------------------------------
 
-         //update worker from notion
-         if (text === '/restartbot') {
-
-            console.log("Перезагрузка бота...")
-            pm2.connect(function(err) {
-                if (err) {
-                  console.error(err);
-                  process.exit(2);
-                }
-
-                console.log("Connect pm2...")
-
-                // pm2.stop({
-                //     script    : 'botworker.js',
-                //     name      : 'botworker'
-                //   }, function(err, apps) {
-                //     if (err) {
-                //       console.error(err)
-                //       return pm2.disconnect()
-                //     }
-                // })
-                // pm2.restart('botworker', (err, proc) => {
-                //   pm2.disconnect();   // Disconnects from PM2
-                //   //if (err) throw err
-                // });
-
-                // pm2.list((err, list) => {
-                //     console.log(err, list)
-              
-                //     // pm2.restart('api', (err, proc) => {
-                //     //   // Disconnects from PM2
-                //     //   pm2.disconnect()
-                //     // })
-                // })
-            });
-         }
         //update worker from notion
         if (text === '/profile') {
-
-            // console.log("Перезагрузка бота...")
-            // pm2.connect(function(err) {
-            //     if (err) {
-            //       console.error(err);
-            //       process.exit(2);
-            //     }
-              
-            //     pm2.restart('botworker', function(err) {
-            //       pm2.disconnect();   // Disconnects from PM2
-            //       if (err) throw err
-            //     });
-            // });
             
             try {
                 console.log("START GET WORKERS ALL...")
@@ -1145,52 +1096,6 @@ bot.on('message', async (msg) => {
                 console.log(error.message)
             }
         }
-
-
-        // if (text.startsWith('/getavatar')) {
-        //     const workerId = text.split(' ');
-        //     console.log(workerId[1])
-
-        //     //получить данные специалиста по его id
-        //     const notion = await getWorkerNotion(workerId[1])
-        //     //console.log(JSON.stringify(notion))
-
-        //     //получить аватарку
-        //     const spec = await getWorkerChildren(notion[0]?.id) 
-        //     if (spec.length > 0) {
-        //         console.log("avatar: ", spec[0].image) 
-
-        //         try {
-        //             //сохранить фото на сервере
-        //             const file = fs.createWriteStream('/var/www/proj.uley.team/upload/avatar_' + workerId[1] + '.jpg');
-        //             const request = https.get(spec[0].image, function(response) {
-        //                 response.pipe(file);
-
-        //                 // after download completed close filestream
-        //                 file.on("finish", () => {
-        //                     file.close();
-        //                     console.log("Download Completed");
-
-        //                     //обновить бд
-        //                     const res = Worker.update({ 
-        //                         avatar: `${host}/upload/avatar_` + workerId[1]+ '.jpg',
-        //                     },
-        //                     { 
-        //                         where: {chatId: workerId[1]} 
-        //                     })
-
-        //                     if (res) {
-        //                         console.log("Специалиста аватар обновлен! ", workerId[1]) 
-        //                     }else {
-        //                         console.log("Ошибка обновления! ", workerId[1]) 
-        //                     }
-        //                 });
-        //             });
-        //         } catch (err) {
-        //             console.error(err);
-        //         }
-        //     }
-        // }
 
 //------------------------------------------------------------------------------------------------------
         if (text === '/addspec') {
