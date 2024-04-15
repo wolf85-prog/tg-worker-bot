@@ -2072,10 +2072,27 @@ bot.on('message', async (msg) => {
                     clearInterval(timerId2);
                 } 
             }
+
+
+            //отправить сообщение в админ-панель
+            const text = 'Ваша заявка принята! Мы свяжемся с вами в ближайшее время.'
+            
+            const convId = await sendMessageAdmin(text, "text", chatId, messageId, null, false)
+            
+            // Подключаемся к серверу socket
+            let socket = io(socketUrl);
+            socket.emit("addUser", chatId)
+            socket.emit("sendAdminSpec", {
+                 senderId: chatTelegramId,
+                 receiverId: chatId,
+                 text: text,
+                 convId: convId,
+                 messageId: messageId,
+            })                        
              
             return bot.sendMessage(chatId, 'Ваша заявка принята! Мы свяжемся с вами в ближайшее время.')
         } 
-        
+
         if (exist2.dataValues.otclick > 1) {
             //отправить сообщение в админ-панель
             const convId = await sendMessageAdmin('Вы ' + exist2.dataValues.otclick + '-й раз откликнулись на заявку', "text", chatId, null, null, false)
