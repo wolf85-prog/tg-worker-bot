@@ -898,7 +898,7 @@ bot.on('message', async (msg) => {
                   process.exit(2);
                 }
               
-                pm2.restart('botworker.js', function(err) {
+                pm2.restart('botworker', function(err) {
                   pm2.disconnect();   // Disconnects from PM2
                   if (err) throw err
                 });
