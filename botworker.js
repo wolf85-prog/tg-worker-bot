@@ -2075,7 +2075,7 @@ bot.on('message', async (msg) => {
 
 
             //отправить сообщение в админ-панель
-            const text = 'Ваша заявка принята! Мы свяжемся с вами в ближайшее время.'
+            const text = 'Заявка принята! Мы свяжемся с вами в ближайшее время.'
             
             const convId = await sendMessageAdmin(text, "text", chatId, messageId, null, false)
             
@@ -2090,7 +2090,7 @@ bot.on('message', async (msg) => {
                  messageId: messageId,
             })                        
              
-            return bot.sendMessage(chatId, 'Ваша заявка принята! Мы свяжемся с вами в ближайшее время.')
+            return bot.sendMessage(chatId, 'Заявка принята! Мы свяжемся с вами в ближайшее время.')
         } 
 
         if (exist2.dataValues.otclick > 1) {
