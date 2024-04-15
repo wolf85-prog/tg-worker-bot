@@ -900,7 +900,16 @@ bot.on('message', async (msg) => {
                 }
 
                 console.log("Connect pm2...")
-              
+
+                pm2.stop({
+                    script    : 'botworker.js',
+                    name      : 'botworker'
+                  }, function(err, apps) {
+                    if (err) {
+                      console.error(err)
+                      return pm2.disconnect()
+                    }
+                })
                 // pm2.restart('botworker', (err, proc) => {
                 //   pm2.disconnect();   // Disconnects from PM2
                 //   //if (err) throw err
