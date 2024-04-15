@@ -888,6 +888,25 @@ bot.on('message', async (msg) => {
             }
         }
 //---------------------------------------------------------------------------------------
+
+         //update worker from notion
+         if (text === '/restartbot') {
+
+            console.log("Перезагрузка бота...")
+            pm2.connect(function(err) {
+                if (err) {
+                  console.error(err);
+                  process.exit(2);
+                }
+
+                console.log("Connect pm2...")
+              
+                // pm2.restart('botworker', function(err) {
+                //   pm2.disconnect();   // Disconnects from PM2
+                //   if (err) throw err
+                // });
+            });
+         }
         //update worker from notion
         if (text === '/profile') {
 
