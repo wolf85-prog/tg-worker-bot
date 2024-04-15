@@ -1037,8 +1037,8 @@ bot.on('message', async (msg) => {
                 }) 
                 
                 // 2
-                console.log("START UPDATE AVATAR")
-                setTimeout(async()=> {  
+                //setTimeout(async()=> {  
+                    console.log("START UPDATE AVATAR")
                     workers.map(async(worker, i)=> {
                         let specArr = []
                         setTimeout(async()=> {  
@@ -1101,9 +1101,9 @@ bot.on('message', async (msg) => {
                                 console.log("Специалист не найден в Notion!", worker.chatId, i) 
                             }              
 
-                        }, 6000 * ++i)   
+                        }, 1206000 * ++i)   
                     })
-                }, 1200000) //20 минут
+                //}, 1200000) //20 минут
             } catch (error) {
                 console.log(error.message)
             }
