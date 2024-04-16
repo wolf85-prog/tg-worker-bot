@@ -2014,11 +2014,7 @@ bot.on('message', async (msg) => {
             },
         })
 
-        //if ((exist2.dataValues.otclick < 2) || ( Math.abs(new Date(exist.dataValues.updatedAt).getTime()-new Date().getTime()) )>3600000) {
         if ((exist2[exist2.length-1].dataValues.otclick < 2) || ( Math.abs(new Date(exist[exist.length-1].dataValues.updatedAt).getTime()-new Date().getTime()) ) > 3600000) { //3600000) {
-            //if (( Math.abs(new Date(exist[exist.length-1].dataValues.updatedAt).getTime()-new Date().getTime()) )>3600000) {
-            //БД
-            // const res = await Pretendent.create(pretendent)
             
             //ноушен
             const blockId = await getBlocksP(projectId); 
