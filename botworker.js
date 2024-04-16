@@ -1964,7 +1964,7 @@ bot.on('message', async (msg) => {
 
         console.log("exist: ", exist)
 
-        if (!exist) {
+        if (exist.length === 0) {
             const res = await Pretendent.create(pretendent)
             console.log("Претендент в БД: ", res.dataValues.id)
         //} else if (Math.abs(new Date(exist[exist.length-1]?.dataValues.updatedAt).getTime()-new Date().getTime())>3600000) {
