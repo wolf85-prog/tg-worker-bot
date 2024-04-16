@@ -2142,6 +2142,22 @@ bot.on('message', async (msg) => {
         console.log("project: ", data)
         const projectId = project[1]
 
+        //отправить сообщение в админ-панель
+        const convId = await sendMyMessage('Пользователь нажал кнопку "Отклонить" в рассылке', "text", chatId, messageId, null, true)
+
+        // Подключаемся к серверу socket
+        let socket = io(socketUrl);
+        socket.emit("addUser", chatId)
+        
+        socket.emit("sendMessageSpec", {
+            senderId: chatId,
+            receiverId: chatTelegramId,
+            text: 'Пользователь нажал кнопку "Отклонить" в рассылке',
+            convId: convId,
+            messageId: messageId,
+            isBot: true,
+        })
+
 
         //специалист
         const workerId = await getWorkerChatId(chatId)
@@ -2224,41 +2240,25 @@ bot.on('message', async (msg) => {
                 } 
             }
 
-            //отправить сообщение в админ-панель
-            const convId = await sendMyMessage('Пользователь нажал кнопку "Отклонить" в рассылке', "text", chatId, messageId, null, true)
-
-            // Подключаемся к серверу socket
-            let socket = io(socketUrl);
-            socket.emit("addUser", chatId)
-            socket.emit("sendMessageSpec", {
-                senderId: chatId,
-                receiverId: chatTelegramId,
-                text: 'Пользователь нажал кнопку "Отклонить" в рассылке',
-                convId: convId,
-                messageId: messageId,
-                isBot: true,
-            })
-
-        
             return bot.sendMessage(chatId, 'Хорошо, тогда в следующий раз!')
         }
 
-        //отправить сообщение в админ-панель
-        const convId = await sendMyMessage('Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить', "text", chatId, null, null, true)
+        if (exist2.dataValues.otclick > 1) {
+            //отправить сообщение в админ-панель
+            const convId = await sendMessageAdmin('Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить', "text", chatId, null, null, true)
 
-        // Подключаемся к серверу socket
-        let socket = io(socketUrl);
-        socket.emit("addUser", chatId)
-        socket.emit("sendMessageSpec", {
-            senderId: chatId,
-            receiverId: chatTelegramId,
-            text: 'Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить',
-            convId: convId,
-            messageId: null,
-            isBot: true,
-        })
-        
-        return bot.sendMessage(chatId, 'Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить')    
+            // Подключаемся к серверу socket
+
+            socket.emit("sendAdminSpec", {
+                senderId: chatTelegramId,
+                receiverId: chatId,
+                text: 'Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить',
+                convId: convId,
+                messageId: null,
+                isBot: true,
+            })
+            return bot.sendMessage(chatId, 'Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить')
+        }    
     }
 
 
