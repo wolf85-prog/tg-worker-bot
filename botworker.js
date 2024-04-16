@@ -1935,6 +1935,7 @@ bot.on('message', async (msg) => {
         // Подключаемся к серверу socket
         let socket = io(socketUrl);
         socket.emit("addUser", chatId)
+
         socket.emit("sendMessageSpec", {
             senderId: chatId,
             receiverId: chatTelegramId,
@@ -1967,12 +1968,13 @@ bot.on('message', async (msg) => {
         if (exist.length === 0) {
             const res = await Pretendent.create(pretendent)
             console.log("Претендент в БД: ", res.dataValues.id)
-        //} else if (Math.abs(new Date(exist[exist.length-1]?.dataValues.updatedAt).getTime()-new Date().getTime())>3600000) {
-        //    const res = await Pretendent.create(pretendent)
-         //   console.log("Претендент в БД: ", res.dataValues.id)
+
+        } else if (Math.abs(new Date(exist[exist.length-1]?.dataValues.updatedAt).getTime()-new Date().getTime()) > 120000) { //3600000) {
+           const res = await Pretendent.create(pretendent)
+           console.log("Претендент еще раз добавлен в БД: ", res.dataValues.id)
+
         } else {
-            //const res = await Pretendent.create(pretendent)
-            //console.log("Еще претендент в БД: ", res.dataValues.id)
+
             console.log('Претендент уже создан в БД для этого проекта!')
             
             //проверяем отклонил ли специалист заявку в прошлый раз
@@ -2013,7 +2015,7 @@ bot.on('message', async (msg) => {
         })
 
         //if ((exist2.dataValues.otclick < 2) || ( Math.abs(new Date(exist.dataValues.updatedAt).getTime()-new Date().getTime()) )>3600000) {
-        if ((exist2[exist2.length-1].dataValues.otclick < 2) || ( Math.abs(new Date(exist[exist.length-1].dataValues.updatedAt).getTime()-new Date().getTime()) )>3600000) {
+        if ((exist2[exist2.length-1].dataValues.otclick < 2) || ( Math.abs(new Date(exist[exist.length-1].dataValues.updatedAt).getTime()-new Date().getTime()) ) > 120000) { //3600000) {
             //if (( Math.abs(new Date(exist[exist.length-1].dataValues.updatedAt).getTime()-new Date().getTime()) )>3600000) {
             //БД
             // const res = await Pretendent.create(pretendent)
@@ -2028,17 +2030,17 @@ bot.on('message', async (msg) => {
             //Добавить специалиста в таблицу Претенденты (Ноушен)
             //найти претендента в ноушене
             if (blockId) {
-                const worker = await getWorkerPretendent(blockId, workerId)
-                console.log("worker: ", worker)
+                //const worker = await getWorkerPretendent(blockId, workerId)
+                //console.log("worker: ", worker)
                     
                 //обновить специалиста в таблице Претенденты в Ноушене если есть
-                if (worker.length > 0) {
-                    await updatePretendent2(worker[0]?.id); //удалить претендента
-                    await addPretendent(blockId, workerId, dateNow); //добавить претендента
-                    console.log("Специалист уже есть в таблице Претенденты!") 
-                } else {                 
+                // if (worker.length > 0) {
+                //     await updatePretendent2(worker[0]?.id); //удалить претендента
+                //     await addPretendent(blockId, workerId, dateNow); //добавить претендента
+                //     console.log("Специалист уже есть в таблице Претенденты!") 
+                // } else {                 
                     await addPretendent(blockId, workerId, dateNow);
-                } 
+                //} 
 
                 //await addPretendent(blockId, workerId, dateNow); //добавить претендента
 
@@ -2048,7 +2050,7 @@ bot.on('message', async (msg) => {
                 // повторить с интервалом 2 минуту (проверка статуса претендента)
                 let timerId2 = setInterval(async() => {
                     const worker = await getWorkerPretendent(blockId, workerId)
-                    console.log("worker status: ", i, worker)
+                    console.log("worker status: ", i, worker, chatId)
 
                     const projectName = await getProjectName(projectId)
                     const user = await Worker.findOne({where:{chatId: chatId.toString()}})
@@ -2075,8 +2077,6 @@ bot.on('message', async (msg) => {
                         const convId = await sendMessageAdmin(text, "text", chatId, messageId, null, false)
                         
                         // Подключаемся к серверу socket
-                        let socket = io(socketUrl);
-                        socket.emit("addUser", chatId)
                         socket.emit("sendAdminSpec", {
                             senderId: chatTelegramId,
                             receiverId: chatId,
@@ -2107,8 +2107,6 @@ bot.on('message', async (msg) => {
             const convId = await sendMessageAdmin(text, "text", chatId, messageId, null, false)
             
             // Подключаемся к серверу socket
-            let socket = io(socketUrl);
-            socket.emit("addUser", chatId)
             socket.emit("sendAdminSpec", {
                  senderId: chatTelegramId,
                  receiverId: chatId,
@@ -2125,8 +2123,6 @@ bot.on('message', async (msg) => {
             const convId = await sendMessageAdmin('Вы ' + exist2[exist2.length-1].dataValues.otclick + '-й раз откликнулись на заявку', "text", chatId, null, null, false)
 
             // Подключаемся к серверу socket
-            let socket = io(socketUrl);
-            socket.emit("addUser", chatId)
             socket.emit("sendAdminSpec", {
                 senderId: chatTelegramId,
                 receiverId: chatId,
@@ -2135,10 +2131,8 @@ bot.on('message', async (msg) => {
                 messageId: null,
                 isBot: false,
             })
-        }   
-
-        return bot.sendMessage(chatId, 'Вы ' + exist2[exist2.length-1].dataValues.otclick + '-й раз откликнулись на заявку') 
-        
+            return bot.sendMessage(chatId, 'Вы ' + exist2[exist2.length-1].dataValues.otclick + '-й раз откликнулись на заявку')
+        }       
     }
 //----------------------------------------------------------------
     //нажатие на кнопку "Отклонить"
