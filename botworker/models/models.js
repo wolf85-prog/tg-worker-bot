@@ -27,6 +27,8 @@ const Worker = sequelize.define('worker', {
     avatar: {type: DataTypes.STRING},
     comment: {type: DataTypes.TEXT}, 
     rank: {type: DataTypes.INTEGER}, 
+    block: {type: DataTypes.BOOLEAN},
+    deleted: {type: DataTypes.BOOLEAN},
 })
 
 const Message = sequelize.define('wmessage', {
@@ -110,6 +112,15 @@ const Speccash = sequelize.define('speccash', {
     podtverStavka: {type: DataTypes.BOOLEAN},  //подтвержденная ставка
 })
 
+const Canceled = sequelize.define('canceled', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true}, 
+    projectId: {type: DataTypes.STRING},  //id проекта
+    workerId: {type: DataTypes.STRING}, //id специалиста;
+    receiverId: {type: DataTypes.STRING}, //чат-id получателя;
+    blockId: {type: DataTypes.STRING}, //id таблицы Претенденты;
+    cancel: {type: DataTypes.BOOLEAN}, //отказано
+})
+
 module.exports = {
     UserBot, 
     Worker,
@@ -120,5 +131,6 @@ module.exports = {
     Projectcash,
     Smetacash,
     Speccash,
+    Canceled,
 }
 

@@ -69,7 +69,7 @@ const pm2 = require('pm2');
 
 //подключение к БД PostreSQL
 const sequelize = require('./botworker/connections/db')
-const {UserBot, Message, Conversation, Worker, Pretendent, Projectcash, Smetacash} = require('./botworker/models/models');
+const {UserBot, Message, Conversation, Worker, Pretendent, Projectcash, Smetacash, Canceled} = require('./botworker/models/models');
 const addWorker = require("./botworker/common/addWorker");
 const getWorkerNotion = require("./botworker/common/getWorkerNotion");
 const addPassport = require("./botworker/common/addPassport");
@@ -2030,19 +2030,20 @@ bot.on('message', async (msg) => {
             //Добавить специалиста в таблицу Претенденты (Ноушен)
             //найти претендента в ноушене
             if (blockId) {
-                //const worker = await getWorkerPretendent(blockId, workerId)
-                //console.log("worker: ", worker)
-                    
-                //обновить специалиста в таблице Претенденты в Ноушене если есть
-                // if (worker.length > 0) {
-                //     await updatePretendent2(worker[0]?.id); //удалить претендента
-                //     await addPretendent(blockId, workerId, dateNow); //добавить претендента
-                //     console.log("Специалист уже есть в таблице Претенденты!") 
-                // } else {                 
-                    await addPretendent(blockId, workerId, dateNow);
-                //} 
 
-                //await addPretendent(blockId, workerId, dateNow); //добавить претендента
+                await addPretendent(blockId, workerId, dateNow); //добавить претендента
+
+                //новый интервал слежения статуса отказа
+                const otkaz = {
+                    projectId: projectId, 
+                    workerId: workerId, 
+                    receiverId: chatId,  
+                    blockId: blockId,
+                    cancel: false,    
+                }
+
+                const res = await Canceled.create(otkaz)
+                console.log("Слежение за статусом в БД: ", res.dataValues.id)
 
                 var minutCount = 0;
                 let i = 0;
@@ -2058,6 +2059,16 @@ bot.on('message', async (msg) => {
                     if (worker && worker[0].status === "Отказано") {
                         const currentHours = new Date(new Date().getTime()+10800000).getHours()
                         console.log("worker status: ", i, currentHours)
+
+                        const res = await Canceled.update({ 
+                            cancel: true  
+                        },
+                        {
+                            where: {
+                                projectId: projectId,
+                                workerId: workerId,
+                            },
+                        })
 
                         let hello = ''
                         if (currentHours >= 6 && currentHours < 12) {
