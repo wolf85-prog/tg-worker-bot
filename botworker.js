@@ -436,9 +436,9 @@ bot.getUpdates().then((updates) => {
         bot.sendMessage(updates[0].message.chat.id, 'Process restarted');
       }
     }
-  });
-  bot.stopPolling();
-  bot.startPolling();
+});
+bot.stopPolling();
+bot.startPolling();
 
 //-----------------------------------------------------------------------------------------
 // START (обработка команд и входящих сообщени от пользователя)
