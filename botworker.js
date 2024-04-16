@@ -1976,8 +1976,8 @@ bot.on('message', async (msg) => {
             console.log('Претендент уже создан в БД для этого проекта!')
             
             //проверяем отклонил ли специалист заявку в прошлый раз
-            if (exist.dataValues.accept) {   
-            //if (exist[exist.length-1].dataValues.accept) {         
+            //if (exist.dataValues.accept) {   
+            if (exist[exist.length-1].dataValues.accept) {         
                 const res = await Pretendent.update({            
                     accept:  false,
                     otclick:  1
@@ -1990,8 +1990,8 @@ bot.on('message', async (msg) => {
                 })
             //или было нажато принять
             } else {
-                //const count = exist[exist.length-1].dataValues.otclick + 1
-                const count = exist.dataValues.otclick + 1
+                const count = exist[exist.length-1].dataValues.otclick + 1
+                //const count = exist.dataValues.otclick + 1
                 const res = await Pretendent.update({ 
                     otclick: count  
                 },
@@ -2005,15 +2005,15 @@ bot.on('message', async (msg) => {
         }
 
 
-        const exist2 = await Pretendent.findOne({
+        const exist2 = await Pretendent.findAll({
             where: {
                 projectId: projectId,
                 workerId: workerId,
             },
         })
 
-        if ((exist2.dataValues.otclick < 2) || ( Math.abs(new Date(exist.dataValues.updatedAt).getTime()-new Date().getTime()) )>3600000) {
-            //if ((exist2[exist2.length-1].dataValues.otclick < 2) || ( Math.abs(new Date(exist[exist.length-1].dataValues.updatedAt).getTime()-new Date().getTime()) )>3600000) {
+        //if ((exist2.dataValues.otclick < 2) || ( Math.abs(new Date(exist.dataValues.updatedAt).getTime()-new Date().getTime()) )>3600000) {
+        if ((exist2[exist2.length-1].dataValues.otclick < 2) || ( Math.abs(new Date(exist[exist.length-1].dataValues.updatedAt).getTime()-new Date().getTime()) )>3600000) {
             //if (( Math.abs(new Date(exist[exist.length-1].dataValues.updatedAt).getTime()-new Date().getTime()) )>3600000) {
             //БД
             // const res = await Pretendent.create(pretendent)
@@ -2120,9 +2120,9 @@ bot.on('message', async (msg) => {
             return bot.sendMessage(chatId, 'Заявка принята! Мы свяжемся с вами в ближайшее время.')
         } 
 
-        if (exist2.dataValues.otclick > 1) {
+        if (exist2[exist2.length-1].dataValues.otclick > 1) {
             //отправить сообщение в админ-панель
-            const convId = await sendMessageAdmin('Вы ' + exist2.dataValues.otclick + '-й раз откликнулись на заявку', "text", chatId, null, null, false)
+            const convId = await sendMessageAdmin('Вы ' + exist2[exist2.length-1].dataValues.otclick + '-й раз откликнулись на заявку', "text", chatId, null, null, false)
 
             // Подключаемся к серверу socket
             let socket = io(socketUrl);
@@ -2130,14 +2130,14 @@ bot.on('message', async (msg) => {
             socket.emit("sendAdminSpec", {
                 senderId: chatTelegramId,
                 receiverId: chatId,
-                text: 'Вы ' + exist2.dataValues.otclick + '-й раз откликнулись на заявку',
+                text: 'Вы ' + exist2[exist2.length-1].dataValues.otclick + '-й раз откликнулись на заявку',
                 convId: convId,
                 messageId: null,
                 isBot: false,
             })
         }   
 
-        return bot.sendMessage(chatId, 'Вы ' + exist2.dataValues.otclick + '-й раз откликнулись на заявку') 
+        return bot.sendMessage(chatId, 'Вы ' + exist2[exist2.length-1].dataValues.otclick + '-й раз откликнулись на заявку') 
         
     }
 //----------------------------------------------------------------
