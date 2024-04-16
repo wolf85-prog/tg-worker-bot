@@ -3,7 +3,11 @@ require("dotenv").config();
 //telegram api
 const TelegramBot = require('node-telegram-bot-api');
 const token = process.env.TELEGRAM_API_TOKEN
-const bot = new TelegramBot(token, {polling: true});
+const bot = new TelegramBot(token, {
+    polling: {
+        autoStart: false,
+    }
+});
 
 // web-приложение
 const webAppUrl = process.env.WEB_APP_URL;
@@ -419,6 +423,22 @@ app.post('/web-stavka', async (req, res) => {
         return res.status(500).json({})
     }
 })
+
+
+bot.getUpdates().then((updates) => {
+    if (updates[0] !== undefined) {
+      if (updates[0].message.text.includes('/restart')) {
+        bot.getUpdates({
+          timeout: 1,
+          limit: 0,
+          offset: updates[0].update_id + 1
+        });
+        bot.sendMessage(updates[0].message.chat.id, 'Process restarted');
+      }
+    }
+  });
+  bot.stopPolling();
+  bot.startPolling();
 
 //-----------------------------------------------------------------------------------------
 // START (обработка команд и входящих сообщени от пользователя)
@@ -890,16 +910,16 @@ bot.on('message', async (msg) => {
 //---------------------------------------------------------------------------------------
         if (text === '/restart') {
             const chat_id = msg.chat.id;
-            let proc = match[1];
+            let proc = 'botworker';
             pm2.restart(proc, function(err, pr) {
-              if (err) {
-                error(err);
-              }
-              for (let proc of pr) {
+                if (err) {
+                    errorTelegram(err);
+                }
+
                 bot.sendMessage(chat_id, `Process <i>${proc.name}</i> has been restarted`, {
-                  parse_mode: 'html'
+                    parse_mode: 'html'
                 });
-              }
+
             });
         }
 
@@ -2288,6 +2308,17 @@ const delay = async(ms) => {
     });
 }
 
+function errorTelegram(error) {
+    bot.stopPolling();
+    bot.getUpdates({
+      timeout: 1,
+      limit: 0,
+      offset: bot._polling.options.params.offset
+    });
+    console.error(error);
+    pm2.disconnect();
+  }
+
 
 //-------------------------------------------------------------------------------------------------------------------------------
 const PORT = process.env.PORT || 8001;
@@ -2349,8 +2380,7 @@ const start = async () => {
                 i++ // счетчик интервалов
             }, 600000); //каждые 10 минут
 
-            // ПРОФИЛЬ (обновить)
-            // повторить с интервалом 24 часа
+            // ПРОФИЛЬ (обновить) повторить с интервалом 24 часа
             let timerId2 = setInterval(async() => {
                 try {
                     console.log("START GET WORKERS ALL...")
