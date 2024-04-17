@@ -2605,7 +2605,7 @@ const start = async () => {
                             const worker = await getWorkerPretendent(blockId, workerId)
                             console.log("WORKER: ", worker)
 
-                            if (worker && worker[0].status === "Отказано") {
+                            if (worker && worker[worker.length-1].status === "Отказано") {
                                 const currentHours = new Date(new Date().getTime()+10800000).getHours()
                                 console.log("worker status: ", currentHours)
         
@@ -2638,6 +2638,8 @@ const start = async () => {
                                 const convId = await sendMessageAdmin(text, "text", chatId, null, null, false)
                                                         
                                 // Подключаемся к серверу socket
+                                let socket = io(socketUrl);
+                                socket.emit("addUser", chatId)
                                 socket.emit("sendAdminSpec", {
                                     senderId: chatTelegramId,
                                     receiverId: chatId,
