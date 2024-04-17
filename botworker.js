@@ -2577,6 +2577,7 @@ const start = async () => {
 
             //запуск сканирования отказа специалисту
             try {
+                console.log("Запускаю сканирования отказа специалисту...")
                 //получить все запуски сканирования отказов
                 const otkazi = await Canceled.findAll({
                     order: [
@@ -2594,6 +2595,7 @@ const start = async () => {
                         const blockId = item.dataValues.blockId
                         const workerId = item.dataValues.workerId
                         const projectId = item.dataValues.projectId
+                        const chatId = item.dataValues.receiverId
 
                         // повторить с интервалом 2 минуту (проверка статуса претендента)
                         let timerId = setInterval(async() => {
