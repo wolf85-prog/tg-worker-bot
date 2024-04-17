@@ -2601,7 +2601,7 @@ const start = async () => {
                         const user = await Worker.findOne({where:{chatId: chatId.toString()}})
 
                         // повторить с интервалом 2 минуту (проверка статуса претендента)
-                        let timerId = setInterval(async() => {
+                        let timerId2 = setInterval(async() => {
                             const worker = await getWorkerPretendent(blockId, workerId)
                             console.log("WORKER: ", worker)
 
@@ -2643,7 +2643,7 @@ const start = async () => {
                                     receiverId: chatId,
                                     text: text,
                                     convId: convId,
-                                    messageId: messageId,
+                                    messageId: null,
                                 }) 
                                 clearInterval(timerId2); 
                                 
