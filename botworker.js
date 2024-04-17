@@ -1977,8 +1977,7 @@ bot.on('message', async (msg) => {
 
             console.log('Претендент уже создан в БД для этого проекта!')
             
-            //проверяем отклонил ли специалист заявку в прошлый раз
-            //if (exist.dataValues.accept) {   
+            //проверяем отклонил ли специалист заявку в прошлый раз 
             if (exist[exist.length-1].dataValues.accept) {         
                 const res = await Pretendent.update({            
                     accept:  false,
@@ -1993,7 +1992,6 @@ bot.on('message', async (msg) => {
             //или было нажато принять
             } else {
                 const count = exist[exist.length-1].dataValues.otclick + 1
-                //const count = exist.dataValues.otclick + 1
                 const res = await Pretendent.update({ 
                     otclick: count  
                 },
@@ -2336,7 +2334,7 @@ const start = async () => {
         await sequelize.authenticate()
         await sequelize.sync()
         
-        httpsServer.listen(PORT, () => {
+        httpsServer.listen(PORT, async() => {
             console.log('HTTPS Server BotWorker running on port ' + PORT);
 
 
@@ -2346,7 +2344,6 @@ const start = async () => {
 
             // повторить с интервалом 10 минут
             let timerId = setInterval(async() => {
-
                 console.log("START GET PROJECTS ALL...")
                 const projects = await getProjectsAll()
                 //console.log(projects)
@@ -2577,6 +2574,28 @@ const start = async () => {
             // if (minutCount == 43200) {
             //     clearInterval(timerId);
             // } 
+
+            //запуск сканирования отказа специалисту
+            try {
+                //получить все запуски сканирования отказов
+                const otkazi = await Canceled.findAll({
+                    order: [
+                        ['id', 'ASC'],
+                    ],
+                    where: {
+                        cancel: false
+                    }
+                })
+
+                console.log("otkazi: ", otkazi)
+
+                otkazi.forEach(async (item, index)=> {
+
+                })
+                
+            } catch (error) {
+                console.log(error.message)
+            }
         });
 
     } catch (error) {
