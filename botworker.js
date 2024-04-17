@@ -2592,17 +2592,18 @@ const start = async () => {
 
                 if (otkazi && otkazi.length > 0) {
                     otkazi.forEach(async (item, index)=> {
+                        console.log("Цикл ", index+1)
                         const blockId = item.dataValues.blockId
                         const workerId = item.dataValues.workerId
                         const projectId = item.dataValues.projectId
                         const chatId = item.dataValues.receiverId
+                        const projectName = await getProjectName(projectId)
+                        const user = await Worker.findOne({where:{chatId: chatId.toString()}})
 
                         // повторить с интервалом 2 минуту (проверка статуса претендента)
                         let timerId = setInterval(async() => {
                             const worker = await getWorkerPretendent(blockId, workerId)
-                                
-                            const projectName = await getProjectName(projectId)
-                            const user = await Worker.findOne({where:{chatId: chatId.toString()}})
+                            console.log("WORKER: ", worker)
 
                             if (worker && worker[0].status === "Отказано") {
                                 const currentHours = new Date(new Date().getTime()+10800000).getHours()
