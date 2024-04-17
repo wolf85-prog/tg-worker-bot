@@ -2632,8 +2632,8 @@ const start = async () => {
 
                                 //отправить сообщение в админ-панель
                                 const text = `${hello}, ${user.dataValues.username}! 
-    Спасибо, что откликнулись на проект «${projectName.properties.Name.title[0].plain_text}». В настоящий момент основной состав уже сформирован. 
-    Будем рады сотрудничеству на новых проектах!`
+Спасибо, что откликнулись на проект «${projectName.properties.Name.title[0].plain_text}». В настоящий момент основной состав уже сформирован. 
+Будем рады сотрудничеству на новых проектах!`
                             
                                 const convId = await sendMessageAdmin(text, "text", chatId, null, null, false)
                                                         
