@@ -2634,7 +2634,7 @@ const start = async () => {
     Спасибо, что откликнулись на проект «${projectName.properties.Name.title[0].plain_text}». В настоящий момент основной состав уже сформирован. 
     Будем рады сотрудничеству на новых проектах!`
                             
-                                const convId = await sendMessageAdmin(text, "text", chatId, messageId, null, false)
+                                const convId = await sendMessageAdmin(text, "text", chatId, null, null, false)
                                                         
                                 // Подключаемся к серверу socket
                                 socket.emit("sendAdminSpec", {
