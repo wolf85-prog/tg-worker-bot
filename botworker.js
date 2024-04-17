@@ -2050,7 +2050,7 @@ bot.on('message', async (msg) => {
                     const projectName = await getProjectName(projectId)
                     const user = await Worker.findOne({where:{chatId: chatId.toString()}})
 
-                    if (worker && worker[0].status === "Отказано") {
+                    if (worker && worker.find(item => item.status === "Отказано")) {
                         const currentHours = new Date(new Date().getTime()+10800000).getHours()
                         console.log("worker status: ", i, currentHours)
 
@@ -2605,7 +2605,7 @@ const start = async () => {
                             const worker = await getWorkerPretendent(blockId, workerId)
                             console.log("WORKER: ", worker)
 
-                            if (worker && worker[0].status === "Отказано") {
+                            if (worker && worker.find(item => item.status === "Отказано")) {
                                 const currentHours = new Date(new Date().getTime()+10800000).getHours()
                                 console.log("worker status: ", currentHours)
         
