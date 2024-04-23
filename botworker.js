@@ -1194,9 +1194,12 @@ bot.on('message', async (msg) => {
             
             console.log("urlAvatar: ", urlAvatar)
 
+            const notion = await getWorkerNotion(chatId)
+            console.log("notion: ", notion)
+
             //сохраниь в бд ноушен
             const res = await addAvatar(workerId, urlAvatar)
-            console.log("res upload avatar: ", res)
+            console.log("res upload avatar:  ", res)
         }
 //-----------------------------------------------------------------------------------------
         if (text === '/editspec') {
