@@ -26,7 +26,7 @@ module.exports = async function addAvatar(pageId, url_image) {
         const worker = response.results.map((page) => {
             return {
                 id: page.id,
-                image: page.image ? page.image?.file.url : null,
+                image: page.image?.file ? page.image?.file.url : page.image.external,
                 image2: page.image ? page.image.external: null,
             };
         });
