@@ -107,6 +107,7 @@ const getWorkerChatId = require("./botworker/common/getWorkerChatId");
 const updatePretendentAlt = require("./botworker/common/updatePretendentAlt");
 const getProjectName = require("./botworker/common/getProjectName");
 const sendMessageAdmin = require("./botworker/common/sendMessageAdmin");
+const addAvatar = require("./botworker/common/addAvatar");
 
 
 //--------------------------------------------------------------------------------------------------------
@@ -1172,9 +1173,30 @@ bot.on('message', async (msg) => {
         }
 //---------------------------------------------------------------------------------------
         if (text === '/addImage') {
-            const img = 'https://proj.uley.team/upload/2023-10-14T16:19:25.849Z.png'
-            const pageId = '38eaccfbe06740d1a136e0d123905ebf'
-            const res = await addImage(img, pageId)
+            //const img = 'https://proj.uley.team/upload/2023-10-14T16:19:25.849Z.png'
+            //const pageId = '38eaccfbe06740d1a136e0d123905ebf'
+            //const res = await addImage(img, pageId)
+
+            const currentMonth = new Date().getMonth() + 1
+            console.log("currentMonth: ", currentMonth)
+            let urlAvatar = ''
+                    
+            if (currentMonth === 4) {
+                //апрель
+                urlAvatar = 'https://proj.uley.team/upload/2024-04-23T08:08:31.547Z.jpg'
+            } else if (currentMonth === 5) {
+                //май
+                urlAvatar = 'https://proj.uley.team/upload/2024-04-23T08:09:19.513Z.jpg' 
+            } else if (currentMonth === 6) {
+                //май
+                urlAvatar = 'https://proj.uley.team/upload/2024-04-23T08:09:53.184Z.jpg'
+            }   
+            
+            console.log("urlAvatar: ", urlAvatar)
+
+            //сохраниь в бд ноушен
+            const res = await addAvatar(workerId, urlAvatar)
+            console.log("res upload avatar: ", res)
         }
 //-----------------------------------------------------------------------------------------
         if (text === '/editspec') {
@@ -1768,14 +1790,32 @@ bot.on('message', async (msg) => {
                     const fio = workerFam + ' '+ workerName2
                     const age = `${dateBorn}-01-01`
 
+                    const currentMonth = new Date().getMonth() + 1
+                    let urlAvatar = ''
+                    
+                    if (currentMonth === 4) {
+                        //апрель
+                        urlAvatar = 'https://proj.uley.team/upload/2024-04-23T08:08:31.547Z.jpg'
+                    } else if (currentMonth === 5) {
+                        //май
+                        urlAvatar = 'https://proj.uley.team/upload/2024-04-23T08:09:19.513Z.jpg' 
+                    } else if (currentMonth === 6) {
+                        //май
+                        urlAvatar = 'https://proj.uley.team/upload/2024-04-23T08:09:53.184Z.jpg'
+                    }
+
+
                     console.log(fio, chatId, age, phone2, specArr2, city2, friend2)
 
                     //сохраниь в бд ноушен
                     const notion = await getWorkerNotion(chatId)
                     console.log("notion specialist: ", notion)
                     if (notion.length === 0) {
-                        await addWorker(fio, chatId, age, phone2, specArr2, city2, friend2)
+                        const workerId = await addWorker(fio, chatId, age, phone2, specArr2, city2, friend2)
                         console.log('Специалист успешно добавлен в Notion!')
+
+                       //const res = await addAvatar(workerId, urlAvatar)
+                       //console.log("res upload avatar: ", res)
                     } else {
                         console.log('Специалист уже существует в Notion!')
                     }
