@@ -1198,7 +1198,7 @@ bot.on('message', async (msg) => {
             console.log("notion: ", notion)
 
             //сохраниь в бд ноушен
-            const res = await addAvatar(workerId, urlAvatar)
+            const res = await addAvatar(notion[0].id, urlAvatar)
             console.log("res upload avatar:  ", res)
         }
 //-----------------------------------------------------------------------------------------
