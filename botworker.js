@@ -1195,7 +1195,7 @@ bot.on('message', async (msg) => {
             console.log("urlAvatar: ", urlAvatar)
 
             const notion = await getWorkerNotion(chatId)
-            console.log("notion: ", notion)
+            console.log("notion id: ", notion[0].id)
 
             //сохраниь в бд ноушен
             const res = await addAvatar(notion[0].id, urlAvatar)

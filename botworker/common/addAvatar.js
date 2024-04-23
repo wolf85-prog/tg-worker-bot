@@ -7,21 +7,35 @@ const databaseWorkersId = process.env.NOTION_DATABASE_WORKERS_ID
 module.exports = async function addAvatar(pageId, url_image) {
 
     try {
+        // const response = await notion.blocks.children.list({
+        //     block_id: pageId,
+
+        //     page: {
+        //         "image": {
+        //             "type": "file",
+        //             "url": url_image,
+        //         },
+
+        //     },
+        // })
+
         const response = await notion.blocks.children.list({
             block_id: pageId,
+        });
 
-            page: {
-                "image": {
-                    "type": "file",
-                    "url": url_image,
-                },
+        const worker = response.results.map((page) => {
+            return {
+                id: page.id,
+                image: page.image ? page.image?.file.url : null,
+                //image: page.image,
+            };
+        });
 
-            },
-        })
+        console.log("worker: ", worker)
+        //const res_id = response.id;
 
-        const res_id = response.id;
-
-        return res_id;
+        //return res_id;
+        return worker;
 
     } catch (error) {
         console.error(error.message)
