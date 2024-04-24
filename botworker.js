@@ -434,7 +434,7 @@ bot.getUpdates().then((updates) => {
           limit: 0,
           offset: updates[0].update_id + 1
         });
-        bot.sendMessage(updates[0].message.chat.id, 'Process restarted');
+        bot.sendMessage(updates[0].message.chat.id, 'Бот перезагружен');
       }
     }
 });
@@ -926,7 +926,18 @@ bot.on('message', async (msg) => {
 
         //update worker from notion
         if (text === '/profile') {
-            
+            let proc = 'botworker';
+            pm2.restart(proc, function(err, pr) {
+                if (err) {
+                    errorTelegram(err);
+                }
+
+                bot.sendMessage(chatId, `Process <i>${proc.name}</i> has been restarted`, {
+                    parse_mode: 'html'
+                });
+
+            });
+
             try {
                 console.log("START GET WORKERS ALL...")
                 const workers = await getWorkersAll()
