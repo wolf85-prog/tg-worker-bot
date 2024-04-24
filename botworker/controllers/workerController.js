@@ -163,7 +163,7 @@ async function getWorkerChildrenId(pageId) {
         const worker = response.results.map((page) => {
             return {
                 id: page.id,
-                image: page.image.file.url,
+                image: page.image?.file ? page.image?.file.url : page.image.external.url,
             };
         });
 
