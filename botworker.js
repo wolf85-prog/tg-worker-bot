@@ -1142,7 +1142,7 @@ bot.on('message', async (msg) => {
                                 console.log("Специалист не найден в Notion!", worker.chatId, i) 
                             }              
 
-                        }, 1206000 * ++i)   
+                        }, 1000 * ++i) //1206000 * ++i)   
                     })
                 //}, 1200000) //20 минут
             } catch (error) {
