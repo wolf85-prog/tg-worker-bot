@@ -927,16 +927,16 @@ bot.on('message', async (msg) => {
         //update worker from notion
         if (text === '/profile') {
             let proc = 'botworker';
-            pm2.restart(proc, function(err, pr) {
-                if (err) {
-                    errorTelegram(err);
-                }
+            // pm2.restart(proc, function(err, pr) {
+            //     if (err) {
+            //         errorTelegram(err);
+            //     }
 
-                bot.sendMessage(chatId, `Process <i>${proc.name}</i> has been restarted`, {
-                    parse_mode: 'html'
-                });
+            //     bot.sendMessage(chatId, `Process <i>${proc.name}</i> has been restarted`, {
+            //         parse_mode: 'html'
+            //     });
 
-            });
+            // });
 
             try {
                 console.log("START GET WORKERS ALL...")
