@@ -153,11 +153,11 @@ async function getWorkerId(id) {
 }
 
 //получить данные дочерних блоков по заданному ID
-async function getWorkerChildrenId(blockId) {
+async function getWorkerChildrenId(pageId) {
     try {
 
         const response = await notion.blocks.children.list({
-            block_id: blockId,
+            block_id: pageId,
         });
 
         const worker = response.results.map((page) => {
