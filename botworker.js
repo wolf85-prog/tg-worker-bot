@@ -1813,12 +1813,15 @@ bot.on('message', async (msg) => {
                     //сохраниь в бд ноушен
                     const notion = await getWorkerNotion(chatId)
                     console.log("notion specialist: ", notion)
+                    
                     if (notion.length === 0) {
+                        //добавить специалиста
                         const workerId = await addWorker(fio, chatId, age, phone2, specArr2, city2, friend2)
                         console.log('Специалист успешно добавлен в Notion!')
 
-                       //const res = await addAvatar(workerId, urlAvatar)
-                       //console.log("res upload avatar: ", res)
+                        //добавить аватар
+                       const res = await addAvatar(workerId, urlAvatar)
+                       console.log("res upload avatar: ", res)
                     } else {
                         console.log('Специалист уже существует в Notion!')
                     }
