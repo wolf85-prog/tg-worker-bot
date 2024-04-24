@@ -13,7 +13,7 @@ module.exports = async function addAvatar(pageId, url_image) {
             children: [ 
                 {
                     image: {
-                        "type": "file",
+                        "type": "external",
                         "external": {
                             "url": url_image,
                         }
