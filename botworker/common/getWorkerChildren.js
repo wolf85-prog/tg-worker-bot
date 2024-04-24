@@ -14,7 +14,7 @@ module.exports = async function getWorkerNotion(chatId) {
         const worker = response.results.map((page) => {
             return {
                 id: page.id,
-                image: page.image?.file ? page.image?.file.url : page.image.external.url,
+                image: page.image ? (page.image?.file ? page.image?.file.url : page.image.external.url) : null,
                 //image: page.image,
             };
         });
