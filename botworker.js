@@ -1519,7 +1519,7 @@ bot.on('message', async (msg) => {
 
         if (text === '/addworker') {
             //сохраниь в бд ноушен
-            const notion = await getWorkerNotion(chatId)
+            const notion = await getWorkerNotion('910483267')
             console.log("notion specialist: ", notion)
             
             if (notion.length === 0) {
