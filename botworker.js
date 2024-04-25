@@ -1517,6 +1517,24 @@ bot.on('message', async (msg) => {
             }
         }
 
+        if (text === '/addworker') {
+            //сохраниь в бд ноушен
+            const notion = await getWorkerNotion(chatId)
+            console.log("notion specialist: ", notion)
+            
+            if (notion.length === 0) {
+                //добавить специалиста
+                const workerId = await addWorker("Вето Виталий", '910483267', '2002', '+7 (922) 150-34-81', [], 'Екатеринбург', '')
+                console.log('Специалист успешно добавлен в Notion!')
+
+                //добавить аватар
+               const res = await addAvatar(workerId, urlAvatar)
+               console.log("res upload avatar: ", res)
+            } else {
+                console.log('Специалист уже существует в Notion!')
+            }
+        }
+
 //------------------------------------------------------------------------------------------------
 //обработка контактов
         if (msg.contact) {
