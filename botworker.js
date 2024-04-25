@@ -1528,11 +1528,27 @@ bot.on('message', async (msg) => {
                 const workerId = await addWorker("Вето Виталий", 910483267, '2002-01-01', '+7 (922) 150-34-81', [], '', null)
                 console.log('Специалист успешно добавлен в Notion!', workerId)
 
-                //добавить аватар
-               const res = await addAvatar(workerId, urlAvatar)
-               console.log("res upload avatar: ", res)
+                
             } else {
                 console.log('Специалист уже существует в Notion!')
+                const currentMonth = new Date().getMonth() + 1
+                    let urlAvatar = ''
+                    
+                    if (currentMonth === 4) {
+                        //апрель
+                        urlAvatar = 'https://proj.uley.team/upload/2024-04-23T08:08:31.547Z.jpg'
+                    } else if (currentMonth === 5) {
+                        //май
+                        urlAvatar = 'https://proj.uley.team/upload/2024-04-23T08:09:19.513Z.jpg' 
+                    } else if (currentMonth === 6) {
+                        //май
+                        urlAvatar = 'https://proj.uley.team/upload/2024-04-23T08:09:53.184Z.jpg'
+                    }
+
+                    //добавить аватар
+               const res = await addAvatar(notion[0].id, urlAvatar)
+               console.log("res upload avatar: ", res)
+
             }
         }
 
