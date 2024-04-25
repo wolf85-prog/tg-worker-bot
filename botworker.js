@@ -1519,12 +1519,13 @@ bot.on('message', async (msg) => {
 
         if (text === '/addworker') {
             //сохраниь в бд ноушен
-            const notion = await getWorkerNotion('910483267')
+            const notion = await getWorkerNotion(910483267)
             console.log("notion specialist: ", notion)
             
             if (notion.length === 0) {
+                console.log("Добавление специалиста...")
                 //добавить специалиста
-                const workerId = await addWorker("Вето Виталий", '910483267', '2002', '+7 (922) 150-34-81', [], 'Екатеринбург', '')
+                const workerId = await addWorker("Вето Виталий", 910483267, '2002', '+7 (922) 150-34-81', [], 'Екатеринбург', '')
                 console.log('Специалист успешно добавлен в Notion!', workerId)
 
                 //добавить аватар
