@@ -1153,7 +1153,7 @@ bot.on('message', async (msg) => {
         if (text === '/updateavatar') {
             //получить данные специалиста по его id
             const notion = await getWorkerNotion(chatId)
-            //console.log(JSON.stringify(notion))
+            console.log(JSON.stringify(notion))
 
             if (notion && notion.length > 0) {
                 
