@@ -1145,80 +1145,93 @@ bot.on('message', async (msg) => {
         }
 
         if (text === '/updateprof') {
+
+            const directory = "/var/www/proj.uley.team/avatars";
+
+            fs.readdir(directory, (err, files) => {
+            if (err) throw err;
+
+            for (const file of files) {
+                fs.unlink(path.join(directory, file), (err) => {
+                if (err) throw err;
+                });
+            }
+            });
+
             try {
-                console.log("START GET WORKERS ALL...")
-                const workers = await getWorkersAll()
-                console.log("workers: ", workers.length)  
+                // console.log("START GET WORKERS ALL...")
+                // const workers = await getWorkersAll()
+                // console.log("workers: ", workers.length)  
                 
                 // 2
-                    console.log("START UPDATE AVATAR")
-                    workers.map(async(worker, i)=> {
-                        let specArr = []
-                        setTimeout(async()=> {  
-                            //получить данные специалиста по его id
-                            const notion = await getWorkerNotion(worker.chatId)
-                            //console.log(JSON.stringify(notion))
+                // console.log("START UPDATE AVATAR")
+                // workers.map(async(worker, i)=> {
+                //     let specArr = []
+                //     setTimeout(async()=> {  
+                //         //получить данные специалиста по его id
+                //         const notion = await getWorkerNotion(worker.chatId)
+                //         //console.log(JSON.stringify(notion))
 
-                            if (notion && notion.length > 0) {
-                                
-                                //получить аватарку
-                                const spec = await getWorkerChildren(notion[0]?.id) 
-                                if (spec.length > 0) {
-                                    console.log("avatar: ", spec[0].image, worker.id) 
-        
-                                    const date = new Date()
-                                    const currentDate = `${date.setDate()}${date.getMonth()+1}${date.getFullYear()}T${date.getHours()}:${date.getMinutes()}`
+                //         if (notion && notion.length > 0) {
+                            
+                //             //получить аватарку
+                //             const spec = await getWorkerChildren(notion[0]?.id) 
+                //             if (spec.length > 0) {
+                //                 console.log("avatar: ", spec[0].image, worker.id) 
+    
+                //                 const date = new Date()
+                //                 const currentDate = `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}T${date.getHours()}:${date.getMinutes()}`
 
-                                        try {
-                                            //сохранить фото на сервере
-                                            if (spec[0].image) {  
-                                                const file = fs.createWriteStream('/var/www/proj.uley.team/avatars/avatar_' + worker.chatId + '_' + currentDate + '.jpg');
-                                                
-                                                const transformer = sharp()
-                                                .resize(500)
-                                                .on('info', ({ height }) => {
-                                                    console.log(`Image height is ${height}`);
-                                                });
-                                                
-                                                const request = https.get(spec[0].image, function(response) {
-                                                    response.pipe(transformer).pipe(file);
+                //                     try {
+                //                         //сохранить фото на сервере
+                //                         if (spec[0].image) {  
+                //                             const file = fs.createWriteStream('/var/www/proj.uley.team/avatars/avatar_' + worker.chatId + '_' + currentDate + '.jpg');
+                                            
+                //                             const transformer = sharp()
+                //                             .resize(500)
+                //                             .on('info', ({ height }) => {
+                //                                 console.log(`Image height is ${height}`);
+                //                             });
+                                            
+                //                             const request = https.get(spec[0].image, function(response) {
+                //                                 response.pipe(transformer).pipe(file);
+                        
+                //                                 // after download completed close filestream
+                //                                 file.on("finish", async() => {
+                //                                     file.close();
+                //                                     console.log("Download Completed");
+                        
+                //                                     //обновить бд
+                //                                     const res = await Worker.update({ 
+                //                                         avatar: `${host}/avatars/avatar_` + worker.chatId + '_' + currentDate + '.jpg',
+                //                                     },
+                //                                     { 
+                //                                         where: {chatId: worker.chatId} 
+                //                                     })
+                        
+                //                                     if (res) {
+                //                                         console.log("Специалиста аватар обновлен! ", worker.chatId) 
+                //                                     }else {
+                //                                         console.log("Ошибка обновления! ", worker.chatId) 
+                //                                     }
+                //                                 });
+                //                             });
+                //                         } else {
+                //                             console.log("Аватар не читается! ", worker.chatId, i) 
+                //                         }
+                //                     } catch (err) {
+                //                         console.error(err);
+                //                     }
+                //             } else {
+                //                 console.log("Аватар не найден в Notion!", worker.chatId, i) 
+                //             }   
                             
-                                                    // after download completed close filestream
-                                                    file.on("finish", async() => {
-                                                        file.close();
-                                                        console.log("Download Completed");
-                            
-                                                        //обновить бд
-                                                        const res = await Worker.update({ 
-                                                            avatar: `${host}/avatars/avatar_` + worker.chatId + '_' + currentDate + '.jpg',
-                                                        },
-                                                        { 
-                                                            where: {chatId: worker.chatId} 
-                                                        })
-                            
-                                                        if (res) {
-                                                            console.log("Специалиста аватар обновлен! ", worker.chatId) 
-                                                        }else {
-                                                            console.log("Ошибка обновления! ", worker.chatId) 
-                                                        }
-                                                    });
-                                                });
-                                            } else {
-                                                console.log("Аватар не читается! ", worker.chatId, i) 
-                                            }
-                                        } catch (err) {
-                                            console.error(err);
-                                        }
-                                } else {
-                                    console.log("Аватар не найден в Notion!", worker.chatId, i) 
-                                }   
-                                
-                            } else {
-                                console.log("Специалист не найден в Notion!", worker.chatId, i) 
-                            }              
+                //         } else {
+                //             console.log("Специалист не найден в Notion!", worker.chatId, i) 
+                //         }              
 
-                        }, 6000 * ++i) //1206000 * ++i)   
-                    })
+                //     }, 6000 * ++i) //1206000 * ++i)   
+                // })        
             } catch (error) {
                 console.log(error.message)
             }
