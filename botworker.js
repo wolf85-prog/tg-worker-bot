@@ -1162,10 +1162,13 @@ bot.on('message', async (msg) => {
                 if (spec.length > 0) {
                     console.log("avatar: ", spec[0].image) 
 
+                    const date = new Date()
+                    const currentDate = `${date.getDay()}_${date.getMonth()+1}_${date.getFullYear()}T${date.getHours()}:${date.getMinutes()}`
+
                         try {
                             //сохранить фото на сервере
                             if (spec[0].image) {  
-                                const file = fs.createWriteStream('/var/www/proj.uley.team/upload/avatar_' + chatId + '.jpg');
+                                const file = fs.createWriteStream('/var/www/proj.uley.team/avatars/avatar_' + chatId + '_' + currentDate + '.jpg');
                                 
                                 const transformer = sharp()
                                 .resize(500)
@@ -1183,7 +1186,7 @@ bot.on('message', async (msg) => {
             
                                         //обновить бд
                                         const res = await Worker.update({ 
-                                            avatar: `${host}/upload/avatar_` + chatId + '.jpg',
+                                            avatar: `${host}/avatars/avatar_` + chatId + '.jpg',
                                         },
                                         { 
                                             where: {chatId: chatId} 
