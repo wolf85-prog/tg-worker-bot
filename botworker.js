@@ -2743,7 +2743,7 @@ const start = async () => {
                                     console.log("avatar: ", spec[0].image, worker.id) 
         
                                     const date = new Date()
-                                    const currentDate = `${date.setDate()}${date.getMonth()+1}${date.getFullYear()}T${date.getHours()}:${date.getMinutes()}`
+                                    const currentDate = `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}T${date.getHours()}:${date.getMinutes()}`
 
                                         try {
                                             //сохранить фото на сервере
