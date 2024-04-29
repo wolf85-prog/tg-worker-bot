@@ -1189,7 +1189,7 @@ bot.on('message', async (msg) => {
             
                                         //обновить бд
                                         const res = await Worker.update({ 
-                                            avatar: `${host}/avatars/avatar_` + chatId + '.jpg',
+                                            avatar: `${host}/avatars/avatar_` + chatId + '_' + currentDate + '.jpg',
                                         },
                                         { 
                                             where: {chatId: chatId} 
