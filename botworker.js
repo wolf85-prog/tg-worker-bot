@@ -945,9 +945,10 @@ bot.on('message', async (msg) => {
 
             const directory = "/var/www/proj.uley.team/avatars";
             //очистить директорию
-            fs.readdirSync(directory, (err, files) => {
+            fs.readdir(directory, (err, files) => {
             if (err) throw err;
 
+            console.log("Начинаю удаление аватарок...")
             for (const file of files) {
                 fs.unlink(path.join(directory, file), (err) => {
                 if (err) throw err;
