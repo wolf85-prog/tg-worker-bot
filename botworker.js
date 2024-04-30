@@ -2891,7 +2891,7 @@ const start = async () => {
                         // повторить с интервалом 2 минуту (проверка статуса претендента)
                         let timerId2 = setInterval(async() => {
                             const worker = await getWorkerPretendent(blockId, workerId)
-                            console.log("WORKER: ", worker, projectName.properties?.Name.title[0].plain_text)
+                            console.log("WORKER: ", worker, projectId, projectName.properties?.Name.title[0].plain_text, workerId)
 
                             if (worker && worker.find(item => item.status === "Отказано")) {
                                 const currentHours = new Date(new Date().getTime()+10800000).getHours()
