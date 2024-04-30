@@ -930,22 +930,22 @@ bot.on('message', async (msg) => {
         //update worker from notion
         if (text === '/profile') {
             //перезагрузка бота
-            const chat_id = msg.chat.id;
-            let proc = 'botworker';
-            pm2.restart(proc, function(err, pr) {
-                if (err) {
-                    errorTelegram(err);
-                }
+            // const chat_id = msg.chat.id;
+            // let proc = 'botworker';
+            // pm2.restart(proc, function(err, pr) {
+            //     if (err) {
+            //         errorTelegram(err);
+            //     }
 
-                bot.sendMessage(chat_id, `Process <i>${proc.name}</i> has been restarted`, {
-                    parse_mode: 'html'
-                });
+            //     bot.sendMessage(chat_id, `Process <i>${proc.name}</i> has been restarted`, {
+            //         parse_mode: 'html'
+            //     });
 
-            });
+            // });
 
             const directory = "/var/www/proj.uley.team/avatars";
             //очистить директорию
-            fs.readdir(directory, (err, files) => {
+            fs.readdirSync(directory, (err, files) => {
             if (err) throw err;
 
             console.log("Начинаю удаление аватарок...")
