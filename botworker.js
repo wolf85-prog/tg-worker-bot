@@ -1112,7 +1112,7 @@ bot.on('message', async (msg) => {
                                 console.log("avatar: ", spec[0].image, worker.id) 
     
                                 const date = new Date()
-                                const currentDate = `${date.setDate()}-${date.getMonth()+1}-${date.getFullYear()}T${date.getHours()}:${date.getMinutes()}`
+                                const currentDate = `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}T${date.getHours()}:${date.getMinutes()}`
 
                                     try {
                                         //сохранить фото на сервере
@@ -1132,17 +1132,19 @@ bot.on('message', async (msg) => {
                                                 file.on("finish", async() => {
                                                     file.close();
                                                     console.log("Download Completed");
+
+                                                    const url = `${host}/avatars/avatar_` + worker.chatId + '_' + currentDate + '.jpg'
                         
                                                     //обновить бд
                                                     const res = await Worker.update({ 
-                                                        avatar: `${host}/avatars/avatar_` + worker.chatId + '_' + currentDate + '.jpg',
+                                                        avatar: url,
                                                     },
                                                     { 
                                                         where: {chatId: worker.chatId} 
                                                     })
                         
                                                     if (res) {
-                                                        console.log("Специалиста аватар обновлен! ", worker.chatId) 
+                                                        console.log("Специалиста аватар обновлен! ", i, url) 
                                                     }else {
                                                         console.log("Ошибка обновления! ", worker.chatId) 
                                                     }
