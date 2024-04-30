@@ -3,14 +3,14 @@ require("dotenv").config();
 //telegram api
 const TelegramBot = require('node-telegram-bot-api');
 const token = process.env.TELEGRAM_API_TOKEN
-const bot = new TelegramBot(token, {
-    polling: true  
-})
 // const bot = new TelegramBot(token, {
-//     polling: {
-//         autoStart: false,
-//     }
-// });
+//     polling: true  
+// })
+const bot = new TelegramBot(token, {
+    polling: {
+        autoStart: false,
+    }
+});
 
 // web-приложение
 const webAppUrl = process.env.WEB_APP_URL;
@@ -429,20 +429,20 @@ app.post('/web-stavka', async (req, res) => {
 })
 
 
-// bot.getUpdates().then((updates) => {
-//     if (updates[0] !== undefined) {
-//       if (updates[0].message.text.includes('/restart')) {
-//         bot.getUpdates({
-//           timeout: 1,
-//           limit: 0,
-//           offset: updates[0].update_id + 1
-//         });
-//         bot.sendMessage(updates[0].message.chat.id, 'Бот перезагружен');
-//       }
-//     }
-// });
-// bot.stopPolling();
-// bot.startPolling();
+bot.getUpdates().then((updates) => {
+    if (updates[0] !== undefined) {
+      if (updates[0].message.text.includes('/profile')) {
+        bot.getUpdates({
+          timeout: 1,
+          limit: 0,
+          offset: updates[0].update_id + 1
+        });
+        bot.sendMessage(updates[0].message.chat.id, 'Бот перезагружен');
+      }
+    }
+});
+bot.stopPolling();
+bot.startPolling();
 
 //-----------------------------------------------------------------------------------------
 // START (обработка команд и входящих сообщени от пользователя)
@@ -929,6 +929,19 @@ bot.on('message', async (msg) => {
 
         //update worker from notion
         if (text === '/profile') {
+            //перезагрузка бота
+            const chat_id = msg.chat.id;
+            let proc = 'botworker';
+            pm2.restart(proc, function(err, pr) {
+                if (err) {
+                    errorTelegram(err);
+                }
+
+                bot.sendMessage(chat_id, `Process <i>${proc.name}</i> has been restarted`, {
+                    parse_mode: 'html'
+                });
+
+            });
 
             const directory = "/var/www/proj.uley.team/avatars";
             //очистить директорию
@@ -1098,7 +1111,7 @@ bot.on('message', async (msg) => {
                                 console.log("avatar: ", spec[0].image, worker.id) 
     
                                 const date = new Date()
-                                const currentDate = `${date.setDate()}${date.getMonth()+1}${date.getFullYear()}T${date.getHours()}:${date.getMinutes()}`
+                                const currentDate = `${date.setDate()}-${date.getMonth()+1}-${date.getFullYear()}T${date.getHours()}:${date.getMinutes()}`
 
                                     try {
                                         //сохранить фото на сервере
@@ -2568,16 +2581,16 @@ const delay = async(ms) => {
     });
 }
 
-// function errorTelegram(error) {
-//     bot.stopPolling();
-//     bot.getUpdates({
-//       timeout: 1,
-//       limit: 0,
-//       offset: bot._polling.options.params.offset
-//     });
-//     console.error(error);
-//     pm2.disconnect();
-// }
+function errorTelegram(error) {
+    bot.stopPolling();
+    bot.getUpdates({
+      timeout: 1,
+      limit: 0,
+      offset: bot._polling.options.params.offset
+    });
+    console.error(error);
+    pm2.disconnect();
+}
 
 
 //-------------------------------------------------------------------------------------------------------------------------------
