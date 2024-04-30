@@ -1228,16 +1228,18 @@ bot.on('message', async (msg) => {
                                                     file.close();
                                                     console.log("Download Completed");
                         
+                                                    const url = `${host}/avatars/avatar_` + worker.chatId + '_' + currentDate + '.jpg'
+                        
                                                     //обновить бд
                                                     const res = await Worker.update({ 
-                                                        avatar: `${host}/avatars/avatar_` + worker.chatId + '_' + currentDate + '.jpg',
+                                                        avatar: url,
                                                     },
                                                     { 
                                                         where: {chatId: worker.chatId} 
                                                     })
                         
                                                     if (res) {
-                                                        console.log("Специалиста аватар обновлен! ", worker.chatId) 
+                                                        console.log("Специалиста аватар обновлен! ", i, url) 
                                                     }else {
                                                         console.log("Ошибка обновления! ", worker.chatId) 
                                                     }
@@ -2889,11 +2891,11 @@ const start = async () => {
                         // повторить с интервалом 2 минуту (проверка статуса претендента)
                         let timerId2 = setInterval(async() => {
                             const worker = await getWorkerPretendent(blockId, workerId)
-                            console.log("WORKER: ", worker, projectName)
+                            console.log("WORKER: ", worker, projectName.properties?.Name.title[0].plain_text)
 
                             if (worker && worker.find(item => item.status === "Отказано")) {
                                 const currentHours = new Date(new Date().getTime()+10800000).getHours()
-                                console.log("worker status: ", currentHours)
+                                //console.log("worker status: ", currentHours)
         
                                 const res = await Canceled.update({ 
                                     cancel: true  
