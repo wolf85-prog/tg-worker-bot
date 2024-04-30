@@ -1703,16 +1703,18 @@ bot.on('message', async (msg) => {
 
             const projectId = '2f459e43-2eff-4274-a8aa-cf24ba34520a' //фаза gate
 
+            //специалист ID
+            const workerId = await getWorkerChatId(chatId[1])
+
             //ноушен
             const blockId = await getBlocksP(projectId); 
 
             if (blockId) {
-                const worker = await getWorkerPretendent(blockId, workerId)
-                console.log("worker status: ", i, worker)
-                
+                const worker = await getWorkerPretendent(blockId, workerId)   
                 const projectName = await getProjectName(projectId)
                 const user = await Worker.findOne({where:{chatId: chatId[1].toString()}})
-            
+
+                const currentHours = new Date(new Date().getTime()+10800000).getHours()
 
                 //запуск сканирования отказа специалисту
                 let hello = ''
