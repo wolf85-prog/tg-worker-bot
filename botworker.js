@@ -1162,7 +1162,7 @@ bot.on('message', async (msg) => {
                             console.log("Специалист не найден в Notion!", worker.chatId, i) 
                         }              
 
-                    }, 1206000 * ++i) //1206000 * ++i)   
+                    }, 6000 * ++i) //1206000 * ++i)   
                 })     
             } catch (error) {
                 console.log(error.message)
