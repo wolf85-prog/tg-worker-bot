@@ -3,14 +3,14 @@ require("dotenv").config();
 //telegram api
 const TelegramBot = require('node-telegram-bot-api');
 const token = process.env.TELEGRAM_API_TOKEN
-// const bot = new TelegramBot(token, {
-//     polling: true  
-// })
 const bot = new TelegramBot(token, {
-    polling: {
-        autoStart: false,
-    }
-});
+    polling: true  
+})
+// const bot = new TelegramBot(token, {
+//     polling: {
+//         autoStart: false,
+//     }
+// });
 
 // web-приложение
 const webAppUrl = process.env.WEB_APP_URL;
@@ -429,20 +429,20 @@ app.post('/web-stavka', async (req, res) => {
 })
 
 
-bot.getUpdates().then((updates) => {
-    if (updates[0] !== undefined) {
-      if (updates[0].message.text.includes('/profile')) {
-        bot.getUpdates({
-          timeout: 1,
-          limit: 0,
-          offset: updates[0].update_id + 1
-        });
-        bot.sendMessage(updates[0].message.chat.id, 'Бот перезагружен');
-      }
-    }
-});
-bot.stopPolling();
-bot.startPolling();
+// bot.getUpdates().then((updates) => {
+//     if (updates[0] !== undefined) {
+//       if (updates[0].message.text.includes('/profile')) {
+//         bot.getUpdates({
+//           timeout: 1,
+//           limit: 0,
+//           offset: updates[0].update_id + 1
+//         });
+//         bot.sendMessage(updates[0].message.chat.id, 'Бот перезагружен');
+//       }
+//     }
+// });
+// bot.stopPolling();
+// bot.startPolling();
 
 //-----------------------------------------------------------------------------------------
 // START (обработка команд и входящих сообщени от пользователя)
@@ -2889,7 +2889,7 @@ const start = async () => {
                         // повторить с интервалом 2 минуту (проверка статуса претендента)
                         let timerId2 = setInterval(async() => {
                             const worker = await getWorkerPretendent(blockId, workerId)
-                            console.log("WORKER: ", worker)
+                            console.log("WORKER: ", worker, projectName)
 
                             if (worker && worker.find(item => item.status === "Отказано")) {
                                 const currentHours = new Date(new Date().getTime()+10800000).getHours()
@@ -2918,7 +2918,7 @@ const start = async () => {
 
                                 //отправить сообщение в админ-панель
                                 const text = `${hello}, ${user.dataValues.username}! 
-Спасибо, что откликнулись на проект «${projectName.properties.Name.title[0].plain_text}». В настоящий момент основной состав уже сформирован. 
+Спасибо, что откликнулись на проект «${projectName.properties?.Name.title[0].plain_text}». В настоящий момент основной состав уже сформирован. 
 Будем рады сотрудничеству на новых проектах!`
                             
                                 const convId = await sendMessageAdmin(text, "text", chatId, null, null, false)
@@ -2937,7 +2937,7 @@ const start = async () => {
                                 
                                 return bot.sendMessage(chatId, text)
                             }
-                        }, 120000)
+                        }, 180000) // 3 минуты
                     })
                 }         
 
