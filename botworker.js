@@ -1697,6 +1697,57 @@ bot.on('message', async (msg) => {
             }
         }
 
+        if (text.startsWith('/startotkaz')) {
+            const chatId = text.split(' ');
+            console.log(chatId[1])
+
+            const projectId = '2f459e43-2eff-4274-a8aa-cf24ba34520a' //фаза gate
+
+            //ноушен
+            const blockId = await getBlocksP(projectId); 
+
+            if (blockId) {
+                const worker = await getWorkerPretendent(blockId, workerId)
+                console.log("worker status: ", i, worker)
+                
+                const projectName = await getProjectName(projectId)
+                const user = await Worker.findOne({where:{chatId: chatId[1].toString()}})
+            
+
+                //запуск сканирования отказа специалисту
+                let hello = ''
+                if (currentHours >= 6 && currentHours < 12) {
+                    hello = 'Доброе утро'
+                } else if (currentHours >= 12 && currentHours < 18) {
+                    hello = 'Добрый день'
+                } else if (currentHours >= 0 && currentHours < 6) {
+                    hello = 'Доброй ночи'
+                } else {
+                    hello = 'Добрый вечер' //18-0
+                }
+
+                //отправить сообщение в админ-панель
+                const text = `${hello}, ${user.dataValues.username}! 
+    Спасибо, что откликнулись на проект «${projectName.properties?.Name.title[0].plain_text}». В настоящий момент основной состав уже сформирован. 
+    Будем рады сотрудничеству на новых проектах!`
+        
+                const convId = await sendMessageAdmin(text, "text", chatId[1], null, null, false)
+                                    
+                // Подключаемся к серверу socket
+                let socket = io(socketUrl);
+                socket.emit("addUser", chatId[1])
+                socket.emit("sendAdminSpec", {
+                    senderId: chatTelegramId,
+                    receiverId: chatId[1],
+                    text: text,
+                    convId: convId,
+                    messageId: null,
+                })  
+            
+                await bot.sendMessage(chatId[1], text)
+            }
+        }
+
         if (text === '/addworker') {
             //сохраниь в бд ноушен
             const notion = await getWorkerNotion(910483267)
