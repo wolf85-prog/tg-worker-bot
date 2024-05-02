@@ -1377,9 +1377,9 @@ bot.on('message', async (msg) => {
                 urlAvatar = 'https://proj.uley.team/upload/2024-04-23T08:08:31.547Z.jpg'
             } else if (currentMonth === 5) {
                 //май
-                urlAvatar = 'https://proj.uley.team/upload/2024-04-23T08:09:19.513Z.jpg' 
+                urlAvatar = 'https://proj.uley.team/upload/2024-05-02T06:01:44.244Z.jpg'
             } else if (currentMonth === 6) {
-                //май
+                //июнь
                 urlAvatar = 'https://proj.uley.team/upload/2024-04-23T08:09:53.184Z.jpg'
             }   
             
@@ -2080,7 +2080,7 @@ bot.on('message', async (msg) => {
                         urlAvatar = 'https://proj.uley.team/upload/2024-04-23T08:08:31.547Z.jpg'
                     } else if (currentMonth === 5) {
                         //май
-                        urlAvatar = 'https://proj.uley.team/upload/2024-04-23T08:09:19.513Z.jpg' 
+                        urlAvatar = 'https://proj.uley.team/upload/2024-05-02T06:01:44.244Z.jpg'
                     } else if (currentMonth === 6) {
                         //май
                         urlAvatar = 'https://proj.uley.team/upload/2024-04-23T08:09:53.184Z.jpg'
