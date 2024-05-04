@@ -857,10 +857,10 @@ bot.on('message', async (msg) => {
                                     specArr.push(obj) 
                                 }
 
-                                if (item.name === '18+') {
+                                if (item.name === '+18') {
                                     const obj = {
                                         spec: item.name,
-                                        cat: '18+',
+                                        cat: '+18',
                                     }
                                     specArr.push(obj) 
                                 }
