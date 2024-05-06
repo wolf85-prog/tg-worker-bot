@@ -1194,8 +1194,8 @@ bot.on('message', async (msg) => {
             //let specArr = []
                                      
             //получить данные специалиста по его id
-            const notion = getWorkerNotion(ID)
-            console.log(notion)
+            const notion = await getWorkerNotion(ID)
+            //console.log(notion)
 
             if (notion && notion.length > 0) {
                 
