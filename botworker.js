@@ -822,7 +822,7 @@ bot.on('message', async (msg) => {
 
                 workers.map(async(worker, i)=> {
                     let specArr = []
-                    if (worker.chatId === '1408579113' || worker.chatId === '805436270') {
+                    //if (worker.chatId === '1408579113' || worker.chatId === '805436270') {
                         //получить данные специалиста по его id
                         const notion = await getWorkerNotion(worker.chatId)
                         // console.log(JSON.stringify(notion))
@@ -892,7 +892,7 @@ bot.on('message', async (msg) => {
                         
                         console.log(worker.chatId)
 
-                    } 
+                    //} 
                 }) 
             } catch (error) {
                 console.log(error.message)
