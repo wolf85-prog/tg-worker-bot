@@ -1187,6 +1187,75 @@ bot.on('message', async (msg) => {
             }
         }
 
+        if (text.startsWith('/myavatar')) {
+            const workerId = text.split(' ');
+            //console.log(workerId[1])
+            const ID = workerId[1]
+            //let specArr = []
+                                     
+            //получить данные специалиста по его id
+            const notion = getWorkerNotion(ID)
+
+            if (notion && notion.length > 0) {
+                
+                //получить аватарку
+                const spec = await getWorkerChildren(notion[0]?.id) 
+                if (spec.length > 0) {
+
+                    const date = new Date()
+                    const currentDate = `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}T${date.getHours()}:${date.getMinutes()}`
+                    try {
+                        //сохранить фото на сервере
+                        if (spec[0].image) {  
+                            const file = fs.createWriteStream('/var/www/proj.uley.team/avatars/avatar_' + ID + '_' + currentDate + '.jpg');
+                            
+                            const transformer = sharp()
+                            .resize(500)
+                            .on('info', ({ height }) => {
+                                console.log(`Image height is ${height}`);
+                            });
+                            
+                            const request = https.get(spec[0].image, function(response) {
+                                response.pipe(transformer).pipe(file);
+        
+                                // after download completed close filestream
+                                file.on("finish", async() => {
+                                    file.close();
+                                    console.log("Download Completed");
+
+                                    const url = `${host}/avatars/avatar_` + ID + '_' + currentDate + '.jpg'
+        
+                                    //обновить бд
+                                    const res = await Worker.update({ 
+                                        avatar: url,
+                                    },
+                                    { 
+                                        where: {chatId: ID} 
+                                    })
+        
+                                    if (res) {
+                                        console.log("Специалиста аватар обновлен! ", url) 
+                                    }else {
+                                        console.log("Ошибка обновления! ", ID) 
+                                    }
+                                });
+                            });
+                        } else {
+                            console.log("Аватар не читается! ", ID) 
+                        }
+                    } catch (err) {
+                        console.error(err);
+                    }
+                        
+                } else {
+                    console.log("Аватар не найден в Notion!", ID) 
+                }   
+                
+            } else {
+                console.log("Специалист не найден в Notion!", ID) 
+            } 
+        }
+
         if (text === '/updateprof') {
 
             const directory = "/var/www/proj.uley.team/avatars";
