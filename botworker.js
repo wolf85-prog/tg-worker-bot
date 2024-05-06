@@ -2851,6 +2851,13 @@ const start = async () => {
                                         }
                                         specArr.push(obj) 
                                     }
+                                    if (item.name === '+18') {
+                                        const obj = {
+                                            spec: item.name,
+                                            cat: '+18',
+                                        }
+                                        specArr.push(obj) 
+                                    }
                                 })
             
                                 if (specArr.length > 0) {
