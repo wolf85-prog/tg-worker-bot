@@ -868,11 +868,11 @@ bot.on('message', async (msg) => {
         
                                 //обновить бд
                                 
-                                    newSpec = {
+                                    const newSpec = {
                                         spec: 'Вне категории',
                                         cat: 'NoTag'
                                     }
-                                    newSpec2 = {
+                                    const newSpec2 = {
                                         spec: 'Тест',
                                         cat: 'Test'
                                     }
@@ -2863,11 +2863,11 @@ const start = async () => {
                                 if (specArr.length > 0) {
                                     //обновить бд
                                     if (worker.chatId === '1408579113' || worker.chatId === '805436270' || worker.chatId === '639113098' || worker.chatId === '1300119841' || worker.chatId === '276285228') {
-                                        newSpec = {
+                                        const newSpec = {
                                             spec: 'Вне категории',
                                             cat: 'NoTag'
                                         }
-                                        newSpec2 = {
+                                        const newSpec2 = {
                                             spec: 'Тест',
                                             cat: 'Test'
                                         }
@@ -2892,11 +2892,11 @@ const start = async () => {
                                 } else {
                                     //обновить бд
                                     if (worker.chatId === '1408579113' || worker.chatId === '805436270' || worker.chatId === '639113098' || worker.chatId === '1300119841' || worker.chatId === '276285228') {
-                                        newSpec = {
+                                        const newSpec = {
                                             spec: 'Вне категории',
                                             cat: 'NoTag'
                                         }
-                                        newSpec2 = {
+                                        const newSpec2 = {
                                             spec: 'Тест',
                                             cat: 'Test'
                                         }
