@@ -868,11 +868,11 @@ bot.on('message', async (msg) => {
         
                                 //обновить бд
                                 
-                                    newSpec = {
+                                    const newSpec = {
                                         spec: 'Вне категории',
                                         cat: 'NoTag'
                                     }
-                                    newSpec2 = {
+                                    const newSpec2 = {
                                         spec: 'Тест',
                                         cat: 'Test'
                                     }
@@ -2874,34 +2874,34 @@ const start = async () => {
             //                             specArr.push(newSpec)
             //                             specArr.push(newSpec2)
     
-            //                             const res = await Worker.update({ 
-            //                                 worklist: JSON.stringify(specArr)  
-            //                             },
-            //                             { 
-            //                                 where: {chatId: worker.chatId} 
-            //                             })
-            //                         } else {             
-            //                             const res = await Worker.update({ 
-            //                                 worklist: JSON.stringify(specArr)  
-            //                             },
-            //                             { 
-            //                                 where: {chatId: worker.chatId} 
-            //                             })
-            //                         }   
-            //                         console.log("Список специальностей (есть) обновлен! ", worker.chatId, i)                                        
-            //                     } else {
-            //                         //обновить бд
-            //                         if (worker.chatId === '1408579113' || worker.chatId === '805436270' || worker.chatId === '639113098' || worker.chatId === '1300119841' || worker.chatId === '276285228') {
-            //                             newSpec = {
-            //                                 spec: 'Вне категории',
-            //                                 cat: 'NoTag'
-            //                             }
-            //                             newSpec2 = {
-            //                                 spec: 'Тест',
-            //                                 cat: 'Test'
-            //                             }
-            //                             specArr.push(newSpec)
-            //                             specArr.push(newSpec2)
+                                        const res = await Worker.update({ 
+                                            worklist: JSON.stringify(specArr)  
+                                        },
+                                        { 
+                                            where: {chatId: worker.chatId} 
+                                        })
+                                    } else {             
+                                        const res = await Worker.update({ 
+                                            worklist: JSON.stringify(specArr)  
+                                        },
+                                        { 
+                                            where: {chatId: worker.chatId} 
+                                        })
+                                    }   
+                                    console.log("Список специальностей (есть) обновлен! ", worker.chatId, i)                                        
+                                } else {
+                                    //обновить бд
+                                    if (worker.chatId === '1408579113' || worker.chatId === '805436270' || worker.chatId === '639113098' || worker.chatId === '1300119841' || worker.chatId === '276285228') {
+                                        newSpec = {
+                                            spec: 'Вне категории',
+                                            cat: 'NoTag'
+                                        }
+                                        newSpec2 = {
+                                            spec: 'Тест',
+                                            cat: 'Test'
+                                        }
+                                        specArr.push(newSpec)
+                                        specArr.push(newSpec2)
     
             //                             const res = await Worker.update({ 
             //                                 worklist: JSON.stringify(specArr)  
