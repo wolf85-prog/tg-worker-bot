@@ -2677,6 +2677,28 @@ bot.on('message', async (msg) => {
         }    
     }
 
+    //----------------------------------------------------------------
+    //нажатие на кнопку "Приянто/Понято"
+    //----------------------------------------------------------------
+    if (data.startsWith('/poster_accept')) {
+
+        //отправить сообщение в админ-панель
+        const convId = await sendMyMessage('Пользователь нажал кнопку "Принято / Понято"', "text", chatId, messageId, null, true)
+
+        // Подключаемся к серверу socket
+        let socket = io(socketUrl);
+        socket.emit("addUser", chatId)
+        
+        socket.emit("sendMessageSpec", {
+            senderId: chatId,
+            receiverId: chatTelegramId,
+            text: 'Пользователь нажал кнопку "Принято / Понято"',
+            convId: convId,
+            messageId: messageId,
+            isBot: true,
+        }) 
+    }
+
 
 
     //нажатие на кнопку "Кнопка"
