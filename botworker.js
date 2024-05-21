@@ -2698,7 +2698,7 @@ bot.on('message', async (msg) => {
             isBot: true,
         }) 
 
-        await bot.deleteMessage(chatId, messageId)  
+        return bot.deleteMessage(chatId, messageId)  
     }
 
 
