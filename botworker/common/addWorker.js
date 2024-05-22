@@ -20,6 +20,177 @@ module.exports = async function addWorker(title, tg_id, age, phone, worklist, ci
                         }
                     ],
                 },
+                "Город": {
+                    "type": "multi_select",
+                    "multi_select": {
+                        "options": [
+                            {
+                                "name": "Выбери название города",
+                                "color": "red"
+                            },
+                            {
+                                "name": "Москва",
+                                "color": "blue"
+                            },
+                            {
+                                "name": "Московская область",
+                                "color": "blue"
+                            },
+                            {
+                                "name": "Санкт-Петербург",
+                                "color": "blue"
+                            },
+
+                            {
+                                "name": "Анапа",
+                                "color": "yellow"
+                            },
+                            {
+                                "name": "Архангельск",
+                                "color": "yellow"
+                            },
+                            {
+                                "name": "Астрахань",
+                                "color": "yellow"
+                            },
+
+                            {
+                                "name": "Барнаул",
+                                "color": "green"
+                            },
+                            {
+                                "name": "Белгород",
+                                "color": "green"
+                            },
+                            {
+                                "name": "Брянск",
+                                "color": "green"
+                            },
+
+                            {
+                                "name": "Валдай",
+                                "color": "orange"
+                            },
+                            {
+                                "name": "Великий Новгород",
+                                "color": "orange"
+                            },
+                            {
+                                "name": "Владивосток",
+                                "color": "orange"
+                            },
+                            {
+                                "name": "Владимир",
+                                "color": "orange"
+                            },
+                            {
+                                "name": "Волгоград",
+                                "color": "orange"
+                            },
+                            {
+                                "name": "Вологда",
+                                "color": "orange"
+                            },
+                            {
+                                "name": "Воронеж",
+                                "color": "orange"
+                            },
+                            {
+                                "name": "Выборг",
+                                "color": "orange"
+                            },
+
+                            {
+                                "name": "Геленджик",
+                                "color": "blue"
+                            },
+                            {
+                                "name": "Гомель",
+                                "color": "blue"
+                            },
+
+                            {
+                                "name": "Евпатория",
+                                "color": "yellow"
+                            },
+                            {
+                                "name": "Екатеринбург",
+                                "color": "yellow"
+                            },
+                            {
+                                "name": "Елец",
+                                "color": "yellow"
+                            },
+
+                            {
+                                "name": "Иваново",
+                                "color": "green"
+                            },
+                            {
+                                "name": "Ижевск",
+                                "color": "green"
+                            },
+                            {
+                                "name": "Иркутск",
+                                "color": "green"
+                            },
+                            {
+                                "name": "Йошкар-Ола",
+                                "color": "green"
+                            },
+
+                            {
+                                "name": "Казань",
+                                "color": "orange"
+                            },
+                            {
+                                "name": "Калининград",
+                                "color": "orange"
+                            },
+                            {
+                                "name": "Калуга",
+                                "color": "orange"
+                            },
+                            {
+                                "name": "Кемерово",
+                                "color": "orange"
+                            },
+                            {
+                                "name": "Керчь",
+                                "color": "orange"
+                            },
+                            {
+                                "name": "Киров",
+                                "color": "orange"
+                            },
+                            {
+                                "name": "Кисловодск",
+                                "color": "orange"
+                            },
+                            {
+                                "name": "Кострома",
+                                "color": "orange"
+                            },
+                            {
+                                "name": "Краснодар",
+                                "color": "orange"
+                            },
+                            {
+                                "name": "Красноярск",
+                                "color": "orange"
+                            },
+                            {
+                                "name": "Курган",
+                                "color": "orange"
+                            },
+                            {
+                                "name": "Курск",
+                                "color": "orange"
+                            },
+
+                        ]
+                    }
+                },
                 Phone: {
                     "type": "phone_number",
                     "phone_number": phone
