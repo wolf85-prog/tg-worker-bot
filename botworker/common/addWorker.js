@@ -188,6 +188,219 @@ module.exports = async function addWorker(title, tg_id, age, phone, worklist, ci
                                 "color": "orange"
                             },
 
+                            {
+                                "name": "Липецк",
+                                "color": "blue"
+                            },
+                            {
+                                "name": "Луганск",
+                                "color": "blue"
+                            },
+
+                            {
+                                "name": "Минск",
+                                "color": "yellow"
+                            },
+                            {
+                                "name": "Мурманск",
+                                "color": "yellow"
+                            },
+                            {
+                                "name": "Муром",
+                                "color": "yellow"
+                            },
+
+                            {
+                                "name": "Набережные Челны",
+                                "color": "green"
+                            },
+                            {
+                                "name": "Нижний Новгород",
+                                "color": "green"
+                            },
+                            {
+                                "name": "Нижний Тагил",
+                                "color": "green"
+                            },
+                            {
+                                "name": "Новороссийск",
+                                "color": "green"
+                            },
+                            {
+                                "name": "Новосибирск",
+                                "color": "green"
+                            },
+                            {
+                                "name": "Норильск",
+                                "color": "green"
+                            },
+
+                            {
+                                "name": "Омск",
+                                "color": "orange"
+                            },
+                            {
+                                "name": "Орел",
+                                "color": "orange"
+                            },
+                            {
+                                "name": "Оренбург",
+                                "color": "orange"
+                            },
+
+                            {
+                                "name": "Пенза",
+                                "color": "blue"
+                            },
+                            {
+                                "name": "Пермь",
+                                "color": "blue"
+                            },
+                            {
+                                "name": "Петрозаводск",
+                                "color": "blue"
+                            },
+                            {
+                                "name": "Петропавловск-Камчатский",
+                                "color": "blue"
+                            },
+                            {
+                                "name": "Псков",
+                                "color": "blue"
+                            },
+                            {
+                                "name": "Пятигорск",
+                                "color": "blue"
+                            },
+
+                            {
+                                "name": "Ржев",
+                                "color": "yellow"
+                            },
+                            {
+                                "name": "Ростов Великий",
+                                "color": "yellow"
+                            },
+                            {
+                                "name": "Ростов-на-Дону",
+                                "color": "yellow"
+                            },
+                            {
+                                "name": "Рыбинск",
+                                "color": "yellow"
+                            },
+                            {
+                                "name": "Рязань",
+                                "color": "yellow"
+                            },
+
+                            {
+                                "name": "Самара",
+                                "color": "green"
+                            },
+                            {
+                                "name": "Саранск",
+                                "color": "green"
+                            },
+                            {
+                                "name": "Саратов",
+                                "color": "green"
+                            },
+                            {
+                                "name": "Севастополь",
+                                "color": "green"
+                            },
+                            {
+                                "name": "Смоленск",
+                                "color": "green"
+                            },
+                            {
+                                "name": "Соликамск",
+                                "color": "green"
+                            },
+                            {
+                                "name": "Сочи",
+                                "color": "green"
+                            },
+                            {
+                                "name": "Суздаль",
+                                "color": "green"
+                            },
+                            {
+                                "name": "Сыктывкар",
+                                "color": "green"
+                            },
+
+                            {
+                                "name": "Таганрог",
+                                "color": "orange"
+                            },
+                            {
+                                "name": "Тамбов",
+                                "color": "orange"
+                            },
+                            {
+                                "name": "Тверь",
+                                "color": "orange"
+                            },
+                            {
+                                "name": "Тольятти",
+                                "color": "orange"
+                            },
+                            {
+                                "name": "Тула",
+                                "color": "orange"
+                            },
+                            {
+                                "name": "Тюмень",
+                                "color": "orange"
+                            },
+
+                            {
+                                "name": "Ульяновск",
+                                "color": "blue"
+                            },
+                            {
+                                "name": "Уфа",
+                                "color": "blue"
+                            },
+
+                            {
+                                "name": "Феодосия",
+                                "color": "yellow"
+                            },
+
+                            {
+                                "name": "Ханты-Мансийск",
+                                "color": "green"
+                            },
+
+                            {
+                                "name": "Чебоксары",
+                                "color": "orange"
+                            },
+                            {
+                                "name": "Челябинск",
+                                "color": "orange"
+                            },
+                            {
+                                "name": "Череповец",
+                                "color": "orange"
+                            },
+
+                            {
+                                "name": "Якутск",
+                                "color": "blue"
+                            },
+                            {
+                                "name": "Ялта",
+                                "color": "blue"
+                            },
+                            {
+                                "name": "Ярославль",
+                                "color": "blue"
+                            },
+
                         ]
                     }
                 },

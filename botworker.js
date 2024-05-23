@@ -317,7 +317,7 @@ app.post('/web-stavka', async (req, res) => {
 
             //специалист
             const workerId = await getWorkerChatId(userId)
-            console.log("workerId: ", workerId)
+            //console.log("workerId: ", workerId)
             
             //новый претендент
             const pretendent = {
@@ -392,7 +392,7 @@ app.post('/web-stavka', async (req, res) => {
                 //найти претендента в ноушене
                 if (blockId) {
                     const worker = await getWorkerPretendent(blockId, workerId)
-                    console.log("worker: ", worker)
+                    //console.log("worker: ", worker)
                         
                     //обновить специалиста в таблице Претенденты если есть
                     if (worker.length > 0) {
@@ -649,7 +649,7 @@ bot.on('message', async (msg) => {
         if (text === '/sendpic') {
             try {
                 const workers = await getWorkersAll() 
-                console.log("workers: ", workers.length)
+                //console.log("workers: ", workers.length)
                 workers.map(async(item, i)=> {
                     console.log(item.chatId)
                     setTimeout(async()=> {
@@ -818,7 +818,7 @@ bot.on('message', async (msg) => {
             try {
                 console.log("START GET WORKERS ALL...")
                 const workers = await getWorkersAll()
-                console.log("workers: ", workers.length)  
+                //console.log("workers: ", workers.length)  
 
                 workers.map(async(worker, i)=> {
                     let specArr = []
@@ -975,7 +975,7 @@ bot.on('message', async (msg) => {
             try {
                 console.log("START GET WORKERS ALL...")
                 const workers = await getWorkersAll()
-                console.log("workers: ", workers.length)  
+                //console.log("workers: ", workers.length)  
 
                 // 1
                 // console.log("START UPDATE WORKERS")
@@ -1274,7 +1274,7 @@ bot.on('message', async (msg) => {
             try {
                 console.log("START GET WORKERS ALL...")
                 const workers = await getWorkersAll()
-                console.log("workers: ", workers.length)  
+                //console.log("workers: ", workers.length)  
                 
                 // 2
                 console.log("START UPDATE AVATAR")
@@ -3061,7 +3061,7 @@ const start = async () => {
                         // повторить с интервалом 2 минуту (проверка статуса претендента)
                         let timerId2 = setInterval(async() => {
                             const worker = await getWorkerPretendent(blockId, workerId)
-                            console.log("WORKER: ", worker, projectId, projectName.properties?.Name.title[0].plain_text, workerId)
+                            //console.log("WORKER: ", worker, projectId, projectName.properties?.Name.title[0].plain_text, workerId)
 
                             if (worker && worker.find(item => item.status === "Отказано")) {
                                 const currentHours = new Date(new Date().getTime()+10800000).getHours()
