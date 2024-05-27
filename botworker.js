@@ -2013,59 +2013,59 @@ bot.on('message', async (msg) => {
 //---------------------------------------------------------------------------------------------------------------
 
  //обработка аудио сообщений
- if (msg.voice) {
-    await bot.sendMessage(chatId, `Ваше аудио-сообщение получено!`)
-    const voice = await bot.getFile(msg.voice.file_id);
+        if (msg.voice) {
+            await bot.sendMessage(chatId, `Ваше аудио-сообщение получено!`)
+            const voice = await bot.getFile(msg.voice.file_id);
 
-    try {
-        const res = await fetch(
-            `https://api.telegram.org/bot${token}/getFile?file_id=${voice.file_id}`
-        );
+            try {
+                const res = await fetch(
+                    `https://api.telegram.org/bot${token}/getFile?file_id=${voice.file_id}`
+                );
 
-        // extract the file path
-        const res2 = await res.json();
-        const filePath = res2.result.file_path;
+                // extract the file path
+                const res2 = await res.json();
+                const filePath = res2.result.file_path;
 
-        // now that we've "file path" we can generate the download link
-        const downloadURL = `https://api.telegram.org/file/bot${token}/${filePath}`;
+                // now that we've "file path" we can generate the download link
+                const downloadURL = `https://api.telegram.org/file/bot${token}/${filePath}`;
 
-        https.get(downloadURL,(res) => {
-            const filename = Date.now()
-            // Image will be stored at this path
-            let path;
-            let ras;
-            if(msg.voice) {
-                ras = msg.voice.mime_type.split('/')
-                //path = `${__dirname}/static/${filename}.${ras[1]}`; 
-                path = `${__dirname}/static/${msg.voice.file_unique_id}.${ras[1]}`; 
+                https.get(downloadURL,(res) => {
+                    const filename = Date.now()
+                    // Image will be stored at this path
+                    let path;
+                    let ras;
+                    if(msg.voice) {
+                        ras = msg.voice.mime_type.split('/')
+                        //path = `${__dirname}/static/${filename}.${ras[1]}`; 
+                        path = `${__dirname}/static/${msg.voice.file_unique_id}.${ras[1]}`; 
+                    }
+                    const filePath = fs.createWriteStream(path);
+                    res.pipe(filePath);
+                    filePath.on('finish', async () => {
+                        filePath.close();
+                        console.log('Download Completed: ', path); 
+                        
+                        let convId;
+                        if(msg.voice) {
+                            // сохранить отправленное боту сообщение пользователя в БД
+                            convId = await sendMyMessage(`${botApiUrl}/${msg.voice.file_unique_id}.${ras[1]}`, 'file', chatId, messageId)
+                        }
+
+                        //Подключаемся к серверу socket
+                        let socket = io(socketUrl);
+                        socket.emit("addUser", chatId)
+                        socket.emit("sendMessageSpec", {
+                            senderId: chatId,
+                            receiverId: chatTelegramId,
+                            text: `${botApiUrl}/${msg.voice.file_unique_id}.${ras[1]}`,
+                            convId: convId,
+                        })
+                    })
+                })            
+            } catch (error) {
+                console.log(error.message)
             }
-            const filePath = fs.createWriteStream(path);
-            res.pipe(filePath);
-            filePath.on('finish', async () => {
-                filePath.close();
-                console.log('Download Completed: ', path); 
-                
-                let convId;
-                if(msg.voice) {
-                    // сохранить отправленное боту сообщение пользователя в БД
-                    convId = await sendMyMessage(`${botApiUrl}/${msg.voice.file_unique_id}.${ras[1]}`, 'file', chatId, messageId)
-                }
-
-                //Подключаемся к серверу socket
-                let socket = io(socketUrl);
-                socket.emit("addUser", chatId)
-                socket.emit("sendMessageSpec", {
-                    senderId: chatId,
-                    receiverId: chatTelegramId,
-                    text: `${botApiUrl}/${msg.voice.file_unique_id}.${ras[1]}`,
-                    convId: convId,
-                })
-            })
-        })            
-    } catch (error) {
-        console.log(error.message)
-    }
-}
+        }
 
 //----------------------------------------------------------------------------------------------------------------      
 
