@@ -57,7 +57,7 @@ async function getWorkers() {
         return workers;
 
     } catch (error) {
-        console.error(error.message)
+        console.error(error.message, new Date().toLocaleString())
     }
 }
 
