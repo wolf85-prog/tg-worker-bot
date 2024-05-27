@@ -317,7 +317,7 @@ app.post('/web-stavka', async (req, res) => {
 
             //специалист
             const workerId = await getWorkerChatId(userId)
-            //console.log("workerId: ", workerId)
+            console.log("workerId: ", workerId)
             
             //новый претендент
             const pretendent = {
@@ -392,7 +392,7 @@ app.post('/web-stavka', async (req, res) => {
                 //найти претендента в ноушене
                 if (blockId) {
                     const worker = await getWorkerPretendent(blockId, workerId)
-                    //console.log("worker: ", worker)
+                    console.log("worker: ", worker)
                         
                     //обновить специалиста в таблице Претенденты если есть
                     if (worker.length > 0) {
@@ -649,7 +649,7 @@ bot.on('message', async (msg) => {
         if (text === '/sendpic') {
             try {
                 const workers = await getWorkersAll() 
-                //console.log("workers: ", workers.length)
+                console.log("workers: ", workers.length)
                 workers.map(async(item, i)=> {
                     console.log(item.chatId)
                     setTimeout(async()=> {
@@ -818,7 +818,7 @@ bot.on('message', async (msg) => {
             try {
                 console.log("START GET WORKERS ALL...")
                 const workers = await getWorkersAll()
-                //console.log("workers: ", workers.length)  
+                console.log("workers: ", workers.length)  
 
                 workers.map(async(worker, i)=> {
                     let specArr = []
@@ -975,7 +975,7 @@ bot.on('message', async (msg) => {
             try {
                 console.log("START GET WORKERS ALL...")
                 const workers = await getWorkersAll()
-                //console.log("workers: ", workers.length)  
+                console.log("workers: ", workers.length)  
 
                 // 1
                 // console.log("START UPDATE WORKERS")
@@ -1274,7 +1274,7 @@ bot.on('message', async (msg) => {
             try {
                 console.log("START GET WORKERS ALL...")
                 const workers = await getWorkersAll()
-                //console.log("workers: ", workers.length)  
+                console.log("workers: ", workers.length)  
                 
                 // 2
                 console.log("START UPDATE AVATAR")
@@ -2780,47 +2780,46 @@ const start = async () => {
             // повторить с интервалом 10 минут
             let timerId = setInterval(async() => {
                 console.log("START GET PROJECTS ALL...")
-                const projects = await getProjectsAll()
-                //console.log(projects)
+                // const projects = await getProjectsAll()
+                // //console.log(projects)
 
-                await Projectcash.truncate();
+                // await Projectcash.truncate();
 
-                projects.map(async(project)=> {
-                    await Projectcash.create({ 
-                        id: project.id, 
-                        title: project.title, 
-                        dateStart: project.date_start, 
-                        dateEnd: project.date_end, 
-                        tgURLchat: project.tgURL_chat,
-                        manager: project.managerId,
-                        status: JSON.stringify(project.status), 
-                        specs: JSON.stringify(project.specs)  
-                    })
-                })
+                // projects.map(async(project)=> {
+                //     await Projectcash.create({ 
+                //         id: project.id, 
+                //         title: project.title, 
+                //         dateStart: project.date_start, 
+                //         dateEnd: project.date_end, 
+                //         tgURLchat: project.tgURL_chat,
+                //         manager: project.managerId,
+                //         status: JSON.stringify(project.status), 
+                //         specs: JSON.stringify(project.specs)  
+                //     })
+                // })
                 
                 //-----------------------------------------------------
 
                 console.log("START GET SMETA ALL...")
-                const smets = await getSmetaAll()
+                // const smets = await getSmetaAll()
 
-                //очистить таблицу
-                await Smetacash.truncate();
+                // //очистить таблицу
+                // await Smetacash.truncate();
                 
-                smets.map(async(smeta)=> {
-                    await Smetacash.create({ 
-                        id: smeta.id, 
-                        projectId: smeta.projectId, 
-                        title: smeta.title, 
-                        final: smeta.final,
-                        dop: JSON.stringify(smeta.dop)  
-                    })
-                })  
+                // smets.map(async(smeta)=> {
+                //     await Smetacash.create({ 
+                //         id: smeta.id, 
+                //         projectId: smeta.projectId, 
+                //         title: smeta.title, 
+                //         final: smeta.final,
+                //         dop: JSON.stringify(smeta.dop)  
+                //     })
+                // })  
 
 
                 i++ // счетчик интервалов
-            }, 600000); //каждые 10 минут   
+            }, 600000); //каждые 10 минут
 
-//------------------------------------------------------------------------------------------------------
 
             //запуск сканирования отказа специалисту
             try {
@@ -2837,70 +2836,70 @@ const start = async () => {
 
                 //console.log("otkazi: ", otkazi)
 
-                if (otkazi && otkazi.length > 0) {
-                    otkazi.forEach(async (item, index)=> {
-                        //console.log("Цикл ", index+1)
-                        const blockId = item.dataValues.blockId
-                        const workerId = item.dataValues.workerId
-                        const projectId = item.dataValues.projectId
-                        const chatId = item.dataValues.receiverId
-                        const projectName = await getProjectName(projectId)
-                        const user = await Worker.findOne({where:{chatId: chatId.toString()}})
+//                 if (otkazi && otkazi.length > 0) {
+//                     otkazi.forEach(async (item, index)=> {
+//                         console.log("Цикл ", index+1)
+//                         const blockId = item.dataValues.blockId
+//                         const workerId = item.dataValues.workerId
+//                         const projectId = item.dataValues.projectId
+//                         const chatId = item.dataValues.receiverId
+//                         const projectName = await getProjectName(projectId)
+//                         const user = await Worker.findOne({where:{chatId: chatId.toString()}})
 
-                        // повторить с интервалом 2 минуту (проверка статуса претендента)
-                        let timerId2 = setInterval(async() => {
-                            const worker = await getWorkerPretendent(blockId, workerId)
-                            //console.log("WORKER: ", worker, projectId, projectName.properties?.Name.title[0].plain_text, workerId)
+//                         // повторить с интервалом 2 минуту (проверка статуса претендента)
+//                         let timerId2 = setInterval(async() => {
+//                             const worker = await getWorkerPretendent(blockId, workerId)
+//                             console.log("WORKER: ", worker, projectId, projectName.properties?.Name.title[0].plain_text, workerId)
 
-                            if (worker && worker.find(item => item.status === "Отказано")) {
-                                const currentHours = new Date(new Date().getTime()+10800000).getHours()
-                                //console.log("worker status: ", currentHours)
+//                             if (worker && worker.find(item => item.status === "Отказано")) {
+//                                 const currentHours = new Date(new Date().getTime()+10800000).getHours()
+//                                 //console.log("worker status: ", currentHours)
         
-                                const res = await Canceled.update({ 
-                                    cancel: true  
-                                },
-                                {
-                                    where: {
-                                        projectId: projectId,
-                                        workerId: workerId,
-                                    },
-                                })
+//                                 const res = await Canceled.update({ 
+//                                     cancel: true  
+//                                 },
+//                                 {
+//                                     where: {
+//                                         projectId: projectId,
+//                                         workerId: workerId,
+//                                     },
+//                                 })
 
-                                let hello = ''
-                                if (currentHours >= 6 && currentHours < 12) {
-                                    hello = 'Доброе утро'
-                                } else if (currentHours >= 12 && currentHours < 18) {
-                                    hello = 'Добрый день'
-                                } else if (currentHours >= 0 && currentHours < 6) {
-                                    hello = 'Доброй ночи'
-                                } else {
-                                    hello = 'Добрый вечер' //18-0
-                                }
+//                                 let hello = ''
+//                                 if (currentHours >= 6 && currentHours < 12) {
+//                                     hello = 'Доброе утро'
+//                                 } else if (currentHours >= 12 && currentHours < 18) {
+//                                     hello = 'Добрый день'
+//                                 } else if (currentHours >= 0 && currentHours < 6) {
+//                                     hello = 'Доброй ночи'
+//                                 } else {
+//                                     hello = 'Добрый вечер' //18-0
+//                                 }
 
-                                //отправить сообщение в админ-панель
-                                const text = `${hello}, ${user.dataValues.username}! 
-Спасибо, что откликнулись на проект «${projectName.properties?.Name.title[0].plain_text}». В настоящий момент основной состав уже сформирован. 
-Будем рады сотрудничеству на новых проектах!`
+//                                 //отправить сообщение в админ-панель
+//                                 const text = `${hello}, ${user.dataValues.username}! 
+// Спасибо, что откликнулись на проект «${projectName.properties?.Name.title[0].plain_text}». В настоящий момент основной состав уже сформирован. 
+// Будем рады сотрудничеству на новых проектах!`
                             
-                                const convId = await sendMessageAdmin(text, "text", chatId, null, null, false)
+//                                 const convId = await sendMessageAdmin(text, "text", chatId, null, null, false)
                                                         
-                                // Подключаемся к серверу socket
-                                let socket = io(socketUrl);
-                                socket.emit("addUser", chatId)
-                                socket.emit("sendAdminSpec", {
-                                    senderId: chatTelegramId,
-                                    receiverId: chatId,
-                                    text: text,
-                                    convId: convId,
-                                    messageId: null,
-                                }) 
-                                clearInterval(timerId2); 
+//                                 // Подключаемся к серверу socket
+//                                 let socket = io(socketUrl);
+//                                 socket.emit("addUser", chatId)
+//                                 socket.emit("sendAdminSpec", {
+//                                     senderId: chatTelegramId,
+//                                     receiverId: chatId,
+//                                     text: text,
+//                                     convId: convId,
+//                                     messageId: null,
+//                                 }) 
+//                                 clearInterval(timerId2); 
                                 
-                                return bot.sendMessage(chatId, text)
-                            }
-                        }, 180000) // 3 минуты
-                    })
-                }         
+//                                 return bot.sendMessage(chatId, text)
+//                             }
+//                         }, 180000) // 3 минуты
+//                     })
+//                 }         
 
             } catch (error) {
                 console.log(error.message)

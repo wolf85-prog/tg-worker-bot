@@ -109,7 +109,7 @@ async function getWorkers2() {
 
 //получить специалиста по его telegram id
 async function getWorkerId(id) {
-    console.log("tgId: ", id)
+    console.log("Открытие приложения Workhub: ", id, new Date().toLocaleString)
     try {
         const response = await notion.databases.query({
             database_id: databaseWorkerId, 
