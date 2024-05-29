@@ -50,7 +50,7 @@ async function getWorkers() {
                 rank: page.properties["Ранг"].number,
                 passport: page.properties.Passport.rich_text[0]?.plain_text,
                 skill: page.properties.Skill.multi_select,
-                profile: page.properties["Профиль"].files[0],
+                profile: page.properties["Профиль"].files[0]?.file.url,
             };
         });
 
@@ -84,7 +84,7 @@ async function getWorkers100() {
                 rank: page.properties["Ранг"].number,
                 passport: page.properties.Passport.rich_text[0]?.plain_text,
                 skill: page.properties.Skill.multi_select,
-                //image: page.properties.["Files & media"].files[0]?.external.url
+                image: page.properties["Профиль"].files[0]?.file.url,
             };
         });
 
