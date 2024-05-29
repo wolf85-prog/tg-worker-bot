@@ -1577,33 +1577,6 @@ bot.on('message', async (msg) => {
             let predStavka
 
             smets.map(async(smeta)=> {
-                // const projObjetc = projects.find((proj)=> proj.id === smeta.projectId)
-
-                // if (projObjetc) {
-                //     projObjetc.specs.map(async(spec) => {
-                //         // const predStavka = await getStavka(smeta.projectId, spec.rowId)
-
-                //         try {
-                //             predStavka = await fetch(
-                //                 `${process.env.REACT_APP_API_URL_STAVKA}pre-payment/${smeta.projectId}/${spec.rowId}`
-                //             );
-                //         } catch (error) {
-                //             console.log(error.message)
-                //         }
-
-                        
-                //         await delay(6000);                                                        
-                //         console.log("predStavka: ", predStavka.data)
-                        
-                //         const obj = {
-                //             specId: spec.id,
-                //             predStavka: predStavka, 
-                //         }
-                //         arraySpecs.push(obj)
-                //     })
-                // }
-
-                // console.log("arraySpecs: ", arraySpecs)
 
                 await Smetacash.create({ 
                     id: smeta.id, 
@@ -2780,41 +2753,41 @@ const start = async () => {
             // повторить с интервалом 10 минут
             let timerId = setInterval(async() => {
                 console.log("START GET PROJECTS ALL...")
-                // const projects = await getProjectsAll()
-                // //console.log(projects)
+                const projects = await getProjectsAll()
+                //console.log(projects)
 
-                // await Projectcash.truncate();
+                await Projectcash.truncate();
 
-                // projects.map(async(project)=> {
-                //     await Projectcash.create({ 
-                //         id: project.id, 
-                //         title: project.title, 
-                //         dateStart: project.date_start, 
-                //         dateEnd: project.date_end, 
-                //         tgURLchat: project.tgURL_chat,
-                //         manager: project.managerId,
-                //         status: JSON.stringify(project.status), 
-                //         specs: JSON.stringify(project.specs)  
-                //     })
-                // })
+                projects.map(async(project)=> {
+                    await Projectcash.create({ 
+                        id: project.id, 
+                        title: project.title, 
+                        dateStart: project.date_start, 
+                        dateEnd: project.date_end, 
+                        tgURLchat: project.tgURL_chat,
+                        manager: project.managerId,
+                        status: JSON.stringify(project.status), 
+                        specs: JSON.stringify(project.specs)  
+                    })
+                })
                 
                 //-----------------------------------------------------
 
                 console.log("START GET SMETA ALL...")
-                // const smets = await getSmetaAll()
+                const smets = await getSmetaAll()
 
-                // //очистить таблицу
-                // await Smetacash.truncate();
+                //очистить таблицу
+                await Smetacash.truncate();
                 
-                // smets.map(async(smeta)=> {
-                //     await Smetacash.create({ 
-                //         id: smeta.id, 
-                //         projectId: smeta.projectId, 
-                //         title: smeta.title, 
-                //         final: smeta.final,
-                //         dop: JSON.stringify(smeta.dop)  
-                //     })
-                // })  
+                smets.map(async(smeta)=> {
+                    await Smetacash.create({ 
+                        id: smeta.id, 
+                        projectId: smeta.projectId, 
+                        title: smeta.title, 
+                        final: smeta.final,
+                        dop: JSON.stringify(smeta.dop)  
+                    })
+                })  
 
 
                 i++ // счетчик интервалов
