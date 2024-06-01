@@ -62,7 +62,7 @@ async function getWorkers() {
 }
 
 //получить данные таблицы Специалисты
-async function getWorkers100() {
+async function getWorkers100(id) {
     try {
         let response = await notion.databases.query({
             database_id: databaseWorkerId
@@ -84,7 +84,7 @@ async function getWorkers100() {
                 rank: page.properties["Ранг"].number,
                 passport: page.properties.Passport.rich_text[0]?.plain_text,
                 skill: page.properties.Skill.multi_select,
-                image: page.properties["Профиль"].files[0]?.file.url,
+                //image: page.properties["Профиль"].files[0]?.file.url,
             };
         });
 
@@ -394,7 +394,8 @@ class WorkerController {
     }
 
     async workers100(req, res) {
-        const workers = await getWorkers100();
+        const id = req.params.id; // получаем id
+        const workers = await getWorkers100(id);
         if(workers){
             res.json(workers);
         }
