@@ -93,7 +93,13 @@ async function getWorkers100(id) {
             };
         });
 
-        return workers;
+        const newObj = {
+            workers: workers,
+            cursor: response.next_cursor,
+            more: response.has_more
+        }
+
+        return newObj;
 
     } catch (error) {
         console.error(error.message)
