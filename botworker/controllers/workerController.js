@@ -70,14 +70,14 @@ async function getWorkers100(id) {
 
         let response = {}
         //if (id === 1) {
-            response = await notion.databases.query({
-                database_id: databaseWorkerId
-            });
+            // response = await notion.databases.query({
+            //     database_id: databaseWorkerId
+            // });
         // } else {
-        //     response = await notion.databases.query({
-        //         database_id: databaseWorkerId,
-        //         start_cursor: id,
-        //     }); 
+            response = await notion.databases.query({
+                database_id: databaseWorkerId,
+                start_cursor: id === 1 ? "" : id,
+            }); 
         // }
         
 
