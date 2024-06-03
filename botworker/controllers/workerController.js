@@ -68,7 +68,7 @@ async function getWorkers100(id) {
         //     database_id: databaseWorkerId
         // });
 
-        let response
+        let response = {}
         if (id === 1) {
             response = await notion.databases.query({
                 database_id: databaseWorkerId
