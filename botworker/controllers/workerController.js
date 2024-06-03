@@ -64,9 +64,14 @@ async function getWorkers() {
 //получить данные таблицы Специалисты
 async function getWorkers100(id) {
     try {
+        // let response = await notion.databases.query({
+        //     database_id: databaseWorkerId
+        // });
+
         let response = await notion.databases.query({
-            database_id: databaseWorkerId
-        });
+            database_id: databaseWorkerId,
+            start_cursor: id,
+        }); 
 
         const workers = response.results.map((page) => {
             return {
