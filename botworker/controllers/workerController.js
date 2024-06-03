@@ -90,6 +90,7 @@ async function getWorkers100(id) {
                 passport: page.properties.Passport.rich_text[0]?.plain_text,
                 skill: page.properties.Skill.multi_select,
                 //image: page.properties["Профиль"].files[0]?.file.url,
+                profile: page.properties["Профиль"],
             };
         });
 
