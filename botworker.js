@@ -2155,7 +2155,7 @@ bot.on('message', async (msg) => {
                     if (notion.length === 0) {
                         //добавить специалиста
                         const workerId = await addWorker(fio, chatId, age, phone2, specArr2, city2, friend2)
-                        console.log('Специалист успешно добавлен в Notion!')
+                        console.log('Специалист успешно добавлен в Notion!', workerId)
 
                         //добавить аватар
                        const res = await addAvatar(workerId, urlAvatar)

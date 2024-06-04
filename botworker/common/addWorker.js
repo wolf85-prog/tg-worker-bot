@@ -446,6 +446,7 @@ module.exports = async function addWorker(title, tg_id, age, phone, worklist, ci
         return res_id;
 
     } catch (error) {
+        console.error("Ошибка добавления специалиста в Notion: ")
         console.error(error.message)
     }
 }
