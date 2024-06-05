@@ -2531,6 +2531,19 @@ bot.on('message', async (msg) => {
         console.log("project: ", data)
         const projectId = project[1]
 
+        await bot.sendMessage(chatId, "Не показывать больше этот проект, даже если в нем изменятся условия и вырастет ставка?", {
+            reply_markup: ({
+                inline_keyboard: [
+                    [
+                        {"text": "Показать еще раз", callback_data:'/cancel2'}, 
+                    ],
+                    [
+                        {"text": "Не показывать", callback_data:'/cancel3'},
+                    ],
+                ]
+            })
+        }) 
+
         //отправить сообщение в админ-панель
         const convId = await sendMyMessage('Пользователь нажал кнопку "Отклонить" в рассылке', "text", chatId, messageId, null, true)
 
@@ -2648,6 +2661,17 @@ bot.on('message', async (msg) => {
             })
             return bot.sendMessage(chatId, 'Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить')
         }    
+    }
+
+    if (data === '/cancel2') {
+        return bot.sendMessage(chatId, `Принято показать еще раз`)  
+
+    }
+
+    if (data === '/cancel3') {
+        return bot.sendMessage(chatId, `Ваш отказ принят.
+До встречи на следующем проекте!`)  
+
     }
 
     //----------------------------------------------------------------
