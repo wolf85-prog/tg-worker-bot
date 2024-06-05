@@ -2535,140 +2535,138 @@ bot.on('message', async (msg) => {
             reply_markup: ({
                 inline_keyboard: [
                     [
-                        {"text": "Показать еще раз", callback_data:'/cancel2'}, 
-                    ],
-                    [
-                        {"text": "Не показывать", callback_data:'/cancel3'},
+                        {"text": "Показать еще", callback_data:'/todocancel2'}, 
+                        {"text": "Не показывать", callback_data:'/todocancel3'},
                     ],
                 ]
             })
         }) 
 
         //отправить сообщение в админ-панель
-        const convId = await sendMyMessage('Пользователь нажал кнопку "Отклонить" в рассылке', "text", chatId, messageId, null, true)
+        // const convId = await sendMyMessage('Пользователь нажал кнопку "Отклонить" в рассылке', "text", chatId, messageId, null, true)
 
-        // Подключаемся к серверу socket
-        let socket = io(socketUrl);
-        socket.emit("addUser", chatId)
+        // // Подключаемся к серверу socket
+        // let socket = io(socketUrl);
+        // socket.emit("addUser", chatId)
         
-        socket.emit("sendMessageSpec", {
-            senderId: chatId,
-            receiverId: chatTelegramId,
-            text: 'Пользователь нажал кнопку "Отклонить" в рассылке',
-            convId: convId,
-            messageId: messageId,
-            isBot: true,
-        })
+        // socket.emit("sendMessageSpec", {
+        //     senderId: chatId,
+        //     receiverId: chatTelegramId,
+        //     text: 'Пользователь нажал кнопку "Отклонить" в рассылке',
+        //     convId: convId,
+        //     messageId: messageId,
+        //     isBot: true,
+        // })
 
 
-        //специалист
-        const workerId = await getWorkerChatId(chatId)
+        // //специалист
+        // const workerId = await getWorkerChatId(chatId)
 
-        //новый претендент
-        const pretendent = {
-            projectId: projectId, 
-            workerId: workerId, 
-            receiverId: chatId,  
-            accept: true,  
-            cancel: 1    
-        }
+        // //новый претендент
+        // const pretendent = {
+        //     projectId: projectId, 
+        //     workerId: workerId, 
+        //     receiverId: chatId,  
+        //     accept: true,  
+        //     cancel: 1    
+        // }
 
-        //найти претендента в БД
-        const exist = await Pretendent.findOne({
-            where: {
-                projectId: projectId,
-                workerId: workerId,
-            },
-        })
+        // //найти претендента в БД
+        // const exist = await Pretendent.findOne({
+        //     where: {
+        //         projectId: projectId,
+        //         workerId: workerId,
+        //     },
+        // })
 
         
-        if (exist) {
-            console.log('Претендент уже создан в БД для этого проекта!')
+        // if (exist) {
+        //     console.log('Претендент уже создан в БД для этого проекта!')
 
-            //проверяем отклонил ли специалист заявку в прошлый раз
-            if (exist.dataValues.accept) {
-                const count = exist.dataValues.cancel + 1
-                const res = await Pretendent.update({ 
-                    cancel: count  
-                },
-                {
-                    where: {
-                        projectId: projectId,
-                        workerId: workerId,
-                    },
-                })
-            //или было нажато принять
-            } else {
-                const res = await Pretendent.update({ 
-                    accept: true,
-                    cancel: 1 
-                },
-                {
-                    where: {
-                        projectId: projectId,
-                        workerId: workerId,
-                    },
-            })
-            console.log("Претендент обновлен в БД")
-            }
+        //     //проверяем отклонил ли специалист заявку в прошлый раз
+        //     if (exist.dataValues.accept) {
+        //         const count = exist.dataValues.cancel + 1
+        //         const res = await Pretendent.update({ 
+        //             cancel: count  
+        //         },
+        //         {
+        //             where: {
+        //                 projectId: projectId,
+        //                 workerId: workerId,
+        //             },
+        //         })
+        //     //или было нажато принять
+        //     } else {
+        //         const res = await Pretendent.update({ 
+        //             accept: true,
+        //             cancel: 1 
+        //         },
+        //         {
+        //             where: {
+        //                 projectId: projectId,
+        //                 workerId: workerId,
+        //             },
+        //     })
+        //     console.log("Претендент обновлен в БД")
+        //     }
             
-        } else {
-            const res = await Pretendent.create(pretendent)
-            console.log("Претендент в БД: ", res.dataValues.id)
-            console.log("Пользователь отклонил заявку!")
-        }
+        // } else {
+        //     const res = await Pretendent.create(pretendent)
+        //     console.log("Претендент в БД: ", res.dataValues.id)
+        //     console.log("Пользователь отклонил заявку!")
+        // }
 
-        const exist2 = await Pretendent.findOne({
-            where: {
-                projectId: projectId,
-                workerId: workerId,
-            },
-        })
+        // const exist2 = await Pretendent.findOne({
+        //     where: {
+        //         projectId: projectId,
+        //         workerId: workerId,
+        //     },
+        // })
 
-        if ((exist2.dataValues.cancel < 2) || ( Math.abs(new Date(exist.dataValues.updatedAt).getTime()-new Date().getTime()) )>3600000) {
-            //ноушен
-            const blockId = await getBlocksP(projectId);  
+        // if ((exist2.dataValues.cancel < 2) || ( Math.abs(new Date(exist.dataValues.updatedAt).getTime()-new Date().getTime()) )>3600000) {
+        //     //ноушен
+        //     const blockId = await getBlocksP(projectId);  
                 
-            //найти претендента в ноушене
-            if (blockId) {
-            const worker = await getWorkerPretendent(blockId, workerId)
-                //console.log("worker: ", worker)
+        //     //найти претендента в ноушене
+        //     if (blockId) {
+        //     const worker = await getWorkerPretendent(blockId, workerId)
+        //         //console.log("worker: ", worker)
                     
-                //обновить специалиста в таблице Претенденты если есть
-                if (worker.length > 0) {
-                    await updatePretendent(worker[0]?.id);
-                } else {
-                    console.log("Специалист отсутствует в таблице Претенденты: ") 
-                } 
-            }
+        //         //обновить специалиста в таблице Претенденты если есть
+        //         if (worker.length > 0) {
+        //             await updatePretendent(worker[0]?.id);
+        //         } else {
+        //             console.log("Специалист отсутствует в таблице Претенденты: ") 
+        //         } 
+        //     }
 
-            return bot.sendMessage(chatId, 'Хорошо, тогда в следующий раз!')
-        }
+        //     return bot.sendMessage(chatId, 'Хорошо, тогда в следующий раз!')
+        // }
 
-        if (exist2.dataValues.otclick > 1) {
-            //отправить сообщение в админ-панель
-            const convId = await sendMessageAdmin('Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить', "text", chatId, null, null, true)
+        // if (exist2.dataValues.otclick > 1) {
+        //     //отправить сообщение в админ-панель
+        //     const convId = await sendMessageAdmin('Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить', "text", chatId, null, null, true)
 
-            // Подключаемся к серверу socket
+        //     // Подключаемся к серверу socket
 
-            socket.emit("sendAdminSpec", {
-                senderId: chatTelegramId,
-                receiverId: chatId,
-                text: 'Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить',
-                convId: convId,
-                messageId: null,
-                isBot: true,
-            })
-            return bot.sendMessage(chatId, 'Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить')
-        }    
+        //     socket.emit("sendAdminSpec", {
+        //         senderId: chatTelegramId,
+        //         receiverId: chatId,
+        //         text: 'Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить',
+        //         convId: convId,
+        //         messageId: null,
+        //         isBot: true,
+        //     })
+        //     return bot.sendMessage(chatId, 'Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить')
+        // }    
     }
 
-    if (data === '/cancel2') {
+    if (data === '/todocancel2') {
         return bot.sendMessage(chatId, `Принято показать еще раз`)  
 
     }
 
-    if (data === '/cancel3') {
+    if (data === '/todocancel3') {
         return bot.sendMessage(chatId, `Ваш отказ принят.
 До встречи на следующем проекте!`)  
 
