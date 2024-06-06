@@ -2691,7 +2691,7 @@ bot.on('message', async (msg) => {
                     inline_keyboard: [
                         [
                             {"text": "Показать еще", callback_data:'/todocancel2'}, 
-                            {"text": "Не показывать", callback_data:`/todocancel3 ${projectId}:${chatId}`},
+                            {"text": "Не показывать", callback_data:`/todocancel3 ${projectId} ${chatId}`},
                         ],
                     ]
                 })
@@ -2728,8 +2728,8 @@ bot.on('message', async (msg) => {
         const projectId = project[1]
         console.log("projectId: ", projectId)
         
-        const worker = data.split(':');
-        const workerId = worker[1]
+        //const worker = data.split(' ');
+        const workerId = project[2]
         console.log("workerId: ", workerId)
 
         try {
