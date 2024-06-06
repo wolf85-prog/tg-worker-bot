@@ -2722,7 +2722,7 @@ bot.on('message', async (msg) => {
     }
 
     //заблокировать рассылку по проекту
-    if (data === '/todocancel3') {
+    if (data.startsWith('/todocancel3')) {
         const project = data.split(' ');
         console.log("project: ", data)
         const projectId = project[1]
