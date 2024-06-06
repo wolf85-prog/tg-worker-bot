@@ -2726,20 +2726,27 @@ bot.on('message', async (msg) => {
         const project = data.split(' ');
         console.log("project: ", data)
         const projectId = project[1]
+        console.log("projectId: ", projectId)
         
         const worker = data.split(':');
         const workerId = worker[1]
+        console.log("workerId: ", workerId)
 
-        const res = await Pretendent.update({ 
-            blockDistrib: true
-        },
-        {
-            where: {
-                projectId: projectId,
-                receiverId: workerId,
+        try {
+            const res = await Pretendent.update({ 
+                blockDistrib: true
             },
-        })
-        console.log("Претендент обновлен в БД")
+            {
+                where: {
+                    projectId: projectId,
+                    receiverId: workerId,
+                },
+            })
+            console.log("Претендент обновлен в БД", res) 
+        } catch (error) {
+            console.log("Ошибка обновления претендента!")
+            console.error(error.message)
+        } 
         
         return bot.sendMessage(chatId, `Ваш отказ принят.
 До встречи на следующем проекте!`)  
