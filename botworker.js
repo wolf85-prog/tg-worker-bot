@@ -2691,7 +2691,7 @@ bot.on('message', async (msg) => {
                     inline_keyboard: [
                         [
                             {"text": "Показать еще", callback_data:'/todocancel2'}, 
-                            {"text": "Не показывать", callback_data:'/todocancel3 ' + projectId + " " + workerId},
+                            {"text": "Не показывать", callback_data:'/todocancel3'},
                         ],
                     ]
                 })
