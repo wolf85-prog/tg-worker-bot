@@ -2684,7 +2684,18 @@ bot.on('message', async (msg) => {
                 } 
             }
 
-            return bot.sendMessage(chatId, 'Хорошо, тогда в следующий раз!')
+            await bot.sendMessage(chatId, 'Хорошо, тогда в следующий раз!')
+
+            return bot.sendMessage(chatId, "Хотите больше не получать это предложение даже при условии, что ставка измениться в большую сторону?", {
+                reply_markup: ({
+                    inline_keyboard: [
+                        [
+                            {"text": "Показать еще", callback_data:'/todocancel2'}, 
+                            {"text": "Не показывать", callback_data:'/todocancel3 ' + projectId + " " + workerId},
+                        ],
+                    ]
+                })
+            }) 
         }
 
         if (exist2.dataValues.otclick > 1) {
@@ -2704,18 +2715,18 @@ bot.on('message', async (msg) => {
             return bot.sendMessage(chatId, 'Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить')
         } 
         
-        setTimeout(async()=> {
-            await bot.sendMessage(chatId, "Не показывать больше этот проект, даже если в нем изменятся условия и вырастет ставка?", {
-                reply_markup: ({
-                    inline_keyboard: [
-                        [
-                            {"text": "Показать еще", callback_data:'/todocancel2'}, 
-                            {"text": "Не показывать", callback_data:'/todocancel3 ' + projectId + " " + workerId},
-                        ],
-                    ]
-                })
-            }) 
-        }, 5000)
+        // setTimeout(async()=> {
+        //     await bot.sendMessage(chatId, "Не показывать больше этот проект, даже если в нем изменятся условия и вырастет ставка?", {
+        //         reply_markup: ({
+        //             inline_keyboard: [
+        //                 [
+        //                     {"text": "Показать еще", callback_data:'/todocancel2'}, 
+        //                     {"text": "Не показывать", callback_data:'/todocancel3 ' + projectId + " " + workerId},
+        //                 ],
+        //             ]
+        //         })
+        //     }) 
+        // }, 5000)
     }
 
     if (data === '/todocancel2') {
