@@ -2736,7 +2736,7 @@ bot.on('message', async (msg) => {
         {
             where: {
                 projectId: projectId,
-                workerId: workerId,
+                receiverId: workerId,
             },
         })
         console.log("Претендент обновлен в БД")
