@@ -2595,8 +2595,8 @@ bot.on('message', async (msg) => {
                         projectId: projectId,
                         workerId: workerId,
                     },
-            })
-            console.log("Претендент обновлен в БД")
+                })
+                console.log("Претендент обновлен в БД")
             }
             
         } else {
@@ -2655,7 +2655,7 @@ bot.on('message', async (msg) => {
                     inline_keyboard: [
                         [
                             {"text": "Показать еще", callback_data:'/todocancel2'}, 
-                            {"text": "Не показывать", callback_data:'/todocancel3'},
+                            {"text": "Не показывать", callback_data:'/todocancel3 ' + projectId + " " + workerId},
                         ],
                     ]
                 })
@@ -2667,7 +2667,24 @@ bot.on('message', async (msg) => {
         return bot.sendMessage(chatId, `Принято показать еще раз`)  
     }
 
+    //заблокировать рассылку по проекту
     if (data === '/todocancel3') {
+        const project = data.split(' ');
+        console.log("project: ", data)
+        const projectId = project[1]
+
+        const workerId = project[2]
+
+        const res = await Pretendent.update({ 
+            blockDistrib: true
+        },
+        {
+            where: {
+                projectId: projectId,
+                workerId: workerId,
+            },
+        })
+        console.log("Претендент обновлен в БД")
         
         return bot.sendMessage(chatId, `Ваш отказ принят.
 До встречи на следующем проекте!`)  
