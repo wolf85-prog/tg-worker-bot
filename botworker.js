@@ -1829,17 +1829,46 @@ bot.on('message', async (msg) => {
                     if (currentMonth === 4) {
                         //апрель
                         urlAvatar = 'https://proj.uley.team/upload/2024-04-23T08:08:31.547Z.jpg'
-                    } else if (currentMonth === 5) {
+                    } 
+                    else if (currentMonth === 5) {
                         //май
                         urlAvatar = 'https://proj.uley.team/upload/2024-04-23T08:09:19.513Z.jpg' 
-                    } else if (currentMonth === 6) {
-                        //май
-                        urlAvatar = 'https://proj.uley.team/upload/2024-04-23T08:09:53.184Z.jpg'
+                    } 
+                    else if (currentMonth === 6) {
+                        //июнь
+                        urlAvatar = 'https://proj.uley.team/upload/2024-06-06T07:51:23.345Z.jpg'
                     }
+                    else if (currentMonth === 7) {
+                        //июль
+                        urlAvatar = 'https://proj.uley.team/upload/2024-06-06T07:52:17.472Z.jpg'
+                    }
+                    else if (currentMonth === 8) {
+                        //август
+                        urlAvatar = 'https://proj.uley.team/upload/2024-06-06T07:53:06.699Z.jpg'
+                    }
+                    else if (currentMonth === 9) {
+                        //сентябрь
+                        urlAvatar = 'https://proj.uley.team/upload/2024-06-06T07:54:00.494Z.jpg'
+                    }
+                    else if (currentMonth === 10) {
+                        //октябрь
+                        urlAvatar = 'https://proj.uley.team/upload/2024-06-06T07:54:13.965Z.jpg'
+                    }
+                    else if (currentMonth === 11) {
+                        //ноябрь
+                        urlAvatar = 'https://proj.uley.team/upload/2024-06-06T07:54:28.857Z.jpg'
+                    }
+                    else if (currentMonth === 12) {
+                        //декабрь
+                        urlAvatar = 'https://proj.uley.team/upload/2024-06-06T07:54:44.499Z.jpg'
+                    }
+                    
 
-                    //добавить аватар
-               const res = await addAvatar(notion[0].id, urlAvatar)
-               console.log("res upload avatar: ", res)
+                //добавить аватар
+               //const res = await addAvatar(notion[0].id, urlAvatar)
+               //console.log("res upload avatar: ", res)
+
+
 
             }
         }
@@ -2137,16 +2166,42 @@ bot.on('message', async (msg) => {
                     if (currentMonth === 4) {
                         //апрель
                         urlAvatar = 'https://proj.uley.team/upload/2024-04-23T08:08:31.547Z.jpg'
-                    } else if (currentMonth === 5) {
+                    } 
+                    else if (currentMonth === 5) {
                         //май
                         urlAvatar = 'https://proj.uley.team/upload/2024-05-02T06:01:44.244Z.jpg'
-                    } else if (currentMonth === 6) {
-                        //май
-                        urlAvatar = 'https://proj.uley.team/upload/2024-04-23T08:09:53.184Z.jpg'
+                    } 
+                    else if (currentMonth === 6) {
+                        //июнь
+                        urlAvatar = 'https://proj.uley.team/upload/2024-06-06T07:51:23.345Z.jpg'
+                    }
+                    else if (currentMonth === 7) {
+                        //июль
+                        urlAvatar = 'https://proj.uley.team/upload/2024-06-06T07:52:17.472Z.jpg'
+                    }
+                    else if (currentMonth === 8) {
+                        //август
+                        urlAvatar = 'https://proj.uley.team/upload/2024-06-06T07:53:06.699Z.jpg'
+                    }
+                    else if (currentMonth === 9) {
+                        //сентябрь
+                        urlAvatar = 'https://proj.uley.team/upload/2024-06-06T07:54:00.494Z.jpg'
+                    }
+                    else if (currentMonth === 10) {
+                        //октябрь
+                        urlAvatar = 'https://proj.uley.team/upload/2024-06-06T07:54:13.965Z.jpg'
+                    }
+                    else if (currentMonth === 11) {
+                        //ноябрь
+                        urlAvatar = 'https://proj.uley.team/upload/2024-06-06T07:54:28.857Z.jpg'
+                    }
+                    else if (currentMonth === 12) {
+                        //декабрь
+                        urlAvatar = 'https://proj.uley.team/upload/2024-06-06T07:54:44.499Z.jpg'
                     }
 
 
-                    console.log(fio, chatId, age, phone2, specArr2, city2, friend2)
+                    console.log(fio, chatId, age, phone2, specArr2, city2, friend2, urlAvatar)
 
                     //сохраниь в бд ноушен
                     const notion = await getWorkerNotion(chatId)
@@ -2154,12 +2209,12 @@ bot.on('message', async (msg) => {
                     
                     if (notion.length === 0) {
                         //добавить специалиста
-                        const workerId = await addWorker(fio, chatId, age, phone2, specArr2, city2, friend2)
+                        const workerId = await addWorker(fio, chatId, age, phone2, specArr2, city2, friend2, urlAvatar)
                         console.log('Специалист успешно добавлен в Notion!', workerId)
 
                         //добавить аватар
-                       const res = await addAvatar(workerId, urlAvatar)
-                       console.log("res upload avatar: ", res)
+                        //const res = await addAvatar(workerId, urlAvatar)
+                        //console.log("res upload avatar: ", res)
                     } else {
                         console.log('Специалист уже существует в Notion!')
                     }
