@@ -2691,7 +2691,7 @@ bot.on('message', async (msg) => {
                     inline_keyboard: [
                         [
                             {"text": "Показать еще", callback_data:'/todocancel2'}, 
-                            {"text": "Не показывать", callback_data:`/todocancel3 ${projectId}^${workerId}`},
+                            {"text": "Не показывать", callback_data:`/todocancel3 ${projectId}:${workerId}`},
                         ],
                     ]
                 })
@@ -2727,7 +2727,7 @@ bot.on('message', async (msg) => {
         console.log("project: ", data)
         const projectId = project[1]
         
-        const worker = data.split('^');
+        const worker = data.split(':');
         const workerId = worker[1]
 
         const res = await Pretendent.update({ 
