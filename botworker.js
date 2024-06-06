@@ -2691,7 +2691,7 @@ bot.on('message', async (msg) => {
                     inline_keyboard: [
                         [
                             {"text": "Показать еще", callback_data:'/todocancel2'}, 
-                            {"text": "Не показывать", callback_data:'/todocancel3'},
+                            {"text": "Не показывать", callback_data:`/todocancel3 ${projectId}`},
                         ],
                     ]
                 })
@@ -2715,18 +2715,6 @@ bot.on('message', async (msg) => {
             return bot.sendMessage(chatId, 'Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить')
         } 
         
-        // setTimeout(async()=> {
-        //     await bot.sendMessage(chatId, "Не показывать больше этот проект, даже если в нем изменятся условия и вырастет ставка?", {
-        //         reply_markup: ({
-        //             inline_keyboard: [
-        //                 [
-        //                     {"text": "Показать еще", callback_data:'/todocancel2'}, 
-        //                     {"text": "Не показывать", callback_data:'/todocancel3 ' + projectId + " " + workerId},
-        //                 ],
-        //             ]
-        //         })
-        //     }) 
-        // }, 5000)
     }
 
     if (data === '/todocancel2') {
