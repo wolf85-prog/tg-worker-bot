@@ -442,6 +442,7 @@ module.exports = async function addWorker(title, tg_id, age, phone, worklist, ci
                         {
                             "type": "file",
                             "file": {
+                                "name": 'image_'+ new Date().toISOString(),
                                 "url": url_image,
                             }
                         }
