@@ -2837,6 +2837,32 @@ function errorTelegram(error) {
 }
 
 
+const fetchNotif = async (dataAll) => {
+	console.log("Получено уведомление: ", dataAll)
+	const { task, 
+		tg_id,
+		fio,
+		sity,
+		year_of_birth, 
+		rating, 
+		projects, 
+		specialities, 
+		comtags, 
+		workers_update,
+		processUpdateD,
+		phone,
+		telegram_id, 
+		srm_id, 
+		chat_link,
+	} = dataAll;
+
+	if (task === 301) {
+       // bot.sendMessage('', chat_link)
+       console.log("NOTIF 300: ", telegram_id, srm_id, chat_link)
+    }
+}
+
+
 //-------------------------------------------------------------------------------------------------------------------------------
 const PORT = process.env.PORT || 8001;
 
@@ -2980,6 +3006,11 @@ const start = async () => {
             } catch (error) {
                 console.log(error.message)
             }
+
+
+            // Подключаемся к серверу socket
+            let socket = io(socketUrl);
+            socket.on("getNotif", fetchNotif);
         });
 
     } catch (error) {
