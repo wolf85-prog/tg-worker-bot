@@ -2837,28 +2837,14 @@ function errorTelegram(error) {
 }
 
 
-const fetchNotif = async (dataAll) => {
-	console.log("Получено уведомление: ", dataAll)
-	const { task, 
-		tg_id,
-		fio,
-		sity,
-		year_of_birth, 
-		rating, 
-		projects, 
-		specialities, 
-		comtags, 
-		workers_update,
-		processUpdateD,
-		phone,
-		telegram_id, 
-		srm_id, 
-		chat_link,
-	} = dataAll;
+const fetchNotif = async (data) => {
+	console.log("Получено уведомление: ", data)
+	const { task, data } = data;
 
 	if (task === 301) {
        // bot.sendMessage('', chat_link)
-       console.log("NOTIF 300: ", telegram_id, srm_id, chat_link)
+
+       console.log("NOTIF 300: ", data[0].telegram_id, data[0].srm_id, data[0].chat_link)
     }
 }
 
@@ -3010,7 +2996,7 @@ const start = async () => {
 
             // Подключаемся к серверу socket
             let socket = io(socketUrl);
-            socket.on("getNotif", fetchNotif);
+            socket.on("getWorker", fetchNotif);
         });
 
     } catch (error) {
