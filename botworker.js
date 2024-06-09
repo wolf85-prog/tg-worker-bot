@@ -2837,9 +2837,9 @@ function errorTelegram(error) {
 }
 
 
-const fetchNotif = async (data) => {
-	console.log("Получено уведомление: ", data)
-	const { task, data } = data;
+const fetchNotif = async (dataAll) => {
+	console.log("Получено уведомление: ", dataAll)
+	const { task, data } = dataAll;
 
 	if (task === 301) {
        // bot.sendMessage('', chat_link)
