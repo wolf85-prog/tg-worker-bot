@@ -111,6 +111,7 @@ const updatePretendentAlt = require("./botworker/common/updatePretendentAlt");
 const getProjectName = require("./botworker/common/getProjectName");
 const sendMessageAdmin = require("./botworker/common/sendMessageAdmin");
 const addAvatar = require("./botworker/common/addAvatar");
+const getProjectNew = require("./botworker/common/getProjectNew");
 
 
 //--------------------------------------------------------------------------------------------------------
@@ -2918,24 +2919,24 @@ const start = async () => {
             }, 600000); //каждые 10 минут
 
             //Получить новые проекты для рассылки, повторить с интервалом 2 минуты
-            setInterval(async() => {
-                console.log("START GET PROJECT NEW...")
-                //notion
-                const projects = await getProjectNew()
+            // setInterval(async() => {
+            //     console.log("START GET PROJECT NEW...")
+            //     //notion
+            //     const projects = await getProjectNew()
 
-                //await ProjectNew.truncate();
+            //     //await ProjectNew.truncate();
 
-                projects.map(async(project)=> {
-                    await ProjectNew.create({ 
-                        id: project.id, 
-                        name: project.name, 
-                        datestart: project.datestart, 
-                        crmID: project.crmID, 
-                    })
-                })
+            //     projects.map(async(project)=> {
+            //         await ProjectNew.create({ 
+            //             id: project.id, 
+            //             name: project.name, 
+            //             datestart: project.datestart, 
+            //             crmID: project.crmID, 
+            //         })
+            //     })
                 
-                i++ // счетчик интервалов
-            }, 120000); //каждые 2 минуты
+            //     i++ // счетчик интервалов
+            // }, 120000); //каждые 2 минуты
 
 
             //запуск сканирования отказа специалисту
