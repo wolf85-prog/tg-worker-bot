@@ -122,6 +122,13 @@ const Canceled = sequelize.define('canceled', {
     cancel: {type: DataTypes.BOOLEAN}, //отказано
 })
 
+const ProjectNew = sequelize.define('projectnew', {
+    id: {type: DataTypes.STRING, primaryKey: true}, // id проекта
+    name: {type: DataTypes.STRING},  //название проекта
+    datestart: {type: DataTypes.STRING}, //начало
+    crmID: {type: DataTypes.STRING},
+})
+
 module.exports = {
     UserBot, 
     Worker,
@@ -133,5 +140,6 @@ module.exports = {
     Smetacash,
     Speccash,
     Canceled,
+    ProjectNew,
 }
 

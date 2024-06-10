@@ -72,7 +72,7 @@ const pm2 = require('pm2');
 
 //подключение к БД PostreSQL
 const sequelize = require('./botworker/connections/db')
-const {UserBot, Message, Conversation, Worker, Pretendent, Projectcash, Smetacash, Canceled} = require('./botworker/models/models');
+const {UserBot, Message, Conversation, Worker, Pretendent, Projectcash, Smetacash, Canceled, ProjectNew} = require('./botworker/models/models');
 const addWorker = require("./botworker/common/addWorker");
 const getWorkerNotion = require("./botworker/common/getWorkerNotion");
 const addPassport = require("./botworker/common/addPassport");
@@ -2916,6 +2916,26 @@ const start = async () => {
 
                 i++ // счетчик интервалов
             }, 600000); //каждые 10 минут
+
+            //Получить новые проекты для рассылки, повторить с интервалом 2 минуты
+            setInterval(async() => {
+                console.log("START GET PROJECT NEW...")
+                //notion
+                const projects = await getProjectNew()
+
+                //await ProjectNew.truncate();
+
+                projects.map(async(project)=> {
+                    await ProjectNew.create({ 
+                        id: project.id, 
+                        name: project.name, 
+                        datestart: project.datestart, 
+                        crmID: project.crmID, 
+                    })
+                })
+                
+                i++ // счетчик интервалов
+            }, 120000); //каждые 2 минуты
 
 
             //запуск сканирования отказа специалисту

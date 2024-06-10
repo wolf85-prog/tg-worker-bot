@@ -34,6 +34,7 @@ router.get("/project/:id", projectController.projectId);
 
 //get PROJECTS from DB
 router.get("/projectscash", projectController.projectsCash)
+router.get("/projectsnewcash", projectController.projectsNewCash)
 
 
 //get DATABASE (специалисты)
