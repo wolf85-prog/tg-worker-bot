@@ -21,10 +21,10 @@ router.get("/workerinfo/:id", workerController.workerInfoId);
 //SEND MESSAGE
 router.get("/sendmessage/:id", workerController.message);
 
-//get PROJECTS ALL
+//get PROJECTS ALL (NOTION)
 router.get("/projectall", workerController.projectAll);
 
-//get PROJECTS NEW
+//get PROJECTS NEW (NOTION)
 router.get("/projectsnew", workerController.projectsNew);
 
 //get PROJECTS STATUS
@@ -32,6 +32,7 @@ router.get("/projectsold", workerController.projectsOld);
 
 router.get("/project/:id", projectController.projectId);
 
+//get PROJECTS from DB
 router.get("/projectscash", projectController.projectsCash)
 
 
