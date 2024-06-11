@@ -2685,8 +2685,6 @@ bot.on('message', async (msg) => {
                 } 
             }
 
-            //await bot.sendMessage(chatId, 'Хорошо, тогда в следующий раз!')
-
             return bot.sendMessage(chatId, "Больше не показывать это предложение даже при условии, что ставка измениться в большую сторону?", {
                 reply_markup: ({
                     inline_keyboard: [
@@ -2712,18 +2710,7 @@ bot.on('message', async (msg) => {
                 messageId: null,
                 isBot: true,
             })
-            //return bot.sendMessage(chatId, 'Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить')
-
-            return bot.sendMessage(chatId, "Больше не показывать это предложение даже при условии, что ставка измениться в большую сторону?", {
-                reply_markup: ({
-                    inline_keyboard: [
-                        [
-                            {"text": "Показать еще", callback_data:'/todocancel2'}, 
-                            {"text": "Не показывать", callback_data:`/todocancel3 ${projectId} ${chatId}`},
-                        ],
-                    ]
-                })
-            }) 
+            return bot.sendMessage(chatId, 'Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить')
         } 
         
     }
