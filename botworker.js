@@ -1874,6 +1874,31 @@ bot.on('message', async (msg) => {
             }
         }
 
+        if (text === '/startpretendent') {
+            const text = 'Добрый день, для добавления вас в чат проекта необходимо ...'
+
+            let keyboard 
+            const image = 'https://proj.uley.team/upload/2024-06-12T08:38:45.822Z.jpg'
+
+            const data = [{telegram_id: '805436270'}]
+
+            data.map((item, i)=> {
+                    setTimeout(async() => {
+                        keyboard = JSON.stringify({
+                            inline_keyboard: [
+                                [
+                                    {"text": 'Перейти в чат', web_app: {url: item.chat_link}},
+                                ],
+                            ]
+                        });
+                        
+                        const url_send_msg = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${item.telegram_id}&parse_mode=html&text=${text.replace(/\n/g, '%0A')}`
+
+                        const url_send_photo = `https://api.telegram.org/bot${token}/sendPhoto?chat_id=${item.telegram_id}&photo=${image}&reply_markup=${keyboard}`
+                    }, 1000 * ++i)
+            })
+        }
+
 //------------------------------------------------------------------------------------------------
 //обработка контактов
         if (msg.contact) {
