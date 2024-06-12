@@ -2847,7 +2847,7 @@ const fetchNotif = async (dataAll) => {
        let keyboard 
        const image = 'https://proj.uley.team/upload/2024-06-12T08:38:45.822Z.jpg'
 
-       dataAll.map((item, i)=> {
+       data.map((item, i)=> {
             setTimeout(async() => {
                 keyboard = JSON.stringify({
                     inline_keyboard: [
