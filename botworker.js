@@ -1881,7 +1881,7 @@ bot.on('message', async (msg) => {
             let keyboard 
             const image = 'https://proj.uley.team/upload/2024-06-12T08:38:45.822Z.jpg'
 
-            const data = [{telegram_id: '805436270'}]
+            const data = [{telegram_id: '805436270', chat_link: 'https://yandex.ru'}]
 
             data.map((item, i)=> {
                     //setTimeout(async() => {
@@ -1892,10 +1892,16 @@ bot.on('message', async (msg) => {
                                 ],
                             ]
                         });
-                        
-                        const url_send_msg = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${item.telegram_id}&parse_mode=html&text=${text.replace(/\n/g, '%0A')}`
 
-                        const url_send_photo = `https://api.telegram.org/bot${token}/sendPhoto?chat_id=${item.telegram_id}&photo=${image}&reply_markup=${keyboard}`
+                        try {
+                            const url_send_msg = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${item.telegram_id}&parse_mode=html&text=${text.replace(/\n/g, '%0A')}`
+
+                            const url_send_photo = `https://api.telegram.org/bot${token}/sendPhoto?chat_id=${item.telegram_id}&photo=${image}&reply_markup=${keyboard}`
+                        } catch (error) {
+                            console.error(error.message)
+                        }
+                        
+                        
                     //}, 1000 * ++i)
             })
         }
