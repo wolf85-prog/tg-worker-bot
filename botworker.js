@@ -1883,7 +1883,7 @@ bot.on('message', async (msg) => {
 
             const data = [{telegram_id: '805436270', chat_link: 'https://yandex.ru'}]
 
-            data.map((item, i)=> {
+            data.map(async(item, i)=> {
                     //setTimeout(async() => {
                         keyboard = JSON.stringify({
                             inline_keyboard: [
@@ -1895,8 +1895,10 @@ bot.on('message', async (msg) => {
 
                         try {
                             const url_send_msg = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${item.telegram_id}&parse_mode=html&text=${text.replace(/\n/g, '%0A')}`
-
                             const url_send_photo = `https://api.telegram.org/bot${token}/sendPhoto?chat_id=${item.telegram_id}&photo=${image}&reply_markup=${keyboard}`
+
+                            const sendTextToTelegram = await $host.get(url_send_msg)
+                            const sendPhotoToTelegram = await $host.get(url_send_photo)
                         } catch (error) {
                             console.error(error.message)
                         }
