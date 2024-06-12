@@ -1888,7 +1888,7 @@ bot.on('message', async (msg) => {
                         keyboard = JSON.stringify({
                             inline_keyboard: [
                                 [
-                                    {"text": 'Перейти в чат', web_app: {url: item.chat_link}},
+                                    {"text": 'Перейти в чат', url: item.chat_link},
                                 ],
                             ]
                         });
