@@ -2839,9 +2839,30 @@ const fetchNotif = async (dataAll) => {
 	const { task, data } = dataAll;
 
 	if (task === 301) {
-       // bot.sendMessage('', chat_link)
 
-       console.log("NOTIF 300: ", data[0].telegram_id, data[0].srm_id, data[0].chat_link)
+       //console.log("NOTIF 300: ", data[0].telegram_id, data[0].srm_id, data[0].chat_link)
+
+       const text = 'Добрый день, для добавления вас в чат проекта необходимо ...'
+
+       let keyboard 
+       const image = 'https://proj.uley.team/upload/2024-06-12T08:38:45.822Z.jpg'
+
+       dataAll.map((item, i)=> {
+            setTimeout(async() => {
+                keyboard = JSON.stringify({
+                    inline_keyboard: [
+                        [
+                            {"text": 'Перейти в чат', web_app: {url: item.chat_link}},
+                        ],
+                    ]
+                });
+                
+                const url_send_msg = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${item.telegram_id}&parse_mode=html&text=${text.replace(/\n/g, '%0A')}`
+
+                const url_send_photo = `https://api.telegram.org/bot${token}/sendPhoto?chat_id=${item.telegram_id}&photo=${image}&reply_markup=${keyboard}`
+            }, 1000 * ++i)
+       })
+        
     }
 }
 
