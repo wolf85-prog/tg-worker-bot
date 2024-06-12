@@ -1881,10 +1881,10 @@ bot.on('message', async (msg) => {
             let keyboard 
             const image = 'https://proj.uley.team/upload/2024-06-12T08:38:45.822Z.jpg'
 
-            const data = [{telegram_id: '805436270', chat_link: 'https://yandex.ru'}]
+            const data = [{telegram_id: '805436270', chat_link: 'https://t.me/mbdou34'}, {telegram_id: '6143011220', chat_link: 'https://t.me/mbdou34'}]
 
             data.map(async(item, i)=> {
-                    //setTimeout(async() => {
+                    setTimeout(async() => {
                         keyboard = JSON.stringify({
                             inline_keyboard: [
                                 [
@@ -1904,7 +1904,7 @@ bot.on('message', async (msg) => {
                         }
                         
                         
-                    //}, 1000 * ++i)
+                    }, 1000 * ++i)
             })
         }
 
