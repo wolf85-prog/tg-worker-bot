@@ -2881,21 +2881,29 @@ const fetchNotif = async (dataAll) => {
        let keyboard 
        const image = 'https://proj.uley.team/upload/2024-06-12T08:38:45.822Z.jpg'
 
-       data.map((item, i)=> {
-            setTimeout(async() => {
-                keyboard = JSON.stringify({
-                    inline_keyboard: [
-                        [
-                            {"text": 'Перейти в чат', web_app: {url: item.chat_link}},
-                        ],
-                    ]
-                });
-                
-                const url_send_msg = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${item.telegram_id}&parse_mode=html&text=${text.replace(/\n/g, '%0A')}`
+       data.map(async(item, i)=> {
+        setTimeout(async() => {
+            keyboard = JSON.stringify({
+                inline_keyboard: [
+                    [
+                        {"text": 'Перейти в чат', url: item.chat_link},
+                    ],
+                ]
+            });
 
+            try {
+                const url_send_msg = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${item.telegram_id}&parse_mode=html&text=${text.replace(/\n/g, '%0A')}`
                 const url_send_photo = `https://api.telegram.org/bot${token}/sendPhoto?chat_id=${item.telegram_id}&photo=${image}&reply_markup=${keyboard}`
-            }, 1000 * ++i)
-       })
+
+                const sendTextToTelegram = await $host.get(url_send_msg)
+                const sendPhotoToTelegram = await $host.get(url_send_photo)
+            } catch (error) {
+                console.error(error.message)
+            }
+            
+            
+        }, 1000 * ++i)
+})
         
     }
 }
