@@ -268,6 +268,7 @@ class ProjectController {
         let arrayProject = []
     
         const projects = await getProjects();
+        console.log("(projectController 271) projects: ", projects)
         if (projects && projects.length > 0){
             projects.map(async(project, index)=> {
                 let arraySpec = []
