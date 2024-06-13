@@ -1930,7 +1930,10 @@ bot.on('message', async (msg) => {
                                 crmID: project.crmID, 
                             })
                             //return;
-                        }   
+                        }   else {
+                            await ProjectNew.update({name: project.name},{where: {id: project.id}})    
+                            console.log("Проект в кеше обновлен!")   
+                        } 
                     })
 
                     //удаление старых проектов
