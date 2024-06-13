@@ -1908,6 +1908,51 @@ bot.on('message', async (msg) => {
             })
         }
 
+        if (text === '/getprojectnew') {
+            console.log("START GET PROJECT NEW...")
+                //notion
+                const projects = await getProjectNew()
+
+                try {    
+                    const projectsNew = await ProjectNew.findAll()
+                    //console.log("projectsNew: ", projectsNew)
+
+                    //добавление новых проектов
+                    projects.map(async(project)=> {
+                        const id = project.id
+                        let exist = await ProjectNew.findOne( {where: {id}} )
+                        
+                        if(!exist){
+                            await ProjectNew.create({ 
+                                id: project.id, 
+                                name: project.name, 
+                                datestart: project.datestart, 
+                                crmID: project.crmID, 
+                            })
+                            //return;
+                        }   
+                    })
+
+                    //удаление старых проектов
+                    projectsNew.map(async(project)=> {
+                        const projectOld = projects.find(item => item.id === project.id)
+                        //console.log("projectOld: ", projectOld)
+                        if (projectOld === undefined) {
+                            await ProjectNew.destroy({
+                                where: {
+                                    id: project.id,
+                                }
+                            })
+                            console.log("Проект удален!")
+                        }
+                    })
+
+                } catch (error) {
+                    console.log("Ошибка botworker.js 1951")
+                    return res.status(500).json(error.message);
+                } 
+        }
+
 //------------------------------------------------------------------------------------------------
 //обработка контактов
         if (msg.contact) {
