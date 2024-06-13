@@ -1948,8 +1948,9 @@ bot.on('message', async (msg) => {
                     })
 
                 } catch (error) {
-                    console.log("Ошибка botworker.js 1951")
-                    return error.message;
+                    //console.log("Ошибка botworker.js 1951")
+                    //return error.message;
+                    console.error(error.message)
                 } 
         }
 
