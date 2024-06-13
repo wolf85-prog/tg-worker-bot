@@ -295,13 +295,11 @@ class ProjectController {
             })
 
             setTimeout(()=> {
-                //res.json(arrayProject);
-                return arrayProject
+                res.json(arrayProject);
             }, 10000) 
         }
         else{
-            //res.json([]);
-            return []
+            res.json([]);
         }
     }
     
