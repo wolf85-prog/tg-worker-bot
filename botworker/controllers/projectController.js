@@ -16,7 +16,7 @@ async function getProjects() {
                id: page.id,
                title: page.properties.Name.title[0]?.plain_text,
                time: page.properties["Дата"].date,
-               time_start: page.properties["Дата"].date.start,
+               time_start: page.properties["Дата"].date?.start,
                time_created: page.created_time,
                geo: '', //page.properties.Address.rollup.array,
                teh: page.properties["Тех. задание"].rich_text,
