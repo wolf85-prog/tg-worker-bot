@@ -1908,7 +1908,7 @@ bot.on('message', async (msg) => {
             })
         }
 
-        if (text === '/getprojectnew') {
+        if (text === '/projectnew') {
             console.log("START GET PROJECT NEW...")
                 //notion
                 const projects = await getProjectNew()
@@ -1949,7 +1949,7 @@ bot.on('message', async (msg) => {
 
                 } catch (error) {
                     console.log("Ошибка botworker.js 1951")
-                    return res.status(500).json(error.message);
+                    return error.message;
                 } 
         }
 
