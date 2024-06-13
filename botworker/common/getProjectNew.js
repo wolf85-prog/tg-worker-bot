@@ -10,7 +10,7 @@ const $host = axios.create({
 module.exports = async function getProjectNew() {
 
     try {
-        let response = await $host.get(`projectnewdate`);
+        let response = await $host.get(`api/projectnewdate`);
         //console.log(response);
         return response.data;
     } catch (error) {
