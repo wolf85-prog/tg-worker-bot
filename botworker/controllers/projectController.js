@@ -3,6 +3,7 @@ const { Client } = require("@notionhq/client");
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
 const databaseId = process.env.NOTION_DATABASE_ID
 const {Projectcash, ProjectNew} = require('../models/models');
+const getBlocks = require("../common/getBlocks");
 const getDatabaseId = require("../common/getDatabaseId");
 
 async function getProjects() {
@@ -109,7 +110,7 @@ async function getProjectsId(managerId) {
                id: page.id,
                title: page.properties.Name.title[0]?.plain_text,
                time: page.properties["Дата"].date,
-               time_start: page.properties["Дата"].date.start,
+               time_start: page.properties["Дата"].date?.start,
                time_created: page.created_time,
                geo: '', //page.properties.Address.rollup.array,
                teh: page.properties["Тех. задание"].rich_text,
