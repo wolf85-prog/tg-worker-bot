@@ -2918,7 +2918,7 @@ function errorTelegram(error) {
 
 
 const fetchNotif = async (dataAll) => {
-	console.log("Получено уведомление: ", dataAll, new Date().toISOString())
+	console.log("Получено уведомление: ", dataAll, new Date().toUTCString())
 	const { task, data } = dataAll;
 
 	if (task === 301) {
