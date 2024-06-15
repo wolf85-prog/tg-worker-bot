@@ -1957,6 +1957,25 @@ bot.on('message', async (msg) => {
                 } 
         }
 
+        if (text === '/sendwork') {
+            // Подключаемся к серверу socket
+            let socket = io(socketUrl);
+
+            socket.emit("sendWorker", {
+                task: 301,
+                data: [
+                    {
+                        telegram_id: 805436270,
+                        chat_link: 'https://t.me/+GMsB8_3M6eo4NWEy',
+                    },
+                    {
+                        telegram_id: 6143011220,
+                        chat_link: 'https://t.me/+GMsB8_3M6eo4NWEy',
+                    },
+                ],
+            }) 
+        }
+
 //------------------------------------------------------------------------------------------------
 //обработка контактов
         if (msg.contact) {
@@ -2918,7 +2937,7 @@ function errorTelegram(error) {
 
 
 const fetchNotif = async (dataAll) => {
-	console.log("Получено уведомление: ", dataAll, new Date().toUTCString())
+	console.log("Получено уведомление: ", dataAll, new Date())
 	const { task, data } = dataAll;
 
 	if (task === 301) {
