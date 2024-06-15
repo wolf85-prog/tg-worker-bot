@@ -2962,7 +2962,7 @@ const fetchNotif = async (dataAll) => {
 
             try {
                 const url_send_msg = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${item.telegram_id}&parse_mode=html&text=${text.replace(/\n/g, '%0A')}`
-                const url_send_photo = `https://api.telegram.org/bot${token}/sendPhoto?chat_id=${item.telegram_id}&photo=${image}&reply_markup=${keyboard}`
+                const url_send_photo = `https://api.telegram.org/bot${token}/sendPhoto?chat_id=${item.telegram_id}&photo=${image}`
                 const url_send_photo2 = `https://api.telegram.org/bot${token}/sendPhoto?chat_id=${item.telegram_id}&photo=${image2}&reply_markup=${keyboard}`
 
                 //const sendTextToTelegram = await $host.get(url_send_msg)
