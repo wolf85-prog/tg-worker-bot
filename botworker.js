@@ -1881,7 +1881,7 @@ bot.on('message', async (msg) => {
             let keyboard 
             const image = 'https://proj.uley.team/upload/2024-06-12T08:38:45.822Z.jpg'
 
-            const data = [{telegram_id: '805436270', chat_link: 'https://t.me/+GMsB8_3M6eo4NWEy'}, {telegram_id: '6143011220', chat_link: 'https://t.me/+GMsB8_3M6eo4NWEy'}]
+            const data = [{telegram_id: '805436270', chat_link: 'https://t.me/%2bGMsB8_3M6eo4NWEy'}, {telegram_id: '6143011220', chat_link: 'https://t.me/%2bGMsB8_3M6eo4NWEy'}]
 
             data.map(async(item, i)=> {
                     setTimeout(async() => {
