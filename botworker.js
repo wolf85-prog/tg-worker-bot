@@ -1888,7 +1888,7 @@ bot.on('message', async (msg) => {
                         keyboard = JSON.stringify({
                             inline_keyboard: [
                                 [
-                                    {"text": 'Перейти в чат', url: item.chat_link},
+                                    {"text": 'Перейти в чат', url: item.chat_link.replace('+','%2b')},
                                 ],
                             ]
                         });
@@ -2960,13 +2960,13 @@ const fetchNotif = async (dataAll) => {
             keyboard = JSON.stringify({
                 inline_keyboard: [
                     [
-                        {"text": 'Перейти в чат', url: item.chat_link},
+                        {"text": 'Перейти в чат', url: item.chat_link.replace('+','%2b')},
                     ],
                 ]
             });
 
             try {
-                const url_send_msg = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${item.telegram_id}&parse_mode=html&text=${text.replace(/\n/g, '%0A')}`
+                //const url_send_msg = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${item.telegram_id}&parse_mode=html&text=${text.replace(/\n/g, '%0A')}`
                 const url_send_photo = `https://api.telegram.org/bot${token}/sendPhoto?chat_id=${item.telegram_id}&photo=${image}`
                 const url_send_photo2 = `https://api.telegram.org/bot${token}/sendPhoto?chat_id=${item.telegram_id}&photo=${image2}&reply_markup=${keyboard}`
 
