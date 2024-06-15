@@ -2939,7 +2939,7 @@ function errorTelegram(error) {
 const fetchNotif = async (dataAll) => {
 
     let d = new Date()
-    d.setSeconds(d.getHours() + 3);
+    d.setHours(d.getHours() + 3);
 
 	console.log("Получено уведомление: ", dataAll, d)
 	const { task, data } = dataAll;
