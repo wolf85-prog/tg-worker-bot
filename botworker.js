@@ -599,6 +599,7 @@ bot.on('message', async (msg) => {
                 text: 'https://proj.uley.team/upload/2024-04-02T06:20:12.952Z.jpg',
                 type: 'image',
                 convId: convId,
+                isBot: true,
             })
 
             //-------------------------------------------------------------------------------------------------------------------------
@@ -617,6 +618,7 @@ bot.on('message', async (msg) => {
                     text: 'https://proj.uley.team/upload/2024-04-02T06:21:42.921Z.jpg',
                     type: 'image',
                     convId: convId,
+                    isBot: true,
                 })
             }, 300000) // 5 минут
 
@@ -2056,6 +2058,7 @@ bot.on('message', async (msg) => {
                             receiverId: chatTelegramId,
                             text: `${botApiUrl}/${msg.document.file_name}`.replaceAll(/\s/g, '_'),
                             convId: convId,
+                            isBot: false,
                         })
                     })
                 })
@@ -2165,6 +2168,7 @@ bot.on('message', async (msg) => {
                             receiverId: chatTelegramId,
                             text: `${botApiUrl}/${msg.voice.file_unique_id}.${ras[1]}`,
                             convId: convId,
+                            isBot: false,
                         })
                     })
                 })            
@@ -2349,6 +2353,7 @@ bot.on('message', async (msg) => {
                             type: 'image',
                             convId: convId,
                             messageId: null,
+                            isBot: true,
                         })
                     }, 15000)
 
@@ -2376,6 +2381,7 @@ bot.on('message', async (msg) => {
                         type: 'image',
                         convId: convId,
                         messageId: null,
+                        isBot: true,
                     })
                 }, 15000)
             } else if (text.startsWith('Твоя ставка отправлена!')) {
@@ -2392,6 +2398,7 @@ bot.on('message', async (msg) => {
                     type: 'text',
                     convId: convId,
                     messageId: messageId,
+                    isBot: true,
                 })
             
             } else {
