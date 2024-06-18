@@ -153,6 +153,7 @@ async function getWorkerId(id) {
                 phone: page.properties.Phone.phone_number,
                 age: page.properties.Age.date,
                 city: page.properties.City.rich_text[0]?.plain_text,
+                newcity: page.properties["Город"].multi_select,
                 spec: page.properties.Specialization.multi_select,
                 comment: page.properties["Комментарии"].rich_text[0]?.plain_text,
                 reyting: page.properties["Рейтинг"].rich_text[0]?.plain_text,
