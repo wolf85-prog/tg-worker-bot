@@ -2339,22 +2339,36 @@ bot.on('message', async (msg) => {
                     console.log('Специалист успешно добавлен в БД! Worker: ')
 
                     setTimeout(async()=> {
-                        //Отлично!
-                        await bot.sendPhoto(chatId, 'https://proj.uley.team/upload/2024-04-02T12:04:15.826Z.jpg')
+                        const worker = await Worker.findOne({where:{chatId: chatId.toString()}})
+                        console.log("worker great: ", worker)
+                        if (!worker.dataValues.great) {
+                            //Отлично!
+                            await bot.sendPhoto(chatId, 'https://proj.uley.team/upload/2024-04-02T12:04:15.826Z.jpg')
 
-                        //отправить сообщение о добавлении специалиста в бд в админ-панель
-                        const convId = sendMessageAdmin('https://proj.uley.team/upload/2024-04-02T12:04:15.826Z.jpg', "image", chatId, null)
+                            //отправить сообщение о добавлении специалиста в бд в админ-панель
+                            const convId = sendMessageAdmin('https://proj.uley.team/upload/2024-04-02T12:04:15.826Z.jpg', "image", chatId, null)
+                            
+                            //отправить сообщение в админку
+                            socket.emit("sendMessageSpec", {
+                                senderId: chatTelegramId,
+                                receiverId: chatId,
+                                text: 'https://proj.uley.team/upload/2024-04-02T12:04:15.826Z.jpg',
+                                type: 'image',
+                                convId: convId,
+                                messageId: null,
+                                isBot: true,
+                            })
+
+                            await Worker.update({ 
+                                great: true
+                            },
+                            {
+                                where: {
+                                    chatId: chatId,
+                                },
+                            })
+                        }
                         
-                        //отправить сообщение в админку
-                        socket.emit("sendMessageSpec", {
-                            senderId: chatTelegramId,
-                            receiverId: chatId,
-                            text: 'https://proj.uley.team/upload/2024-04-02T12:04:15.826Z.jpg',
-                            type: 'image',
-                            convId: convId,
-                            messageId: null,
-                            isBot: true,
-                        })
                     }, 15000)
 
                 } catch (error) {
