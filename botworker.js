@@ -2338,10 +2338,10 @@ bot.on('message', async (msg) => {
  
                     console.log('Специалист успешно добавлен в БД! Worker: ')
 
-                    setTimeout(async()=> {
-                        const worker = await Worker.findOne({where:{chatId: chatId.toString()}})
-                        console.log("worker great: ", worker)
-                        if (!worker.dataValues.great) {
+                    const worker = await Worker.findOne({where:{chatId: chatId.toString()}})
+                    console.log("worker great: ", worker)
+                    if (!worker.dataValues.great) {
+                        setTimeout(async()=> {
                             //Отлично!
                             await bot.sendPhoto(chatId, 'https://proj.uley.team/upload/2024-04-02T12:04:15.826Z.jpg')
 
@@ -2367,10 +2367,9 @@ bot.on('message', async (msg) => {
                                     chatId: chatId,
                                 },
                             })
-                        }
                         
-                    }, 15000)
-
+                        }, 15000)
+                    }
                 } catch (error) {
                     console.log(error.message)
                 }
