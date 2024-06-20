@@ -2378,10 +2378,13 @@ bot.on('message', async (msg) => {
             } else if (text.startsWith('Специальность успешно добавлена')) {
                 setTimeout(async()=> {
                     //Отлично!
-                    await bot.sendPhoto(chatId, 'https://proj.uley.team/upload/2024-04-02T12:04:15.826Z.jpg')
+                    //await bot.sendPhoto(chatId, 'https://proj.uley.team/upload/2024-04-02T12:04:15.826Z.jpg')
 
                     //отправить сообщение о добавлении специалиста в бд в админ-панель
-                    const convId = sendMessageAdmin('https://proj.uley.team/upload/2024-04-02T12:04:15.826Z.jpg', "image", chatId, null)
+                    //const convId = sendMessageAdmin('https://proj.uley.team/upload/2024-04-02T12:04:15.826Z.jpg', "image", chatId, null)
+
+                    const mess = 'Специальность успешно добавлена'
+                    const convId = sendMessageAdmin(mess, "text", chatId, null)
 
                     // Подключаемся к серверу socket
                     let socket = io(socketUrl);
@@ -2391,8 +2394,8 @@ bot.on('message', async (msg) => {
                     socket.emit("sendMessageSpec", {
                         senderId: chatTelegramId,
                         receiverId: chatId,
-                        text: 'https://proj.uley.team/upload/2024-04-02T12:04:15.826Z.jpg',
-                        type: 'image',
+                        text: mess, //'https://proj.uley.team/upload/2024-04-02T12:04:15.826Z.jpg',
+                        type: 'text',
                         convId: convId,
                         messageId: null,
                         isBot: true,
