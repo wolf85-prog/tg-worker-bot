@@ -2795,7 +2795,7 @@ bot.on('message', async (msg) => {
             },
         })
 
-        if ((exist2.dataValues.cancel < 2) || ( Math.abs(new Date(exist2.dataValues.updatedAt).getTime()-new Date().getTime()) )>3600000) {
+        if ((exist2.dataValues.cancel < 2) || ( Math.abs(new Date(exist2.dataValues.createdAt).getTime()-new Date().getTime()) )>3600000) {
             //ноушен
             const blockId = await getBlocksP(projectId);  
                 
