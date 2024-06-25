@@ -2824,8 +2824,9 @@ bot.on('message', async (msg) => {
             }) 
         } else {
             //отправить сообщение в админ-панель
-            const convId = await sendMessageAdmin('Отправка заявки временно недоступна. Попробуйте позже', "text", chatId, null, null, true)
-            console.log("Время заявки (мин.) ", (new Date(exist.dataValues.updatedAt).getTime()-new Date().getTime())/60000)
+            //const convId = await sendMessageAdmin('Отправка заявки временно недоступна. Попробуйте позже', "text", chatId, null, null, true)
+            return bot.sendMessage(chatId, 'Отправка заявки временно недоступна. Попробуйте позже (через ' + Math.round(Math.abs(new Date(exist.dataValues.updatedAt).getTime()-new Date().getTime())/60000) + 'мин.)')
+            //console.log("Время заявки (мин.) ", Math.round(Math.abs(new Date(exist.dataValues.updatedAt).getTime()-new Date().getTime())/60000))
         }
 
         if (exist2.dataValues.otclick > 1) {
