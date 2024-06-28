@@ -3000,8 +3000,40 @@ const fetchNotif = async (dataAll) => {
                 const url_send_photo2 = `https://api.telegram.org/bot${token}/sendPhoto?chat_id=${item.telegram_id}&photo=${image2}&reply_markup=${keyboard}`
 
                 //const sendTextToTelegram = await $host.get(url_send_msg)
+                
+                //1
                 const sendPhotoToTelegram = await $host.get(url_send_photo)
+
+                //отправить сообщение в админ-панель
+                const convId = sendMessageAdmin(image, "image", item.telegram_id, null, true)
+
+                // Подключаемся к серверу socket
+                socket.emit("sendAdminSpec", {
+                    senderId: chatTelegramId,
+                    receiverId: item.telegram_id,
+                    text: image,
+                    type: 'image',
+                    convId: convId,
+                    messageId: null,
+                    isBot: true,
+                })
+
+                //2
                 const sendPhotoToTelegram2 = await $host.get(url_send_photo2)
+
+                //отправить сообщение в админ-панель
+                const convId2 = sendMessageAdmin(image2, "image", item.telegram_id, null, true)
+
+                // Подключаемся к серверу socket
+                socket.emit("sendAdminSpec", {
+                    senderId: chatTelegramId,
+                    receiverId: item.telegram_id,
+                    text: image2,
+                    type: 'image',
+                    convId: convId2,
+                    messageId: null,
+                    isBot: true,
+                })
             } catch (error) {
                 console.error(error.message)
             }
