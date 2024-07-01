@@ -2232,6 +2232,7 @@ bot.on('message', async (msg) => {
                             phone: phone2, 
                             dateborn: dateBorn,
                             city: city2, 
+                            newcity: city2, 
                             //companys: companys2,
                             //stag: stag2,                      
                             worklist: JSON.stringify(specArr),
