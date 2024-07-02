@@ -60,18 +60,18 @@ module.exports = async function addWorker(title, tg_id, age, phone, worklist, ci
                     "type": "number",
                     "number": promoId
                 },
-                "Профиль": {
-                    "type": "files",
-                    "files": [
-                        {
-                            "name": 'image_'+ new Date().toISOString()+'.jpg',
-                            "type": "external",
-                            "external": {
-                                "url": url_image,
-                            }
-                        }
-                    ]
-                },
+                // "Профиль": {
+                //     "type": "files",
+                //     "files": [
+                //         {
+                //             "name": 'image_'+ new Date().toISOString()+'.jpg',
+                //             "type": "external",
+                //             "external": {
+                //                 "url": url_image,
+                //             }
+                //         }
+                //     ]
+                // },
             }
         })
 
