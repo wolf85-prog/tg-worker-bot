@@ -28,6 +28,6 @@ module.exports = async function getDatabaseSmeta(baseId) {
 
         return responseResults;
     } catch (error) {
-        console.error(error.message)
+        console.error("Ошибка получения данных из таблицы Персональная смета:", error.message)
     }
 }

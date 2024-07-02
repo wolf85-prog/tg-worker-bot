@@ -21,6 +21,6 @@ module.exports = async function getBlocksNew(blockId, table) {
 
         return res;
     } catch (error) {
-        console.error(error.message)
+        console.error("Ошибка получения данных из сметы:", error.message)
     }
 }
