@@ -184,7 +184,7 @@ class SmetaController {
             smets.map(async(smeta, index)=> {
                 let arrayPerson = []
                 const blockId = await getBlocksNew(smeta.id, "Персональные сметы");
-                console.log("blockId: ", blockId, index)
+                console.log("blockId: ", blockId, smeta.name)
                 if (blockId) {  
                     //console.log("blockId: ", blockId)
                     databaseBlock = await getDatabaseSmeta(blockId, smeta.name); 
