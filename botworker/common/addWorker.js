@@ -20,14 +20,14 @@ module.exports = async function addWorker(title, tg_id, age, phone, worklist, ci
                         }
                     ],
                 },
-                // "Город": {
-                //      "multi_select": [
-                //             {
-                //               "name": citylist,  
-                //             }
+                "Город": {
+                     "multi_select": [
+                            {
+                              "name": citylist,  
+                            }
                             
-                //     ]
-                // },
+                    ]
+                },
                 Phone: {
                     "type": "phone_number",
                     "phone_number": phone
