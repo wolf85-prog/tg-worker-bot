@@ -9,17 +9,17 @@ module.exports = async function addWorker(title, tg_id, age, phone, worklist, ci
         const response = await notion.pages.create({
             parent: { database_id: databaseWorkersId },
             properties: {
-                City: {
-                    "type": "rich_text",
-                    rich_text: [
-                        {
-                            type: 'text',
-                            text: {
-                                content: citylist,
-                            },
-                        }
-                    ],
-                },
+                // City: {
+                //     "type": "rich_text",
+                //     rich_text: [
+                //         {
+                //             type: 'text',
+                //             text: {
+                //                 content: citylist,
+                //             },
+                //         }
+                //     ],
+                // },
                 "Город": {
                      "multi_select": [
                             {
@@ -32,13 +32,13 @@ module.exports = async function addWorker(title, tg_id, age, phone, worklist, ci
                     "type": "phone_number",
                     "phone_number": phone
                 },
-                // Age: {
-                //     "type": "date",
-                //     date: {
-                //         "start": age,
-                //         "end": null,
-                //     }
-                // },
+                Age: {
+                    "type": "date",
+                    date: {
+                        "start": age,
+                        "end": null,
+                    }
+                },
                 Specialization: {
                     "type": "multi_select",
                     "multi_select": worklist
@@ -60,18 +60,18 @@ module.exports = async function addWorker(title, tg_id, age, phone, worklist, ci
                     "type": "number",
                     "number": promoId
                 },
-                // "Профиль": {
-                //     "type": "files",
-                //     "files": [
-                //         {
-                //             "name": 'image_'+ new Date().toISOString()+'.jpg',
-                //             "type": "external",
-                //             "external": {
-                //                 "url": url_image,
-                //             }
-                //         }
-                //     ]
-                // },
+                "Профиль": {
+                    "type": "files",
+                    "files": [
+                        {
+                            "name": 'image_'+ new Date().toISOString()+'.jpg',
+                            "type": "external",
+                            "external": {
+                                "url": url_image,
+                            }
+                        }
+                    ]
+                },
             }
         })
 
