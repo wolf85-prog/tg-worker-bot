@@ -206,6 +206,7 @@ class SmetaController {
                                     gsm: db?.gsm,
                                     transport: db?.transport,
                                     specialist: db?.specialist,
+                                    comtag: db?.comtag,
                                 }
                                 arrayPerson.push(newPerson)
                             }
