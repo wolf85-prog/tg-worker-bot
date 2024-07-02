@@ -187,7 +187,7 @@ class SmetaController {
                 console.log("blockId: ", blockId, index)
                 if (blockId) {  
                     //console.log("blockId: ", blockId)
-                    databaseBlock = await getDatabaseSmeta(blockId); 
+                    databaseBlock = await getDatabaseSmeta(blockId, smeta.name); 
                     //console.log(JSON.stringify(databaseBlock))
                     //если бд ноушена доступна
                     if (databaseBlock) {

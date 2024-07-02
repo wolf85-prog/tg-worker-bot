@@ -3,7 +3,7 @@ require("dotenv").config();
 const { Client } = require("@notionhq/client");
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
 
-module.exports = async function getDatabaseSmeta(baseId) {
+module.exports = async function getDatabaseSmeta(baseId, smetaName) {
     try {
         const response = await notion.databases.query({
             database_id: baseId
@@ -28,6 +28,6 @@ module.exports = async function getDatabaseSmeta(baseId) {
 
         return responseResults;
     } catch (error) {
-        console.error("Ошибка получения данных из таблицы Персональная смета:", baseId)
+        console.error("Ошибка получения данных из таблицы Персональная смета:", smetaName)
     }
 }
