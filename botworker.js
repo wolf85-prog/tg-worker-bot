@@ -3045,9 +3045,6 @@ const fetchNotif = async (dataAll) => {
                 //отправить сообщение в админ-панель
                 const convId2 = sendMessageAdmin(image2, "image", item.telegram_id, null, true)
 
-                // Подключаемся к серверу socket
-                let socket = io(socketUrl);
-                socket2.emit("addUser", item.telegram_id)
                 socket2.emit("sendAdminSpec", {
                     senderId: chatTelegramId,
                     receiverId: item.telegram_id,

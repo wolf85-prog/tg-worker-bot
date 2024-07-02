@@ -178,6 +178,8 @@ class SmetaController {
         let arraySmeta = []
 
         const smets = await getSmeta();
+        console.log("smets: ", smets)
+        
         if (smets && smets.length > 0){
             smets.map(async(smeta, index)=> {
                 let arrayPerson = []
