@@ -1979,6 +1979,24 @@ bot.on('message', async (msg) => {
             }) 
         }
 
+        if (text === '/addworker') {
+            const fio = 'Тестовый Тест'
+            const chatId = '1698411118'
+            const age = '2000'
+            const phone2 = '+7 (900) 123-45-45'
+            const specArr2 = []
+            const city2 = 'Москва'
+            const friend2 = null
+            const urlAvatar = ''
+
+            try {
+                const workerId = await addWorker(fio, chatId, age, phone2, specArr2, city2, friend2, urlAvatar)
+            } catch (error) {
+                console.log("Ошибка добавления специалиста в Notion: ", error.message)
+            }
+            
+        }
+
 //------------------------------------------------------------------------------------------------
 //обработка контактов
         if (msg.contact) {
