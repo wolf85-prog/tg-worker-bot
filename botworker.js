@@ -1981,12 +1981,12 @@ bot.on('message', async (msg) => {
 
         if (text === '/addworker') {
             const fio = 'Тестовый Тест'
-            const chatId = '1698411118'
+            const chatId = 1698411118
             const age = '2000'
             const phone2 = '+7 (900) 123-45-45'
             const specArr2 = []
             const city2 = 'Москва'
-            const friend2 = null
+            const friend2 = 0
             const urlAvatar = ''
 
             try {
