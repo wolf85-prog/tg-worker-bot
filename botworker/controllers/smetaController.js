@@ -179,11 +179,12 @@ class SmetaController {
 
         const smets = await getSmeta();
         console.log("smets: ", smets)
-        
+
         if (smets && smets.length > 0){
             smets.map(async(smeta, index)=> {
                 let arrayPerson = []
                 const blockId = await getBlocksNew(smeta.id, "Персональные сметы");
+                console.log("blockId: ", blockId, index)
                 if (blockId) {  
                     //console.log("blockId: ", blockId)
                     databaseBlock = await getDatabaseSmeta(blockId); 
