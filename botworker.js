@@ -1979,7 +1979,7 @@ bot.on('message', async (msg) => {
             }) 
         }
 
-        if (text === '/addworker') {
+        if (text === '/addworker2') {
             const fio = 'Тестовый Тест'
             const chatId = 1698411118
             const age = '2000'
