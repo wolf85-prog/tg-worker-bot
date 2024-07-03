@@ -198,7 +198,7 @@ ${worklist.map(item =>' - ' + item.spec).join('\n')}`
             setTimeout(async()=> {
                 let arrSpec =[]
                 const oldlist = res[0].spec
-                console.log("Oldlist: ", oldlist)
+                //console.log("Oldlist: ", oldlist)
 
                 //массив специалистов
                 oldlist.forEach(item => {               
@@ -215,7 +215,7 @@ ${worklist.map(item =>' - ' + item.spec).join('\n')}`
                     arrSpec.push(obj)
                 });
 
-                console.log("arrSpec: ", arrSpec)
+                //console.log("arrSpec: ", arrSpec)
 
                 await updateWorker(res[0].id, arrSpec)
             }, 2000)
@@ -392,7 +392,7 @@ app.post('/web-stavka', async (req, res) => {
                 //Добавить специалиста в таблицу Претенденты (Ноушен)
                 //найти претендента в ноушене
                 if (blockId) {
-                    const worker = await getWorkerPretendent(blockId, workerId)
+                    const worker = await getWorkerPretendent(blockId, workerId, "")
                     console.log("worker: ", worker)
                         
                     //обновить специалиста в таблице Претенденты если есть
@@ -2630,7 +2630,7 @@ bot.on('message', async (msg) => {
 
                 // повторить с интервалом 2 минуту (проверка статуса претендента)
                 let timerId2 = setInterval(async() => {
-                    const worker = await getWorkerPretendent(blockId, workerId)
+                    const worker = await getWorkerPretendent(blockId, workerId, projectName.properties.Name.title[0].plain_text)
                     console.log("worker status: ", i, worker, chatId)
 
                     const projectName = await getProjectName(projectId)
@@ -2683,7 +2683,7 @@ bot.on('message', async (msg) => {
 
                     i++ //счетчик интервалов
                     minutCount = i
-                }, 120000)
+                }, 240000) //4 минуты
 
                 // остановить вывод через 30 дней
                 if (minutCount == 43200) {
@@ -2706,7 +2706,7 @@ bot.on('message', async (msg) => {
                  messageId: messageId,
             })                        
              
-            return bot.sendMessage(chatId, 'Заявка принята! Мы свяжемся с вами в ближайшее время.')
+            return bot.sendMessage(chatId, text)
         } 
 
         if (exist2[exist2.length-1].dataValues.otclick > 1) {
@@ -2820,7 +2820,7 @@ bot.on('message', async (msg) => {
                 
             //найти претендента в ноушене
             if (blockId) {
-            const worker = await getWorkerPretendent(blockId, workerId)
+            const worker = await getWorkerPretendent(blockId, workerId, projectId)
                 //console.log("worker: ", worker)
                     
                 //обновить специалиста в таблице Претенденты если есть
@@ -3055,7 +3055,7 @@ const fetchNotif = async (dataAll) => {
                     isBot: true,
                 })
             } catch (error) {
-                console.error(error.message)
+                console.error("Ошибка отправки приглашения специалисту", url_send_photo)
             }
             
             
@@ -3152,7 +3152,7 @@ const start = async () => {
                         // повторить с интервалом 2 минуту (проверка статуса претендента)
                         let timerId2 = setInterval(async() => {
                             //запрос в ноушен
-                            const worker = await getWorkerPretendent(blockId, workerId, projectName)
+                            const worker = await getWorkerPretendent(blockId, workerId, projectName.properties?.Name.title[0].plain_text)
                             //console.log("WORKER: ", worker, projectId, projectName.properties?.Name.title[0].plain_text, workerId)
 
                             if (worker && worker.find(item => item.status === "Отказано")) {

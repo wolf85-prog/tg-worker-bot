@@ -29,6 +29,6 @@ module.exports = async function getWorkerPretendent(blockId, workerId, projectNa
 
         return worker;
     } catch (error) {
-        console.error("Ошибка получения статуса претендента из Ноушена в проекте - ", projectName, workerId)
+        console.error("Ошибка получения претендента из Ноушена в проекте - ", projectName, workerId)
     }
 }
