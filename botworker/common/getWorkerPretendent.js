@@ -5,7 +5,7 @@ const notion = new Client({ auth: process.env.NOTION_API_KEY });
 const databaseWorkerId = process.env.NOTION_DATABASE_WORKERS_ID
 
 //получить id блока заданной страницы по tg_id
-module.exports = async function getWorkerPretendent(blockId, workerId) {
+module.exports = async function getWorkerPretendent(blockId, workerId, projectName) {
     try {
         const response = await notion.databases.query({
             database_id: blockId,
@@ -29,6 +29,6 @@ module.exports = async function getWorkerPretendent(blockId, workerId) {
 
         return worker;
     } catch (error) {
-        console.error(error.message)
+        console.error("Ошибка получения статуса претендента из Ноушена в проекте - ", projectName, workerId)
     }
 }

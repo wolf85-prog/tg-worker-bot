@@ -3125,26 +3125,6 @@ const start = async () => {
                 i++ // счетчик интервалов
             }, 600000); //каждые 10 минут
 
-            //Получить новые проекты для рассылки, повторить с интервалом 2 минуты
-            // setInterval(async() => {
-            //     console.log("START GET PROJECT NEW...")
-            //     //notion
-            //     const projects = await getProjectNew()
-
-            //     //await ProjectNew.truncate();
-
-            //     projects.map(async(project)=> {
-            //         await ProjectNew.create({ 
-            //             id: project.id, 
-            //             name: project.name, 
-            //             datestart: project.datestart, 
-            //             crmID: project.crmID, 
-            //         })
-            //     })
-                
-            //     i++ // счетчик интервалов
-            // }, 120000); //каждые 2 минуты
-
 
             //запуск сканирования отказа специалисту
             try {
@@ -3172,7 +3152,7 @@ const start = async () => {
                         // повторить с интервалом 2 минуту (проверка статуса претендента)
                         let timerId2 = setInterval(async() => {
                             //запрос в ноушен
-                            const worker = await getWorkerPretendent(blockId, workerId)
+                            const worker = await getWorkerPretendent(blockId, workerId, projectName)
                             //console.log("WORKER: ", worker, projectId, projectName.properties?.Name.title[0].plain_text, workerId)
 
                             if (worker && worker.find(item => item.status === "Отказано")) {
@@ -3226,7 +3206,8 @@ const start = async () => {
                 }         
 
             } catch (error) {
-                console.log(error.message)
+                //console.log(error.message)
+                console.error("Ошибка в системе отказов претендентам")
             }
 
 
