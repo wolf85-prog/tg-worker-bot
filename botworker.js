@@ -2630,10 +2630,12 @@ bot.on('message', async (msg) => {
 
                 // повторить с интервалом 2 минуту (проверка статуса претендента)
                 let timerId2 = setInterval(async() => {
-                    const worker = await getWorkerPretendent(blockId, workerId, projectName.properties.Name.title[0].plain_text)
-                    console.log("worker status: ", i, worker, chatId)
 
                     const projectName = await getProjectName(projectId)
+                    
+                    const worker = await getWorkerPretendent(blockId, workerId, projectName.properties.Name.title[0].plain_text)
+                    console.log("worker status: ", i, worker, chatId)
+                    
                     const user = await Worker.findOne({where:{chatId: chatId.toString()}})
 
                     if (worker && worker.find(item => item.status === "Отказано")) {
