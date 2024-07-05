@@ -3129,89 +3129,91 @@ const start = async () => {
 
 
             //запуск сканирования отказа специалисту
-            try {
-                console.log("Запускаю сканирования отказа специалисту...")
-                //получить все запуски сканирования отказов
-                const otkazi = await Canceled.findAll({
-                    order: [
-                        ['id', 'ASC'],
-                    ],
-                    where: {
-                        cancel: false
-                    }
-                })
-
-                if (otkazi && otkazi.length > 0) {
-                    otkazi.forEach(async (item, index)=> {
-                        //console.log("Цикл ", index+1)
-                        const blockId = item.dataValues.blockId
-                        const workerId = item.dataValues.workerId
-                        const projectId = item.dataValues.projectId
-                        const chatId = item.dataValues.receiverId
-                        const projectName = await getProjectName(projectId)
-                        const user = await Worker.findOne({where:{chatId: chatId.toString()}})
-
-                        // повторить с интервалом 2 минуту (проверка статуса претендента)
-                        let timerId2 = setInterval(async() => {
-                            //запрос в ноушен
-                            const worker = await getWorkerPretendent(blockId, workerId, projectName.properties?.Name.title[0].plain_text)
-                            //console.log("WORKER: ", worker, projectId, projectName.properties?.Name.title[0].plain_text, workerId)
-
-                            if (worker && worker.find(item => item.status === "Отказано")) {
-                                const currentHours = new Date(new Date().getTime()+10800000).getHours()
-                                //console.log("worker status: ", currentHours)
-        
-                                const res = await Canceled.update({ 
-                                    cancel: true  
-                                },
-                                {
-                                    where: {
-                                        projectId: projectId,
-                                        workerId: workerId,
-                                    },
-                                })
-
-                                let hello = ''
-                                if (currentHours >= 6 && currentHours < 12) {
-                                    hello = 'Доброе утро'
-                                } else if (currentHours >= 12 && currentHours < 18) {
-                                    hello = 'Добрый день'
-                                } else if (currentHours >= 0 && currentHours < 6) {
-                                    hello = 'Доброй ночи'
-                                } else {
-                                    hello = 'Добрый вечер' //18-0
-                                }
-
-                                //отправить сообщение в админ-панель
-                                const text = `${hello}, ${user.dataValues.username}! 
-Спасибо, что откликнулись на проект «${projectName.properties?.Name.title[0].plain_text}». В настоящий момент основной состав уже сформирован. 
-Будем рады сотрудничеству на новых проектах!`
-                            
-                                const convId = await sendMessageAdmin(text, "text", chatId, null, null, false)
-                                                        
-                                // Подключаемся к серверу socket
-                                let socket = io(socketUrl);
-                                socket.emit("addUser", chatId)
-                                socket.emit("sendAdminSpec", {
-                                    senderId: chatTelegramId,
-                                    receiverId: chatId,
-                                    text: text,
-                                    convId: convId,
-                                    messageId: null,
-                                }) 
-                                clearInterval(timerId2); 
-                                
-                                return bot.sendMessage(chatId, text)
-                            }
-                        }, 240000) // 4 минуты
+            let timerId2 = setInterval(async() => {
+                try {
+                    console.log("Запускаю сканирования отказа специалисту...")
+                    //получить все запуски сканирования отказов
+                    const otkazi = await Canceled.findAll({
+                        order: [
+                            ['id', 'ASC'],
+                        ],
+                        where: {
+                            cancel: false
+                        }
                     })
-                }         
 
-            } catch (error) {
-                //console.log(error.message)
-                console.error("Ошибка в системе отказов претендентам")
-            }
+                    if (otkazi && otkazi.length > 0) {
+                        otkazi.forEach(async (item, index)=> {
+                            //console.log("Цикл ", index+1)
+                            const blockId = item.dataValues.blockId
+                            const workerId = item.dataValues.workerId
+                            const projectId = item.dataValues.projectId
+                            const chatId = item.dataValues.receiverId
+                            const projectName = await getProjectName(projectId)
+                            const user = await Worker.findOne({where:{chatId: chatId.toString()}})
 
+                            // повторить с интервалом 10 секунд (проверка статуса претендента)
+                            setTimeout(async() => {
+                                //запрос в ноушен
+                                const worker = await getWorkerPretendent(blockId, workerId, projectName.properties?.Name.title[0].plain_text)
+                                //console.log("WORKER: ", worker, projectId, projectName.properties?.Name.title[0].plain_text, workerId)
+
+                                if (worker && worker.find(item => item.status === "Отказано")) {
+                                    const currentHours = new Date(new Date().getTime()+10800000).getHours()
+                                    //console.log("worker status: ", currentHours)
+            
+                                    const res = await Canceled.destroy(
+                                    // { 
+                                    //     cancel: true  
+                                    // },
+                                    {
+                                        where: {
+                                            projectId: projectId,
+                                            workerId: workerId,
+                                        },
+                                    })
+
+                                    let hello = ''
+                                    if (currentHours >= 6 && currentHours < 12) {
+                                        hello = 'Доброе утро'
+                                    } else if (currentHours >= 12 && currentHours < 18) {
+                                        hello = 'Добрый день'
+                                    } else if (currentHours >= 0 && currentHours < 6) {
+                                        hello = 'Доброй ночи'
+                                    } else {
+                                        hello = 'Добрый вечер' //18-0
+                                    }
+
+                                    //отправить сообщение в админ-панель
+                                    const text = `${hello}, ${user.dataValues.username}! 
+    Спасибо, что откликнулись на проект «${projectName.properties?.Name.title[0].plain_text}». В настоящий момент основной состав уже сформирован. 
+    Будем рады сотрудничеству на новых проектах!`
+                                
+                                    const convId = await sendMessageAdmin(text, "text", chatId, null, null, false)
+                                                            
+                                    // Подключаемся к серверу socket
+                                    let socket = io(socketUrl);
+                                    socket.emit("addUser", chatId)
+                                    socket.emit("sendAdminSpec", {
+                                        senderId: chatTelegramId,
+                                        receiverId: chatId,
+                                        text: text,
+                                        convId: convId,
+                                        messageId: null,
+                                    }) 
+                                    clearInterval(timerId2); 
+                                    
+                                    return bot.sendMessage(chatId, text)
+                                }
+                            }, 5000 * ++index) // 10 сек
+                        })
+                    }         
+
+                } catch (error) {
+                    //console.log(error.message)
+                    console.error("Ошибка в системе отказов претендентам")
+                }
+            }, 900000); //каждые 15 минут
 
             // Подключаемся к серверу socket
             let socket = io(socketUrl);
