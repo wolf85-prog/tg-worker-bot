@@ -49,6 +49,6 @@ module.exports = async function updatePretendentAlt(blockId, workerId, stavka, d
         //console.log(response)
         console.log("4.1 Претендент обновлен!. Data: "  + response.id)//+ JSON.stringify(response))
     } catch (error) {
-        console.error(error.message)
+        console.error("Ошибка обновления претендента в ф-и updatePretendentAlt())", error.message)
     }
 }

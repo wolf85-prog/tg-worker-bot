@@ -25,6 +25,6 @@ module.exports = async function updateWorker(pageId, worklist) {
             console.log("Ошибка обновления специалиста!") //+ JSON.stringify(response))
         }
     } catch (error) {
-        console.error(error.message)
+        console.error("Ошибка обновления специалиста в ф-и updateWorker())", error.message)
     }
 }

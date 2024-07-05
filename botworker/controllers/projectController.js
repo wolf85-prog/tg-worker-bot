@@ -140,7 +140,7 @@ async function getProjectId(projectId) {
 
         return response;
     } catch (error) {
-        console.error(error.message)
+        console.error("Ошибка получения проекта в ф-и getProjectId())", error.message)
     }
 }
 

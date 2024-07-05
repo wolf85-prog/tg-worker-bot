@@ -40,6 +40,6 @@ module.exports = async function addPassport(passport_str, pageId) {
         return res_id;
 
     } catch (error) {
-        console.error(error.message)
+        console.error("Ошибка добавления паспорта ф-и addPassport())", error.message)
     }
 }

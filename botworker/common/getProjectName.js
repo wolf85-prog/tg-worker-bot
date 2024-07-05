@@ -13,7 +13,7 @@ module.exports = async function getProjectName(projectId) {
 
         return response;
     } catch (error) {
-        console.error(error.message)
+        console.error("Ошибка получения имени проекта ф-и getProjectName())", error.message)
     }
 
 }

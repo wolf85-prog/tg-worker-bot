@@ -46,6 +46,6 @@ module.exports = async function addImage(url_image, pageId) {
         return res_id;
 
     } catch (error) {
-        console.error(error.message)
+        console.error("Ошибка добавления автара в ф-и addImage())", error.message)
     }
 }
