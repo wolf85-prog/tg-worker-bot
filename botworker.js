@@ -2623,7 +2623,7 @@ bot.on('message', async (msg) => {
                 }
 
                 const res = await Canceled.create(otkaz)
-                console.log("Слежение за статусом в БД: ", res.dataValues.id)
+                //console.log("Слежение за статусом в БД: ", res.dataValues.id)
 
                 var minutCount = 0;
                 let i = 0;
@@ -2642,9 +2642,10 @@ bot.on('message', async (msg) => {
                         const currentHours = new Date(new Date().getTime()+10800000).getHours()
                         console.log("worker (отказано): ", currentHours)
 
-                        const res = await Canceled.update({ 
-                            cancel: true  
-                        },
+                        const res = await Canceled.destroy(
+                        // { 
+                        //     cancel: true  
+                        // },
                         {
                             where: {
                                 projectId: projectId,
@@ -3126,7 +3127,7 @@ const start = async () => {
 
                 i++ // счетчик интервалов
             }, 600000); //каждые 10 минут
-
+//-----------------------------------------------------
 
             //запуск сканирования отказа специалисту
             let timerId2 = setInterval(async() => {
@@ -3152,7 +3153,7 @@ const start = async () => {
                             const projectName = await getProjectName(projectId)
                             const user = await Worker.findOne({where:{chatId: chatId.toString()}})
 
-                            // повторить с интервалом 10 секунд (проверка статуса претендента)
+                            // повторить с интервалом 5 секунд (проверка статуса претендента)
                             setTimeout(async() => {
                                 //запрос в ноушен
                                 const worker = await getWorkerPretendent(blockId, workerId, projectName.properties?.Name.title[0].plain_text)
@@ -3204,7 +3205,7 @@ const start = async () => {
                                     
                                     return bot.sendMessage(chatId, text)
                                 }
-                            }, 5000 * ++index) // 10 сек
+                            }, 5000 * ++index) // 5 сек
                         })
                     }         
 
