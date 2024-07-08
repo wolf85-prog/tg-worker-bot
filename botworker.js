@@ -1752,7 +1752,7 @@ bot.on('message', async (msg) => {
 
             if (blockId) {
                 const worker = await getWorkerPretendent(blockId, workerId)
-                console.log("worker status: ", i, worker)
+                //console.log("worker status: ", i, worker)
                 
                 //const projectName = await getProjectName(projectId)
                 //const user = await Worker.findOne({where:{chatId: chatId.toString()}})
@@ -2634,13 +2634,13 @@ bot.on('message', async (msg) => {
                     const projectName = await getProjectName(projectId)
                     
                     const worker = await getWorkerPretendent(blockId, workerId, projectName.properties.Name.title[0].plain_text)
-                    console.log("worker status: ", i, worker, chatId)
+                    console.log("worker status: ", worker?.status, chatId, projectName.properties.Name.title[0].plain_text)
                     
                     const user = await Worker.findOne({where:{chatId: chatId.toString()}})
 
                     if (worker && worker.find(item => item.status === "Отказано")) {
                         const currentHours = new Date(new Date().getTime()+10800000).getHours()
-                        console.log("worker status: ", i, currentHours)
+                        console.log("worker (отказано): ", currentHours)
 
                         const res = await Canceled.update({ 
                             cancel: true  
@@ -3156,11 +3156,10 @@ const start = async () => {
                             setTimeout(async() => {
                                 //запрос в ноушен
                                 const worker = await getWorkerPretendent(blockId, workerId, projectName.properties?.Name.title[0].plain_text)
-                                //console.log("WORKER: ", worker, projectId, projectName.properties?.Name.title[0].plain_text, workerId)
+                                console.log("WORKER (bot): ", worker?.status, chatId, projectName.properties?.Name.title[0].plain_text)
 
                                 if (worker && worker.find(item => item.status === "Отказано")) {
                                     const currentHours = new Date(new Date().getTime()+10800000).getHours()
-                                    //console.log("worker status: ", currentHours)
             
                                     const res = await Canceled.destroy(
                                     // { 
