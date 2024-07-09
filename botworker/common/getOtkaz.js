@@ -91,7 +91,7 @@ module.exports = async function getOtkaz(bot) {
                     
                     
                 }
-            }, 5000 * ++index) // 5 сек
+            }, 4000 * ++index) // 5 сек
         })
     }           
     

@@ -3136,9 +3136,8 @@ const start = async () => {
             } catch (error) {
                 console.error("Ошибка в системе отказов претендентам")
             }
-            
 
-
+            //повтор каждые 20 минут
             setInterval(async() => {
                 try {   
                     await getOtkaz(bot)
@@ -3146,7 +3145,7 @@ const start = async () => {
                     //console.log(error.message)
                     console.error("Ошибка в системе отказов претендентам")
                 }
-            }, 900000); //каждые 15 минут
+            }, 1200000); //каждые 20 минут
 
             // Подключаемся к серверу socket
             let socket = io(socketUrl);
