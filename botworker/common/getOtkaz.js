@@ -47,10 +47,10 @@ module.exports = async function getOtkaz(bot) {
                 if (worker && worker.find(item => item.status === "Отказано")) {
                     const currentHours = new Date(new Date().getTime()+10800000).getHours()
 
-                    const res = await Canceled.destroy(
-                    // { 
-                    //     cancel: true  
-                    // },
+                    const res = await Canceled.update(
+                    { 
+                        cancel: true  
+                    },
                     {
                         where: {
                             projectId: projectId,

@@ -2643,10 +2643,10 @@ bot.on('message', async (msg) => {
                         const currentHours = new Date(new Date().getTime()+10800000).getHours()
                         console.log("worker (отказано): ", currentHours)
 
-                        const res = await Canceled.destroy(
-                        // { 
-                        //     cancel: true  
-                        // },
+                        const res = await Canceled.update(
+                        { 
+                            cancel: true  
+                        },
                         {
                             where: {
                                 projectId: projectId,
