@@ -45,11 +45,13 @@ module.exports = async function getOtkazTest(bot) {
     Спасибо, что откликнулись на проект «${projectName.properties?.Name.title[0].plain_text}». В настоящий момент основной состав уже сформирован. 
     Будем рады сотрудничеству на новых проектах!`
 
-            const report = bot.sendMessage('805436270', text)
+            const report = await bot.sendMessage('805436270', text)
                     
             await delay(5000)
         })
-    }           
+    }   
+    
+    await delay(5000)
     
 }  
 
