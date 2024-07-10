@@ -91,8 +91,16 @@ module.exports = async function getOtkaz(bot) {
                     
                     
                 }
+            //delay(5000)
             }, 4000 * ++index) // 5 сек
         })
     }           
     
-}          
+}  
+
+//функция задержки
+const delay = async(ms) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(resolve, ms);
+    });
+}

@@ -113,6 +113,7 @@ const sendMessageAdmin = require("./botworker/common/sendMessageAdmin");
 const addAvatar = require("./botworker/common/addAvatar");
 const getProjectNew = require("./botworker/common/getProjectNew");
 const getOtkaz = require("./botworker/common/getOtkaz");
+const getOtkazTest = require("./botworker/common/getOtkazTest");
 
 
 //--------------------------------------------------------------------------------------------------------
@@ -1999,12 +2000,15 @@ bot.on('message', async (msg) => {
         }
 
         if (text === '/testwhile') {
-            let i = 100
-            while(i) {
-                await bot.sendMessage(chatId, `Тестовое сообщение ${i}`)
-                console.log(`Тестовое сообщение ${i}`)
-                i--
-                await delay(120000)
+            let j = 2
+            while(j) {
+                try {   
+                    await getOtkazTest(bot)
+                } catch (error) {
+                    //console.log(error.message)
+                    console.error("Ошибка в системе отказов претендентам")
+                }
+                j--
             }
         }
 
@@ -3141,11 +3145,6 @@ const start = async () => {
 //-----------------------------------------------------
 
             //запуск сканирования отказа специалисту
-            try {
-                await getOtkaz(bot)
-            } catch (error) {
-                console.error("Ошибка в системе отказов претендентам")
-            }
 
             //повтор каждые 20 минут
             setInterval(async() => {
@@ -3156,6 +3155,18 @@ const start = async () => {
                     console.error("Ошибка в системе отказов претендентам")
                 }
             }, 1200000); //каждые 20 минут
+
+
+            // let j = 2
+            // while(j) {
+            //     try {   
+            //         await getOtkaz(bot)
+            //     } catch (error) {
+            //         //console.log(error.message)
+            //         console.error("Ошибка в системе отказов претендентам")
+            //     }
+            //     j--
+            // }
 
             // Подключаемся к серверу socket
             let socket = io(socketUrl);
