@@ -1999,12 +1999,12 @@ bot.on('message', async (msg) => {
         }
 
         if (text === '/testwhile') {
-            let i = 10
+            let i = 100
             while(i) {
                 await bot.sendMessage(chatId, `Тестовое сообщение ${i}`)
                 console.log(`Тестовое сообщение ${i}`)
                 i--
-                await delay(5000)
+                await delay(120000)
             }
         }
 
