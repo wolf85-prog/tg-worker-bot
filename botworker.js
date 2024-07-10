@@ -2004,7 +2004,7 @@ bot.on('message', async (msg) => {
                 //bot.sendMessage(chatId, `Тестовое сообщение ${i}`)
                 console.log(`Тестовое сообщение ${i}`)
                 i--
-                //delay(10000)
+                await delay(5000)
             }
         }
 
