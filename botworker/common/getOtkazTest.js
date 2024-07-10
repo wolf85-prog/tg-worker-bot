@@ -41,13 +41,13 @@ module.exports = async function getOtkazTest(bot) {
             // повторить с интервалом 5 секунд (проверка статуса претендента)
 
             //отправить сообщение в админ-панель
-            const text = `${hello}, ${user.dataValues.username}! 
+            const text = `${user.dataValues.username}! 
     Спасибо, что откликнулись на проект «${projectName.properties?.Name.title[0].plain_text}». В настоящий момент основной состав уже сформирован. 
     Будем рады сотрудничеству на новых проектах!`
 
             const report = bot.sendMessage('805436270', text)
                     
-            delay(5000)
+            await delay(5000)
         })
     }           
     
