@@ -2001,7 +2001,8 @@ bot.on('message', async (msg) => {
         if (text === '/testwhile') {
             let i = 1
             while(true) {
-                bot.sendMessage(chatId, `Тестовое сообщение ${i}`)
+                //bot.sendMessage(chatId, `Тестовое сообщение ${i}`)
+                console.log(`Тестовое сообщение ${i}`)
                 ++i
                 delay(10000)
             }
