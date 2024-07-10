@@ -27,13 +27,13 @@ module.exports = async function getOtkaz(bot) {
         }
     })
 
-    let j = 1
+    let j = 0
 
     if (otkazi && otkazi.length > 0) {
         console.log("Отказы ", otkazi.length)
         //otkazi.forEach(async (item, index)=> {
         while (j < otkazi.length) { 
-            console.log("Цикл ", j)
+            console.log("Цикл ", j+1)
             const blockId = otkazi[j].dataValues.blockId
             const workerId = otkazi[j].dataValues.workerId
             const projectId = otkazi[j].dataValues.projectId

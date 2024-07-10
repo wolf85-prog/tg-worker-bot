@@ -27,7 +27,7 @@ module.exports = async function getOtkazTest(bot) {
         }
     })
 
-    let j = 1
+    let j = 0
 
     if (otkazi && otkazi.length > 0) {
         console.log("Отказы ", otkazi.length)
