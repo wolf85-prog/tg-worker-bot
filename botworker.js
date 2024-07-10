@@ -3146,27 +3146,16 @@ const start = async () => {
 
             //запуск сканирования отказа специалисту
 
-            //повтор каждые 20 минут
-            setInterval(async() => {
+            let j = 1000
+            while(j) {
                 try {   
                     await getOtkaz(bot)
                 } catch (error) {
                     //console.log(error.message)
                     console.error("Ошибка в системе отказов претендентам")
                 }
-            }, 1200000); //каждые 20 минут
-
-
-            // let j = 2
-            // while(j) {
-            //     try {   
-            //         await getOtkaz(bot)
-            //     } catch (error) {
-            //         //console.log(error.message)
-            //         console.error("Ошибка в системе отказов претендентам")
-            //     }
-            //     j--
-            // }
+                j--
+            }
 
             // Подключаемся к серверу socket
             let socket = io(socketUrl);
