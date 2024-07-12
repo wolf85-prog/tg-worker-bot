@@ -42,7 +42,7 @@ module.exports = async function getOtkaz(bot) {
             const user = await Worker.findOne({where:{chatId: chatId.toString()}})
 
             const cancel = await Canceled.findOne({where:{workerId, projectId, blockId}})
-            console.log('cancel: ', cancel)
+            //console.log('cancel: ', cancel)
 
             // повторить с интервалом 5 секунд (проверка статуса претендента)
             if (!cancel.dataValues.cancel) {
