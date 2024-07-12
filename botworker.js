@@ -2012,6 +2012,19 @@ bot.on('message', async (msg) => {
             }
         }
 
+        //удалить старые записи из таблицы Canceled
+        if (text === '/delcancel') {
+            const daysAgo15 = new Date(new Date().setDate(new Date().getDate() - 15));
+            const res = Canceled.destroy({
+                where: {
+                    createdAt: {
+                        [Op.lt]: daysAgo15
+                    }
+                }
+            })
+            console.log(res)
+        }
+
 //------------------------------------------------------------------------------------------------
 //обработка контактов
         if (msg.contact) {
