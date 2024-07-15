@@ -33,7 +33,9 @@ module.exports = async function getOtkaz(bot) {
         console.log("Отказы ", otkazi.length)
         //otkazi.forEach(async (item, index)=> {
         while (j < otkazi.length) { 
-            console.log("Цикл ", j+1)
+            let d = new Date()
+            d.setHours(d.getHours() + 3);
+            console.log("Цикл ", j+1, d)
             const blockId = otkazi[j].dataValues.blockId
             const workerId = otkazi[j].dataValues.workerId
             const projectId = otkazi[j].dataValues.projectId
