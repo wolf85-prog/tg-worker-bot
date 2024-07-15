@@ -3108,6 +3108,10 @@ const start = async () => {
         httpsServer.listen(PORT, async() => {
             console.log('HTTPS Server BotWorker running on port ' + PORT);
 
+            // Подключаемся к серверу socket
+            let socket = io(socketUrl);
+            socket.on("getWorker", fetchNotif);
+
 
             // 86400 секунд в дне
             var minutCount = 0;
@@ -3158,7 +3162,6 @@ const start = async () => {
 //-----------------------------------------------------
 
             //запуск сканирования отказа специалисту
-
             let j = 1000
             while(j) {
                 try {   
@@ -3169,10 +3172,6 @@ const start = async () => {
                 }
                 j--
             }
-
-            // Подключаемся к серверу socket
-            let socket = io(socketUrl);
-            socket.on("getWorker", fetchNotif);
         });
 
     } catch (error) {
