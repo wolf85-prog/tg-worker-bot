@@ -123,6 +123,7 @@ const Canceled = sequelize.define('canceled', {
     blockId: {type: DataTypes.STRING}, //id таблицы Претенденты;
     cancel: {type: DataTypes.BOOLEAN}, //отказано
     datestart: {type: DataTypes.STRING}, //начало
+    dateend: {type: DataTypes.STRING}, //конец
 })
 
 const ProjectNew = sequelize.define('projectnew', {
