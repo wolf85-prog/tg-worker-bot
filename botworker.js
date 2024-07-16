@@ -2085,7 +2085,7 @@ bot.on('message', async (msg) => {
 
                             const res = await Canceled.update(
                                 { 
-                                    dateend: datesObj[datesObj.length-1] 
+                                    dateend: datesObj[datesObj.length-1].date 
                                 },
                                 {
                                     where: {
@@ -2094,6 +2094,7 @@ bot.on('message', async (msg) => {
                                     },
                                 }
                             )
+                            console.log("Отказ обнавлен! ", res)
                         }, 5000 * ++index)
                        
                     }
