@@ -2651,7 +2651,7 @@ bot.on('message', async (msg) => {
                     receiverId: chatId,  
                     blockId: blockId,
                     cancel: false, 
-                    datestart: "",   
+                    datestart: projectDate.properties["Дата"].date?.start,   
                 }
 
                 const res = await Canceled.create(otkaz)
