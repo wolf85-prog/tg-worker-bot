@@ -129,6 +129,7 @@ const ProjectNew = sequelize.define('projectnew', {
     name: {type: DataTypes.STRING},  //название проекта
     datestart: {type: DataTypes.STRING}, //начало
     crmID: {type: DataTypes.STRING},
+    dateend: {type: DataTypes.STRING}, //конец
 })
 
 module.exports = {
