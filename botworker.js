@@ -2086,6 +2086,7 @@ bot.on('message', async (msg) => {
 
                             const res = await Canceled.update(
                                 { 
+                                    datestart: datesObj[0].date, 
                                     dateend: datesObj[datesObj.length-1].date 
                                 },
                                 {
