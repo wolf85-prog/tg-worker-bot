@@ -58,6 +58,8 @@ const sendMyMessage = require('./botworker/common/sendMyMessage')
 const getWorkerPretendent = require('./botworker/common/getWorkerPretendent')
 const updatePretendent = require("./botworker/common/updatePretendent");
 const updatePretendent2 = require("./botworker/common/updatePretendent2");
+const getBlocks = require('./botworker/common/getBlocks')
+const getDatabaseId = require('./botworker/common/getDatabaseId')
 
 const express = require('express');
 const cors = require('cors');
@@ -2023,6 +2025,68 @@ bot.on('message', async (msg) => {
                 }
             })
             console.log(res)
+        }
+
+        if (text === '/updatecancel') {
+            //получить все запуски сканирования отказов
+            const otkazi = await Canceled.findAll({
+                order: [
+                    ['id', 'ASC'],
+                ],
+                where: {
+                    cancel: false
+                }
+            })
+
+            let databaseBlock, allDate;
+
+            if (otkazi && otkazi.length > 0) {
+                console.log("Отказы ", otkazi.length)
+
+                otkazi.map((item, index)=> {
+                    const projectId = item.dataValues.projectId
+                
+                    if (projectId) {
+                        //console.log(`i: ${i} ${day}.${month}.${year} ${chas}:${minut} Проект: ${project_name} Статус: ${statusProjectNew}`) 
+                        setTimeout(async()=> {
+                            const blockId = await getBlocks(projectId);            
+                            if (blockId) {
+                                j = 0    
+                                databaseBlock = await getDatabaseId(blockId);   
+                            } 
+    
+                            //получить массив дат
+                            if (databaseBlock) {   
+                                databaseBlock.map((db) => {
+                                    allDate.push(db?.date)                        
+                                })
+                            }
+    
+                            //получить уникальные даты из Основного состава по возрастанию
+                            const dates = [...allDate].filter((el, ind) => ind === allDate.indexOf(el));
+                            const sortedDates = [...dates].sort((a, b) => {       
+                                var dateA = new Date(a), dateB = new Date(b) 
+                                return dateA-dateB  //сортировка по возрастающей дате  
+                            })
+    
+                            const datesObj = []
+    
+                            sortedDates.map((item) =>{
+                                const obj = {
+                                    date: item,
+                                    consilience: false,
+                                    send: false,
+                                }
+                                datesObj.push(obj)  
+                            })
+    
+                            console.log("datesObj: ", datesObj)
+                        }, 5000 * ++index)
+                       
+                    }
+                })
+                
+            }
         }
 
 //------------------------------------------------------------------------------------------------
