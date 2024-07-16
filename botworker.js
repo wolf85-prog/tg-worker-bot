@@ -2038,7 +2038,8 @@ bot.on('message', async (msg) => {
                 }
             })
 
-            let databaseBlock, allDate;
+            let databaseBlock;
+            let allDate = [];
 
             if (otkazi && otkazi.length > 0) {
                 console.log("Отказы ", otkazi.length)
