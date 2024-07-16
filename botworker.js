@@ -2014,11 +2014,11 @@ bot.on('message', async (msg) => {
 
         //удалить старые записи из таблицы Canceled
         if (text === '/delcancel') {
-            const daysAgo10 = new Date(new Date().setDate(new Date().getDate() - 10));
+            const daysAgo5 = new Date(new Date().setDate(new Date().getDate() - 5));
             const res = Canceled.destroy({
                 where: {
                     createdAt: {
-                        [Op.lt]: daysAgo10
+                        [Op.lt]: daysAgo5
                     }
                 }
             })
