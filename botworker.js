@@ -2081,7 +2081,19 @@ bot.on('message', async (msg) => {
                                 datesObj.push(obj)  
                             })
     
-                            console.log("datesObj: ", datesObj)
+                            //console.log("datesObj: ", datesObj)
+
+                            const res = await Canceled.update(
+                                { 
+                                    dateend: datesObj[datesObj.length-1] 
+                                },
+                                {
+                                    where: {
+                                        projectId: projectId,
+                                        workerId: workerId,
+                                    },
+                                }
+                            )
                         }, 5000 * ++index)
                        
                     }
