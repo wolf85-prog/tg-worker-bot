@@ -2632,7 +2632,7 @@ bot.on('message', async (msg) => {
             const blockId = await getBlocksP(projectId); 
 
             const projectDate = await getProjectName(projectId)
-            console.log("projectDate: ", projectDate) 
+            console.log("projectDate: ", projectDate.properties["Дата"].date?.start) 
            
            // текущая дата
             const date = Date.now() + 10800000; //+3 часа
