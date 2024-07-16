@@ -2046,6 +2046,7 @@ bot.on('message', async (msg) => {
 
                 otkazi.map((item, index)=> {
                     const projectId = item.dataValues.projectId
+                    const workerId = item.dataValues.workerId
                 
                     if (projectId) {
                         //console.log(`i: ${i} ${day}.${month}.${year} ${chas}:${minut} Проект: ${project_name} Статус: ${statusProjectNew}`) 
