@@ -2630,6 +2630,9 @@ bot.on('message', async (msg) => {
             
             //ноушен
             const blockId = await getBlocksP(projectId); 
+
+            const projectDate = await getProjectName(projectId)
+            console.log("projectDate: ", projectDate) 
            
            // текущая дата
             const date = Date.now() + 10800000; //+3 часа
@@ -2647,7 +2650,8 @@ bot.on('message', async (msg) => {
                     workerId: workerId, 
                     receiverId: chatId,  
                     blockId: blockId,
-                    cancel: false,    
+                    cancel: false, 
+                    datestart: "",   
                 }
 
                 const res = await Canceled.create(otkaz)
