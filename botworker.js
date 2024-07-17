@@ -2080,76 +2080,77 @@ bot.on('message', async (msg) => {
                 }
             })
 
-            const filterOtkaz = otkazi.filter((item)=> new Date(item.dataValues.datestart) >= currentDate || new Date(item.dataValues.dateend <= currentDate))
-            console.log("filterOtkaz: ", filterOtkaz.length)
+            //const filterOtkaz = otkazi.filter((item)=> new Date(item.dataValues.datestart) >= currentDate || new Date(item.dataValues.dateend <= currentDate))
+            //console.log("filterOtkaz: ", filterOtkaz.length)
 
             let databaseBlock;
             let allDate = [];
 
-            // if (otkazi && otkazi.length > 0) {
-            //     console.log("Отказы ", otkazi.length)
+            if (otkazi && otkazi.length > 0) {
+                console.log("Отказы ", otkazi.length)
 
-            //     // otkazi.map((item, index)=> {
-            //     //     const projectId = item.dataValues.projectId
-            //     //     const workerId = item.dataValues.workerId
+                otkazi.map((item, index)=> {
+                    const projectId = item.dataValues.projectId
+                    const workerId = item.dataValues.workerId
                 
-            //     //     if (projectId) {
-            //     //         //console.log(`i: ${i} ${day}.${month}.${year} ${chas}:${minut} Проект: ${project_name} Статус: ${statusProjectNew}`) 
-            //     //         setTimeout(async()=> {
-            //     //             const blockId = await getBlocks(projectId);            
-            //     //             if (blockId) {
-            //     //                 j = 0    
-            //     //                 databaseBlock = await getDatabaseId(blockId);   
-            //     //             } 
+                    if (projectId) {
+                        //console.log(`i: ${i} ${day}.${month}.${year} ${chas}:${minut} Проект: ${project_name} Статус: ${statusProjectNew}`) 
+                        setTimeout(async()=> {
+                            console.log("projectId: ", projectId)
+                            const blockId = await getBlocks(projectId);            
+                            if (blockId) {
+                                j = 0    
+                                databaseBlock = await getDatabaseId(blockId);   
+                            } 
     
-            //     //             //получить массив дат
-            //     //             if (databaseBlock) {   
-            //     //                 databaseBlock.map((db) => {
-            //     //                     allDate.push(db?.date)                        
-            //     //                 })
-            //     //             }
+                            //получить массив дат
+                            if (databaseBlock) {   
+                                databaseBlock.map((db) => {
+                                    allDate.push(db?.date)                        
+                                })
+                            }
     
-            //     //             //получить уникальные даты из Основного состава по возрастанию
-            //     //             const dates = [...allDate].filter((el, ind) => ind === allDate.indexOf(el));
-            //     //             const sortedDates = [...dates].sort((a, b) => {       
-            //     //                 var dateA = new Date(a), dateB = new Date(b) 
-            //     //                 return dateA-dateB  //сортировка по возрастающей дате  
-            //     //             })
+                            //получить уникальные даты из Основного состава по возрастанию
+                            const dates = [...allDate].filter((el, ind) => ind === allDate.indexOf(el));
+                            const sortedDates = [...dates].sort((a, b) => {       
+                                var dateA = new Date(a), dateB = new Date(b) 
+                                return dateA-dateB  //сортировка по возрастающей дате  
+                            })
     
-            //     //             const datesObj = []
+                            const datesObj = []
     
-            //     //             sortedDates.map((item) =>{
-            //     //                 const obj = {
-            //     //                     date: item,
-            //     //                     consilience: false,
-            //     //                     send: false,
-            //     //                 }
-            //     //                 datesObj.push(obj)  
-            //     //             })
+                            sortedDates.map((item) =>{
+                                const obj = {
+                                    date: item,
+                                    consilience: false,
+                                    send: false,
+                                }
+                                datesObj.push(obj)  
+                            })
     
-            //     //             //console.log("datesObj: ", datesObj)
+                            console.log("datesObj: ", datesObj)
 
-            //     //             const res = await Canceled.update(
-            //     //                 { 
-            //     //                     datestart: datesObj[0].date, 
-            //     //                     dateend: datesObj[datesObj.length-1].date 
-            //     //                 },
-            //     //                 {
-            //     //                     where: {
-            //     //                         projectId: projectId,
-            //     //                         workerId: workerId,
-            //     //                     },
-            //     //                 }
-            //     //             )
-            //     //             console.log("Отказ обнавлен! ", res)
-            //     //         }, 5000 * ++index)
+                            const res = await Canceled.update(
+                                { 
+                                    datestart: datesObj[0].date, 
+                                    dateend: datesObj[datesObj.length-1].date 
+                                },
+                                {
+                                    where: {
+                                        projectId: projectId,
+                                        workerId: workerId,
+                                    },
+                                }
+                            )
+                            console.log("Отказ обнавлен! ", res)
+                        }, 5000 * ++index)
                        
-            //     //     }
-            //     // })
+                    }
+                })
                 
-            // } else {
-            //     console.log("Отказы нет", otkazi)
-            // }
+            } else {
+                console.log("Отказы нет", otkazi)
+            }
         }
 
 //------------------------------------------------------------------------------------------------
