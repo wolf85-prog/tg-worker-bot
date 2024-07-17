@@ -2027,6 +2027,45 @@ bot.on('message', async (msg) => {
             console.log(res)
         }
 
+        if (text.startsWith('/getDateOtkaz')) {
+            const projectId = text.split(' ');
+            console.log("projectId: ", projectId[1])
+            if (projectId[1]) {
+                const blockId = await getBlocks(projectId[1]);            
+                if (blockId) {
+                    j = 0    
+                    databaseBlock = await getDatabaseId(blockId);   
+                } 
+
+                //получить массив дат
+                if (databaseBlock) {   
+                    databaseBlock.map((db) => {
+                        allDate.push(db?.date)                        
+                    })
+                }
+
+                //получить уникальные даты из Основного состава по возрастанию
+                const dates = [...allDate].filter((el, ind) => ind === allDate.indexOf(el));
+                const sortedDates = [...dates].sort((a, b) => {       
+                    var dateA = new Date(a), dateB = new Date(b) 
+                    return dateA-dateB  //сортировка по возрастающей дате  
+                })
+
+                const datesObj = []
+
+                sortedDates.map((item) =>{
+                    const obj = {
+                        date: item,
+                    }
+                    datesObj.push(obj)  
+                })
+
+                console.log("datesObj: ", datesObj)
+                console.log("1: ", datesObj[0])
+                console.log("2: ", datesObj[datesObj.length-1])
+            }       
+        }
+
         if (text === '/updatecancel') {
             //получить все запуски сканирования отказов
             const currentDate = new Date()
