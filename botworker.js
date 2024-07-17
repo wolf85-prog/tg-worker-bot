@@ -2030,6 +2030,8 @@ bot.on('message', async (msg) => {
         if (text.startsWith('/getDateOtkaz')) {
             const projectId = text.split(' ');
             console.log("projectId: ", projectId[1])
+            let databaseBlock;
+            let allDate = [];
             if (projectId[1]) {
                 const blockId = await getBlocks(projectId[1]);            
                 if (blockId) {
