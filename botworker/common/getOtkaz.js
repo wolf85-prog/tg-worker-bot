@@ -17,7 +17,7 @@ const { Op } = require('sequelize')
 module.exports = async function getOtkaz(bot) {
     console.log("ЗАПУСКАЮ СКАНИРОВАНИЕ ОТКАЗОВ СПЕЦИАЛИСТАМ...")
 
-    const currentDate = new Date().getTime()
+    const currentDate = new Date()
     //получить все запуски сканирования отказов
     const otkazi = await Canceled.findAll({
         order: [
@@ -25,9 +25,9 @@ module.exports = async function getOtkaz(bot) {
         ],
         where: {
             cancel: false,
-            datestart: {
-                [Op.gte]: currentDate,
-            },
+            // datestart: {
+            //     [Op.gte]: currentDate,
+            // },
         }
     })
 

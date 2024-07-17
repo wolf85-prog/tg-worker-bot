@@ -2029,6 +2029,7 @@ bot.on('message', async (msg) => {
 
         if (text === '/updatecancel') {
             //получить все запуски сканирования отказов
+            const currentDate = new Date()
             const otkazi = await Canceled.findAll({
                 order: [
                     ['id', 'ASC'],
