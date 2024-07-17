@@ -2090,12 +2090,12 @@ bot.on('message', async (msg) => {
                 console.log("Отказы ", otkazi.length)
 
                 otkazi.map((item, index)=> {
-                    const projectId = item.dataValues.projectId
-                    const workerId = item.dataValues.workerId
-                
-                    if (projectId) {
-                        //console.log(`i: ${i} ${day}.${month}.${year} ${chas}:${minut} Проект: ${project_name} Статус: ${statusProjectNew}`) 
-                        setTimeout(async()=> {
+                    setTimeout(async()=> {
+                        const projectId = item.dataValues.projectId
+                        const workerId = item.dataValues.workerId
+                    
+                        if (projectId) {
+                        
                             allDate = []
                             const projectName = await getProjectName(projectId)
 
@@ -2164,9 +2164,9 @@ bot.on('message', async (msg) => {
 
                             
                             console.log("Отказ обнавлен! ")
-                        }, 5000 * ++index)
+                        }
                        
-                    }
+                    }, 5000 * ++index)
                 })
                 
             } else {
