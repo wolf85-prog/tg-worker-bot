@@ -2098,6 +2098,7 @@ bot.on('message', async (msg) => {
                         setTimeout(async()=> {
                             allDate = []
                             console.log("projectId: ", projectId)
+                            console.log("Index: ", index+1)
                             const blockId = await getBlocks(projectId);            
                             if (blockId) {
                                 j = 0    
@@ -2775,7 +2776,7 @@ bot.on('message', async (msg) => {
         if ((exist2[exist2.length-1].dataValues.otclick < 2) || ( Math.abs(new Date(exist[exist.length-1].dataValues.updatedAt).getTime()-new Date().getTime()) ) > 3600000) { //3600000) {
             
             //ноушен
-            const blockId = await getBlocksP(projectId); 
+            const blockIdP = await getBlocksP(projectId); 
 
             const projectDate = await getProjectName(projectId)
             console.log("projectDate: ", projectDate.properties["Дата"].date?.start) 
@@ -2786,18 +2787,51 @@ bot.on('message', async (msg) => {
             
             //Добавить специалиста в таблицу Претенденты (Ноушен)
             //найти претендента в ноушене
-            if (blockId) {
+            if (blockIdP) {
 
-                await addPretendent(blockId, workerId, dateNow); //добавить претендента
+                await addPretendent(blockIdP, workerId, dateNow); //добавить претендента
+
+
+                let databaseBlock;
+                let allDate = [];
+                const blockId = await getBlocks(projectId);            
+                if (blockId) {
+                    j = 0    
+                    databaseBlock = await getDatabaseId(blockId);   
+                } 
+
+                //получить массив дат
+                if (databaseBlock) {   
+                    databaseBlock.map((db) => {
+                        allDate.push(db?.date)                        
+                    })
+                }
+
+                //получить уникальные даты из Основного состава по возрастанию
+                const dates = [...allDate].filter((el, ind) => ind === allDate.indexOf(el));
+                const sortedDates = [...dates].sort((a, b) => {       
+                    var dateA = new Date(a), dateB = new Date(b) 
+                    return dateA-dateB  //сортировка по возрастающей дате  
+                })
+
+                const datesObj = []
+
+                sortedDates.map((item) =>{
+                    const obj = {
+                        date: item,
+                    }
+                    datesObj.push(obj)  
+                })
 
                 //новый интервал слежения статуса отказа
                 const otkaz = {
                     projectId: projectId, 
                     workerId: workerId, 
                     receiverId: chatId,  
-                    blockId: blockId,
+                    blockId: blockIdP,
                     cancel: false, 
-                    datestart: projectDate.properties["Дата"].date?.start,   
+                    datestart: datesObj[0],  
+                    dateend: datesObj[datesObj.length-1],
                 }
 
                 const res = await Canceled.create(otkaz)
