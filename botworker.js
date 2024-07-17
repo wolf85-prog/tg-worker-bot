@@ -2092,6 +2092,7 @@ bot.on('message', async (msg) => {
                 otkazi.map((item, index)=> {
                     const projectId = item.dataValues.projectId
                     const workerId = item.dataValues.workerId
+                    allDate = []
                 
                     if (projectId) {
                         //console.log(`i: ${i} ${day}.${month}.${year} ${chas}:${minut} Проект: ${project_name} Статус: ${statusProjectNew}`) 
@@ -2130,19 +2131,36 @@ bot.on('message', async (msg) => {
     
                             console.log("datesObj: ", datesObj)
 
-                            const res = await Canceled.update(
-                                { 
-                                    datestart: datesObj[0].date, 
-                                    dateend: datesObj[datesObj.length-1].date 
-                                },
-                                {
-                                    where: {
-                                        projectId: projectId,
-                                        workerId: workerId,
+                            if (datesObj.length > 0) {
+                                const res = await Canceled.update(
+                                    { 
+                                        datestart: datesObj[0].date, 
+                                        dateend: datesObj[datesObj.length-1].date 
                                     },
-                                }
-                            )
-                            console.log("Отказ обнавлен! ", res)
+                                    {
+                                        where: {
+                                            projectId: projectId,
+                                            workerId: workerId,
+                                        },
+                                    }
+                                )
+                            } else {
+                                const res = await Canceled.update(
+                                    { 
+                                        datestart: null, 
+                                        dateend: null 
+                                    },
+                                    {
+                                        where: {
+                                            projectId: projectId,
+                                            workerId: workerId,
+                                        },
+                                    }
+                                ) 
+                            }
+
+                            
+                            console.log("Отказ обнавлен! ")
                         }, 5000 * ++index)
                        
                     }
