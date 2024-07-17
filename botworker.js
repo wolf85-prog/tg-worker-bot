@@ -2039,7 +2039,7 @@ bot.on('message', async (msg) => {
                 }
             })
 
-            const filterOtkaz = otkazi.filter((item)=> new Date(item.dataValues.datestart) > currentDate)
+            const filterOtkaz = otkazi.filter((item)=> new Date(item.dataValues.datestart) >= currentDate)
             console.log("filterOtkaz: ", filterOtkaz.length)
 
             let databaseBlock;
