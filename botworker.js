@@ -2097,8 +2097,10 @@ bot.on('message', async (msg) => {
                         //console.log(`i: ${i} ${day}.${month}.${year} ${chas}:${minut} Проект: ${project_name} Статус: ${statusProjectNew}`) 
                         setTimeout(async()=> {
                             allDate = []
+                            const projectName = await getProjectName(projectId)
+
                             console.log("projectId: ", projectId)
-                            console.log("Index: ", index+1)
+                            console.log("Index: ", index)
                             const blockId = await getBlocks(projectId);            
                             if (blockId) {
                                 j = 0    
@@ -2129,7 +2131,7 @@ bot.on('message', async (msg) => {
                                 }
                                 datesObj.push(obj)  
                             })
-    
+                            console.log("projectName: ", projectName.properties.Name.title[0].plain_text)
                             console.log("datesObj: ", datesObj)
 
                             if (datesObj.length > 0) {
@@ -2779,7 +2781,7 @@ bot.on('message', async (msg) => {
             const blockIdP = await getBlocksP(projectId); 
 
             const projectDate = await getProjectName(projectId)
-            console.log("projectDate: ", projectDate.properties["Дата"].date?.start) 
+            //console.log("projectDate: ", projectDate.properties["Дата"].date?.start) 
            
            // текущая дата
             const date = Date.now() + 10800000; //+3 часа
