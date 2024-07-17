@@ -2830,8 +2830,8 @@ bot.on('message', async (msg) => {
                     receiverId: chatId,  
                     blockId: blockIdP,
                     cancel: false, 
-                    datestart: datesObj[0],  
-                    dateend: datesObj[datesObj.length-1],
+                    datestart: datesObj[0].date,  
+                    dateend: datesObj[datesObj.length-1].date,
                 }
 
                 const res = await Canceled.create(otkaz)
