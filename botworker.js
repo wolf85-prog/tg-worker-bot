@@ -2092,11 +2092,11 @@ bot.on('message', async (msg) => {
                 otkazi.map((item, index)=> {
                     const projectId = item.dataValues.projectId
                     const workerId = item.dataValues.workerId
-                    allDate = []
                 
                     if (projectId) {
                         //console.log(`i: ${i} ${day}.${month}.${year} ${chas}:${minut} Проект: ${project_name} Статус: ${statusProjectNew}`) 
                         setTimeout(async()=> {
+                            allDate = []
                             console.log("projectId: ", projectId)
                             const blockId = await getBlocks(projectId);            
                             if (blockId) {
