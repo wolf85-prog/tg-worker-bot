@@ -97,7 +97,7 @@ app.use('/api', router);
 app.use(statusMonitor()); // Enable Express Status Monitor middleware
 
 app.use(
-    require('./botworker/config/monitor-config')({
+    require('botworker/config/monitor-config')({
       //path: '/',
       // Use existing socket.io instance.
       socketPath: socketUrl,
