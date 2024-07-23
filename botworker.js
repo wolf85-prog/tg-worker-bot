@@ -49,6 +49,7 @@ const { Op } = require('sequelize')
 let workerId, workerFam, workerName2, phone2, dateBorn, Worklist, city2, stag2, companys2, friend2;
 let count = []
 let count2 = []
+let socket = io(socketUrl);
 
 //functions
 const getBlocksP = require('./botworker/common/getBlocksP')
@@ -71,6 +72,7 @@ const path = require('path')
 const multer  = require("multer")
 const sharp = require('sharp');
 const pm2 = require('pm2');
+const statusMonitor = require('express-status-monitor');
 
 //подключение к БД PostreSQL
 const sequelize = require('./botworker/connections/db')
@@ -92,6 +94,37 @@ app.use(cors());
 app.use(express.static('tg-worker-bot'));
 app.use(express.static(path.resolve(__dirname, 'static')))
 app.use('/api', router);
+app.use(statusMonitor()); // Enable Express Status Monitor middleware
+
+app.use(
+    require('./botworker/config/monitor-config')({
+      //path: '/',
+      // Use existing socket.io instance.
+      socketPath: socketUrl,
+      websocket: socket,
+  
+  
+      // Pass socket.io instance port down to config.
+      // Use only if you're passing your own instance.
+      port: 9000,
+      healthChecks: [
+        {
+          protocol: 'http',
+          host: 'localhost',
+          port: 3000,
+          path: '/admin/health/ex1',
+          headers: {},
+        },
+        {
+          protocol: 'http',
+          host: 'localhost',
+          port: 3000,
+          path: '/return-status/200',
+          headers: {},
+        },
+      ],
+    }),
+  );
 
 // Certificate
 const privateKey = fs.readFileSync('privkey.pem', 'utf8'); //fs.readFileSync('/etc/letsencrypt/live/proj.uley.team/privkey.pem', 'utf8');
@@ -116,6 +149,7 @@ const addAvatar = require("./botworker/common/addAvatar");
 const getProjectNew = require("./botworker/common/getProjectNew");
 const getOtkaz = require("./botworker/common/getOtkaz");
 const getOtkazTest = require("./botworker/common/getOtkazTest");
+const { socketPath } = require("./botworker/config/monitor-config");
 
 
 //--------------------------------------------------------------------------------------------------------
@@ -3295,7 +3329,7 @@ const start = async () => {
             console.log('HTTPS Server BotWorker running on port ' + PORT);
 
             // Подключаемся к серверу socket
-            let socket = io(socketUrl);
+            //let socket = io(socketUrl);
             socket.on("getWorker", fetchNotif);
 
 
