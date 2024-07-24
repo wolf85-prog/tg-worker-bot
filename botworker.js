@@ -91,7 +91,7 @@ const getUserbotsAll = require("./botworker/http/getUserbotsAll");
 
 app.use(statusMonitor({
     title: 'Бот специалистов',
-    theme: 'custom.css',
+    theme: './custom.css',
 })); // Enable Express Status Monitor middleware
 app.use(express.json());
 app.use(cors());
