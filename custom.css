@@ -44,6 +44,10 @@ canvas {
   height: 100px;
 }
 
+.header {
+  color: #fff;
+}
+
 .content {
   width: 600px;
   margin: auto;
