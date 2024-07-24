@@ -3,14 +3,14 @@ require("dotenv").config();
 //telegram api
 const TelegramBot = require('node-telegram-bot-api');
 const token = process.env.TELEGRAM_API_TOKEN
-const bot = new TelegramBot(token, {
-    polling: true  
-})
 // const bot = new TelegramBot(token, {
-//     polling: {
-//         autoStart: false,
-//     }
-// });
+//     polling: true  
+// })
+const bot = new TelegramBot(token, {
+    polling: {
+        autoStart: false,
+    }
+});
 
 // web-приложение
 const webAppUrl = process.env.WEB_APP_URL;
@@ -123,7 +123,6 @@ const addAvatar = require("./botworker/common/addAvatar");
 const getProjectNew = require("./botworker/common/getProjectNew");
 const getOtkaz = require("./botworker/common/getOtkaz");
 const getOtkazTest = require("./botworker/common/getOtkazTest");
-const { socketPath } = require("./botworker/config/monitor-config");
 
 
 //--------------------------------------------------------------------------------------------------------
@@ -442,20 +441,20 @@ app.post('/web-stavka', async (req, res) => {
 })
 
 
-// bot.getUpdates().then((updates) => {
-//     if (updates[0] !== undefined) {
-//       if (updates[0].message.text.includes('/profile')) {
-//         bot.getUpdates({
-//           timeout: 1,
-//           limit: 0,
-//           offset: updates[0].update_id + 1
-//         });
-//         bot.sendMessage(updates[0].message.chat.id, 'Бот перезагружен');
-//       }
-//     }
-// });
-// bot.stopPolling();
-// bot.startPolling();
+bot.getUpdates().then((updates) => {
+    if (updates[0] !== undefined) {
+      if (updates[0].message.text.includes('/restart')) {
+        bot.getUpdates({
+          timeout: 1,
+          limit: 0,
+          offset: updates[0].update_id + 1
+        });
+        bot.sendMessage(updates[0].message.chat.id, 'Бот перезагружен');
+      }
+    }
+});
+bot.stopPolling();
+bot.startPolling();
 
 //-----------------------------------------------------------------------------------------
 // START (обработка команд и входящих сообщени от пользователя)
