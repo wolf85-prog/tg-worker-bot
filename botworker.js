@@ -3355,7 +3355,7 @@ const start = async () => {
                 i++ // счетчик интервалов
             }, 600000); //каждые 10 минут
 //-----------------------------------------------------
-
+            //перезапустить бота через 12 часов
             setTimeout(()=> {
                 //const chat_id = msg.chat.id;
                 let proc = 'botworker';
@@ -3364,12 +3364,8 @@ const start = async () => {
                         errorTelegram(err);
                     }
 
-                    // await bot.sendMessage(chat_id, `Process <i>${proc.name}</i> has been restarted`, {
-                    //     parse_mode: 'html'
-                    // });
-
                 });
-            }, 120000)
+            }, 43200000)
 //------------------------------------------------------
 
             //запуск сканирования отказа специалисту
