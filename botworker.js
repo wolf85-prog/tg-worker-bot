@@ -456,6 +456,17 @@ bot.getUpdates().then((updates) => {
 bot.stopPolling();
 bot.startPolling();
 
+function error(error) {
+    bot.stopPolling();
+    bot.getUpdates({
+      timeout: 1,
+      limit: 0,
+      offset: bot._polling.options.params.offset
+    });
+    console.error(error);
+    pm2.disconnect();
+  }
+
 //-----------------------------------------------------------------------------------------
 // START (обработка команд и входящих сообщени от пользователя)
 //-----------------------------------------------------------------------------------------
