@@ -456,7 +456,8 @@ bot.getUpdates().then((updates) => {
 bot.stopPolling();
 bot.startPolling();
 
-function error(error) {
+
+function errorTelegram(error) {
     bot.stopPolling();
     bot.getUpdates({
       timeout: 1,
@@ -465,7 +466,7 @@ function error(error) {
     });
     console.error(error);
     pm2.disconnect();
-  }
+}
 
 //-----------------------------------------------------------------------------------------
 // START (обработка команд и входящих сообщени от пользователя)
@@ -954,14 +955,13 @@ bot.on('message', async (msg) => {
         }
 //---------------------------------------------------------------------------------------
         if (text === '/restart') {
-            const chat_id = msg.chat.id;
             let proc = 'botworker';
             pm2.restart(proc, function(err, pr) {
                 if (err) {
                     errorTelegram(err);
                 }
 
-                bot.sendMessage(chat_id, `Process <i>${proc.name}</i> has been restarted`, {
+                bot.sendMessage(chatId, `Process <i>${proc.name}</i> has been restarted`, {
                     parse_mode: 'html'
                 });
 
@@ -3208,16 +3208,7 @@ const delay = async(ms) => {
     });
 }
 
-function errorTelegram(error) {
-    bot.stopPolling();
-    bot.getUpdates({
-      timeout: 1,
-      limit: 0,
-      offset: bot._polling.options.params.offset
-    });
-    console.error(error);
-    pm2.disconnect();
-}
+
 
 
 const fetchNotif = async (dataAll) => {
@@ -3365,8 +3356,24 @@ const start = async () => {
             }, 600000); //каждые 10 минут
 //-----------------------------------------------------
 
+            setTimeout(()=> {
+                //const chat_id = msg.chat.id;
+                let proc = 'botworker';
+                pm2.restart(proc, function(err, pr) {
+                    if (err) {
+                        errorTelegram(err);
+                    }
+
+                    // await bot.sendMessage(chat_id, `Process <i>${proc.name}</i> has been restarted`, {
+                    //     parse_mode: 'html'
+                    // });
+
+                });
+            }, 120000)
+//------------------------------------------------------
+
             //запуск сканирования отказа специалисту
-            let j = 100000
+            let j = 1000
             while(j) {
                 try {   
                     await getOtkaz(bot)
