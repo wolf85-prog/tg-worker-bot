@@ -89,12 +89,15 @@ const getStavka = require("./botworker/http/stavkaAPI");
 const getWorkersAll= require("./botworker/http/getWorkersAll");
 const getUserbotsAll = require("./botworker/http/getUserbotsAll");
 
+app.use(statusMonitor({
+    title: 'Бот специалистов',
+    theme: 'custom.css',
+})); // Enable Express Status Monitor middleware
 app.use(express.json());
 app.use(cors());
 app.use(express.static('tg-worker-bot'));
 app.use(express.static(path.resolve(__dirname, 'static')))
 app.use('/api', router);
-app.use(statusMonitor()); // Enable Express Status Monitor middleware
 
 // app.use(
 //     require('botworker/config/monitor-config')({
