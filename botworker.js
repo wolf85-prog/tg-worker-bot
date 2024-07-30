@@ -2419,6 +2419,13 @@ bot.on('message', async (msg) => {
                     convId: convId,
                     messageId: parseInt(response.message_id)-1,
                 })
+
+                //город
+                if (city2 === 'москва' || city2 === 'Масква' || city2 === 'масква' || city2 === 'МОСКВА' || 
+                    city2 === 'Mockva' || city2 === 'Mocква' || city2 === 'Mosква'|| city2 === 'Mackва' || 
+                    city2 === 'Mockba') {
+                        city2 = 'Москва'
+                }
  
                 //массив специалистов
                 let specArr = []
