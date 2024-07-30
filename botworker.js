@@ -76,7 +76,7 @@ const statusMonitor = require('express-status-monitor');
 
 //подключение к БД PostreSQL
 const sequelize = require('./botworker/connections/db')
-const {UserBot, Message, Conversation, Worker, Pretendent, Projectcash, Smetacash, Canceled, ProjectNew} = require('./botworker/models/models');
+const {UserBot, Worker, Message, Conversation, Worker, Pretendent, Projectcash, Smetacash, Canceled, ProjectNew} = require('./botworker/models/models');
 const addWorker = require("./botworker/common/addWorker");
 const getWorkerNotion = require("./botworker/common/getWorkerNotion");
 const addPassport = require("./botworker/common/addPassport");
@@ -543,9 +543,9 @@ bot.on('message', async (msg) => {
                             from: 'Notion',
                             avatar: '', 
                         })
-                        console.log('Пользователь добавлен в БД из Ноушен')
+                        console.log('Пользователь добавлен в БД Workers из Ноушен')
                     } else {
-                            console.log('Отмена добавления в БД. Пользователь уже существует')
+                        console.log('Отмена добавления в БД. Пользователь уже существует')
                     }
 
                 } catch (error) {
@@ -669,7 +669,7 @@ bot.on('message', async (msg) => {
                 } else {
                         console.log('Отмена добавления в БД. Пользователь уже существует')
                 }
-            }, 36000000) // 60 минут 36000000
+            }, 3600000) // 60 минут | 36000000 (10 часов)
         }
 //-----------------------------------------------------------------------------------------------
         if (text === '/sendpic') {
@@ -2636,14 +2636,28 @@ bot.on('message', async (msg) => {
 //----------------------------------------------------------------------------------------------------------------
                 //отправка сообщения    
 
-                //добавление пользователя в БД
+                //добавление пользователя в БД USERBOT
                 const user = await UserBot.findOne({where:{chatId: chatId.toString()}})
                 if (!user) {
                     await UserBot.create({ firstname: firstname, lastname: lastname, chatId: chatId, username: username })
-                    console.log('Пользователь добавлен в БД')
+                    console.log('Пользователь добавлен в БД UserBots')
                 } else {
-                    console.log('Отмена операции! Пользователь уже существует')
+                    console.log('Отмена операции! Пользователь уже существует в Userbots')
                     await UserBot.update({ username: username }, {
+                        where: {
+                          chatId: chatId.toString(),
+                        },
+                    });
+                }
+
+                //добавление пользователя в БД WORKERS
+                const userW = await Worker.findOne({where:{chatId: chatId.toString()}})
+                if (!userW) {
+                    await Worker.create({ username: firstname, userfamily: lastname, chatId: chatId, })
+                    console.log('Пользователь добавлен в БД Workers')
+                } else {
+                    console.log('Отмена операции! Пользователь уже существует в Workers')
+                    await Worker.update({ username: username }, {
                         where: {
                           chatId: chatId.toString(),
                         },
