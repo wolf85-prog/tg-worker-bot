@@ -2653,7 +2653,18 @@ bot.on('message', async (msg) => {
                 //добавление пользователя в БД WORKERS
                 const userW = await Worker.findOne({where:{chatId: chatId.toString()}})
                 if (!userW) {
-                    await Worker.create({ username: firstname, userfamily: lastname, chatId: chatId, })
+                    await Worker.create({ 
+                        username: firstname, 
+                        userfamily: lastname, 
+                        chatId: chatId, 
+                        worklist: JSON.stringify([{
+                            spec: 'Вне категории',
+                            cat: 'NoTag'
+                        }]),
+                        promoId: 0,
+                        from: 'Bot',
+                        avatar: ''
+                    })
                     console.log('Пользователь добавлен в БД Workers')
                 } else {
                     console.log('Отмена операции! Пользователь уже существует в Workers')
