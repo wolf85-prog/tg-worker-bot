@@ -4,7 +4,7 @@ const { Client } = require("@notionhq/client");
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
 const databaseWorkersId = process.env.NOTION_DATABASE_WORKERS_ID
 
-module.exports = async function addWorker(title, tg_id, age, phone, worklist, citylist, promoId, url_image) {
+module.exports = async function addWorker(title, tg_id, age, worklist, city, promoId, url_image) {
     try {
         const response = await notion.pages.create({
             parent: { database_id: databaseWorkersId },
@@ -23,17 +23,17 @@ module.exports = async function addWorker(title, tg_id, age, phone, worklist, ci
                 "Город": {
                      "multi_select": [
                             {
-                              "name": citylist,  
+                              "name": city,  
                             }
                             
                     ],
                     "type": "multi_select",
                     // "multi_select": citylist
                 },
-                Phone: {
-                    "type": "phone_number",
-                    "phone_number": phone
-                },
+                // Phone: {
+                //     "type": "phone_number",
+                //     "phone_number": phone
+                // },
                 Age: {
                     "type": "date",
                     date: {

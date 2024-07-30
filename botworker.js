@@ -2449,7 +2449,7 @@ bot.on('message', async (msg) => {
                         const res = await Worker.create({
                             userfamily: workerFam, 
                             username: workerName2, 
-                            phone: phone2, 
+                            //phone: phone2, 
                             dateborn: dateBorn,
                             city: city2, 
                             newcity: city2, 
@@ -2467,9 +2467,10 @@ bot.on('message', async (msg) => {
                         const res = await Worker.update({ 
                             userfamily: workerFam, 
                             username: workerName2, 
-                            phone: phone2, 
+                            //phone: phone2, 
                             dateborn: dateBorn,
                             city: city2,
+                            newcity: city2,
                             worklist: JSON.stringify(specArr),
                             chatId: chatId,
                             promoId: friend2,
@@ -2538,7 +2539,7 @@ bot.on('message', async (msg) => {
                     
                     if (notion.length === 0) {
                         //добавить специалиста
-                        const workerId = await addWorker(fio, chatId, age, phone2, specArr2, city2, friend2, urlAvatar)
+                        const workerId = await addWorker(fio, chatId, age, specArr2, city2, friend2, urlAvatar)
                         console.log('Специалист успешно добавлен в Notion!', workerId)
 
                         //добавить аватар
@@ -2552,7 +2553,7 @@ bot.on('message', async (msg) => {
                     console.log("Очищаю переменные...")
                     workerFam = '';
                     workerName2 = '';
-                    phone2 = '';
+                    //phone2 = '';
                     dateBorn = '';
                     city2 = '';
                     friend2 = '';
