@@ -2009,7 +2009,7 @@ bot.on('message', async (msg) => {
             const specArr2 = [{name: 'Техник по свету'}]
             const city2 = 'Санкт-Петербург'
             const friend2 = 0
-            const urlAvatar = ''
+            const urlAvatar = 'https://proj.uley.team/upload/2024-06-06T07:52:17.472Z.jpg'
 
             try {
                 const workerId = await addWorker(fio, chatId, age, specArr2, city2, friend2, urlAvatar)
