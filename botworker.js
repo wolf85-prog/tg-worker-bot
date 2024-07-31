@@ -2002,17 +2002,17 @@ bot.on('message', async (msg) => {
         }
 
         if (text === '/addworker2') {
-            const fio = 'Тестовый Тест'
-            const chatId = 1698411118
-            const age = '2000'
-            const phone2 = '+7 (900) 123-45-45'
-            const specArr2 = []
-            const city2 = 'Москва'
+            const fio = 'Роман'
+            const chatId = 560993838
+            const age = '1999'
+            //const phone2 = '+7 (900) 123-45-45'
+            const specArr2 = [{name: 'Техник по свету'}]
+            const city2 = 'Санкт-Петербург'
             const friend2 = 0
             const urlAvatar = ''
 
             try {
-                const workerId = await addWorker(fio, chatId, age, phone2, specArr2, city2, friend2, urlAvatar)
+                const workerId = await addWorker(fio, chatId, age, specArr2, city2, friend2, urlAvatar)
             } catch (error) {
                 console.log("Ошибка добавления специалиста в Notion: ", error.message)
             }
