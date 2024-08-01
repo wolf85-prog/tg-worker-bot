@@ -2751,11 +2751,11 @@ bot.on('message', async (msg) => {
                     console.log('Пользователь добавлен в БД Workers')
                 } else {
                     console.log('Отмена операции! Пользователь уже существует в Workers')
-                    await Worker.update({ username: username }, {
-                        where: {
-                          chatId: chatId.toString(),
-                        },
-                    });
+                    // await Worker.update({ username: username }, {
+                    //     where: {
+                    //       chatId: chatId.toString(),
+                    //     },
+                    // });
                 }
 
                 //обработка пересылаемых сообщений
