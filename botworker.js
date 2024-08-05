@@ -3415,13 +3415,20 @@ const start = async () => {
             //let socket = io(socketUrl);
             socket.on("getWorker", fetchNotif);
 
-
             // 86400 секунд в дне
             var minutCount = 0;
             let i = 0;
 
             // повторить с интервалом 10 минут
             let timerId = setInterval(async() => {
+                // Подключаемся к серверу socket
+                
+                console.log("send process: ", 3)
+                socket.emit("sendProcess", {
+                    process: '3',
+                    data: true,
+                })
+
                 console.log("START GET PROJECTS ALL...")
                 const projects = await getProjectsAll()
                 //console.log(projects)
