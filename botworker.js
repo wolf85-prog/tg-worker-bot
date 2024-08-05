@@ -3479,13 +3479,13 @@ const start = async () => {
             //запуск сканирования отказа специалисту
             let j = 1000
             while(j) {
-                try {   
+                //try {   
                     await getOtkaz(bot)
-                } catch (error) {
-                    //console.log(error.message)
-                    console.error("Ошибка в системе отказов претендентам")
-                }
-                j--
+                    j--
+                // } catch (error) {
+                //     //console.log(error.message)
+                //     console.error("Ошибка в системе отказов претендентам")
+                // }
             }
         });
 
