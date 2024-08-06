@@ -51,6 +51,11 @@ let count = []
 let count2 = []
 let socket = io(socketUrl);
 
+let currentProcess = 0 
+let dataProcess = true
+let dataInterval = '0'
+let dataTime = 'S'
+
 //functions
 const getBlocksP = require('./botworker/common/getBlocksP')
 const addPretendent = require('./botworker/common/addPretendent')
@@ -3399,6 +3404,22 @@ const fetchNotif = async (dataAll) => {
     }
 }
 
+const fetchProcess = async (dataAll) => {
+
+    let d = new Date()
+    d.setHours(d.getHours() + 3);
+
+	console.log("Получен процесс W: ", dataAll, d)
+	const { process, data, interval, time } = dataAll;
+
+	if (process === 1) {
+        currentProcess = 1
+        dataProcess = data
+        dataInterval = interval
+        dataTime = time
+    }
+}
+
 
 //-------------------------------------------------------------------------------------------------------------------------------
 const PORT = process.env.PORT || 8001;
@@ -3415,6 +3436,8 @@ const start = async () => {
             //let socket = io(socketUrl);
             socket.on("getWorker", fetchNotif);
 
+            socket.on("getProcess", fetchProcess);
+
             // 86400 секунд в дне
             var minutCount = 0;
             let i = 0;
@@ -3423,10 +3446,12 @@ const start = async () => {
             let timerId = setInterval(async() => {
                 // Подключаемся к серверу socket
                 
-                console.log("send process: ", 3)
+                console.log("send process W: ", 3)
                 socket.emit("sendProcess", {
                     process: '3',
                     data: true,
+                    interval: '10',
+                    time: 'M',
                 })
 
                 console.log("START GET PROJECTS ALL...")
