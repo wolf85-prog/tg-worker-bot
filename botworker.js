@@ -3444,15 +3444,6 @@ const start = async () => {
 
             // повторить с интервалом 10 минут
             let timerId = setInterval(async() => {
-                // Подключаемся к серверу socket
-                
-                console.log("send process W: ", 3)
-                socket.emit("sendProcess", {
-                    process: '3',
-                    data: true,
-                    interval: '10',
-                    time: 'M',
-                })
 
                 console.log("START GET PROJECTS ALL...")
                 const projects = await getProjectsAll()
@@ -3491,6 +3482,14 @@ const start = async () => {
                     })
                 })  
 
+                //передаем данные о функции
+                console.log("send process W: ", 3)
+                socket.emit("sendProcess", {
+                    process: '3',
+                    data: true,
+                    interval: '10',
+                    time: 'M',
+                })
 
                 i++ // счетчик интервалов
             }, 600000); //каждые 10 минут
