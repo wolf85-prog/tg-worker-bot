@@ -3438,6 +3438,15 @@ const start = async () => {
 
             socket.on("getProcess", fetchProcess);
 
+            //передаем данные о функции
+            console.log("send process W: ", 3)
+            socket.emit("sendProcess", {
+                process: '3',
+                data: true,
+                interval: '10',
+                time: 'M',
+            })
+
             // 86400 секунд в дне
             var minutCount = 0;
             let i = 0;
