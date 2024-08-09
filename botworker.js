@@ -168,9 +168,8 @@ app.post('/web-data', async (req, res) => {
                     message_text: 
 `Данные успешно добавлены!
   
-<b>Фамилия:</b> ${workerfamily} 
 <b>Имя:</b> ${workerName} 
-<b>Телефон:</b> ${phone} 
+<b>Никнейм:</b> ${workerfamily} 
 <b>Год рождения:</b> ${dateborn}
 <b>Город:</b> ${city} 
 <b>Promo ID:</b> ${friend} 
