@@ -169,7 +169,6 @@ app.post('/web-data', async (req, res) => {
 `Данные успешно добавлены!
   
 <b>Имя:</b> ${workerName} 
-<b>Никнейм:</b> ${workerfamily} 
 <b>Год рождения:</b> ${dateborn}
 <b>Город:</b> ${city} 
 <b>Promo ID:</b> ${friend} 
@@ -2452,7 +2451,7 @@ bot.on('message', async (msg) => {
                     const user = await Worker.findOne({where:{chatId: chatId.toString()}})
                     if (!user) {
                         const res = await Worker.create({
-                            userfamily: workerFam, 
+                            //userfamily: workerFam, 
                             username: workerName2, 
                             //phone: phone2, 
                             dateborn: dateBorn,
@@ -2470,7 +2469,7 @@ bot.on('message', async (msg) => {
                         //обновление специалиста, если существует в бд
                         console.log('Отмена добавления в БД. Пользователь уже существует')
                         const res = await Worker.update({ 
-                            userfamily: workerFam, 
+                            //userfamily: workerFam, 
                             username: workerName2, 
                             //phone: phone2, 
                             dateborn: dateBorn,
@@ -2492,7 +2491,7 @@ bot.on('message', async (msg) => {
                     }
                     
 
-                    const fio = workerFam + ' '+ workerName2
+                    const fio = workerName2 //workerFam + ' '+ workerName2
                     const age = `${dateBorn}-01-01`
 
                     const currentMonth = new Date().getMonth() + 1
@@ -2556,7 +2555,7 @@ bot.on('message', async (msg) => {
 
                     //очистить переменные
                     console.log("Очищаю переменные...")
-                    workerFam = '';
+                    //workerFam = '';
                     workerName2 = '';
                     //phone2 = '';
                     dateBorn = '';
