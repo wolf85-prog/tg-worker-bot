@@ -2734,7 +2734,7 @@ bot.on('message', async (msg) => {
 
                 const messagesAll = JSON.parse(JSON.stringify(messages))
 
-                const mess = messagesAll.find((item)=> item.createdAt.split('T')[0] === currentDate.split('T')[0])
+                const mess = messagesAll.find((item)=> item.createdAt.split('T')[0] === currentDate.toISOString().split('T')[0])
 
                 console.log("mess: ", mess)
                 
