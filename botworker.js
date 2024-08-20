@@ -2721,9 +2721,9 @@ bot.on('message', async (msg) => {
                 const currentHours = new Date(new Date().getTime()+10800000).getHours()
 
                 const messagesAll = await Message.findAll({where:{senderId: chatId.toString()}})
-                console.log(JSON.stringify(messagesAll))
+                //console.log(JSON.stringify(messagesAll))
 
-                const mess = messagesAll.find((item)=> new Date(item.dataValues.createdAt).split('T')[0] === currentDate.split('T')[0])
+                const mess = messagesAll.find((item)=> item.dataValues.createdAt.split('T')[0] === currentDate.split('T')[0])
                 
                 if (!mess) {
                     if (currentHours >= 6 && currentHours < 12) {
