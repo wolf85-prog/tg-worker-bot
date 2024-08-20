@@ -2733,7 +2733,7 @@ bot.on('message', async (msg) => {
                     where:{senderId: chatId.toString()}, 
                     offset: countAll > 50 ? countAll - 50 : 0,
                 })
-                //console.log(messagesAll)
+                console.log("NEW COUNT: ", messagesAll.length)
 
                 const mess = messagesAll.find((item)=> item.dataValues.createdAt.split('T')[0] === currentDate.split('T')[0])
 
