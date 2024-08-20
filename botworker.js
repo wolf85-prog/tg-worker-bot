@@ -2646,7 +2646,10 @@ bot.on('message', async (msg) => {
             
             } else {
 //----------------------------------------------------------------------------------------------------------------
-                //отправка сообщения    
+                //отправка сообщения 
+                // Подключаемся к серверу socket
+                let socket = io(socketUrl);
+                socket.emit("addUser", chatId)   
 
                 //добавление пользователя в БД USERBOT
                 const user = await UserBot.findOne({where:{chatId: chatId.toString()}})
@@ -2704,7 +2707,7 @@ bot.on('message', async (msg) => {
                 })
                 const messagesAll = JSON.parse(JSON.stringify(messages))
                 const mess = messagesAll.find((item)=> item.createdAt.split('T')[0] === currentDate.toISOString().split('T')[0])
-                console.log("mess: ", mess)          
+                //console.log("mess: ", mess)          
                 if (mess) {
                     console.log("сегодня были сообщения")
                 } else { 
@@ -2721,6 +2724,19 @@ bot.on('message', async (msg) => {
                     //ответ бота
                     console.log(`${hello}, ${firstname}`)
                     await bot.sendMessage(chatId, `${hello}, ${firstname}`)
+
+                    // сохранить отправленное боту сообщение пользователя в БД
+                    const convId = sendMyMessage(`${hello}, ${firstname}`, 'text', chatId, messageId, null)
+
+                    socket.emit("sendMessageSpec", {
+                        senderId: chatTelegramId,
+                        receiverId: chatId,
+                        text: `${hello}, ${firstname}`,
+                        type: 'text',
+                        convId: convId,
+                        messageId: messageId,
+                        replyId: null,
+                    })
                 }
 
                 //-------------------------------------
@@ -2738,11 +2754,6 @@ bot.on('message', async (msg) => {
 
                 // сохранить отправленное боту сообщение пользователя в БД
                 const convId = sendMyMessage(str_text, 'text', chatId, messageId, reply_id)
-
-                // Подключаемся к серверу socket
-                let socket = io(socketUrl);
-
-                socket.emit("addUser", chatId)
 
                 socket.emit("sendMessageSpec", {
                     senderId: chatId,
