@@ -2687,6 +2687,44 @@ bot.on('message', async (msg) => {
                     // });
                 }
 
+                //приветствие
+                let hello = ''
+                const currentDate = new Date()
+                const currentHours = new Date(new Date().getTime()+10800000).getHours()
+
+                const countAll = await Message.count({
+                    where: { senderId: chatId.toString() },
+                });
+                const messages = await Message.findAll({
+                    order: [
+                        ['id', 'ASC'],
+                    ],
+                    where:{senderId: chatId.toString()}, 
+                    offset: countAll > 50 ? countAll - 50 : 0,
+                })
+                const messagesAll = JSON.parse(JSON.stringify(messages))
+                const mess = messagesAll.find((item)=> item.createdAt.split('T')[0] === currentDate.toISOString().split('T')[0])
+                console.log("mess: ", mess)          
+                if (mess) {
+                    console.log("сегодня были сообщения")
+                } else { 
+                    if (currentHours >= 6 && currentHours < 12) {
+                        hello = 'Доброе утро'
+                    } else if (currentHours >= 12 && currentHours < 18) {
+                        hello = 'Добрый день'
+                    } else if (currentHours >= 0 && currentHours < 6) {
+                        hello = 'Доброй ночи'
+                    } else {
+                        hello = 'Добрый вечер' //18-0
+                    }
+
+                    //ответ бота
+                    console.log(`${hello}, ${firstname}`)
+                    await bot.sendMessage(chatId, `${hello}, ${firstname}`)
+                }
+
+                //-------------------------------------
+
                 //обработка пересылаемых сообщений
                 let str_text;
                 let reply_id;
@@ -2715,50 +2753,7 @@ bot.on('message', async (msg) => {
                     messageId: messageId,
                     replyId: reply_id,
                 })
-
-                let hello = ''
-                const currentDate = new Date()
-                const currentHours = new Date(new Date().getTime()+10800000).getHours()
-
-                const countAll = await Message.count({
-                    where: { senderId: chatId.toString() },
-                });
-
-                const messages = await Message.findAll({
-                    order: [
-                        ['id', 'ASC'],
-                    ],
-                    where:{senderId: chatId.toString()}, 
-                    offset: countAll > 50 ? countAll - 50 : 0,
-                })
-
-                const messagesAll = JSON.parse(JSON.stringify(messages))
-
-                const mess = messagesAll.find((item)=> item.createdAt.split('T')[0] === currentDate.toISOString().split('T')[0])
-
-                console.log("mess: ", mess)
-                
-                if (mess) {
-                    console.log("сегодня были сообщения")
-                } else { 
-                    if (currentHours >= 6 && currentHours < 12) {
-                        hello = 'Доброе утро'
-                    } else if (currentHours >= 12 && currentHours < 18) {
-                        hello = 'Добрый день'
-                    } else if (currentHours >= 0 && currentHours < 6) {
-                        hello = 'Доброй ночи'
-                    } else {
-                        hello = 'Добрый вечер' //18-0
-                    }
-
-                    //ответ бота
-                    console.log(`${hello}, ${firstname}`)
-                }
             
-
-
-                
-                //const report = bot.sendMessage(chatId, `${hello}, ${firstname}`)
 
                 //await bot.sendMessage(chatId, 'Я принял ваш запрос!')
                 //await bot.sendMessage(chatTelegramId, `${text} \n \n от ${firstname} ${lastname} ${chatId}`)           
