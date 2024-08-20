@@ -2735,7 +2735,7 @@ bot.on('message', async (msg) => {
                 })
                 console.log("NEW COUNT: ", messagesAll.length)
 
-                const messagesAll = res.json(messages)
+                const messagesAll = JSON.parse(JSON.stringify(messages))
 
                 console.log("messagesAll: ", messagesAll)
 
