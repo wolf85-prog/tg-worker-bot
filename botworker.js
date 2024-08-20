@@ -2727,12 +2727,15 @@ bot.on('message', async (msg) => {
 
                 //const messagesAll = await Message.findAll({where:{senderId: chatId.toString(), createdAt: {[Op.gte]: },}})
                 const messagesAll = await Message.findAll({
+                    order: [
+                        ['id', 'ASC'],
+                    ],
                     where:{senderId: chatId.toString()}, 
                     offset: countAll > 50 ? countAll - 50 : 0,
                 })
                 //console.log(messagesAll)
 
-                const mess = messagesAll.find((item)=> item.dataValues.createdAt === currentDate)
+                const mess = messagesAll.find((item)=> item.dataValues.createdAt.split('T')[0] === currentDate.split('T')[0])
 
                 console.log("mess: ", mess)
                 
