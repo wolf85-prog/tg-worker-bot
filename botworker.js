@@ -2733,7 +2733,7 @@ bot.on('message', async (msg) => {
                     where:{senderId: chatId.toString()}, 
                     offset: countAll > 50 ? countAll - 50 : 0,
                 })
-                console.log("NEW COUNT: ", messagesAll.length)
+                console.log("NEW COUNT: ", messages.length)
 
                 const messagesAll = JSON.parse(JSON.stringify(messages))
 
