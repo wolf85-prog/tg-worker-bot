@@ -2730,11 +2730,15 @@ bot.on('message', async (msg) => {
                     where:{senderId: chatId.toString()}, 
                     offset: countAll > 50 ? countAll - 50 : 0,
                 })
-                console.log(messagesAll)
+                //console.log(messagesAll)
 
-                const mess = messagesAll.find((item)=> item.createdAt === currentDate)
+                const mess = messagesAll.find((item)=> item.dataValues.createdAt === currentDate)
+
+                console.log("mess: ", mess)
                 
-                if (!mess) {
+                if (mess) {
+                    console.log("сегодня были сообщения")
+                } else { 
                     if (currentHours >= 6 && currentHours < 12) {
                         hello = 'Доброе утро'
                     } else if (currentHours >= 12 && currentHours < 18) {
@@ -2747,8 +2751,6 @@ bot.on('message', async (msg) => {
 
                     //ответ бота
                     console.log(`${hello}, ${firstname}`)
-                } else {
-                    console.log("сегодня были сообщения")
                 }
             
 
