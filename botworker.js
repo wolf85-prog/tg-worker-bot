@@ -2723,24 +2723,24 @@ bot.on('message', async (msg) => {
                 const messagesAll = await Message.findAll({where:{senderId: chatId.toString()}})
                 console.log(JSON.stringify(messagesAll))
 
-                // const mess = messagesAll.find((item)=> new Date(item.createdAt).split('T')[0] === currentDate.split('T')[0])
+                const mess = messagesAll.find((item)=> new Date(item.dataValues.createdAt).split('T')[0] === currentDate.split('T')[0])
                 
-                // if (!mess) {
-                //     if (currentHours >= 6 && currentHours < 12) {
-                //         hello = 'Доброе утро'
-                //     } else if (currentHours >= 12 && currentHours < 18) {
-                //         hello = 'Добрый день'
-                //     } else if (currentHours >= 0 && currentHours < 6) {
-                //         hello = 'Доброй ночи'
-                //     } else {
-                //         hello = 'Добрый вечер' //18-0
-                //     }
+                if (!mess) {
+                    if (currentHours >= 6 && currentHours < 12) {
+                        hello = 'Доброе утро'
+                    } else if (currentHours >= 12 && currentHours < 18) {
+                        hello = 'Добрый день'
+                    } else if (currentHours >= 0 && currentHours < 6) {
+                        hello = 'Доброй ночи'
+                    } else {
+                        hello = 'Добрый вечер' //18-0
+                    }
 
-                //     //ответ бота
-                //     console.log(`${hello}, ${firstname}`)
-                // } else {
-                //     console.log("сегодня были сообщения")
-                // }
+                    //ответ бота
+                    console.log(`${hello}, ${firstname}`)
+                } else {
+                    console.log("сегодня были сообщения")
+                }
             
 
 
