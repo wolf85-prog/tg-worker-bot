@@ -2725,18 +2725,22 @@ bot.on('message', async (msg) => {
                     console.log(`${hello}, ${firstname}`)
                     await bot.sendMessage(chatId, `${hello}, ${firstname}`)
 
-                    // сохранить отправленное боту сообщение пользователя в БД
-                    const convId = await sendMessageAdmin(`${hello}, ${firstname}`, 'text', chatId, messageId, null, true)
+                    
+                    setTimeout(async()=> {
+                        // сохранить отправленное боту сообщение пользователя в БД
+                        const convId = await sendMessageAdmin(`${hello}, ${firstname}`, 'text', chatId, messageId, null, true)
 
-                    socket.emit("sendAdminSpec", {
-                        senderId: chatTelegramId,
-                        receiverId: chatId,
-                        text: `${hello}, ${firstname}`,
-                        type: 'text',
-                        convId: convId,
-                        messageId: messageId,
-                        isBot: true,
-                    })
+                        socket.emit("sendAdminSpec", {
+                            senderId: chatTelegramId,
+                            receiverId: chatId,
+                            text: `${hello}, ${firstname}`,
+                            type: 'text',
+                            convId: convId,
+                            messageId: messageId,
+                            isBot: true,
+                        })
+                    }, 3000)
+                    
                         
                 }
 
