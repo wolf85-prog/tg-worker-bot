@@ -2716,8 +2716,36 @@ bot.on('message', async (msg) => {
                     replyId: reply_id,
                 })
 
+                let hello = ''
+                const currentDate = new Date()
+                const currentHours = new Date(new Date().getTime()+10800000).getHours()
 
-                // ответ бота
+                const messagesAll = await Message.findAll({where:{senderId: chatId.toString()}})
+
+                const mess = messagesAll.find((item)=> new Date(item.createdAt).split('T')[0] === currentDate.split('T')[0])
+                
+                if (!mess) {
+                    if (currentHours >= 6 && currentHours < 12) {
+                        hello = 'Доброе утро'
+                    } else if (currentHours >= 12 && currentHours < 18) {
+                        hello = 'Добрый день'
+                    } else if (currentHours >= 0 && currentHours < 6) {
+                        hello = 'Доброй ночи'
+                    } else {
+                        hello = 'Добрый вечер' //18-0
+                    }
+
+                    //ответ бота
+                    console.log(`${hello}, ${firstname}`)
+                } else {
+                    console.log("сегодня были сообщения")
+                }
+            
+
+
+                
+                //const report = bot.sendMessage(chatId, `${hello}, ${firstname}`)
+
                 //await bot.sendMessage(chatId, 'Я принял ваш запрос!')
                 //await bot.sendMessage(chatTelegramId, `${text} \n \n от ${firstname} ${lastname} ${chatId}`)           
             }
