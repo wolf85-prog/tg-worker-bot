@@ -2723,15 +2723,16 @@ bot.on('message', async (msg) => {
                 const countAll = await Message.count({
                     where: { senderId: chatId.toString() },
                 });
+                console.log("COUNT: ", countAll)
 
                 //const messagesAll = await Message.findAll({where:{senderId: chatId.toString(), createdAt: {[Op.gte]: },}})
                 const messagesAll = await Message.findAll({
                     where:{senderId: chatId.toString()}, 
                     offset: countAll > 50 ? countAll - 50 : 0,
                 })
-                console.log(JSON.stringify(messagesAll))
+                console.log(messagesAll)
 
-                const mess = messagesAll.find((item)=> item.createdAt.split('T')[0] === currentDate.split('T')[0])
+                const mess = messagesAll.find((item)=> item.createdAt === currentDate)
                 
                 if (!mess) {
                     if (currentHours >= 6 && currentHours < 12) {
