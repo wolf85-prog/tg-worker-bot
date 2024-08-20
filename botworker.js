@@ -2723,9 +2723,7 @@ bot.on('message', async (msg) => {
                 const countAll = await Message.count({
                     where: { senderId: chatId.toString() },
                 });
-                console.log("COUNT: ", countAll)
 
-                //const messagesAll = await Message.findAll({where:{senderId: chatId.toString(), createdAt: {[Op.gte]: },}})
                 const messages = await Message.findAll({
                     order: [
                         ['id', 'ASC'],
@@ -2733,13 +2731,10 @@ bot.on('message', async (msg) => {
                     where:{senderId: chatId.toString()}, 
                     offset: countAll > 50 ? countAll - 50 : 0,
                 })
-                console.log("NEW COUNT: ", messages.length)
 
                 const messagesAll = JSON.parse(JSON.stringify(messages))
 
-                console.log("messagesAll: ", messagesAll)
-
-                const mess = messagesAll.find((item)=> item.dataValues.createdAt.split('T')[0] === currentDate.split('T')[0])
+                const mess = messagesAll.find((item)=> item.createdAt.split('T')[0] === currentDate.split('T')[0])
 
                 console.log("mess: ", mess)
                 
