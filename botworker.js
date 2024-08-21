@@ -2723,7 +2723,7 @@ bot.on('message', async (msg) => {
 
                     //ответ бота
                     console.log(`${hello}, ${firstname}`)
-                    await bot.sendMessage(chatId, `${hello}, ${firstname}`)
+                    await bot.sendMessage(chatId, `${hello}, ${firstname}.`)
 
                     
                     setTimeout(async()=> {
