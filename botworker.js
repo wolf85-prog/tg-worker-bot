@@ -2728,12 +2728,12 @@ bot.on('message', async (msg) => {
                     
                     setTimeout(async()=> {
                         // сохранить отправленное боту сообщение пользователя в БД
-                        const convId = await sendMessageAdmin(`${hello}, ${firstname}`, 'text', chatId, messageId, null, true)
+                        const convId = await sendMessageAdmin(`${hello}, ${firstname}.`, 'text', chatId, messageId, null, true)
 
                         socket.emit("sendAdminSpec", {
                             senderId: chatTelegramId,
                             receiverId: chatId,
-                            text: `${hello}, ${firstname}`,
+                            text: `${hello}, ${firstname}.`,
                             type: 'text',
                             convId: convId,
                             messageId: messageId,
