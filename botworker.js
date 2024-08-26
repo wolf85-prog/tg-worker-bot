@@ -2721,14 +2721,20 @@ bot.on('message', async (msg) => {
                         hello = 'Добрый вечер' //18-0
                     }
 
-                    //ответ бота
-                    console.log(`${hello}, ${firstname}`)
-                    await bot.sendMessage(chatId, `${hello}, ${firstname}.`)
+                    const nameNotion = await getWorkerNotion(chatId)
 
+                    //ответ бота
+                    //console.log(`${hello}, ${firstname}`)
+                    if (nameNotion) {
+                        await bot.sendMessage(chatId, `${hello}, ${nameNotion[0].fio}.`)
+                    } else {
+                        await bot.sendMessage(chatId, `${hello}.`)
+                    }
+                    
                     
                     setTimeout(async()=> {
                         // сохранить отправленное боту сообщение пользователя в БД
-                        const convId = await sendMessageAdmin(`${hello}, ${firstname}.`, 'text', chatId, messageId, null, true)
+                        const convId = await sendMessageAdmin(`${hello}, ${firstname}.`, 'text', chatId, messageId, null, false)
 
                         socket.emit("sendAdminSpec", {
                             senderId: chatTelegramId,
@@ -2737,7 +2743,7 @@ bot.on('message', async (msg) => {
                             type: 'text',
                             convId: convId,
                             messageId: messageId,
-                            isBot: true,
+                            isBot: false,
                         })
                     }, 3000)
                     
