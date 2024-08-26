@@ -2733,7 +2733,7 @@ bot.on('message', async (msg) => {
                         
                     }
                     
-                    await bot.sendMessage(chatId, `${hello_text}.`)
+                    await bot.sendMessage(chatId, hello_text)
 
                     setTimeout(async()=> {
                         // сохранить отправленное боту сообщение пользователя в БД
