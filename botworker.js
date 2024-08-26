@@ -2725,21 +2725,24 @@ bot.on('message', async (msg) => {
 
                     //ответ бота
                     //console.log(`${hello}, ${firstname}`)
+                    let hello_text = ''
                     if (nameNotion) {
-                        await bot.sendMessage(chatId, `${hello}, ${nameNotion[0].fio}.`)
+                        hello_text = `${hello}, ${nameNotion[0].fio}.`
                     } else {
-                        await bot.sendMessage(chatId, `${hello}.`)
+                        hello_text = `${hello}.`
+                        
                     }
                     
-                    
+                    await bot.sendMessage(chatId, `${hello_text}.`)
+
                     setTimeout(async()=> {
                         // сохранить отправленное боту сообщение пользователя в БД
-                        const convId = await sendMessageAdmin(`${hello}, ${firstname}.`, 'text', chatId, messageId, null, false)
+                        const convId = await sendMessageAdmin(hello_text, 'text', chatId, messageId, null, false)
 
                         socket.emit("sendAdminSpec", {
                             senderId: chatTelegramId,
                             receiverId: chatId,
-                            text: `${hello}, ${firstname}.`,
+                            text: hello_text,
                             type: 'text',
                             convId: convId,
                             messageId: messageId,
