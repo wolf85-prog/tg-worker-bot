@@ -2727,7 +2727,12 @@ bot.on('message', async (msg) => {
                     //console.log(`${hello}, ${firstname}`)
                     let hello_text = ''
                     if (nameNotion) {
-                        hello_text = `${hello}, ${nameNotion[0].fio}.`
+                        if (/\s/.test(nameNotion[0].fio))  {
+                            hello_text = `${hello}, ${nameNotion[0].fio}.`
+                        } else {
+                            hello_text = `${hello}, ${nameNotion[0].fio.split(' ')[1]}.`
+                        }
+                        
                     } else {
                         hello_text = `${hello}.`
                         
