@@ -111,7 +111,7 @@ module.exports = async function getOtkaz(bot) {
                         }
                     } 
                 } catch (error) {
-                    console.error("Ошибка в системе отказов претендентам")
+                    console.error("Ошибка в системе отказов претендентам", new Date().toISOString())
                 }
 
             j++       
