@@ -1084,7 +1084,7 @@ bot.on('message', async (msg) => {
                     const currentDate = `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}T${date.getHours()}:${date.getMinutes()}`
                     try {
                         //сохранить фото на сервере
-                        if (spec[0].image) {  
+                        //if (spec[0].image) {  
                             const file = fs.createWriteStream('/var/www/proj.uley.team/avatars/avatar_' + ID + '_' + currentDate + '.jpg');
                             
                             const transformer = sharp()
@@ -1118,9 +1118,9 @@ bot.on('message', async (msg) => {
                                     }
                                 });
                             });
-                        } else {
-                            console.log("Аватар не читается! ", ID) 
-                        }
+                        //} else {
+                        //    console.log("Аватар не читается! ", ID) 
+                        //}
                     } catch (err) {
                         console.error(err);
                     }
