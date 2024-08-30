@@ -1082,7 +1082,26 @@ bot.on('message', async (msg) => {
                 if (avatar) {
                     const date = new Date()
                     const currentDate = `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}T${date.getHours()}:${date.getMinutes()}`
+                    const directory = "/var/www/proj.uley.team/avatars";
+
                     try {
+                        //найти старое фото
+                        var fileName = ID; 
+                        fs.readdir(directory, function(err,list){
+                            if(err) throw err;
+                            for(var i=0; i<list.length; i++)
+                            {
+                                if(list[i].includes(fileName))
+                                {
+                                    //удалить найденный файл (синхронно)
+                                    fs.unlinkSync(path.join(directory, list[i]), (err) => {
+                                        if (err) throw err;
+                                        console.log("Файл удален!")
+                                    });
+                                }
+                            }
+                        });
+
                         //сохранить фото на сервере
                         //if (spec[0].image) {  
                             const file = fs.createWriteStream('/var/www/proj.uley.team/avatars/avatar_' + ID + '_' + currentDate + '.jpg');
@@ -1122,7 +1141,7 @@ bot.on('message', async (msg) => {
                         //    console.log("Аватар не читается! ", ID) 
                         //}
                     } catch (err) {
-                        console.error(err);
+                        console.error(err, new Date().toLocaleDateString());
                     }
                         
                 } else {
