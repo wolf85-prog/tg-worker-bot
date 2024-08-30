@@ -23,19 +23,21 @@ module.exports = async function getWorkerNotion(id) {
 
         const worker = response.results.map((page) => {
             return {
-                id: page.id,
-                fio: page.properties.Name.title[0]?.plain_text,
-                tgId: page.properties.Telegram.number,
-                phone: page.properties.Phone.phone_number,
-                age: page.properties.Age.date,
-                city: page.properties.City.rich_text[0]?.plain_text,
-                spec: page.properties.Specialization.multi_select,
-                comment: page.properties["Комментарии"].rich_text[0]?.plain_text,
-                reyting: page.properties["Рейтинг"].rich_text[0]?.plain_text,
-                merch: page.properties.Merch.multi_select,
-                comteg: page.properties["КомТег"].multi_select,
-                rank: page.properties["Ранг"].number,
-                passport: page.properties.Passport.rich_text[0]?.plain_text,
+                id: worker.id,
+                fio: worker.properties.Name.title[0]?.plain_text,
+                tgId: worker.properties.Telegram.number,
+                phone: worker.properties.Phone.phone_number,
+                age: worker.properties.Age.date,
+                city: worker.properties.City.rich_text[0]?.plain_text,
+                newcity: worker.properties["Город"].multi_select,
+                spec: worker.properties.Specialization.multi_select,
+                comment: worker.properties["Комментарии"].rich_text[0]?.plain_text,
+                reyting: worker.properties["Рейтинг"].rich_text[0]?.plain_text,
+                merch: worker.properties.Merch.multi_select,
+                comteg: worker.properties["КомТег"].multi_select,
+                rank: worker.properties["Ранг"].number,
+                passport: worker.properties.Passport.rich_text[0]?.plain_text,   
+                profile: worker.properties["Профиль"], 
             };
         });
 
