@@ -1093,7 +1093,7 @@ bot.on('message', async (msg) => {
                                 console.log(`Image height is ${height}`);
                             });
                             
-                            const request = https.get(spec[0].image, function(response) {
+                            const request = https.get(avatar, function(response) {
                                 response.pipe(transformer).pipe(file);
         
                                 // after download completed close filestream
