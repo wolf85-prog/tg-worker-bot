@@ -10,7 +10,7 @@ const sendMessageAdmin = require("./sendMessageAdmin");
 //notion api
 const { Client } = require("@notionhq/client");
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
-const databaseWorkerId = process.env.NOTION_DATABASE_WORKERS_ID
+const databaseId = process.env.NOTION_DATABASE_ID
 
 //socket.io
 const {io} = require("socket.io-client")
