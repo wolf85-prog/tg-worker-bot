@@ -7,6 +7,8 @@ const getProjectName = require("./getProjectName");
 const getWorkerPretendent = require('./getWorkerPretendent')
 const sendMessageAdmin = require("./sendMessageAdmin");
 
+//notion api
+const { Client } = require("@notionhq/client");
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
 const databaseWorkerId = process.env.NOTION_DATABASE_WORKERS_ID
 
