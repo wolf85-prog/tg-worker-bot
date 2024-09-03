@@ -50,7 +50,7 @@ module.exports = async function getOtkaz(bot) {
         console.error(error.message)
     }
 
-    console.log("projects: ", responseResults)
+    console.log("projects: ", responseResults.length)
 
     const currentDate = new Date()
     //получить все запуски сканирования отказов
@@ -72,14 +72,14 @@ module.exports = async function getOtkaz(bot) {
         console.log("filterOtkaz: ", otkazi.length)
         //console.log("projects: ", responseResults?.length)
 
-        // const newOtkaz = otkazi.map((item)=> {
-        //     const res = responseResults.find((proj)=> proj.id === item.dataValues.projectId)
-        //     if (res) {
-        //         item
-        //     }
-        // })
+        const newOtkaz = otkazi.map((item)=> {
+            const res = responseResults.find((proj)=> proj.id === item.dataValues.projectId)
+            if (res) {
+                item
+            }
+        })
 
-        // console.log("Новые Отказы ", newOtkaz.length)
+        console.log("Новые Отказы ", newOtkaz.length)
 
         let j = 0
 
