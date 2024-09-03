@@ -2066,12 +2066,16 @@ bot.on('message', async (msg) => {
         
         if (text === '/getdelworker') {
             //получить все запуски сканирования отказов
-            const delWorker = await Worker.update({
-                deleted: null,
-                where: {
-                    deleted: true,
+            const delWorker = await Worker.update(
+                { 
+                    deleted: null,
+                },
+                {
+                    where: {
+                        deleted: true,
+                    },
                 }
-            })
+            )
             console.log("res: ", delWorker)
         }
 
