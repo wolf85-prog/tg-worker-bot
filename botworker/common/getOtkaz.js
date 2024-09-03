@@ -50,8 +50,6 @@ module.exports = async function getOtkaz(bot) {
         console.error(error.message)
     }
 
-    console.log("projects: ", responseResults.length)
-
     const currentDate = new Date()
     //получить все запуски сканирования отказов
     const bdOtkazi = await Canceled.findAll({
@@ -60,9 +58,6 @@ module.exports = async function getOtkaz(bot) {
         ],
         where: {
             cancel: false,
-            // datestart: {
-            //     [Op.gte]: currentDate,
-            // },
         }
     })
 
@@ -70,10 +65,11 @@ module.exports = async function getOtkaz(bot) {
     if (bdOtkazi && bdOtkazi.length > 0) {
         const otkazi = bdOtkazi.filter((item)=> new Date(item.dataValues.datestart) >= currentDate || new Date(item.dataValues.dateend <= currentDate))
         console.log("filterOtkaz: ", otkazi.length)
-        //console.log("projects: ", responseResults?.length)
+        console.log("projects: ", responseResults?.length)
 
         const newOtkaz = otkazi.map((item)=> {
             const res = responseResults.find((proj)=> proj.id === item.dataValues.projectId)
+            
             if (res) {
                 item
             }

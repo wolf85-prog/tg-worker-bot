@@ -2063,6 +2063,17 @@ bot.on('message', async (msg) => {
                 console.log("Отказы нет", otkazi)
             }
         }
+        
+        if (text === '/getdelworker') {
+            //получить все запуски сканирования отказов
+            const delWorker = await Worker.update({
+                deleted: null,
+                where: {
+                    deleted: true,
+                }
+            })
+            console.log("res: ", delWorker)
+        }
 
 //------------------------------------------------------------------------------------------------
 //обработка контактов
