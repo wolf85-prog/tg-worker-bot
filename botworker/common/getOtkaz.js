@@ -33,7 +33,7 @@ module.exports = async function getOtkaz(bot) {
             {
                 "timestamp": "created_time",
                 "created_time": {
-                    "after": "2024-01-30"
+                    "after": "2024-04-30"
                 }
             }
         });
