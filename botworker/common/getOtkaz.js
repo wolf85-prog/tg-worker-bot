@@ -69,7 +69,7 @@ module.exports = async function getOtkaz(bot) {
 
         const newOtkaz = otkazi.map((item)=> {
             const res = responseResults.find((proj)=> proj.id === item.dataValues.projectId)
-            
+            console.log("res: ", res)
             if (res) {
                 item
             }
