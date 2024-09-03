@@ -22,20 +22,6 @@ const { Op } = require('sequelize')
 module.exports = async function getOtkaz(bot) {
     console.log("ЗАПУСКАЮ СКАНИРОВАНИЕ ОТКАЗОВ СПЕЦИАЛИСТАМ...")
 
-    const currentDate = new Date()
-    //получить все запуски сканирования отказов
-    const bdOtkazi = await Canceled.findAll({
-        order: [
-            ['id', 'ASC'],
-        ],
-        where: {
-            cancel: false,
-            // datestart: {
-            //     [Op.gte]: currentDate,
-            // },
-        }
-    })
-
     let responseResults
 
     try {
@@ -63,6 +49,22 @@ module.exports = async function getOtkaz(bot) {
     } catch (error) {
         console.error(error.message)
     }
+
+    console.log("projects: ", responseResults)
+
+    const currentDate = new Date()
+    //получить все запуски сканирования отказов
+    const bdOtkazi = await Canceled.findAll({
+        order: [
+            ['id', 'ASC'],
+        ],
+        where: {
+            cancel: false,
+            // datestart: {
+            //     [Op.gte]: currentDate,
+            // },
+        }
+    })
 
 
     if (bdOtkazi && bdOtkazi.length > 0) {
