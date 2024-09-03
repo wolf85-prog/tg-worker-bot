@@ -31,14 +31,51 @@ module.exports = async function getOtkaz(bot) {
         }
     })
 
+    let responseResults
+
+    try {
+        //1
+        const response = await notion.databases.query({
+            database_id: databaseId,
+            //page_size: 30,
+            "filter": 
+            {
+                "timestamp": "created_time",
+                "created_time": {
+                    "after": "2024-01-30"
+                }
+            }
+        });
+
+        responseResults = response.results.map((page) => {
+            return {
+                id: page.id,
+                title: page.properties.Name.title[0]?.plain_text,
+                status: page.properties["Статус проекта"].select,
+            };
+        });
+
+    } catch (error) {
+        console.error(error.message)
+    }
+
+
     if (bdOtkazi && bdOtkazi.length > 0) {
         const otkazi = bdOtkazi.filter((item)=> new Date(item.dataValues.datestart) >= currentDate || new Date(item.dataValues.dateend <= currentDate))
         console.log("filterOtkaz: ", otkazi.length)
+        console.log("projects: ", responseResults?.length)
+
+        const newOtkaz = otkazi.map((item)=> {
+            const res = responseResults.find((proj)=> proj.id === item.dataValues.projectId)
+            if (res) {
+                item
+            }
+        })
 
         let j = 0
 
         if (otkazi && otkazi.length > 0) {
-            console.log("Отказы ", otkazi.length)
+            console.log("Отказы ", otkazi.length, newOtkaz.length)
             //otkazi.forEach(async (item, index)=> {
             while (j < otkazi.length) { 
                 let d = new Date()
