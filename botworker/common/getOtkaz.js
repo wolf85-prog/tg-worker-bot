@@ -68,19 +68,21 @@ module.exports = async function getOtkaz(bot) {
     if (bdOtkazi && bdOtkazi.length > 0) {
         const otkazi = bdOtkazi.filter((item)=> new Date(item.dataValues.datestart) >= currentDate || new Date(item.dataValues.dateend <= currentDate))
         console.log("filterOtkaz: ", otkazi.length)
-        console.log("projects: ", responseResults?.length)
+        //console.log("projects: ", responseResults?.length)
 
-        const newOtkaz = otkazi.map((item)=> {
-            const res = responseResults.find((proj)=> proj.id === item.dataValues.projectId)
-            if (res) {
-                item
-            }
-        })
+        // const newOtkaz = otkazi.map((item)=> {
+        //     const res = responseResults.find((proj)=> proj.id === item.dataValues.projectId)
+        //     if (res) {
+        //         item
+        //     }
+        // })
+
+        // console.log("Новые Отказы ", newOtkaz.length)
 
         let j = 0
 
         if (otkazi && otkazi.length > 0) {
-            console.log("Отказы ", otkazi.length, newOtkaz.length)
+            console.log("Отказы ", otkazi.length)
             //otkazi.forEach(async (item, index)=> {
             while (j < otkazi.length) { 
                 let d = new Date()
