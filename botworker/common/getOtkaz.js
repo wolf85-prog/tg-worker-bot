@@ -7,6 +7,9 @@ const getProjectName = require("./getProjectName");
 const getWorkerPretendent = require('./getWorkerPretendent')
 const sendMessageAdmin = require("./sendMessageAdmin");
 
+const notion = new Client({ auth: process.env.NOTION_API_KEY });
+const databaseWorkerId = process.env.NOTION_DATABASE_WORKERS_ID
+
 //socket.io
 const {io} = require("socket.io-client")
 const socketUrl = process.env.SOCKET_APP_URL
