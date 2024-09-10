@@ -134,6 +134,34 @@ const ProjectNew = sequelize.define('projectnew', {
     dateend: {type: DataTypes.STRING}, //конец
 })
 
+const Specialist = sequelize.define('specialist', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},  
+    fio: {type: DataTypes.STRING},
+    chatId: {type: DataTypes.STRING, unique: true},
+    phone: {type: DataTypes.STRING},
+    phone2: {type: DataTypes.STRING},
+    specialization: {type: DataTypes.STRING},  
+    city: {type: DataTypes.STRING},
+    skill: {type: DataTypes.STRING},
+    promoId: {type: DataTypes.INTEGER}, 
+    rank: {type: DataTypes.INTEGER}, 
+    merch: {type: DataTypes.STRING},
+    company: {type: DataTypes.STRING},
+    comteg: {type: DataTypes.STRING},
+    comteg2: {type: DataTypes.STRING},
+    comment: {type: DataTypes.TEXT}, 
+    comment2: {type: DataTypes.TEXT}, 
+    age: {type: DataTypes.STRING},
+    reyting: {type: DataTypes.STRING},
+    inn: {type: DataTypes.STRING}, 
+    passport: {type: DataTypes.TEXT},
+    profile: {type: DataTypes.STRING},
+    dogovor: {type: DataTypes.BOOLEAN}, 
+    samozanjatost: {type: DataTypes.BOOLEAN},
+    passportScan: {type: DataTypes.STRING},
+    email: {type: DataTypes.STRING}, 
+})
+
 module.exports = {
     UserBot, 
     Worker,
@@ -146,5 +174,6 @@ module.exports = {
     Speccash,
     Canceled,
     ProjectNew,
+    Specialist,
 }
 

@@ -2081,9 +2081,37 @@ bot.on('message', async (msg) => {
         }
 
         if (text === '/savespecdb') {
-            specNotion.map((item)=> {
-                console.log(item.id)
-            })
+
+            const worker = specNotion.map((page) => {
+                return {
+                    fio: page.properties.Name.title[0]?.plain_text,
+                    chatId: page.properties.Telegram.number,
+                    phone: page.properties.Phone.phone_number,
+                    phone2: page.properties["Phone 2"].phone_number,
+                    specialization: page.properties.Specialization.multi_select,  
+                    city: page.properties.City.rich_text[0]?.plain_text,
+                    skill: page.properties.Skill.multi_select,
+                    promoId: page.properties["Промокод ID"].number, 
+                    rank: page.properties["Ранг"].number, 
+                    merch: page.properties.Merch.multi_select,
+                    company: page.properties.Company.multi_select,
+                    comteg: page.properties["КомТег"].multi_select,
+                    comteg2: page.properties["КомТег 2"].multi_select,
+                    comment: page.properties["Комментарии"].rich_text[0]?.plain_text, 
+                    comment2: page.properties["Комментарии 2"].rich_text[0]?.plain_text,  
+                    age: page.properties.Age.date,
+                    reyting: page.properties["Рейтинг"].rich_text[0]?.plain_text,
+                    inn: page.properties["ИНН"].rich_text[0]?.plain_text, 
+                    passport: page.properties.Passport.rich_text[0]?.plain_text,
+                    profile: page.properties["Профиль"].files.length > 0 ? (page.properties["Профиль"]?.files[0].file ? page.properties["Профиль"]?.files[0].file.url : page.properties["Профиль"]?.files[0].external.url) : null,
+                    dogovor: page.properties["Договор"].select?.name,
+                    samozanjatost: page.properties["Самозанятость"].select?.name,
+                    passportScan: page.properties["Паспорт скан"]?.files.length > 0 ? (page.properties["Паспорт скан"]?.files[0].file ? page.properties["Паспорт скан"]?.files[0].file.url : page.properties["Паспорт скан"]?.files[0].external.url) : null,
+                    email: page.properties.Email.email, 
+                };
+            });
+
+            console.log("arr_worker: ", worker.length)
         }
 
 //------------------------------------------------------------------------------------------------
