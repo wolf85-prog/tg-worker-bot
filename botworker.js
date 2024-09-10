@@ -119,6 +119,7 @@ const credentials = {
 const httpsServer = https.createServer(credentials, app);
 
 const {specData} = require('./botworker/data/specData');
+const {specNotion} = require('./botworker/data/specNotion');
 const getWorkerChildren = require("./botworker/common/getWorkerChildren");
 const getWorkerChatId = require("./botworker/common/getWorkerChatId");
 const updatePretendentAlt = require("./botworker/common/updatePretendentAlt");
@@ -2077,6 +2078,12 @@ bot.on('message', async (msg) => {
                 }
             )
             console.log("res: ", delWorker)
+        }
+
+        if (text === '/savespecdb') {
+            specNotion.map((item)=> {
+                console.log(item.id)
+            })
         }
 
 //------------------------------------------------------------------------------------------------
