@@ -81,7 +81,7 @@ const statusMonitor = require('express-status-monitor');
 
 //подключение к БД PostreSQL
 const sequelize = require('./botworker/connections/db')
-const {UserBot, Message, Conversation, Worker, Pretendent, Projectcash, Smetacash, Canceled, ProjectNew} = require('./botworker/models/models');
+const {UserBot, Message, Conversation, Worker, Pretendent, Projectcash, Smetacash, Canceled, ProjectNew, Specialist} = require('./botworker/models/models');
 const addWorker = require("./botworker/common/addWorker");
 const getWorkerNotion = require("./botworker/common/getWorkerNotion");
 const addPassport = require("./botworker/common/addPassport");
@@ -2081,6 +2081,12 @@ bot.on('message', async (msg) => {
         }
 
         if (text === '/savespecdb') {
+            let arrList = []
+            specNotion.map((page1) => {
+                page1.properties.Specialization.multi_select.map(item=> {                   
+                    arrList.push(item.name)
+                })
+            });
 
             const worker = specNotion.map((page) => {
                 return {
@@ -2088,7 +2094,7 @@ bot.on('message', async (msg) => {
                     chatId: page.properties.Telegram.number,
                     phone: page.properties.Phone.phone_number,
                     phone2: page.properties["Phone 2"].phone_number,
-                    specialization: page.properties.Specialization.multi_select,  
+                    specialization: JSON.stringify(arrList),  
                     city: page.properties.City.rich_text[0]?.plain_text,
                     skill: page.properties.Skill.multi_select,
                     promoId: page.properties["Промокод ID"].number, 
@@ -2112,6 +2118,20 @@ bot.on('message', async (msg) => {
             });
 
             console.log("arr_worker: ", worker.length)
+
+
+            worker.map(async (user, index) => {      
+                setTimeout(async()=> { 
+                    console.log(index + " Пользовател: " + user + " сохранен!")
+
+                    //сохранение сообщения в базе данных wmessage
+                    await Specialist.create(message)
+
+                }, 2000 * ++index) 
+
+            })
+                
+
         }
 
 //------------------------------------------------------------------------------------------------
