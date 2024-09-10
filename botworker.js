@@ -2088,7 +2088,7 @@ bot.on('message', async (msg) => {
                 })
             });
 
-            const worker = specNotion.map((page) => {
+            const workers = specNotion.map((page) => {
                 return {
                     fio: page.properties.Name.title[0]?.plain_text,
                     chatId: page.properties.Telegram.number,
@@ -2120,14 +2120,14 @@ bot.on('message', async (msg) => {
             console.log("arr_worker: ", worker.length)
 
 
-            worker.map(async (user, index) => {      
+            workers.map(async (user, index) => {      
                 setTimeout(async()=> { 
                     console.log(index + " Пользовател: " + user + " сохранен!")
 
                     //сохранение сообщения в базе данных wmessage
-                    await Specialist.create(message)
+                    await Specialist.create(user)
 
-                }, 2000 * ++index) 
+                }, 500 * ++index) 
 
             })
                 
