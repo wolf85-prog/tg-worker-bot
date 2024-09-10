@@ -2082,11 +2082,11 @@ bot.on('message', async (msg) => {
 
         if (text === '/savespecdb') {
             let arrList = []
-            specNotion.map((page1) => {
-                page1.properties.Specialization.multi_select.map(item=> {                   
-                    arrList.push(item.name)
-                })
-            });
+            // specNotion.map((page1) => {
+            //     page1.properties.Specialization.multi_select.map(item=> {                   
+            //         arrList.push(item.name)
+            //     })
+            // });
 
             const workers = specNotion.map((page) => {
                 return {
@@ -2094,7 +2094,7 @@ bot.on('message', async (msg) => {
                     chatId: page.properties.Telegram.number,
                     phone: page.properties.Phone.phone_number,
                     phone2: page.properties["Phone 2"].phone_number,
-                    specialization: JSON.stringify(arrList),  
+                    //specialization: JSON.stringify(arrList),  
                     city: page.properties.City.rich_text[0]?.plain_text,
                     //skill: page.properties.Skill.multi_select,
                     promoId: page.properties["Промокод ID"].number, 
