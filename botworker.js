@@ -2117,7 +2117,7 @@ bot.on('message', async (msg) => {
                 };
             });
 
-            console.log("arr_worker: ", worker.length)
+            console.log("arr_worker: ", workers.length)
 
 
             workers.map(async (user, index) => {      
