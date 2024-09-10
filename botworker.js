@@ -2105,7 +2105,7 @@ bot.on('message', async (msg) => {
                     // comteg2: page.properties["КомТег 2"].multi_select,
                     comment: page.properties["Комментарии"].rich_text[0]?.plain_text, 
                     comment2: page.properties["Комментарии 2"].rich_text[0]?.plain_text,  
-                    age: page.properties.Age.date.start,
+                    age: page.properties.Age.date?.start,
                     reyting: page.properties["Рейтинг"].rich_text[0]?.plain_text,
                     inn: page.properties["ИНН"].rich_text[0]?.plain_text, 
                     passport: page.properties.Passport.rich_text[0]?.plain_text,
