@@ -3326,56 +3326,55 @@ const start = async () => {
             let i = 0;
 
             // повторить с интервалом 10 минут
-            let timerId = setInterval(async() => {
+            //let timerId = setInterval(async() => {
 
-                console.log("START GET PROJECTS ALL...")
-                const projects = await getProjectsAll()
-                //console.log(projects)
+                //console.log("START GET PROJECTS ALL...")
+                //const projects = await getProjectsAll()
 
-                await Projectcash.truncate();
+                // await Projectcash.truncate();
 
-                projects.map(async(project)=> {
-                    await Projectcash.create({ 
-                        id: project.id, 
-                        title: project.title, 
-                        dateStart: project.date_start, 
-                        dateEnd: project.date_end, 
-                        tgURLchat: project.tgURL_chat,
-                        manager: project.managerId,
-                        status: JSON.stringify(project.status), 
-                        specs: JSON.stringify(project.specs)  
-                    })
-                })
+                // projects.map(async(project)=> {
+                //     await Projectcash.create({ 
+                //         id: project.id, 
+                //         title: project.title, 
+                //         dateStart: project.date_start, 
+                //         dateEnd: project.date_end, 
+                //         tgURLchat: project.tgURL_chat,
+                //         manager: project.managerId,
+                //         status: JSON.stringify(project.status), 
+                //         specs: JSON.stringify(project.specs)  
+                //     })
+                // })
                 
                 //-----------------------------------------------------
 
-                console.log("START GET SMETA ALL...")
-                const smets = await getSmetaAll()
+                //console.log("START GET SMETA ALL...")
+                // const smets = await getSmetaAll()
 
-                //очистить таблицу
-                await Smetacash.truncate();
+                // //очистить таблицу
+                // await Smetacash.truncate();
                 
-                smets.map(async(smeta)=> {
-                    await Smetacash.create({ 
-                        id: smeta.id, 
-                        projectId: smeta.projectId, 
-                        title: smeta.title, 
-                        final: smeta.final,
-                        dop: JSON.stringify(smeta.dop)  
-                    })
-                })  
+                // smets.map(async(smeta)=> {
+                //     await Smetacash.create({ 
+                //         id: smeta.id, 
+                //         projectId: smeta.projectId, 
+                //         title: smeta.title, 
+                //         final: smeta.final,
+                //         dop: JSON.stringify(smeta.dop)  
+                //     })
+                // })  
 
                 //передаем данные о функции
-                console.log("send process W: ", 3)
-                socket.emit("sendProcess", {
-                    process: '3',
-                    data: true,
-                    interval: '10',
-                    time: 'M',
-                })
+                // console.log("send process W: ", 3)
+                // socket.emit("sendProcess", {
+                //     process: '3',
+                //     data: true,
+                //     interval: '10',
+                //     time: 'M',
+                // })
 
                 i++ // счетчик интервалов
-            }, 600000); //каждые 10 минут
+            //}, 600000); //каждые 10 минут
 //-----------------------------------------------------
             //перезапустить бота через 12 часов
             setTimeout(()=> {
@@ -3392,15 +3391,10 @@ const start = async () => {
 
             //запуск сканирования отказа специалисту
             let j = 1000
-            while(j) {
-                //try {   
-                    await getOtkaz(bot)
-                    j--
-                // } catch (error) {
-                //     //console.log(error.message)
-                //     console.error("Ошибка в системе отказов претендентам")
-                // }
-            }
+            // while(j) { 
+            //     await getOtkaz(bot)
+            //     j--
+            // }
         });
 
     } catch (error) {
