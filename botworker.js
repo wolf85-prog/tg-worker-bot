@@ -2108,7 +2108,7 @@ bot.on('message', async (msg) => {
                 })
 
                 let skillArr = []
-                page.properties.skill.multi_select.length > 0 && page.properties.skill.multi_select.map(item2=> { 
+                page.properties.Skill.multi_select.length > 0 && page.properties.Skill.multi_select.map(item2=> { 
                     const obj = {
                         name: item2.name,
                     }
