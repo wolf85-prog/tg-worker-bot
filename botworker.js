@@ -2108,12 +2108,12 @@ bot.on('message', async (msg) => {
                 })
 
                 let skillArr = []
-                page.properties.skill.multi_select.map(item2=> { 
+                page.properties.skill.multi_select.length > 0 && page.properties.skill.multi_select.map(item2=> { 
                     const obj = {
                         name: item2.name,
                     }
                     skillArr.push(obj) 
-                })
+                }) 
 
                 return {
                     fio: page.properties.Name.title[0]?.plain_text,
