@@ -2083,7 +2083,7 @@ bot.on('message', async (msg) => {
 
         if (text === '/savespecdb') {
 
-            const workers = specNotion.map((page) => {
+            const workers = specNotion.reverse().map((page) => {
                 let specArr = []
                 page.properties.Specialization.multi_select.map(item=> {                   
                     //arr.push({spec: item.name})
