@@ -2080,21 +2080,40 @@ bot.on('message', async (msg) => {
             console.log("res: ", delWorker)
         }
 
+
         if (text === '/savespecdb') {
-            let arrList = []
-            // specNotion.map((page1) => {
-            //     page1.properties.Specialization.multi_select.map(item=> {                   
-            //         arrList.push(item.name)
-            //     })
-            // });
 
             const workers = specNotion.map((page) => {
+                let specArr = []
+                page.properties.Specialization.multi_select.map(item=> {                   
+                    //arr.push({spec: item.name})
+                    specData.map((category)=> {
+                        category.models.map((work)=> {
+                            if (work.name === item.name){
+                                const obj = {
+                                    spec: item.name,
+                                    cat: category.icon,
+                                }
+                                specArr.push(obj)
+                            }
+                        })
+                        if (category.icon === item.name) {
+                            const obj = {
+                                spec: item.name,
+                                cat: category.icon,
+                            }
+                            specArr.push(obj) 
+                        }
+                    })
+                
+                })
+
                 return {
                     fio: page.properties.Name.title[0]?.plain_text,
                     chatId: page.properties.Telegram.number,
                     phone: page.properties.Phone.phone_number,
                     phone2: page.properties["Phone 2"].phone_number,
-                    //specialization: JSON.stringify(arrList),  
+                    specialization: JSON.stringify(specArr),  
                     city: page.properties.City.rich_text[0]?.plain_text,
                     //skill: page.properties.Skill.multi_select,
                     promoId: page.properties["Промокод ID"].number, 
@@ -2122,7 +2141,7 @@ bot.on('message', async (msg) => {
 
             workers.map(async (user, index) => {      
                 setTimeout(async()=> { 
-                    console.log(index + " Пользовател: " + user + " сохранен!")
+                    console.log(index + " Пользовател: " + user.chatId + " сохранен!")
 
                     //сохранение сообщения в базе данных wmessage
                     await Specialist.create(user)
