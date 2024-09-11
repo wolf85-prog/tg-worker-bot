@@ -2104,8 +2104,15 @@ bot.on('message', async (msg) => {
                             }
                             specArr.push(obj) 
                         }
-                    })
-                
+                    })              
+                })
+
+                let skillArr = []
+                page.properties.skill.multi_select.map(item2=> { 
+                    const obj = {
+                        name: item2.name,
+                    }
+                    skillArr.push(obj) 
                 })
 
                 return {
@@ -2115,7 +2122,7 @@ bot.on('message', async (msg) => {
                     phone2: page.properties["Phone 2"].phone_number,
                     specialization: JSON.stringify(specArr),  
                     city: page.properties.City.rich_text[0]?.plain_text,
-                    //skill: page.properties.Skill.multi_select,
+                    skill: JSON.stringify(skillArr), 
                     promoId: page.properties["Промокод ID"].number, 
                     rank: page.properties["Ранг"].number, 
                     // merch: page.properties.Merch.multi_select,
