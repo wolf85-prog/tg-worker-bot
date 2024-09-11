@@ -2108,11 +2108,11 @@ bot.on('message', async (msg) => {
                     age: page.properties.Age.date?.start,
                     reyting: page.properties["Рейтинг"].rich_text[0]?.plain_text,
                     inn: page.properties["ИНН"].rich_text[0]?.plain_text, 
-                    passport: page.properties.Passport.rich_text[0]?.plain_text,
+                    //passport: page.properties.Passport.rich_text[0]?.plain_text,
                     profile: page.properties["Профиль"].files.length > 0 ? (page.properties["Профиль"]?.files[0].file ? page.properties["Профиль"]?.files[0].file.url : page.properties["Профиль"]?.files[0].external.url) : null,
-                    dogovor: page.properties["Договор"].select?.name,
-                    samozanjatost: page.properties["Самозанятость"].select?.name,
-                    passportScan: page.properties["Паспорт скан"]?.files.length > 0 ? (page.properties["Паспорт скан"]?.files[0].file ? page.properties["Паспорт скан"]?.files[0].file.url : page.properties["Паспорт скан"]?.files[0].external.url) : null,
+                    dogovor: page.properties["Договор"].select?.name ? true : false,
+                    samozanjatost: page.properties["Самозанятость"].select?.name ? true : false,
+                    //passportScan: page.properties["Паспорт скан"]?.files.length > 0 ? (page.properties["Паспорт скан"]?.files[0].file ? page.properties["Паспорт скан"]?.files[0].file.url : page.properties["Паспорт скан"]?.files[0].external.url) : null,
                     email: page.properties.Email.email, 
                 };
             });
