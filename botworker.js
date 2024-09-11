@@ -2115,6 +2115,38 @@ bot.on('message', async (msg) => {
                     skillArr.push(obj) 
                 }) 
 
+                let merchArr = []
+                page.properties.Merch.multi_select.length > 0 && page.properties.Merch.multi_select.map(item2=> { 
+                    const obj = {
+                        name: item2.name,
+                    }
+                    merchArr.push(obj) 
+                })
+
+                let companyArr = []
+                page.properties.Company.multi_select.length > 0 && page.properties.Company.multi_select.map(item2=> { 
+                    const obj = {
+                        name: item2.name,
+                    }
+                    companyArr.push(obj) 
+                })
+
+                let comtegArr = []
+                page.properties["КомТег"].multi_select.length > 0 && page.properties["КомТег"].multi_select.map(item2=> { 
+                    const obj = {
+                        name: item2.name,
+                    }
+                    comtegArr.push(obj) 
+                })
+
+                let comtegArr2 = []
+                page.properties["КомТег 2"].multi_select.length > 0 && page.properties["КомТег 2"].multi_select.map(item2=> { 
+                    const obj = {
+                        name: item2.name,
+                    }
+                    comtegArr2.push(obj) 
+                })
+
                 return {
                     fio: page.properties.Name.title[0]?.plain_text,
                     chatId: page.properties.Telegram.number,
@@ -2125,20 +2157,20 @@ bot.on('message', async (msg) => {
                     skill: JSON.stringify(skillArr), 
                     promoId: page.properties["Промокод ID"].number, 
                     rank: page.properties["Ранг"].number, 
-                    // merch: page.properties.Merch.multi_select,
-                    // company: page.properties.Company.multi_select,
-                    // comteg: page.properties["КомТег"].multi_select,
-                    // comteg2: page.properties["КомТег 2"].multi_select,
+                    merch: JSON.stringify(merchArr), 
+                    company: JSON.stringify(companyArr), 
+                    comteg: JSON.stringify(comtegArr), 
+                    comteg2: JSON.stringify(comtegArr2), 
                     comment: page.properties["Комментарии"].rich_text[0]?.plain_text, 
                     comment2: page.properties["Комментарии 2"].rich_text[0]?.plain_text,  
                     age: page.properties.Age.date?.start,
                     reyting: page.properties["Рейтинг"].rich_text[0]?.plain_text,
                     inn: page.properties["ИНН"].rich_text[0]?.plain_text, 
-                    //passport: page.properties.Passport.rich_text[0]?.plain_text,
+                    passport: page.properties.Passport.rich_text[0]?.plain_text,
                     profile: page.properties["Профиль"].files.length > 0 ? (page.properties["Профиль"]?.files[0].file ? page.properties["Профиль"]?.files[0].file.url : page.properties["Профиль"]?.files[0].external.url) : null,
                     dogovor: page.properties["Договор"].select?.name ? true : false,
                     samozanjatost: page.properties["Самозанятость"].select?.name ? true : false,
-                    //passportScan: page.properties["Паспорт скан"]?.files.length > 0 ? (page.properties["Паспорт скан"]?.files[0].file ? page.properties["Паспорт скан"]?.files[0].file.url : page.properties["Паспорт скан"]?.files[0].external.url) : null,
+                    passportScan: page.properties["Паспорт скан"]?.files.length > 0 ? (page.properties["Паспорт скан"]?.files[0].file ? page.properties["Паспорт скан"]?.files[0].file.url : page.properties["Паспорт скан"]?.files[0].external.url) : null,
                     email: page.properties.Email.email, 
                 };
             });
