@@ -2104,7 +2104,31 @@ bot.on('message', async (msg) => {
                             }
                             specArr.push(obj) 
                         }
-                    })              
+                    })  
+                    
+                    if (item.name === 'Blacklist') {
+                        const obj = {
+                            spec: item.name,
+                            cat: 'Blacklist',
+                        }
+                        specArr.push(obj) 
+                    }
+
+                    if (item.name === '+18') {
+                        const obj = {
+                            spec: item.name,
+                            cat: '+18',
+                        }
+                        specArr.push(obj) 
+                    }
+
+                    if (item.name === 'Менеджер «U.L.E.Y»') {
+                        const obj = {
+                            spec: item.name,
+                            cat: 'Менеджер',
+                        }
+                        specArr.push(obj) 
+                    }
                 })
 
                 let skillArr = []
