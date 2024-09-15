@@ -1,5 +1,4 @@
 const {Worker, Specialist} = require('../models/models')
-const ApiError = require('../error/ApiError')
 
 require("dotenv").config();
 
