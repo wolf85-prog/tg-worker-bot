@@ -2574,12 +2574,15 @@ bot.on('message', async (msg) => {
                     console.log(fio, chatId, age, phone2, specArr2, city2, friend2, urlAvatar)
 
                     //сохраниь в бд ноушен
-                    const notion = await getWorkerNotion(chatId)
-                    console.log("notion specialist: ", notion)
+                    //const notion = await getWorkerNotion(chatId)
+                    //const notion = await Specilist.findOne()
                     
-                    if (notion.length === 0) {
+                    let exist = await Specialist.findOne( {where: {chatId: chatId}} )
+            
+                    
+                    if (!exist) {
                         //добавить специалиста
-                        const workerId = await addWorker(fio, chatId, age, specArr2, city2, friend2, urlAvatar)
+                        const workerId = await addWorkerDB(fio, chatId, age, specArr2, city2, friend2, urlAvatar)
                         console.log('Специалист успешно добавлен в Notion!', workerId)
 
                         //добавить аватар
