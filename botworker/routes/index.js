@@ -7,6 +7,8 @@ const blockController = require('../controllers/blockController')
 const projectController = require('../controllers/projectController')
 const smetaController = require('../controllers/smetaController')
 
+const { getSpecialist, getSpecCount, editSpecialist, getSpecialistId } = require('../controllers/specialistController')
+
 //get WORKERS
 router.get("/workers", workerController.workers);
 router.get("/workers100/:id", workerController.workers100);
@@ -72,5 +74,13 @@ router.get('/blockssmeta/:id', blockController.blocksSmetaId); //получит�
 
 //get DATABASE (специалисты)
 router.get('/dbsmeta/:id', databaseController.dbSmetaId); //получить таблицу Персональные сметы
+
+
+
+//----------------- Специалисты ---------------------------------
+router.get('/specialist/get', getSpecialist)
+router.get('/specialist/count/get/:count/:prev', getSpecCount) //еще
+router.patch('/specialist/update/:id', editSpecialist)
+router.get("/specialist/:id", getSpecialistId);
 
 module.exports = router

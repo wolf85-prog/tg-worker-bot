@@ -81,7 +81,8 @@ const statusMonitor = require('express-status-monitor');
 
 //подключение к БД PostreSQL
 const sequelize = require('./botworker/connections/db')
-const {UserBot, Message, Conversation, Worker, Pretendent, Projectcash, Smetacash, Canceled, ProjectNew, Specialist} = require('./botworker/models/models');
+const {UserBot, Message, Conversation, Worker, Pretendent, 
+    Projectcash, Smetacash, Canceled, ProjectNew, Specialist} = require('./botworker/models/models');
 const addWorker = require("./botworker/common/addWorker");
 const getWorkerNotion = require("./botworker/common/getWorkerNotion");
 const addPassport = require("./botworker/common/addPassport");
@@ -500,7 +501,9 @@ bot.on('message', async (msg) => {
             }
 
             //поиск пользователя в notion
-            const res = await getWorkerNotion(chatId)
+            //const res = await getWorkerNotion(chatId)
+            const res = await Specialist.findOne({where:{chatId: chatId.toString()}})
+            
             //console.log('res: ', res)
             let specArr = []
 
