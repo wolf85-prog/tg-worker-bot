@@ -2147,13 +2147,29 @@ bot.on('message', async (msg) => {
                     comtegArr2.push(obj) 
                 })
 
+                let comment = []
+                page.properties["Комментарии"].rich_text.length > 0 && page.properties["Комментарии"].rich_text.map(item2=> { 
+                    const obj = {
+                        content: item2.plain_text,
+                    }
+                    comment.push(obj) 
+                })
+
+                let comment2 = []
+                page.properties["Комментарии 2"].rich_text.length > 0 && page.properties["Комментарии 2"].rich_text.map(item2=> { 
+                    const obj = {
+                        content: item2.plain_text,
+                    }
+                    comment2.push(obj) 
+                })
+
                 return {
                     fio: page.properties.Name.title[0]?.plain_text,
                     chatId: page.properties.Telegram.number,
                     phone: page.properties.Phone.phone_number,
                     phone2: page.properties["Phone 2"].phone_number,
                     specialization: JSON.stringify(specArr),  
-                    city: page.properties.City.rich_text[0]?.plain_text,
+                    city: page.properties["Город"].multi_select[0]?.name,
                     skill: JSON.stringify(skillArr), 
                     promoId: page.properties["Промокод ID"].number, 
                     rank: page.properties["Ранг"].number, 
@@ -2161,8 +2177,8 @@ bot.on('message', async (msg) => {
                     company: JSON.stringify(companyArr), 
                     comteg: JSON.stringify(comtegArr), 
                     comteg2: JSON.stringify(comtegArr2), 
-                    comment: page.properties["Комментарии"].rich_text[0]?.plain_text, 
-                    comment2: page.properties["Комментарии 2"].rich_text[0]?.plain_text,  
+                    comment: JSON.stringify(comment),
+                    comment2: JSON.stringify(comment2),
                     age: page.properties.Age.date?.start,
                     reyting: page.properties["Рейтинг"].rich_text[0]?.plain_text,
                     inn: page.properties["ИНН"].rich_text[0]?.plain_text, 
