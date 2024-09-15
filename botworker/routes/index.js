@@ -8,8 +8,6 @@ const projectController = require('../controllers/projectController')
 const smetaController = require('../controllers/smetaController')
 const specialistController = require('../controllers/specialistController')
 
-//const { getSpecialist, getSpecCount, editSpecialist, getSpecialistId } = require('../controllers/specialistController')
-
 //get WORKERS
 router.get("/workers", workerController.workers);
 router.get("/workers100/:id", workerController.workers100);
@@ -82,6 +80,5 @@ router.get('/dbsmeta/:id', databaseController.dbSmetaId); //получить т�
 router.get('/specialist/get', specialistController.getSpecialist)
 router.get('/specialist/count/get/:count/:prev', specialistController.getSpecCount) //еще
 router.patch('/specialist/update/:id', specialistController.editSpecialist)
-router.get('/specialist/:id', specialistController.getSpecialistId);
 
 module.exports = router
