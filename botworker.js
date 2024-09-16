@@ -507,9 +507,9 @@ bot.on('message', async (msg) => {
             //console.log('res: ', res)
             let specArr = []
 
-            if (res.length > 0) {
+            if (res) {
                 try {
-                    res[0].spec.map((item) => {
+                    res.dataValues.spec.map((item) => {
                         specData.map((category)=> {
                             category.models.map((work)=> {
                                 if (work.name === item.name){
@@ -559,7 +559,7 @@ bot.on('message', async (msg) => {
                     console.log(error.message)
                 }
             } else {
-                console.log("Специалист в ноушене не найден!")
+                console.log("Специалист в БД не найден!")
             }
 
             //создание чата специалиста
