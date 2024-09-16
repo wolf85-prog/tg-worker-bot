@@ -509,7 +509,7 @@ bot.on('message', async (msg) => {
 
             if (res) {
                 try {
-                    res.dataValues.spec.map((item) => {
+                    res.dataValues.specialization.map((item) => {
                         specData.map((category)=> {
                             category.models.map((work)=> {
                                 if (work.name === item.name){
