@@ -209,31 +209,43 @@ ${worklist.map(item =>' - ' + item.spec).join('\n')}`
             console.log("Начинаю сохранять данные в ноушене...", user?.id)
 
             //сохраниь в бд ноушен
-            const res = await getWorkerNotion(user?.id)
+            const res = await Specialist.findOne({where:{chatId: chatId.toString()}}) //await getWorkerNotion(user?.id)
             
             setTimeout(async()=> {
                 let arrSpec =[]
-                const oldlist = res[0].spec
+                const oldlist = JSON.parse(res.dataValues.specialization)
                 //console.log("Oldlist: ", oldlist)
 
                 //массив специалистов
-                oldlist.forEach(item => {               
-                    const obj = {
-                        name: item.name,
-                    }
-                    arrSpec.push(obj)
-                });
+                // oldlist.forEach(item => {               
+                //     const obj = {
+                //         name: item.name,
+                //     }
+                //     arrSpec.push(obj)
+                // });
 
-                worklist.forEach(item => {               
-                    const obj = {
-                        name: item.spec,
-                    }
-                    arrSpec.push(obj)
-                });
+               
+
+                // worklist.forEach(item => {               
+                //     const obj = {
+                //         name: item.spec,
+                //     }
+                //     arrSpec.push(obj)
+                // });
+
+                arrSpec = [...oldlist, ...worklist]
 
                 //console.log("arrSpec: ", arrSpec)
 
-                await updateWorker(res[0].id, arrSpec)
+                //await updateWorker(res[0].id, arrSpec)
+
+                const res = await Specialist.update({ 
+                    specialization: JSON.stringify(arrSpec)  
+                },
+                { 
+                    where: {id: res.id} 
+                }) 
+
             }, 2000)
             
  
@@ -502,65 +514,7 @@ bot.on('message', async (msg) => {
 
             //поиск пользователя в notion
             //const res = await getWorkerNotion(chatId)
-            const res = await Specialist.findOne({where:{chatId: chatId.toString()}})
-            
-            //console.log('res: ', res)
-            let specArr = []
 
-            if (res) {
-                try {
-                    res.dataValues.specialization.map((item) => {
-                        specData.map((category)=> {
-                            category.models.map((work)=> {
-                                if (work.name === item.name){
-                                    const obj = {
-                                        spec: item.name,
-                                        cat: category.icon,
-                                    }
-                                    specArr.push(obj)
-                                }
-                            })
-                            if (category.icon === item.name) {
-                                const obj = {
-                                    spec: item.name,
-                                    cat: category.icon,
-                                }
-                                specArr.push(obj) 
-                            }
-                        })
-                    })
-
-                    //добавление специалиста в БД
-                    const user = await Worker.findOne({where:{chatId: chatId.toString()}})
-                    if (!user) {
-                        await Worker.create({ 
-                            userfamily: res[0].fio.split(' ')[0], 
-                            username: res[0].fio.split(' ')[1],
-                            phone: res[0].phone, 
-                            dateborn: res[0].age ? res[0].age.start.split('-')[0] : '',
-                            city: res[0].city, 
-                            //companys: companys2,
-                            //stag: stag2,                      
-                            worklist: JSON.stringify(specArr.length > 0 ? specArr : [{
-                                spec: 'Вне категории',
-                                cat: 'NoTag'
-                            }]),
-                            chatId: chatId,
-                            promoId: 0,
-                            from: 'Notion',
-                            avatar: '', 
-                        })
-                        console.log('Пользователь добавлен в БД Workers из Ноушен')
-                    } else {
-                        console.log('Отмена добавления в БД. Пользователь уже существует')
-                    }
-
-                } catch (error) {
-                    console.log(error.message)
-                }
-            } else {
-                console.log("Специалист в БД не найден!")
-            }
 
             //создание чата специалиста
             try {
@@ -654,23 +608,15 @@ bot.on('message', async (msg) => {
 
             //регистрация как Неизвестный специалист после отсутствия в бд
             setTimeout(async()=> {
-                const user = await Worker.findOne({where:{chatId: chatId.toString()}})
+                const user = await Specialist.findOne({where:{chatId: chatId.toString()}})
                 if (!user) {
-                    await Worker.create({ 
-                        userfamily: 'Неизвестный', 
-                        username: 'специалист',  
-                        phone: '', 
-                        dateborn: '',
-                        city: '', 
-                        companys: '',
-                        stag: '',                      
-                        worklist: JSON.stringify([{
+                    await Specialist.create({ 
+                        fio: 'Неизвестный специалист',                   
+                        specialization: JSON.stringify([{
                             spec: 'Вне категории',
                             cat: 'NoTag'
                         }]),
                         chatId: chatId,
-                        promoId: '',
-                        from: '' 
                     })
                     console.log('Пользователь добавлен в БД')
                 } else {
@@ -2485,54 +2431,6 @@ bot.on('message', async (msg) => {
                     }));
                 }
 
-                try {
-                    //добавление специалиста в БД
-                    const user = await Specialist.findOne({where:{chatId: chatId.toString()}})
-                    if (!user) {
-                        const res = await Specialist.create({
-                            //userfamily: workerFam, 
-                            fio: workerName2, 
-                            //phone: phone2, 
-                            age: dateBorn,
-                            city: city2, 
-                            //newcity: city2, 
-                            //companys: companys2,
-                            //stag: stag2,                      
-                            //worklist: JSON.stringify(specArr),
-                            specialization: JSON.stringify(specArr),
-                            chatId: chatId,
-                            promoId: friend2,
-                            //from: 'App'
-                        })
-                        console.log('Пользователь добавлен в БД')
-                    } else {
-                        //обновление специалиста, если существует в бд
-                        console.log('Отмена добавления в БД. Пользователь уже существует')
-                        const res = await Specialist.update({ 
-                            //userfamily: workerFam, 
-                            fio: workerName2, 
-                            //phone: phone2, 
-                            age: dateBorn,
-                            city: city2,
-                            //worklist: JSON.stringify(specArr),
-                            specialization: JSON.stringify(specArr),
-                            chatId: chatId,
-                            promoId: friend2,
-                            //from: 'App'
-                        },
-                        { 
-                            where: {chatId: chatId} 
-                        })
-                        if (res) {
-                           console.log("Специалист обновлен! ", chatId) 
-                        }else {
-                            console.log("Ошибка обновления! ", chatId) 
-                        }
-                    }
-                    
-
-                    const fio = workerName2 //workerFam + ' '+ workerName2
-                    const age = `${dateBorn}-01-01`
 
                     const currentMonth = new Date().getMonth() + 1
                     let urlAvatar = ''
@@ -2574,27 +2472,69 @@ bot.on('message', async (msg) => {
                         urlAvatar = 'https://proj.uley.team/upload/2024-06-06T07:54:44.499Z.jpg'
                     }
 
+                try {
+                    //добавление специалиста в БД
+                    const user = await Specialist.findOne({where:{chatId: chatId.toString()}})
+                    if (!user) {
+                        const res = await Specialist.create({
+                            fio: workerName2, 
+                            //phone: phone2, 
+                            age: `${dateBorn}-01-01`,
+                            city: city2,                  
+                            //worklist: JSON.stringify(specArr),
+                            specialization: JSON.stringify(specArr),
+                            chatId: chatId,
+                            promoId: friend2,
+                            profile: urlAvatar,
+                        })
+                        console.log('Пользователь добавлен в БД')
+                    } else {
+                        //обновление специалиста, если существует в бд
+                        console.log('Отмена добавления в БД. Пользователь уже существует')
+                        const res = await Specialist.update({ 
+                            fio: workerName2, 
+                            //phone: phone2, 
+                            age: dateBorn+'-01-01',
+                            city: city2,
+                            //worklist: JSON.stringify(specArr),
+                            specialization: JSON.stringify(specArr),
+                            chatId: chatId,
+                            promoId: friend2,
+                            profile: urlAvatar,
+                        },
+                        { 
+                            where: {chatId: chatId} 
+                        })
+                        if (res) {
+                           console.log("Специалист обновлен! ", chatId) 
+                        }else {
+                            console.log("Ошибка обновления! ", chatId) 
+                        }
+                    }
+                    
 
-                    console.log(fio, chatId, age, phone2, specArr2, city2, friend2, urlAvatar)
+                    
+
+
+                    //console.log(fio, chatId, age, phone2, specArr2, city2, friend2, urlAvatar)
 
                     //сохраниь в бд ноушен
                     //const notion = await getWorkerNotion(chatId)
                     //const notion = await Specilist.findOne()
                     
-                    let exist = await Specialist.findOne( {where: {chatId: chatId}} )
-            
+                    //let exist = await Specialist.findOne( {where: {chatId: chatId}} )
                     
-                    if (!exist) {
-                        //добавить специалиста
-                        const workerId = await addWorkerDB(fio, chatId, age, specArr2, city2, friend2, urlAvatar)
-                        console.log('Специалист успешно добавлен в Notion!', workerId)
+                    // if (!exist) {
+                    //     //добавить специалиста
+                    //     const workerId = await addWorkerDB(fio, chatId, age, specArr2, city2, friend2, urlAvatar)
+                    //     console.log('Специалист успешно добавлен в Notion!', workerId)
 
-                        //добавить аватар
-                        //const res = await addAvatar(workerId, urlAvatar)
-                        //console.log("res upload avatar: ", res)
-                    } else {
-                        console.log('Специалист уже существует в Notion!')
-                    }
+                    //     //добавить аватар
+                    //     //const res = await addAvatar(workerId, urlAvatar)
+                    //     //console.log("res upload avatar: ", res)
+                    // } else {
+                    //     console.log('Специалист уже существует в Notion!')
+                    // }
 
                     //очистить переменные
                     console.log("Очищаю переменные...")
@@ -2607,7 +2547,7 @@ bot.on('message', async (msg) => {
  
                     console.log('Специалист успешно добавлен в БД! Worker: ')
 
-                    const worker = await Worker.findOne({where:{chatId: chatId.toString()}})
+                    const worker = await Specialist.findOne({where:{chatId: chatId.toString()}})
                     console.log("worker great: ", worker)
                     if (!worker.dataValues.great) {
                         setTimeout(async()=> {
@@ -2629,7 +2569,7 @@ bot.on('message', async (msg) => {
                                 isBot: true,
                             })
 
-                            await Worker.update({ 
+                            await Specialist.update({ 
                                 great: true
                             },
                             {
@@ -2709,28 +2649,21 @@ bot.on('message', async (msg) => {
                 }
 
                 //добавление пользователя в БД WORKERS
-                const userW = await Worker.findOne({where:{chatId: chatId.toString()}})
+                const userW = await Specialist.findOne({where:{chatId: chatId.toString()}})
                 if (!userW) {
-                    await Worker.create({ 
-                        username: firstname, 
-                        userfamily: lastname, 
+                    await Specialist.create({ 
+                        fio: lastname + ' ' + firstname, 
                         chatId: chatId, 
-                        worklist: JSON.stringify([{
+                        specialization: JSON.stringify([{
                             spec: 'Вне категории',
                             cat: 'NoTag'
                         }]),
                         promoId: 0,
-                        from: 'Bot',
                         avatar: ''
                     })
                     console.log('Пользователь добавлен в БД Workers')
                 } else {
                     console.log('Отмена операции! Пользователь уже существует в Workers')
-                    // await Worker.update({ username: username }, {
-                    //     where: {
-                    //       chatId: chatId.toString(),
-                    //     },
-                    // });
                 }
 
                 //приветствие
@@ -2764,39 +2697,39 @@ bot.on('message', async (msg) => {
                         hello = 'Добрый вечер' //18-0
                     }
 
-                    const nameNotion = await getWorkerNotion(chatId)
+                    // const nameNotion = await getWorkerNotion(chatId)
 
-                    //ответ бота
-                    //console.log(`${hello}, ${firstname}`)
-                    let hello_text = ''
-                    if (nameNotion) {
-                        if (nameNotion[0].fio.indexOf(' ') === -1)  {
-                            hello_text = `${hello}, ${nameNotion[0].fio}.`
-                        } else {
-                            hello_text = `${hello}, ${nameNotion[0].fio.split(' ')[1]}.`
-                        }
+                    // //ответ бота
+                    // //console.log(`${hello}, ${firstname}`)
+                    // let hello_text = ''
+                    // if (nameNotion) {
+                    //     if (nameNotion[0].fio.indexOf(' ') === -1)  {
+                    //         hello_text = `${hello}, ${nameNotion[0].fio}.`
+                    //     } else {
+                    //         hello_text = `${hello}, ${nameNotion[0].fio.split(' ')[1]}.`
+                    //     }
                         
-                    } else {
-                        hello_text = `${hello}.`
+                    // } else {
+                    //     hello_text = `${hello}.`
                         
-                    }
+                    // }
                     
-                    const res = await bot.sendMessage(chatId, hello_text)
+                    // const res = await bot.sendMessage(chatId, hello_text)
 
-                    setTimeout(async()=> {
-                        // сохранить отправленное боту сообщение пользователя в БД
-                        const convId = await sendMessageAdmin(hello_text, 'text', chatId, res.message_id, null, false)
+                    // setTimeout(async()=> {
+                    //     // сохранить отправленное боту сообщение пользователя в БД
+                    //     const convId = await sendMessageAdmin(hello_text, 'text', chatId, res.message_id, null, false)
 
-                        socket.emit("sendAdminSpec", {
-                            senderId: chatTelegramId,
-                            receiverId: chatId,
-                            text: hello_text,
-                            type: 'text',
-                            convId: convId,
-                            messageId: res.message_id,
-                            isBot: false,
-                        })
-                    }, 3000)
+                    //     socket.emit("sendAdminSpec", {
+                    //         senderId: chatTelegramId,
+                    //         receiverId: chatId,
+                    //         text: hello_text,
+                    //         type: 'text',
+                    //         convId: convId,
+                    //         messageId: res.message_id,
+                    //         isBot: false,
+                    //     })
+                    // }, 3000)
                     
                         
                 }
