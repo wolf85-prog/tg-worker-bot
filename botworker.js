@@ -2805,6 +2805,7 @@ bot.on('message', async (msg) => {
             messageId: messageId,
         })  
 
+
         //специалист ID Notion
         //const workerId = await getWorkerChatId(chatId)
 
@@ -3008,20 +3009,20 @@ bot.on('message', async (msg) => {
 
 
             //отправить сообщение в админ-панель
-            // const text = 'Заявка принята! Мы свяжемся с вами в ближайшее время.'
+            const text = 'Заявка принята! Мы свяжемся с вами в ближайшее время.'
             
-            // const convId = await sendMessageAdmin(text, "text", chatId, messageId, null, false)
+            const convId2 = await sendMessageAdmin(text, "text", chatId, messageId, null, false)
             
-            // // Подключаемся к серверу socket
-            // socket.emit("sendAdminSpec", {
-            //      senderId: chatTelegramId,
-            //      receiverId: chatId,
-            //      text: text,
-            //      convId: convId,
-            //      messageId: messageId,
-            // })                        
+            // Подключаемся к серверу socket
+            socket.emit("sendAdminSpec", {
+                 senderId: chatTelegramId,
+                 receiverId: chatId,
+                 text: text,
+                 convId: convId2,
+                 messageId: messageId,
+            })                        
              
-            // return bot.sendMessage(chatId, text)
+            return bot.sendMessage(chatId, text)
         //} 
 
         // if (exist2[exist2.length-1].dataValues.otclick > 1) {
@@ -3039,6 +3040,8 @@ bot.on('message', async (msg) => {
         //     })
         //     return bot.sendMessage(chatId, 'Вы ' + exist2[exist2.length-1].dataValues.otclick + '-й раз откликнулись на заявку')
         // }       
+
+        
     }
 //----------------------------------------------------------------
     //нажатие на кнопку "Отклонить"
