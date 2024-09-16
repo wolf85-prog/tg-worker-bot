@@ -2487,37 +2487,38 @@ bot.on('message', async (msg) => {
 
                 try {
                     //добавление специалиста в БД
-                    const user = await Worker.findOne({where:{chatId: chatId.toString()}})
+                    const user = await Specialist.findOne({where:{chatId: chatId.toString()}})
                     if (!user) {
-                        const res = await Worker.create({
+                        const res = await Specialist.create({
                             //userfamily: workerFam, 
-                            username: workerName2, 
+                            fio: workerName2, 
                             //phone: phone2, 
-                            dateborn: dateBorn,
+                            age: dateBorn,
                             city: city2, 
-                            newcity: city2, 
+                            //newcity: city2, 
                             //companys: companys2,
                             //stag: stag2,                      
-                            worklist: JSON.stringify(specArr),
+                            //worklist: JSON.stringify(specArr),
+                            specialization: JSON.stringify(specArr),
                             chatId: chatId,
                             promoId: friend2,
-                            from: 'App'
+                            //from: 'App'
                         })
                         console.log('Пользователь добавлен в БД')
                     } else {
                         //обновление специалиста, если существует в бд
                         console.log('Отмена добавления в БД. Пользователь уже существует')
-                        const res = await Worker.update({ 
+                        const res = await Specialist.update({ 
                             //userfamily: workerFam, 
-                            username: workerName2, 
+                            fio: workerName2, 
                             //phone: phone2, 
-                            dateborn: dateBorn,
+                            age: dateBorn,
                             city: city2,
-                            newcity: city2,
-                            worklist: JSON.stringify(specArr),
+                            //worklist: JSON.stringify(specArr),
+                            specialization: JSON.stringify(specArr),
                             chatId: chatId,
                             promoId: friend2,
-                            from: 'App'
+                            //from: 'App'
                         },
                         { 
                             where: {chatId: chatId} 
