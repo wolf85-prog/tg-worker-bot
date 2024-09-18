@@ -13,7 +13,7 @@ const bot = new TelegramBot(token, {
 });
 
 // web-приложение
-const webAppUrl = process.env.WEB_APP_URL;
+const webAppUrl = process.env.WEB_APP_URL + '/profile';
 const botApiUrl = process.env.REACT_APP_API_URL
 const webAppUrlPas = process.env.WEB_APP_URL + '/add-passport';
 
