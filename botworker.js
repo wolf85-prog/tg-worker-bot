@@ -81,7 +81,8 @@ const statusMonitor = require('express-status-monitor');
 
 //подключение к БД PostreSQL
 const sequelize = require('./botworker/connections/db')
-const {UserBot, Message, Conversation, Worker, Pretendent, Projectcash, Smetacash, Canceled, ProjectNew, Specialist} = require('./botworker/models/models');
+const {UserBot, Message, Conversation, Worker, Pretendent, 
+    Projectcash, Smetacash, Canceled, ProjectNew, Specialist} = require('./botworker/models/models');
 const addWorker = require("./botworker/common/addWorker");
 const getWorkerNotion = require("./botworker/common/getWorkerNotion");
 const addPassport = require("./botworker/common/addPassport");
@@ -208,31 +209,43 @@ ${worklist.map(item =>' - ' + item.spec).join('\n')}`
             console.log("Начинаю сохранять данные в ноушене...", user?.id)
 
             //сохраниь в бд ноушен
-            const res = await getWorkerNotion(user?.id)
+            const res = await Specialist.findOne({where:{chatId: chatId.toString()}}) //await getWorkerNotion(user?.id)
             
             setTimeout(async()=> {
                 let arrSpec =[]
-                const oldlist = res[0].spec
+                const oldlist = JSON.parse(res.dataValues.specialization)
                 //console.log("Oldlist: ", oldlist)
 
                 //массив специалистов
-                oldlist.forEach(item => {               
-                    const obj = {
-                        name: item.name,
-                    }
-                    arrSpec.push(obj)
-                });
+                // oldlist.forEach(item => {               
+                //     const obj = {
+                //         name: item.name,
+                //     }
+                //     arrSpec.push(obj)
+                // });
 
-                worklist.forEach(item => {               
-                    const obj = {
-                        name: item.spec,
-                    }
-                    arrSpec.push(obj)
-                });
+               
+
+                // worklist.forEach(item => {               
+                //     const obj = {
+                //         name: item.spec,
+                //     }
+                //     arrSpec.push(obj)
+                // });
+
+                arrSpec = [...oldlist, ...worklist]
 
                 //console.log("arrSpec: ", arrSpec)
 
-                await updateWorker(res[0].id, arrSpec)
+                //await updateWorker(res[0].id, arrSpec)
+
+                const res = await Specialist.update({ 
+                    specialization: JSON.stringify(arrSpec)  
+                },
+                { 
+                    where: {id: res.id} 
+                }) 
+
             }, 2000)
             
  
@@ -500,64 +513,8 @@ bot.on('message', async (msg) => {
             }
 
             //поиск пользователя в notion
-            const res = await getWorkerNotion(chatId)
-            //console.log('res: ', res)
-            let specArr = []
+            //const res = await getWorkerNotion(chatId)
 
-            if (res.length > 0) {
-                try {
-                    res[0].spec.map((item) => {
-                        specData.map((category)=> {
-                            category.models.map((work)=> {
-                                if (work.name === item.name){
-                                    const obj = {
-                                        spec: item.name,
-                                        cat: category.icon,
-                                    }
-                                    specArr.push(obj)
-                                }
-                            })
-                            if (category.icon === item.name) {
-                                const obj = {
-                                    spec: item.name,
-                                    cat: category.icon,
-                                }
-                                specArr.push(obj) 
-                            }
-                        })
-                    })
-
-                    //добавление специалиста в БД
-                    const user = await Worker.findOne({where:{chatId: chatId.toString()}})
-                    if (!user) {
-                        await Worker.create({ 
-                            userfamily: res[0].fio.split(' ')[0], 
-                            username: res[0].fio.split(' ')[1],
-                            phone: res[0].phone, 
-                            dateborn: res[0].age ? res[0].age.start.split('-')[0] : '',
-                            city: res[0].city, 
-                            //companys: companys2,
-                            //stag: stag2,                      
-                            worklist: JSON.stringify(specArr.length > 0 ? specArr : [{
-                                spec: 'Вне категории',
-                                cat: 'NoTag'
-                            }]),
-                            chatId: chatId,
-                            promoId: 0,
-                            from: 'Notion',
-                            avatar: '', 
-                        })
-                        console.log('Пользователь добавлен в БД Workers из Ноушен')
-                    } else {
-                        console.log('Отмена добавления в БД. Пользователь уже существует')
-                    }
-
-                } catch (error) {
-                    console.log(error.message)
-                }
-            } else {
-                console.log("Специалист в ноушене не найден!")
-            }
 
             //создание чата специалиста
             try {
@@ -651,29 +608,21 @@ bot.on('message', async (msg) => {
 
             //регистрация как Неизвестный специалист после отсутствия в бд
             setTimeout(async()=> {
-                const user = await Worker.findOne({where:{chatId: chatId.toString()}})
+                const user = await Specialist.findOne({where:{chatId: chatId.toString()}})
                 if (!user) {
-                    await Worker.create({ 
-                        userfamily: 'Неизвестный', 
-                        username: 'специалист',  
-                        phone: '', 
-                        dateborn: '',
-                        city: '', 
-                        companys: '',
-                        stag: '',                      
-                        worklist: JSON.stringify([{
+                    await Specialist.create({ 
+                        fio: 'Неизвестный специалист',                   
+                        specialization: JSON.stringify([{
                             spec: 'Вне категории',
                             cat: 'NoTag'
                         }]),
                         chatId: chatId,
-                        promoId: '',
-                        from: '' 
                     })
                     console.log('Пользователь добавлен в БД')
                 } else {
                         console.log('Отмена добавления в БД. Пользователь уже существует')
                 }
-            }, 3600000) // 60 минут | 36000000 (10 часов)
+            }, 1800000) // 60 минут | 36000000 (10 часов)
         }
 //-----------------------------------------------------------------------------------------------
         if (text === '/sendpic') {
@@ -2104,7 +2053,31 @@ bot.on('message', async (msg) => {
                             }
                             specArr.push(obj) 
                         }
-                    })              
+                    })  
+                    
+                    if (item.name === 'Blacklist') {
+                        const obj = {
+                            spec: item.name,
+                            cat: 'Blacklist',
+                        }
+                        specArr.push(obj) 
+                    }
+
+                    if (item.name === '+18') {
+                        const obj = {
+                            spec: item.name,
+                            cat: '+18',
+                        }
+                        specArr.push(obj) 
+                    }
+
+                    if (item.name === 'Менеджер «U.L.E.Y»') {
+                        const obj = {
+                            spec: item.name,
+                            cat: 'Менеджер',
+                        }
+                        specArr.push(obj) 
+                    }
                 })
 
                 let skillArr = []
@@ -2147,13 +2120,29 @@ bot.on('message', async (msg) => {
                     comtegArr2.push(obj) 
                 })
 
+                let comment = []
+                page.properties["Комментарии"].rich_text.length > 0 && page.properties["Комментарии"].rich_text.map(item2=> { 
+                    const obj = {
+                        content: item2.plain_text,
+                    }
+                    comment.push(obj) 
+                })
+
+                let comment2 = []
+                page.properties["Комментарии 2"].rich_text.length > 0 && page.properties["Комментарии 2"].rich_text.map(item2=> { 
+                    const obj = {
+                        content: item2.plain_text,
+                    }
+                    comment2.push(obj) 
+                })
+
                 return {
                     fio: page.properties.Name.title[0]?.plain_text,
                     chatId: page.properties.Telegram.number,
                     phone: page.properties.Phone.phone_number,
                     phone2: page.properties["Phone 2"].phone_number,
                     specialization: JSON.stringify(specArr),  
-                    city: page.properties.City.rich_text[0]?.plain_text,
+                    city: page.properties["Город"].multi_select[0]?.name,
                     skill: JSON.stringify(skillArr), 
                     promoId: page.properties["Промокод ID"].number, 
                     rank: page.properties["Ранг"].number, 
@@ -2161,8 +2150,8 @@ bot.on('message', async (msg) => {
                     company: JSON.stringify(companyArr), 
                     comteg: JSON.stringify(comtegArr), 
                     comteg2: JSON.stringify(comtegArr2), 
-                    comment: page.properties["Комментарии"].rich_text[0]?.plain_text, 
-                    comment2: page.properties["Комментарии 2"].rich_text[0]?.plain_text,  
+                    comment: JSON.stringify(comment),
+                    comment2: JSON.stringify(comment2),
                     age: page.properties.Age.date?.start,
                     reyting: page.properties["Рейтинг"].rich_text[0]?.plain_text,
                     inn: page.properties["ИНН"].rich_text[0]?.plain_text, 
@@ -2442,53 +2431,6 @@ bot.on('message', async (msg) => {
                     }));
                 }
 
-                try {
-                    //добавление специалиста в БД
-                    const user = await Worker.findOne({where:{chatId: chatId.toString()}})
-                    if (!user) {
-                        const res = await Worker.create({
-                            //userfamily: workerFam, 
-                            username: workerName2, 
-                            //phone: phone2, 
-                            dateborn: dateBorn,
-                            city: city2, 
-                            newcity: city2, 
-                            //companys: companys2,
-                            //stag: stag2,                      
-                            worklist: JSON.stringify(specArr),
-                            chatId: chatId,
-                            promoId: friend2,
-                            from: 'App'
-                        })
-                        console.log('Пользователь добавлен в БД')
-                    } else {
-                        //обновление специалиста, если существует в бд
-                        console.log('Отмена добавления в БД. Пользователь уже существует')
-                        const res = await Worker.update({ 
-                            //userfamily: workerFam, 
-                            username: workerName2, 
-                            //phone: phone2, 
-                            dateborn: dateBorn,
-                            city: city2,
-                            newcity: city2,
-                            worklist: JSON.stringify(specArr),
-                            chatId: chatId,
-                            promoId: friend2,
-                            from: 'App'
-                        },
-                        { 
-                            where: {chatId: chatId} 
-                        })
-                        if (res) {
-                           console.log("Специалист обновлен! ", chatId) 
-                        }else {
-                            console.log("Ошибка обновления! ", chatId) 
-                        }
-                    }
-                    
-
-                    const fio = workerName2 //workerFam + ' '+ workerName2
-                    const age = `${dateBorn}-01-01`
 
                     const currentMonth = new Date().getMonth() + 1
                     let urlAvatar = ''
@@ -2530,24 +2472,69 @@ bot.on('message', async (msg) => {
                         urlAvatar = 'https://proj.uley.team/upload/2024-06-06T07:54:44.499Z.jpg'
                     }
 
+                try {
+                    //добавление специалиста в БД
+                    const user = await Specialist.findOne({where:{chatId: chatId.toString()}})
+                    if (!user) {
+                        const res = await Specialist.create({
+                            fio: workerName2, 
+                            //phone: phone2, 
+                            age: `${dateBorn}-01-01`,
+                            city: city2,                  
+                            //worklist: JSON.stringify(specArr),
+                            specialization: JSON.stringify(specArr),
+                            chatId: chatId,
+                            promoId: friend2,
+                            profile: urlAvatar,
+                        })
+                        console.log('Пользователь добавлен в БД')
+                    } else {
+                        //обновление специалиста, если существует в бд
+                        console.log('Отмена добавления в БД. Пользователь уже существует')
+                        const res = await Specialist.update({ 
+                            fio: workerName2, 
+                            //phone: phone2, 
+                            age: dateBorn+'-01-01',
+                            city: city2,
+                            //worklist: JSON.stringify(specArr),
+                            specialization: JSON.stringify(specArr),
+                            chatId: chatId,
+                            promoId: friend2,
+                            profile: urlAvatar,
+                        },
+                        { 
+                            where: {chatId: chatId} 
+                        })
+                        if (res) {
+                           console.log("Специалист обновлен! ", chatId) 
+                        }else {
+                            console.log("Ошибка обновления! ", chatId) 
+                        }
+                    }
+                    
 
-                    console.log(fio, chatId, age, phone2, specArr2, city2, friend2, urlAvatar)
+                    
+
+
+                    //console.log(fio, chatId, age, phone2, specArr2, city2, friend2, urlAvatar)
 
                     //сохраниь в бд ноушен
-                    const notion = await getWorkerNotion(chatId)
-                    console.log("notion specialist: ", notion)
+                    //const notion = await getWorkerNotion(chatId)
+                    //const notion = await Specilist.findOne()
                     
-                    if (notion.length === 0) {
-                        //добавить специалиста
-                        const workerId = await addWorker(fio, chatId, age, specArr2, city2, friend2, urlAvatar)
-                        console.log('Специалист успешно добавлен в Notion!', workerId)
+                    //let exist = await Specialist.findOne( {where: {chatId: chatId}} )
+                    
+                    // if (!exist) {
+                    //     //добавить специалиста
+                    //     const workerId = await addWorkerDB(fio, chatId, age, specArr2, city2, friend2, urlAvatar)
+                    //     console.log('Специалист успешно добавлен в Notion!', workerId)
 
-                        //добавить аватар
-                        //const res = await addAvatar(workerId, urlAvatar)
-                        //console.log("res upload avatar: ", res)
-                    } else {
-                        console.log('Специалист уже существует в Notion!')
-                    }
+                    //     //добавить аватар
+                    //     //const res = await addAvatar(workerId, urlAvatar)
+                    //     //console.log("res upload avatar: ", res)
+                    // } else {
+                    //     console.log('Специалист уже существует в Notion!')
+                    // }
 
                     //очистить переменные
                     console.log("Очищаю переменные...")
@@ -2560,7 +2547,7 @@ bot.on('message', async (msg) => {
  
                     console.log('Специалист успешно добавлен в БД! Worker: ')
 
-                    const worker = await Worker.findOne({where:{chatId: chatId.toString()}})
+                    const worker = await Specialist.findOne({where:{chatId: chatId.toString()}})
                     console.log("worker great: ", worker)
                     if (!worker.dataValues.great) {
                         setTimeout(async()=> {
@@ -2582,7 +2569,7 @@ bot.on('message', async (msg) => {
                                 isBot: true,
                             })
 
-                            await Worker.update({ 
+                            await Specialist.update({ 
                                 great: true
                             },
                             {
@@ -2662,28 +2649,21 @@ bot.on('message', async (msg) => {
                 }
 
                 //добавление пользователя в БД WORKERS
-                const userW = await Worker.findOne({where:{chatId: chatId.toString()}})
+                const userW = await Specialist.findOne({where:{chatId: chatId.toString()}})
                 if (!userW) {
-                    await Worker.create({ 
-                        username: firstname, 
-                        userfamily: lastname, 
+                    await Specialist.create({ 
+                        fio: lastname + ' ' + firstname, 
                         chatId: chatId, 
-                        worklist: JSON.stringify([{
+                        specialization: JSON.stringify([{
                             spec: 'Вне категории',
                             cat: 'NoTag'
                         }]),
                         promoId: 0,
-                        from: 'Bot',
                         avatar: ''
                     })
                     console.log('Пользователь добавлен в БД Workers')
                 } else {
                     console.log('Отмена операции! Пользователь уже существует в Workers')
-                    // await Worker.update({ username: username }, {
-                    //     where: {
-                    //       chatId: chatId.toString(),
-                    //     },
-                    // });
                 }
 
                 //приветствие
@@ -2717,39 +2697,39 @@ bot.on('message', async (msg) => {
                         hello = 'Добрый вечер' //18-0
                     }
 
-                    const nameNotion = await getWorkerNotion(chatId)
+                    // const nameNotion = await getWorkerNotion(chatId)
 
-                    //ответ бота
-                    //console.log(`${hello}, ${firstname}`)
-                    let hello_text = ''
-                    if (nameNotion) {
-                        if (nameNotion[0].fio.indexOf(' ') === -1)  {
-                            hello_text = `${hello}, ${nameNotion[0].fio}.`
-                        } else {
-                            hello_text = `${hello}, ${nameNotion[0].fio.split(' ')[1]}.`
-                        }
+                    // //ответ бота
+                    // //console.log(`${hello}, ${firstname}`)
+                    // let hello_text = ''
+                    // if (nameNotion) {
+                    //     if (nameNotion[0].fio.indexOf(' ') === -1)  {
+                    //         hello_text = `${hello}, ${nameNotion[0].fio}.`
+                    //     } else {
+                    //         hello_text = `${hello}, ${nameNotion[0].fio.split(' ')[1]}.`
+                    //     }
                         
-                    } else {
-                        hello_text = `${hello}.`
+                    // } else {
+                    //     hello_text = `${hello}.`
                         
-                    }
+                    // }
                     
-                    const res = await bot.sendMessage(chatId, hello_text)
+                    // const res = await bot.sendMessage(chatId, hello_text)
 
-                    setTimeout(async()=> {
-                        // сохранить отправленное боту сообщение пользователя в БД
-                        const convId = await sendMessageAdmin(hello_text, 'text', chatId, res.message_id, null, false)
+                    // setTimeout(async()=> {
+                    //     // сохранить отправленное боту сообщение пользователя в БД
+                    //     const convId = await sendMessageAdmin(hello_text, 'text', chatId, res.message_id, null, false)
 
-                        socket.emit("sendAdminSpec", {
-                            senderId: chatTelegramId,
-                            receiverId: chatId,
-                            text: hello_text,
-                            type: 'text',
-                            convId: convId,
-                            messageId: res.message_id,
-                            isBot: false,
-                        })
-                    }, 3000)
+                    //     socket.emit("sendAdminSpec", {
+                    //         senderId: chatTelegramId,
+                    //         receiverId: chatId,
+                    //         text: hello_text,
+                    //         type: 'text',
+                    //         convId: convId,
+                    //         messageId: res.message_id,
+                    //         isBot: false,
+                    //     })
+                    // }, 3000)
                     
                         
                 }
@@ -2806,9 +2786,9 @@ bot.on('message', async (msg) => {
     //нажатие на кнопку "Принять"
 //---------------------------------------------------------------------------
     if (data.startsWith('/accept')) {
-        const project = data.split(' ');
-        console.log("project: ", data)
-        const projectId = project[1]  
+        // const project = data.split(' ');
+        // console.log("project: ", data)
+        // const projectId = project[1]  
 
         //отправить сообщение в админ-панель
         const convId = await sendMyMessage('Пользователь нажал кнопку "Принять" в рассылке', "text", chatId, messageId, null, false)
@@ -2825,248 +2805,251 @@ bot.on('message', async (msg) => {
             messageId: messageId,
         })  
 
-        //специалист ID
-        const workerId = await getWorkerChatId(chatId)
+
+        //специалист ID Notion
+        //const workerId = await getWorkerChatId(chatId)
 
         //новый претендент
-        const pretendent = {
-            projectId: projectId, 
-            workerId: workerId, 
-            receiverId: chatId,  
-            accept: false, 
-            otclick: 1     
-        }
+        // const pretendent = {
+        //     projectId: projectId, 
+        //     //workerId: workerId, 
+        //     receiverId: chatId,  
+        //     accept: false, 
+        //     otclick: 1     
+        // }
 
-        const exist = await Pretendent.findAll({
-            where: {
-                projectId: projectId,
-                workerId: workerId,
-            },
-        })
+        // const exist = await Pretendent.findAll({
+        //     where: {
+        //         projectId: projectId,
+        //         workerId: workerId,
+        //     },
+        // })
 
-        console.log("exist: ", exist)
+        //console.log("exist: ", exist)
 
-        if (exist.length === 0) {
-            const res = await Pretendent.create(pretendent)
-            console.log("Претендент в БД: ", res.dataValues.id)
+        // if (exist.length === 0) {
+        //     const res = await Pretendent.create(pretendent)
+        //     console.log("Претендент в БД: ", res.dataValues.id)
 
-        } else if (Math.abs(new Date(exist[exist.length-1]?.dataValues.updatedAt).getTime()-new Date().getTime()) > 3600000) { //3600000) {
-           const res = await Pretendent.create(pretendent)
-           console.log("Претендент еще раз добавлен в БД: ", res.dataValues.id)
+        // } else if (Math.abs(new Date(exist[exist.length-1]?.dataValues.updatedAt).getTime()-new Date().getTime()) > 3600000) { //3600000) {
+        //    const res = await Pretendent.create(pretendent)
+        //    console.log("Претендент еще раз добавлен в БД: ", res.dataValues.id)
 
-        } else {
+        // } else {
 
-            console.log('Претендент уже создан в БД для этого проекта!')
+        //     console.log('Претендент уже создан в БД для этого проекта!')
             
-            //проверяем отклонил ли специалист заявку в прошлый раз 
-            if (exist[exist.length-1].dataValues.accept) {         
-                const res = await Pretendent.update({            
-                    accept:  false,
-                    otclick:  1
-                },
-                {
-                    where: {
-                        projectId: projectId,
-                        workerId: workerId,
-                    },
-                })
-            //или было нажато принять
-            } else {
-                const count = exist[exist.length-1].dataValues.otclick + 1
-                const res = await Pretendent.update({ 
-                    otclick: count  
-                },
-                {
-                    where: {
-                        projectId: projectId,
-                        workerId: workerId,
-                    },
-                })
-            }         
-        }
+        //     //проверяем отклонил ли специалист заявку в прошлый раз 
+        //     if (exist[exist.length-1].dataValues.accept) {         
+        //         const res = await Pretendent.update({            
+        //             accept:  false,
+        //             otclick:  1
+        //         },
+        //         {
+        //             where: {
+        //                 projectId: projectId,
+        //                 workerId: workerId,
+        //             },
+        //         })
+        //     //или было нажато принять
+        //     } else {
+        //         const count = exist[exist.length-1].dataValues.otclick + 1
+        //         const res = await Pretendent.update({ 
+        //             otclick: count  
+        //         },
+        //         {
+        //             where: {
+        //                 projectId: projectId,
+        //                 workerId: workerId,
+        //             },
+        //         })
+        //     }         
+        // }
 
 
-        const exist2 = await Pretendent.findAll({
-            where: {
-                projectId: projectId,
-                workerId: workerId,
-            },
-        })
+        // const exist2 = await Pretendent.findAll({
+        //     where: {
+        //         projectId: projectId,
+        //         workerId: workerId,
+        //     },
+        // })
 
-        if ((exist2[exist2.length-1].dataValues.otclick < 2) || ( Math.abs(new Date(exist[exist.length-1].dataValues.updatedAt).getTime()-new Date().getTime()) ) > 3600000) { //3600000) {
+        //if ((exist2[exist2.length-1].dataValues.otclick < 2) || ( Math.abs(new Date(exist[exist.length-1].dataValues.updatedAt).getTime()-new Date().getTime()) ) > 3600000) { //3600000) {
             
             //ноушен
-            const blockIdP = await getBlocksP(projectId); 
+            //const blockIdP = await getBlocksP(projectId); 
 
-            const projectDate = await getProjectName(projectId)
+            //const projectDate = await getProjectName(projectId)
             //console.log("projectDate: ", projectDate.properties["Дата"].date?.start) 
            
            // текущая дата
-            const date = Date.now() + 10800000; //+3 часа
-            const dateNow =new Date(date)
+            // const date = Date.now() + 10800000; //+3 часа
+            // const dateNow =new Date(date)
             
             //Добавить специалиста в таблицу Претенденты (Ноушен)
             //найти претендента в ноушене
-            if (blockIdP) {
+//             if (blockIdP) {
 
-                await addPretendent(blockIdP, workerId, dateNow); //добавить претендента
+//                 await addPretendent(blockIdP, workerId, dateNow); //добавить претендента
 
 
-                let databaseBlock;
-                let allDate = [];
-                const blockId = await getBlocks(projectId);            
-                if (blockId) {
-                    j = 0    
-                    databaseBlock = await getDatabaseId(blockId);   
-                } 
+//                 let databaseBlock;
+//                 let allDate = [];
+//                 const blockId = await getBlocks(projectId);            
+//                 if (blockId) {
+//                     j = 0    
+//                     databaseBlock = await getDatabaseId(blockId);   
+//                 } 
 
-                //получить массив дат
-                if (databaseBlock) {   
-                    databaseBlock.map((db) => {
-                        allDate.push(db?.date)                        
-                    })
-                }
+//                 //получить массив дат
+//                 if (databaseBlock) {   
+//                     databaseBlock.map((db) => {
+//                         allDate.push(db?.date)                        
+//                     })
+//                 }
 
-                //получить уникальные даты из Основного состава по возрастанию
-                const dates = [...allDate].filter((el, ind) => ind === allDate.indexOf(el));
-                const sortedDates = [...dates].sort((a, b) => {       
-                    var dateA = new Date(a), dateB = new Date(b) 
-                    return dateA-dateB  //сортировка по возрастающей дате  
-                })
+//                 //получить уникальные даты из Основного состава по возрастанию
+//                 const dates = [...allDate].filter((el, ind) => ind === allDate.indexOf(el));
+//                 const sortedDates = [...dates].sort((a, b) => {       
+//                     var dateA = new Date(a), dateB = new Date(b) 
+//                     return dateA-dateB  //сортировка по возрастающей дате  
+//                 })
 
-                const datesObj = []
+//                 const datesObj = []
 
-                sortedDates.map((item) =>{
-                    const obj = {
-                        date: item,
-                    }
-                    datesObj.push(obj)  
-                })
+//                 sortedDates.map((item) =>{
+//                     const obj = {
+//                         date: item,
+//                     }
+//                     datesObj.push(obj)  
+//                 })
 
-                //новый интервал слежения статуса отказа
-                const otkaz = {
-                    projectId: projectId, 
-                    workerId: workerId, 
-                    receiverId: chatId,  
-                    blockId: blockIdP,
-                    cancel: false, 
-                    datestart: datesObj[0].date,  
-                    dateend: datesObj[datesObj.length-1].date,
-                }
+//                 //новый интервал слежения статуса отказа
+//                 const otkaz = {
+//                     projectId: projectId, 
+//                     workerId: workerId, 
+//                     receiverId: chatId,  
+//                     blockId: blockIdP,
+//                     cancel: false, 
+//                     datestart: datesObj[0].date,  
+//                     dateend: datesObj[datesObj.length-1].date,
+//                 }
 
-                const res = await Canceled.create(otkaz)
-                //console.log("Слежение за статусом в БД: ", res.dataValues.id)
+//                 const res = await Canceled.create(otkaz)
+//                 //console.log("Слежение за статусом в БД: ", res.dataValues.id)
 
-                var minutCount = 0;
-                let i = 0;
+//                 var minutCount = 0;
+//                 let i = 0;
 
-                // повторить с интервалом 2 минуту (проверка статуса претендента)
-                let timerId2 = setInterval(async() => {
+//                 // повторить с интервалом 2 минуту (проверка статуса претендента)
+//                 let timerId2 = setInterval(async() => {
 
-                    const projectName = await getProjectName(projectId)
+//                     const projectName = await getProjectName(projectId)
                     
-                    const worker = await getWorkerPretendent(blockId, workerId, projectName.properties.Name.title[0].plain_text)
-                    console.log("worker status: ", worker?.status, chatId, projectName.properties.Name.title[0].plain_text)
+//                     const worker = await getWorkerPretendent(blockId, workerId, projectName.properties.Name.title[0].plain_text)
+//                     console.log("worker status: ", worker?.status, chatId, projectName.properties.Name.title[0].plain_text)
                     
-                    const user = await Worker.findOne({where:{chatId: chatId.toString()}})
+//                     const user = await Worker.findOne({where:{chatId: chatId.toString()}})
 
-                    if (worker && worker.find(item => item.status === "Отказано")) {
-                        const currentHours = new Date(new Date().getTime()+10800000).getHours()
-                        console.log("worker (отказано): ", currentHours)
+//                     if (worker && worker.find(item => item.status === "Отказано")) {
+//                         const currentHours = new Date(new Date().getTime()+10800000).getHours()
+//                         console.log("worker (отказано): ", currentHours)
 
-                        const res = await Canceled.update(
-                        { 
-                            cancel: true  
-                        },
-                        {
-                            where: {
-                                projectId: projectId,
-                                workerId: workerId,
-                            },
-                        })
+//                         const res = await Canceled.update(
+//                         { 
+//                             cancel: true  
+//                         },
+//                         {
+//                             where: {
+//                                 projectId: projectId,
+//                                 workerId: workerId,
+//                             },
+//                         })
 
-                        let hello = ''
-                        if (currentHours >= 6 && currentHours < 12) {
-                            hello = 'Доброе утро'
-                        } else if (currentHours >= 12 && currentHours < 18) {
-                            hello = 'Добрый день'
-                        } else if (currentHours >= 0 && currentHours < 6) {
-                            hello = 'Доброй ночи'
-                        } else {
-                            hello = 'Добрый вечер' //18-0
-                        }
+//                         let hello = ''
+//                         if (currentHours >= 6 && currentHours < 12) {
+//                             hello = 'Доброе утро'
+//                         } else if (currentHours >= 12 && currentHours < 18) {
+//                             hello = 'Добрый день'
+//                         } else if (currentHours >= 0 && currentHours < 6) {
+//                             hello = 'Доброй ночи'
+//                         } else {
+//                             hello = 'Добрый вечер' //18-0
+//                         }
 
-                        //отправить сообщение в админ-панель
-                        const text = `${hello}, ${user.dataValues.username}! 
-Спасибо, что откликнулись на проект «${projectName.properties.Name.title[0].plain_text}». В настоящий момент основной состав уже сформирован. 
-Будем рады сотрудничеству на новых проектах!`
-                        const convId = await sendMessageAdmin(text, "text", chatId, messageId, null, false)
+//                         //отправить сообщение в админ-панель
+//                         const text = `${hello}, ${user.dataValues.username}! 
+// Спасибо, что откликнулись на проект «${projectName.properties.Name.title[0].plain_text}». В настоящий момент основной состав уже сформирован. 
+// Будем рады сотрудничеству на новых проектах!`
+//                         const convId = await sendMessageAdmin(text, "text", chatId, messageId, null, false)
                         
-                        // Подключаемся к серверу socket
-                        socket.emit("sendAdminSpec", {
-                            senderId: chatTelegramId,
-                            receiverId: chatId,
-                            text: text,
-                            convId: convId,
-                            messageId: messageId,
-                        }) 
-                        clearInterval(timerId2); 
+//                         // Подключаемся к серверу socket
+//                         socket.emit("sendAdminSpec", {
+//                             senderId: chatTelegramId,
+//                             receiverId: chatId,
+//                             text: text,
+//                             convId: convId,
+//                             messageId: messageId,
+//                         }) 
+//                         clearInterval(timerId2); 
 
-                        return bot.sendMessage(chatId, text)
+//                         return bot.sendMessage(chatId, text)
 
-                    }
+//                     }
 
-                    i++ //счетчик интервалов
-                    minutCount = i
-                }, 240000) //4 минуты
+//                     i++ //счетчик интервалов
+//                     minutCount = i
+//                 }, 240000) //4 минуты
 
-                // остановить вывод через 30 дней
-                if (minutCount == 43200) {
-                    clearInterval(timerId2);
-                } 
-            }
+//                 // остановить вывод через 30 дней
+//                 if (minutCount == 43200) {
+//                     clearInterval(timerId2);
+//                 } 
+//             }
 
 
             //отправить сообщение в админ-панель
             const text = 'Заявка принята! Мы свяжемся с вами в ближайшее время.'
             
-            const convId = await sendMessageAdmin(text, "text", chatId, messageId, null, false)
+            const convId2 = await sendMessageAdmin(text, "text", chatId, messageId, null, false)
             
             // Подключаемся к серверу socket
             socket.emit("sendAdminSpec", {
                  senderId: chatTelegramId,
                  receiverId: chatId,
                  text: text,
-                 convId: convId,
+                 convId: convId2,
                  messageId: messageId,
             })                        
              
             return bot.sendMessage(chatId, text)
-        } 
+        //} 
 
-        if (exist2[exist2.length-1].dataValues.otclick > 1) {
-            //отправить сообщение в админ-панель
-            const convId = await sendMessageAdmin('Вы ' + exist2[exist2.length-1].dataValues.otclick + '-й раз откликнулись на заявку', "text", chatId, null, null, false)
+        // if (exist2[exist2.length-1].dataValues.otclick > 1) {
+        //     //отправить сообщение в админ-панель
+        //     const convId = await sendMessageAdmin('Вы ' + exist2[exist2.length-1].dataValues.otclick + '-й раз откликнулись на заявку', "text", chatId, null, null, false)
 
-            // Подключаемся к серверу socket
-            socket.emit("sendAdminSpec", {
-                senderId: chatTelegramId,
-                receiverId: chatId,
-                text: 'Вы ' + exist2[exist2.length-1].dataValues.otclick + '-й раз откликнулись на заявку',
-                convId: convId,
-                messageId: null,
-                isBot: false,
-            })
-            return bot.sendMessage(chatId, 'Вы ' + exist2[exist2.length-1].dataValues.otclick + '-й раз откликнулись на заявку')
-        }       
+        //     // Подключаемся к серверу socket
+        //     socket.emit("sendAdminSpec", {
+        //         senderId: chatTelegramId,
+        //         receiverId: chatId,
+        //         text: 'Вы ' + exist2[exist2.length-1].dataValues.otclick + '-й раз откликнулись на заявку',
+        //         convId: convId,
+        //         messageId: null,
+        //         isBot: false,
+        //     })
+        //     return bot.sendMessage(chatId, 'Вы ' + exist2[exist2.length-1].dataValues.otclick + '-й раз откликнулись на заявку')
+        // }       
+
+        
     }
 //----------------------------------------------------------------
     //нажатие на кнопку "Отклонить"
 //----------------------------------------------------------------
     if (data.startsWith('/cancel')) {
-        const project = data.split(' ');
-        console.log("project: ", data)
-        const projectId = project[1]
+        //const project = data.split(' ');
+        //console.log("project: ", data)
+        //const projectId = project[1]
 
         //отправить сообщение в админ-панель
         const convId = await sendMyMessage('Пользователь нажал кнопку "Отклонить" в рассылке', "text", chatId, messageId, null, true)
@@ -3086,118 +3069,118 @@ bot.on('message', async (msg) => {
 
 
         //специалист
-        const workerId = await getWorkerChatId(chatId)
+        // const workerId = await getWorkerChatId(chatId)
 
-        //новый претендент
-        const pretendent = {
-            projectId: projectId, 
-            workerId: workerId, 
-            receiverId: chatId,  
-            accept: true,  
-            cancel: 1    
-        }
+        // //новый претендент
+        // const pretendent = {
+        //     projectId: projectId, 
+        //     workerId: workerId, 
+        //     receiverId: chatId,  
+        //     accept: true,  
+        //     cancel: 1    
+        // }
 
-        //найти претендента в БД
-        const exist = await Pretendent.findOne({
-            where: {
-                projectId: projectId,
-                workerId: workerId,
-            },
-        })
+        // //найти претендента в БД
+        // const exist = await Pretendent.findOne({
+        //     where: {
+        //         projectId: projectId,
+        //         workerId: workerId,
+        //     },
+        // })
 
         
-        if (exist) {
-            console.log('Претендент уже создан в БД для этого проекта!')
+        // if (exist) {
+        //     console.log('Претендент уже создан в БД для этого проекта!')
 
-            //проверяем отклонил ли специалист заявку в прошлый раз
-            if (exist.dataValues.accept) {
-                const count = exist.dataValues.cancel + 1
-                const res = await Pretendent.update({ 
-                    cancel: count  
-                },
-                {
-                    where: {
-                        projectId: projectId,
-                        workerId: workerId,
-                    },
-                })
-            //или было нажато принять
-            } else {
-                const res = await Pretendent.update({ 
-                    accept: true,
-                    cancel: 1 
-                },
-                {
-                    where: {
-                        projectId: projectId,
-                        workerId: workerId,
-                    },
-                })
-                console.log("Претендент обновлен в БД")
-            }
+        //     //проверяем отклонил ли специалист заявку в прошлый раз
+        //     if (exist.dataValues.accept) {
+        //         const count = exist.dataValues.cancel + 1
+        //         const res = await Pretendent.update({ 
+        //             cancel: count  
+        //         },
+        //         {
+        //             where: {
+        //                 projectId: projectId,
+        //                 workerId: workerId,
+        //             },
+        //         })
+        //     //или было нажато принять
+        //     } else {
+        //         const res = await Pretendent.update({ 
+        //             accept: true,
+        //             cancel: 1 
+        //         },
+        //         {
+        //             where: {
+        //                 projectId: projectId,
+        //                 workerId: workerId,
+        //             },
+        //         })
+        //         console.log("Претендент обновлен в БД")
+        //     }
             
-        } else {
-            const res = await Pretendent.create(pretendent)
-            console.log("Претендент в БД: ", res.dataValues.id)
-            console.log("Пользователь отклонил заявку!")
-        }
+        // } else {
+        //     const res = await Pretendent.create(pretendent)
+        //     console.log("Претендент в БД: ", res.dataValues.id)
+        //     console.log("Пользователь отклонил заявку!")
+        // }
 
-        const exist2 = await Pretendent.findOne({
-            where: {
-                projectId: projectId,
-                workerId: workerId,
-            },
-        })
+        // const exist2 = await Pretendent.findOne({
+        //     where: {
+        //         projectId: projectId,
+        //         workerId: workerId,
+        //     },
+        // })
 
-        if ((exist2.dataValues.cancel < 2) || ( Math.abs(new Date(exist2.dataValues.createdAt).getTime()-new Date().getTime()) )>3600000) {
-            //ноушен
-            const blockId = await getBlocksP(projectId);  
+        // if ((exist2.dataValues.cancel < 2) || ( Math.abs(new Date(exist2.dataValues.createdAt).getTime()-new Date().getTime()) )>3600000) {
+        //     //ноушен
+        //     const blockId = await getBlocksP(projectId);  
                 
-            //найти претендента в ноушене
-            if (blockId) {
-            const worker = await getWorkerPretendent(blockId, workerId, projectId)
-                //console.log("worker: ", worker)
+        //     //найти претендента в ноушене
+        //     if (blockId) {
+        //     const worker = await getWorkerPretendent(blockId, workerId, projectId)
+        //         //console.log("worker: ", worker)
                     
-                //обновить специалиста в таблице Претенденты если есть
-                if (worker.length > 0) {
-                    await updatePretendent(worker[0]?.id);
-                } else {
-                    console.log("Специалист отсутствует в таблице Претенденты: ") 
-                } 
-            }
+        //         //обновить специалиста в таблице Претенденты если есть
+        //         if (worker.length > 0) {
+        //             await updatePretendent(worker[0]?.id);
+        //         } else {
+        //             console.log("Специалист отсутствует в таблице Претенденты: ") 
+        //         } 
+        //     }
 
-            return bot.sendMessage(chatId, "Больше не показывать это предложение даже при условии, что ставка измениться в большую сторону?", {
-                reply_markup: ({
-                    inline_keyboard: [
-                        [
-                            {"text": "Показать еще", callback_data:'/todocancel2'}, 
-                            {"text": "Не показывать", callback_data:`/todocancel3 ${projectId} ${chatId}`},
-                        ],
-                    ]
-                })
-            }) 
-        } else {
-            //отправить сообщение в админ-панель
-            //const convId = await sendMessageAdmin('Отправка заявки временно недоступна. Попробуйте позже', "text", chatId, null, null, true)
-            console.log("Время заявки (мин.) ", Math.round(Math.abs(new Date(exist2.dataValues.createdAt).getTime()-new Date().getTime())/60000))
-            return bot.sendMessage(chatId, 'Отправка заявки временно недоступна. Попробуйте позже (через ' + parseInt(60 - Math.round(Math.abs(new Date(exist2.dataValues.createdAt).getTime()-new Date().getTime())/60000)) + ' мин.)')
-        }
+        //     return bot.sendMessage(chatId, "Больше не показывать это предложение даже при условии, что ставка измениться в большую сторону?", {
+        //         reply_markup: ({
+        //             inline_keyboard: [
+        //                 [
+        //                     {"text": "Показать еще", callback_data:'/todocancel2'}, 
+        //                     {"text": "Не показывать", callback_data:`/todocancel3 ${projectId} ${chatId}`},
+        //                 ],
+        //             ]
+        //         })
+        //     }) 
+        // } else {
+        //     //отправить сообщение в админ-панель
+        //     //const convId = await sendMessageAdmin('Отправка заявки временно недоступна. Попробуйте позже', "text", chatId, null, null, true)
+        //     console.log("Время заявки (мин.) ", Math.round(Math.abs(new Date(exist2.dataValues.createdAt).getTime()-new Date().getTime())/60000))
+        //     return bot.sendMessage(chatId, 'Отправка заявки временно недоступна. Попробуйте позже (через ' + parseInt(60 - Math.round(Math.abs(new Date(exist2.dataValues.createdAt).getTime()-new Date().getTime())/60000)) + ' мин.)')
+        // }
 
-        if (exist2.dataValues.otclick > 1) {
-            //отправить сообщение в админ-панель
-            const convId = await sendMessageAdmin('Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить', "text", chatId, null, null, true)
+        // if (exist2.dataValues.otclick > 1) {
+        //     //отправить сообщение в админ-панель
+        //     const convId = await sendMessageAdmin('Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить', "text", chatId, null, null, true)
 
-            // Подключаемся к серверу socket
-            socket.emit("sendAdminSpec", {
-                senderId: chatTelegramId,
-                receiverId: chatId,
-                text: 'Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить',
-                convId: convId,
-                messageId: null,
-                isBot: true,
-            })
-            return bot.sendMessage(chatId, 'Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить')
-        } 
+        //     // Подключаемся к серверу socket
+        //     socket.emit("sendAdminSpec", {
+        //         senderId: chatTelegramId,
+        //         receiverId: chatId,
+        //         text: 'Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить',
+        //         convId: convId,
+        //         messageId: null,
+        //         isBot: true,
+        //     })
+        //     return bot.sendMessage(chatId, 'Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить')
+        // } 
         
     }
 
