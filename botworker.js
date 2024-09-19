@@ -2192,8 +2192,11 @@ bot.on('message', async (msg) => {
 
                 if (updWorker) {
                     setTimeout(async()=> {
-                        console.log(item.avatar, item.chatId)
-                        console.log(updWorker.chatId)
+                        if (item.avatar.length > 0) {
+                          console.log(item.avatar, item.chatId) 
+                          console.log(updWorker.chatId) 
+                        }
+   
                         // const worker = await Specialist.update(
                         //     { 
                         //         profile: item.avatar,
