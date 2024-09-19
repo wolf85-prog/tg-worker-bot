@@ -2181,6 +2181,25 @@ bot.on('message', async (msg) => {
 
         }
 
+
+        if (text === '/newavatar') {
+            const oldWorker = await Worker.findAll()
+            const newWorker = await Specialist.findAll()
+            console.log(oldWorker.length, newWorker.length, oldWorker[0].chatId)
+
+            //получить все запуски сканирования отказов
+            // const worker = await Specialist.update(
+            //     { 
+            //         profile: null,
+            //     },
+            //     {
+            //         where: {
+            //             chatId: chatId,
+            //         },
+            //     }
+            // )
+            // console.log("res: ", worker)
+        }
 //------------------------------------------------------------------------------------------------
 //обработка контактов
         if (msg.contact) {
