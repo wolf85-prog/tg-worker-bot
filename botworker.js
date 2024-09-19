@@ -2187,6 +2187,30 @@ bot.on('message', async (msg) => {
             const newWorker = await Specialist.findAll()
             console.log(oldWorker.length, newWorker.length, oldWorker[0].chatId)
 
+            oldWorker.map((item, i)=> {
+                const updWorker = newWorker.find((user)=> user.chatId === item.chatId)
+
+                if (updWorker) {
+                    setTimeout(async()=> {
+                        console.log(item.avatar, item.chatId)
+                        console.log(updWorker.chatId)
+                        // const worker = await Specialist.update(
+                        //     { 
+                        //         profile: item.avatar,
+                        //     },
+                        //     {
+                        //         where: {
+                        //             chatId: updWorker.chatId,
+                        //         },
+                        //     }
+                        // )
+                        // console.log("res: ", worker)  
+                    }, 500 * ++i)
+                }
+
+                
+            })
+
             //получить все запуски сканирования отказов
             // const worker = await Specialist.update(
             //     { 
