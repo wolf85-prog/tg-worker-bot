@@ -2193,21 +2193,23 @@ bot.on('message', async (msg) => {
                 if (updWorker) {
                     setTimeout(async()=> {
                         if (item.avatar.length > 0) {
-                          console.log(item.avatar, item.chatId) 
-                          console.log(updWorker.chatId) 
+                        //   console.log(item.avatar, item.chatId) 
+                        //   console.log(updWorker.chatId) 
+
+                            const worker = await Specialist.update(
+                                { 
+                                    profile: item.avatar,
+                                },
+                                {
+                                    where: {
+                                        chatId: item.chatId.toString(),
+                                    },
+                                }
+                            )
+                            console.log("res: ", worker) 
                         }
    
-                        // const worker = await Specialist.update(
-                        //     { 
-                        //         profile: item.avatar,
-                        //     },
-                        //     {
-                        //         where: {
-                        //             chatId: updWorker.chatId,
-                        //         },
-                        //     }
-                        // )
-                        // console.log("res: ", worker)  
+                         
                     }, 500 * ++i)
                 }
 
