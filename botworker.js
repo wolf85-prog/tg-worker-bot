@@ -3229,6 +3229,22 @@ bot.on('message', async (msg) => {
         //     })
         //     return bot.sendMessage(chatId, 'Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить')
         // } 
+
+        //отправить сообщение в админ-панель
+        const text = 'Хорошо, тогда в следующий раз!'
+            
+        const convId2 = await sendMessageAdmin(text, "text", chatId, messageId, null, false)
+        
+        // Подключаемся к серверу socket
+        socket.emit("sendAdminSpec", {
+             senderId: chatTelegramId,
+             receiverId: chatId,
+             text: text,
+             convId: convId2,
+             messageId: messageId,
+        })                        
+         
+        return bot.sendMessage(chatId, text)
         
     }
 
