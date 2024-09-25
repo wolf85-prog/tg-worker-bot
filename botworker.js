@@ -1475,7 +1475,7 @@ bot.on('message', async (msg) => {
 
             workersId.map(async(item)=> {
                 const res = await UserBot.update({ 
-                        block: true 
+                        blockW: true 
                     },
                     {
                         where: {
