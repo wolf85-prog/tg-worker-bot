@@ -1822,24 +1822,6 @@ bot.on('message', async (msg) => {
             }) 
         }
 
-        if (text === '/addworker2') {
-            const fio = 'Игнатий'
-            const chatId = 47216759
-            const age = '1974'
-            //const phone2 = '+7 (900) 123-45-45'
-            const specArr2 = [{name: 'Оператор-постановщик'}]
-            const city2 = 'Москва'
-            const friend2 = 0
-            const urlAvatar = 'https://proj.uley.team/upload/2024-06-06T07:52:17.472Z.jpg'
-
-            try {
-                const workerId = await addWorker(fio, chatId, age, specArr2, city2, friend2, urlAvatar)
-            } catch (error) {
-                console.log("Ошибка добавления специалиста в Notion: ", error.message)
-            }
-            
-        }
-
 
         if (text === '/testwhile') {
             let j = 2
@@ -2228,6 +2210,36 @@ bot.on('message', async (msg) => {
             //     }
             // )
             // console.log("res: ", worker)
+        }
+
+        if (text === '/newdatecreate') {
+            const oldWorker = await Worker.findAll()
+            const newWorker = await Specialist.findAll()
+            console.log(oldWorker.length, newWorker.length, oldWorker[0].chatId)
+
+            oldWorker.map((item, i)=> {
+                const updWorker = newWorker.find((user)=> user.chatId === item.chatId)
+
+                if (updWorker) {
+                    setTimeout(async()=> {
+                            console.log(i) 
+                            console.log("Дата создания: ", item.createdAt) 
+
+                            const worker = await Specialist.update(
+                                { 
+                                    createdAt: item.createdAt,
+                                },
+                                {
+                                    where: {
+                                        chatId: item.chatId.toString(),
+                                    },
+                                }
+                            )
+                            console.log("res: ", worker) 
+                         
+                    }, 500 * ++i)
+                }               
+            })
         }
 //------------------------------------------------------------------------------------------------
 //обработка контактов
