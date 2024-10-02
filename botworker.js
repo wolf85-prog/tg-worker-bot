@@ -209,8 +209,9 @@ ${worklist.map(item =>' - ' + item.spec).join('\n')}`
             console.log("Начинаю сохранять данные в ноушене...", user?.id)
 
             //сохраниь в бд ноушен
-            const res = await Specialist.findOne({where:{chatId: chatId.toString()}}) //await getWorkerNotion(user?.id)
-            
+            const res = await Specialist.findOne({where:{chatId: user?.id}}) //await getWorkerNotion(user?.id)
+            console.log("спец: ", res)
+
             setTimeout(async()=> {
                 let arrSpec =[]
                 const oldlist = JSON.parse(res.dataValues.specialization)
