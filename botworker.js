@@ -223,13 +223,18 @@ ${worklist.map(item =>' - ' + item.spec).join('\n')}`
 
                 console.log("arrSpec: ", arrSpec)
 
+                try {
+                    const res = await Specialist.update({ 
+                        specialization: JSON.stringify(arrSpec)  
+                    },
+                    { 
+                        where: {id: res.id} 
+                    }) 
+                } catch (error) {
+                    console.log("Ошибка сохранения специальности: ", error.message)
+                }
 
-                const res = await Specialist.update({ 
-                    specialization: JSON.stringify(arrSpec)  
-                },
-                { 
-                    where: {id: res.id} 
-                }) 
+                
 
             }, 2000)
             
