@@ -209,39 +209,30 @@ ${worklist.map(item =>' - ' + item.spec).join('\n')}`
             console.log("Начинаю сохранять данные в ноушене...", user?.id)
 
             //сохраниь в бд ноушен
-            const res = await Specialist.findOne({where:{chatId: user?.id}}) //await getWorkerNotion(user?.id)
+            const res = await Specialist.findOne({where:{chatId: user?.id.toString()}}) //await getWorkerNotion(user?.id)
             console.log("спец: ", res)
 
             setTimeout(async()=> {
                 let arrSpec =[]
                 const oldlist = JSON.parse(res.dataValues.specialization)
-                //console.log("Oldlist: ", oldlist)
 
                 //массив специалистов
-
                 arrSpec = [...oldlist, ...worklist]
-
                 console.log("arrSpec: ", arrSpec)
 
-                try {
-                    const res = await Specialist.update({ 
-                        specialization: JSON.stringify(arrSpec)  
-                    },
-                    { 
-                        where: {id: res.id} 
-                    }) 
-                } catch (error) {
-                    console.log("Ошибка сохранения специальности: ", error.message)
-                }
-
-                
+                const res = await Specialist.update({ 
+                    specialization: JSON.stringify(arrSpec)  
+                },
+                { 
+                    where: {id: res.id} 
+                })           
 
             }, 2000)
-            
  
 
         return res.status(200).json({});
     } catch (e) {
+        console.log("Ошибка сохранения специальности: ", e.message)
         return res.status(500).json({})
     }
 })
