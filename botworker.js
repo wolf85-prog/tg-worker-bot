@@ -216,8 +216,15 @@ ${worklist.map(item =>' - ' + item.spec).join('\n')}`
                 let arrSpec =[]
                 const oldlist = JSON.parse(specObj.dataValues.specialization)
 
+                arrSpec = [...oldlist]
                 //массив специалистов
-                arrSpec = [...oldlist, ...worklist]
+                worklist.map(item => {
+                    const obj = {
+                        spec: item.spec,
+                        cat: item.cat,
+                    }
+                    arrSpec.push(obj)
+                })
                 console.log("arrSpec: ", arrSpec)
 
                 const res2 = await Specialist.update({ 
