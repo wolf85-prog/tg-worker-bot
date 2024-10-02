@@ -217,27 +217,11 @@ ${worklist.map(item =>' - ' + item.spec).join('\n')}`
                 //console.log("Oldlist: ", oldlist)
 
                 //массив специалистов
-                // oldlist.forEach(item => {               
-                //     const obj = {
-                //         name: item.name,
-                //     }
-                //     arrSpec.push(obj)
-                // });
-
-               
-
-                // worklist.forEach(item => {               
-                //     const obj = {
-                //         name: item.spec,
-                //     }
-                //     arrSpec.push(obj)
-                // });
 
                 arrSpec = [...oldlist, ...worklist]
 
-                //console.log("arrSpec: ", arrSpec)
+                console.log("arrSpec: ", arrSpec)
 
-                //await updateWorker(res[0].id, arrSpec)
 
                 const res = await Specialist.update({ 
                     specialization: JSON.stringify(arrSpec)  
