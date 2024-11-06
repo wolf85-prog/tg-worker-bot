@@ -132,6 +132,40 @@ const getOtkaz = require("./botworker/common/getOtkaz");
 const getOtkazTest = require("./botworker/common/getOtkazTest");
 
 
+function unDuplicateArraySingleValues(array) {
+    // Проверка, что это не пустой массив
+    if ((Array.isArray(array) || array instanceof Array) && array.length) {
+      // Возвращает массив уникальных значений
+      return [...new Set(array)];
+    } else {
+      // Это не заполненный массив,
+      // возвращаем переданное без изменений
+      return array;
+    }
+  }
+  
+  function unDuplicateArrayObjects(array, propertyName) {
+    if ((Array.isArray(array) || array instanceof Array)
+      && array.length
+      && typeof propertyName === 'string'
+      && propertyName.length) {
+      // Массив значений из ключа propertyName, который надо проверить
+      const objectValuesArrayFromKey = array.map(item => item[propertyName]);
+  
+      // Удалить дубли этих значений с помощью предыдущей функции
+      const uniqueValues = unDuplicateArraySingleValues(objectValuesArrayFromKey);
+  
+      // Вернуть массив только с уникальными объектами
+      return uniqueValues.map(
+        key => array.find(
+          item => item[propertyName] === key
+        )
+      );
+    } else {
+      return array;
+    }
+  }
+
 //--------------------------------------------------------------------------------------------------------
 //              REQUEST
 //--------------------------------------------------------------------------------------------------------
@@ -215,21 +249,16 @@ ${worklist.map(item =>' - ' + item.spec).join('\n')}`
             setTimeout(async()=> {
                 let arrSpec =[]
                 const oldlist = JSON.parse(specObj.dataValues.specialization)
-                console.log("oldlist: ", oldlist)
 
-                const newlist = worklist.map((item)=> {                 
-                    if (oldlist.find(o => o.spec !== item.spec)) {
-                        // const obj = {
-                        //     spec: item.spec,
-                        //     cat: item.cat,
-                        // }
-                        return item
-                    }
-                })
+                let oldlist2 = unDuplicateArrayObjects(arr_count, 'spec')
+                console.log("oldlist: ", unique2)
 
+
+                let newlist = unDuplicateArrayObjects(arr_count, 'spec')
                 console.log("newlist: ", newlist)
 
-                arrSpec = [...oldlist]
+
+                arrSpec = [...oldlist2]
                 //массив специалистов
                 newlist.map(item => {
                     const obj = {
