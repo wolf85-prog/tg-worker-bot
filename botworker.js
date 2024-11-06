@@ -252,7 +252,7 @@ ${worklist.map(item =>' - ' + item.spec).join('\n')}`
 
                 arrSpec = [...oldlist]
                 //массив специалистов
-                newlist.map(item => {
+                worklist.map(item => {
                     const obj = {
                         spec: item.spec,
                         cat: item.cat,
