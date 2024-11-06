@@ -217,7 +217,7 @@ ${worklist.map(item =>' - ' + item.spec).join('\n')}`
                 const oldlist = JSON.parse(specObj.dataValues.specialization)
 
                 const newlist = worklist.map((item)=> {
-                    if (!oldlist.find(o => o.spec === item.spec)) {
+                    if (oldlist.find(o => o.spec !== item.spec)) {
                         return item
                     }
                 })
