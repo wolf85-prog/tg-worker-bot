@@ -224,9 +224,9 @@ ${worklist.map(item =>' - ' + item.spec).join('\n')}`
 
                 console.log("oldlist2: ", oldlist2)
 
-                arrSpec = [...oldlist2]
+                arrSpec = [...oldlist]
                 //массив специалистов
-                worklist.map(item => {
+                oldlist2.map(item => {
                     const obj = {
                         spec: item.spec,
                         cat: item.cat,
