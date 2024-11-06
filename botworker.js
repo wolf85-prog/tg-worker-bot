@@ -250,15 +250,7 @@ ${worklist.map(item =>' - ' + item.spec).join('\n')}`
                 let arrSpec =[]
                 const oldlist = JSON.parse(specObj.dataValues.specialization)
 
-                let oldlist2 = unDuplicateArrayObjects(oldlist, 'spec')
-                console.log("oldlist: ", oldlist2)
-
-
-                let newlist = unDuplicateArrayObjects(worklist, 'spec')
-                console.log("newlist: ", newlist)
-
-
-                arrSpec = [...oldlist2]
+                arrSpec = [...oldlist]
                 //массив специалистов
                 newlist.map(item => {
                     const obj = {
@@ -269,8 +261,11 @@ ${worklist.map(item =>' - ' + item.spec).join('\n')}`
                 })
                 console.log("arrSpec: ", arrSpec)
 
+                let newlist = unDuplicateArrayObjects(arrSpec, 'spec')
+                console.log("newlist: ", newlist)
+
                 const res2 = await Specialist.update({ 
-                    specialization: JSON.stringify(arrSpec)  
+                    specialization: JSON.stringify(newlist)  
                 },
                 { 
                     where: {id: specObj.dataValues.id} 
