@@ -250,11 +250,11 @@ ${worklist.map(item =>' - ' + item.spec).join('\n')}`
                 let arrSpec =[]
                 const oldlist = JSON.parse(specObj.dataValues.specialization)
 
-                let oldlist2 = unDuplicateArrayObjects(arr_count, 'spec')
+                let oldlist2 = unDuplicateArrayObjects(oldlist, 'spec')
                 console.log("oldlist: ", unique2)
 
 
-                let newlist = unDuplicateArrayObjects(arr_count, 'spec')
+                let newlist = unDuplicateArrayObjects(worklist, 'spec')
                 console.log("newlist: ", newlist)
 
 
