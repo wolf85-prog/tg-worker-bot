@@ -215,9 +215,14 @@ ${worklist.map(item =>' - ' + item.spec).join('\n')}`
             setTimeout(async()=> {
                 let arrSpec =[]
                 const oldlist = JSON.parse(specObj.dataValues.specialization)
+                console.log("oldlist: ", oldlist)
 
-                const newlist = worklist.map((item)=> {
+                const newlist = worklist.map((item)=> {                 
                     if (oldlist.find(o => o.spec !== item.spec)) {
+                        // const obj = {
+                        //     spec: item.spec,
+                        //     cat: item.cat,
+                        // }
                         return item
                     }
                 })
