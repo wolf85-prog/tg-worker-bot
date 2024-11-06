@@ -216,7 +216,15 @@ ${worklist.map(item =>' - ' + item.spec).join('\n')}`
                 let arrSpec =[]
                 const oldlist = JSON.parse(specObj.dataValues.specialization)
 
-                arrSpec = [...oldlist]
+                const oldlist2 = worklist.map((item)=> {
+                    if (!oldlist.includes(item.spec)) {
+                        return item
+                    }
+                })
+
+                console.log("oldlist2: ", oldlist2)
+
+                arrSpec = [...oldlist2]
                 //массив специалистов
                 worklist.map(item => {
                     const obj = {
