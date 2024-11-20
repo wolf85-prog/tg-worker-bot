@@ -2894,72 +2894,73 @@ bot.on('message', async (msg) => {
         //const workerId = await getWorkerChatId(chatId)
 
         //специалист из БД
-        const workerId = await getWorkerChatId(chatId)
+        const worker = await getWorkerChatId(chatId)
+        const workerId = worker.dataValues.id.toString()
 
         //новый претендент
-        // const pretendent = {
-        //     projectId: projectId, 
-        //     //workerId: workerId, 
-        //     receiverId: chatId,  
-        //     accept: false, 
-        //     otclick: 1     
-        // }
+        const pretendent = {
+            projectId: projectId, 
+            workerId: workerId, 
+            receiverId: chatId,  
+            accept: false, 
+            otclick: 1     
+        }
 
-        // const exist = await Pretendent.findAll({
-        //     where: {
-        //         projectId: projectId,
-        //         workerId: workerId,
-        //     },
-        // })
+        const exist = await Pretendent.findOne({
+            where: {
+                projectId: projectId,
+                workerId: workerId,
+            },
+        })
 
-        //console.log("exist: ", exist)
+        console.log("exist: ", exist)
 
-        // if (exist.length === 0) {
-        //     const res = await Pretendent.create(pretendent)
-        //     console.log("Претендент в БД: ", res.dataValues.id)
+        if (!exist) {
+            const res = await Pretendent.create(pretendent)
+            console.log("Претендент в БД: ", res.dataValues.id)
 
-        // } else if (Math.abs(new Date(exist[exist.length-1]?.dataValues.updatedAt).getTime()-new Date().getTime()) > 3600000) { //3600000) {
-        //    const res = await Pretendent.create(pretendent)
-        //    console.log("Претендент еще раз добавлен в БД: ", res.dataValues.id)
+        } else if (Math.abs(new Date(exist[exist.length-1]?.dataValues.updatedAt).getTime()-new Date().getTime()) > 3600000) { //3600000) {
+           const res = await Pretendent.create(pretendent)
+           console.log("Претендент еще раз добавлен в БД: ", res.dataValues.id)
 
-        // } else {
+        } else {
 
-        //     console.log('Претендент уже создан в БД для этого проекта!')
+            console.log('Претендент уже создан в БД для этого проекта!')
             
-        //     //проверяем отклонил ли специалист заявку в прошлый раз 
-        //     if (exist[exist.length-1].dataValues.accept) {         
-        //         const res = await Pretendent.update({            
-        //             accept:  false,
-        //             otclick:  1
-        //         },
-        //         {
-        //             where: {
-        //                 projectId: projectId,
-        //                 workerId: workerId,
-        //             },
-        //         })
-        //     //или было нажато принять
-        //     } else {
-        //         const count = exist[exist.length-1].dataValues.otclick + 1
-        //         const res = await Pretendent.update({ 
-        //             otclick: count  
-        //         },
-        //         {
-        //             where: {
-        //                 projectId: projectId,
-        //                 workerId: workerId,
-        //             },
-        //         })
-        //     }         
-        // }
+            //проверяем отклонил ли специалист заявку в прошлый раз 
+            if (exist[exist.length-1].dataValues.accept) {         
+                const res = await Pretendent.update({            
+                    accept:  false,
+                    otclick:  1
+                },
+                {
+                    where: {
+                        projectId: projectId,
+                        workerId: workerId,
+                    },
+                })
+            //или было нажато принять
+            } else {
+                const count = exist[exist.length-1].dataValues.otclick + 1
+                const res = await Pretendent.update({ 
+                    otclick: count  
+                },
+                {
+                    where: {
+                        projectId: projectId,
+                        workerId: workerId,
+                    },
+                })
+            }         
+        }
 
 
-        // const exist2 = await Pretendent.findAll({
-        //     where: {
-        //         projectId: projectId,
-        //         workerId: workerId,
-        //     },
-        // })
+        const exist2 = await Pretendent.findAll({
+            where: {
+                projectId: projectId,
+                workerId: workerId,
+            },
+        })
 
         //if ((exist2[exist2.length-1].dataValues.otclick < 2) || ( Math.abs(new Date(exist[exist.length-1].dataValues.updatedAt).getTime()-new Date().getTime()) ) > 3600000) { //3600000) {
             
@@ -3134,9 +3135,9 @@ bot.on('message', async (msg) => {
     //нажатие на кнопку "Отклонить"
 //----------------------------------------------------------------
     if (data.startsWith('/cancel')) {
-        //const project = data.split(' ');
-        //console.log("project: ", data)
-        //const projectId = project[1]
+        const project = data.split(' ');
+        console.log("project: ", data)
+        const projectId = project[1]
 
         //отправить сообщение в админ-панель
         const convId = await sendMyMessage('Пользователь нажал кнопку "Отклонить" в рассылке', "text", chatId, messageId, null, true)
@@ -3156,68 +3157,69 @@ bot.on('message', async (msg) => {
 
 
         //специалист
-        // const workerId = await getWorkerChatId(chatId)
+        const worker = await getWorkerChatId(chatId)
+        const workerId = worker.dataValues.id.toString()
 
-        // //новый претендент
-        // const pretendent = {
-        //     projectId: projectId, 
-        //     workerId: workerId, 
-        //     receiverId: chatId,  
-        //     accept: true,  
-        //     cancel: 1    
-        // }
+        //новый претендент
+        const pretendent = {
+            projectId: projectId, 
+            workerId: workerId, 
+            receiverId: chatId,  
+            accept: true,  
+            cancel: 1    
+        }
 
-        // //найти претендента в БД
-        // const exist = await Pretendent.findOne({
-        //     where: {
-        //         projectId: projectId,
-        //         workerId: workerId,
-        //     },
-        // })
+        //найти претендента в БД
+        const exist = await Pretendent.findOne({
+            where: {
+                projectId: projectId,
+                workerId: workerId,
+            },
+        })
 
         
-        // if (exist) {
-        //     console.log('Претендент уже создан в БД для этого проекта!')
+        if (exist) {
+            console.log('Претендент уже создан в БД для этого проекта!')
 
-        //     //проверяем отклонил ли специалист заявку в прошлый раз
-        //     if (exist.dataValues.accept) {
-        //         const count = exist.dataValues.cancel + 1
-        //         const res = await Pretendent.update({ 
-        //             cancel: count  
-        //         },
-        //         {
-        //             where: {
-        //                 projectId: projectId,
-        //                 workerId: workerId,
-        //             },
-        //         })
-        //     //или было нажато принять
-        //     } else {
-        //         const res = await Pretendent.update({ 
-        //             accept: true,
-        //             cancel: 1 
-        //         },
-        //         {
-        //             where: {
-        //                 projectId: projectId,
-        //                 workerId: workerId,
-        //             },
-        //         })
-        //         console.log("Претендент обновлен в БД")
-        //     }
+            //проверяем отклонил ли специалист заявку в прошлый раз
+            if (exist.dataValues.accept) {
+                const count = exist.dataValues.cancel + 1
+                const res = await Pretendent.update({ 
+                    cancel: count  
+                },
+                {
+                    where: {
+                        projectId: projectId,
+                        workerId: workerId,
+                    },
+                })
+            //или было нажато принять
+            } else {
+                const res = await Pretendent.update({ 
+                    accept: true,
+                    cancel: 1 
+                },
+                {
+                    where: {
+                        projectId: projectId,
+                        workerId: workerId,
+                    },
+                })
+                console.log("Претендент обновлен в БД")
+            }
             
-        // } else {
-        //     const res = await Pretendent.create(pretendent)
-        //     console.log("Претендент в БД: ", res.dataValues.id)
-        //     console.log("Пользователь отклонил заявку!")
-        // }
+        } else {
+            const res = await Pretendent.create(pretendent)
+            console.log("Претендент в БД: ", res.dataValues.id)
+            console.log("Пользователь отклонил заявку!")
+        }
 
-        // const exist2 = await Pretendent.findOne({
-        //     where: {
-        //         projectId: projectId,
-        //         workerId: workerId,
-        //     },
-        // })
+        const exist2 = await Pretendent.findOne({
+            where: {
+                projectId: projectId,
+                workerId: workerId,
+            },
+        })
 
         // if ((exist2.dataValues.cancel < 2) || ( Math.abs(new Date(exist2.dataValues.createdAt).getTime()-new Date().getTime()) )>3600000) {
         //     //ноушен
