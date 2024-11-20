@@ -1546,7 +1546,7 @@ bot.on('message', async (msg) => {
             //новый претендент
             const pretendent = {
                 projectId: '5d2ac571-c32d-4dbe-9c0a-c2a7395363ef', 
-                workerId: workerId.dataValues.id, 
+                workerId: workerId.dataValues.id.toString(), 
                 receiverId: chatId,  
                 accept: false, 
                 otclick: 1   
