@@ -1,5 +1,5 @@
 require("dotenv").config();
-const {Specialist} = require('./botworker/models/models');
+const {Specialist} = require('../models/models');
 
 //получить id блока заданной страницы по tg_id
 module.exports = async function getWorkerChatId(id) {
