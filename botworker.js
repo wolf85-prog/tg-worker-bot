@@ -2871,9 +2871,9 @@ bot.on('message', async (msg) => {
     //нажатие на кнопку "Принять"
 //---------------------------------------------------------------------------
     if (data.startsWith('/accept')) {
-        // const project = data.split(' ');
-        // console.log("project: ", data)
-        // const projectId = project[1]  
+        const project = data.split(' ');
+        console.log("project: ", data)
+        const projectId = project[1]  
 
         //отправить сообщение в админ-панель
         const convId = await sendMyMessage('Пользователь нажал кнопку "Принять" в рассылке', "text", chatId, messageId, null, false)
