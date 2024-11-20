@@ -1552,7 +1552,6 @@ bot.on('message', async (msg) => {
                 otclick: 1   
             }
 
-            //сохраниь в бд ноушен
 
             const user = await Pretendent.findOne({
                 where: {
@@ -2893,6 +2892,9 @@ bot.on('message', async (msg) => {
 
         //специалист ID Notion
         //const workerId = await getWorkerChatId(chatId)
+
+        //специалист из БД
+        const workerId = await getWorkerChatId(chatId)
 
         //новый претендент
         // const pretendent = {
