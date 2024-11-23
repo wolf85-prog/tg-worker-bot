@@ -1,6 +1,7 @@
 const {Worker, Specialist} = require('../models/models')
 
 require("dotenv").config();
+const axios = require("axios");
 
 const {specData} = require('../data/specData');
 const host = process.env.HOST
