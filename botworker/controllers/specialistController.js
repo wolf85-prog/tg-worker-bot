@@ -135,7 +135,7 @@ class SpecialistController {
             if (text !== '') {
                 const url_send_msg = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${worker.dataValues.chatId}&parse_mode=html&text=${text.replace(/\n/g, '%0A')}`
 
-                console.log("Отправка текста...")
+                console.log("Отправка текста...", url_send_msg)
                 
                 sendTextToTelegram = await $host.get(url_send_msg)
       
