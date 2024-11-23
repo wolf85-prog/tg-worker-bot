@@ -14,6 +14,12 @@ const sharp = require('sharp');
 const {io} = require("socket.io-client");
 const socketUrl = process.env.SOCKET_APP_URL
 
+const chatTelegramId = process.env.CHAT_ID
+const { Op } = require('sequelize');
+const getProjectName = require('../common/getProjectName');
+const getWorkerChatId = require('../common/getWorkerChatId');
+const getWorkerId = require('../common/getWorkerId');
+
 class SpecialistController {
 
     async getSpecialist(req, res) {
@@ -87,6 +93,57 @@ class SpecialistController {
     //         return res.status(500).json(err);
     //     }
     // }
+
+
+    async sendOtkaz(req, res) {
+        const {id} = req.params 
+        const {projectId} = req.body
+
+        try {
+            const project = await getProjectName(projectId)
+            console.log("project: ", project)
+            const projectName = project.title
+
+            const worker = await getWorkerId(id)
+            console.log("worker: ", worker)
+
+
+            let hello = ''
+            const currentHours = new Date(new Date().getTime()+10800000).getHours()
+            if (currentHours >= 6 && currentHours < 12) {
+                hello = 'Доброе утро'
+            } else if (currentHours >= 12 && currentHours < 18) {
+                hello = 'Добрый день'
+            } else if (currentHours >= 0 && currentHours < 6) {
+                hello = 'Доброй ночи'
+            } else {
+                hello = 'Добрый вечер' //18-0
+            }                
+
+            //отправить сообщение в админ-панель
+            const text = `${hello}, ${user.dataValues.username}! 
+            Спасибо, что откликнулись на проект «${projectName}». В настоящий момент основной состав уже сформирован. 
+            Будем рады сотрудничеству на новых проектах!`
+        
+            const report = bot.sendMessage(chatId, text)
+                                
+            const convId = await sendMessageAdmin(text, "text", chatId, report.message_id, null, false)
+                                                            
+            // Подключаемся к серверу socket
+            let socket = io(socketUrl);
+            //socket.emit("addUser", chatId)
+            socket.emit("sendAdminSpec", {
+                senderId: chatTelegramId,
+                receiverId: chatId,
+                text: text,
+                convId: convId,
+                messageId: report.message_id,
+            })                                                                  
+            //return res.status(200).json(workers);
+        } catch (error) {
+            return res.status(500).json(error.message);
+        }
+    }
 
 }
 

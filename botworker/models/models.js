@@ -126,14 +126,6 @@ const Canceled = sequelize.define('canceled', {
     dateend: {type: DataTypes.STRING}, //конец
 })
 
-const ProjectNew = sequelize.define('projectnew', {
-    id: {type: DataTypes.STRING, primaryKey: true}, // id проекта
-    name: {type: DataTypes.STRING},  //название проекта
-    datestart: {type: DataTypes.STRING}, //начало
-    crmID: {type: DataTypes.STRING},
-    dateend: {type: DataTypes.STRING}, //конец
-})
-
 const Specialist = sequelize.define('specialist', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},  
     fio: {type: DataTypes.STRING},
@@ -164,6 +156,36 @@ const Specialist = sequelize.define('specialist', {
     deleted: {type: DataTypes.BOOLEAN},
     great: {type: DataTypes.BOOLEAN}, //hello
     block18: {type: DataTypes.BOOLEAN},
+})
+
+const ProjectNew = sequelize.define('projectnew', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    crmID: {type: DataTypes.STRING},
+    name: {type: DataTypes.STRING},  //название проекта
+    status: {type: DataTypes.STRING},
+    specifika: {type: DataTypes.STRING},
+    city: {type: DataTypes.STRING},
+    dateStart: {type: DataTypes.STRING},  //дата начала проекта
+    dateEnd: {type: DataTypes.STRING},  //дата окончания проекта
+    teh: {type: DataTypes.TEXT},
+    geo: {type: DataTypes.STRING},
+    managerId: {type: DataTypes.STRING},
+    managerId2: {type: DataTypes.STRING},
+    companyId: {type: DataTypes.STRING},
+    chatId: {type: DataTypes.STRING},
+    spec: {type: DataTypes.STRING},
+    comment: {type: DataTypes.TEXT},
+    equipment: {type: DataTypes.STRING},
+    number: {type: DataTypes.INTEGER},
+    teh1: {type: DataTypes.STRING},
+    teh2: {type: DataTypes.STRING},
+    teh3: {type: DataTypes.STRING},
+    teh4: {type: DataTypes.STRING},
+    teh5: {type: DataTypes.STRING},
+    teh6: {type: DataTypes.STRING},
+    teh7: {type: DataTypes.STRING},
+    teh8: {type: DataTypes.STRING},
+    deleted: {type: DataTypes.BOOLEAN},
 })
 
 module.exports = {

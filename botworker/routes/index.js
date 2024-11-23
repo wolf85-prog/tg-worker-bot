@@ -81,4 +81,6 @@ router.get('/specialist/get', specialistController.getSpecialist)
 router.get('/specialist/count/get/:count/:prev', specialistController.getSpecCount) //еще
 router.patch('/specialist/update/:id', specialistController.editSpecialist)
 
+router.post('/specialist/otkaz/send/:id', specialistController.sendOtkaz)
+
 module.exports = router

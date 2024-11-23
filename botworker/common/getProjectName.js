@@ -1,17 +1,11 @@
 require("dotenv").config();
-//notion api
-const { Client } = require("@notionhq/client");
-const notion = new Client({ auth: process.env.NOTION_API_KEY });
+const {ProjectNew} = require('../models/models')
 
-module.exports = async function getProjectName(projectId) {
+module.exports = async function getProjectName(id) {
     try {
-        const response = await notion.pages.retrieve({
-            page_id: projectId,           
-        });
+        const projects = await ProjectNew.findOne({where: {projectId: id}})
+        return res.status(200).json(projects);
 
-        //title: response.properties.Name.title[0]?.plain_text,  
-
-        return response;
     } catch (error) {
         console.error("Ошибка получения имени проекта ф-и getProjectName())", error.message, new Date().toISOString())
     }
