@@ -102,10 +102,10 @@ class SpecialistController {
         try {
             const project = await getProjectName(projectId)
             console.log("project: ", project)
-            const projectName = project.name
+            const projectName = project.dataValues.name
 
             const worker = await getWorkerId(id)
-            console.log("worker: ", worker)
+            console.log("worker: ", worker.dataValues.fio)
 
 
             let hello = ''
@@ -121,9 +121,9 @@ class SpecialistController {
             }                
 
             //отправить сообщение в админ-панель
-            // const text = `${hello}, ${user.dataValues.username}! 
-            // Спасибо, что откликнулись на проект «${projectName}». В настоящий момент основной состав уже сформирован. 
-            // Будем рады сотрудничеству на новых проектах!`
+            const text = `${hello}, ${worker.split(' ')[1]}! 
+            Спасибо, что откликнулись на проект «${projectName}». В настоящий момент основной состав уже сформирован. 
+            Будем рады сотрудничеству на новых проектах!`
         
             // const report = bot.sendMessage(chatId, text)
                                 
@@ -139,7 +139,7 @@ class SpecialistController {
             //     convId: convId,
             //     messageId: report.message_id,
             // })                                                                  
-            return res.status(200).json(worker);
+            return res.status(200).json(text);
         } catch (error) {
             return res.status(500).json(error.message);
         }
