@@ -112,7 +112,7 @@ class SpecialistController {
             const projectName = project.dataValues.name
 
             const worker = await getWorkerId(id)
-            console.log("worker: ", worker.dataValues)
+            //console.log("worker: ", worker.dataValues)
 
 
             let hello = ''
@@ -132,14 +132,14 @@ class SpecialistController {
             Спасибо, что откликнулись на проект «${projectName}». В настоящий момент основной состав уже сформирован. 
             Будем рады сотрудничеству на новых проектах!`
 
-            // if (text !== '') {
-            //     const url_send_msg = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${user}&parse_mode=html&text=${text.replace(/\n/g, '%0A')}`
+            if (text !== '') {
+                const url_send_msg = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${worker.dataValues.chatId}&parse_mode=html&text=${text.replace(/\n/g, '%0A')}`
 
-            //     console.log("Отправка текста...")
+                console.log("Отправка текста...")
                 
-            //     sendTextToTelegram = await $host.get(url_send_msg)
+                sendTextToTelegram = await $host.get(url_send_msg)
       
-            // }
+            }
         
             //const report = bot.sendMessage(chatId, text)
                                 
