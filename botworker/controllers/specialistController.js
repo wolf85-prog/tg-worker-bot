@@ -24,6 +24,7 @@ const { Op } = require('sequelize');
 const getProjectName = require('../common/getProjectName');
 const getWorkerChatId = require('../common/getWorkerChatId');
 const getWorkerId = require('../common/getWorkerId');
+const sendMessageAdmin = require("../common/sendMessageAdmin");
 
 const token = process.env.TELEGRAM_API_TOKEN_WORK
 
@@ -112,6 +113,7 @@ class SpecialistController {
             const projectName = project.dataValues.name
 
             const worker = await getWorkerId(id)
+            const chatId = worker.dataValues.chatId
             //console.log("worker: ", worker.dataValues)
 
 
@@ -129,33 +131,32 @@ class SpecialistController {
 
             //отправить сообщение в админ-панель
             const text = `${hello}, ${worker.dataValues.fio?.split(' ')[1]}! 
-            Спасибо, что откликнулись на проект «${projectName}». В настоящий момент основной состав уже сформирован. 
-            Будем рады сотрудничеству на новых проектах!`
-
+Спасибо, что откликнулись на проект «${projectName}». В настоящий момент основной состав уже сформирован. 
+Будем рады сотрудничеству на новых проектах!`
+            let sendTextToTelegram
             if (text !== '') {
-                const url_send_msg = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${worker.dataValues.chatId}&parse_mode=html&text=${text.replace(/\n/g, '%0A')}`
+                const url_send_msg = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&parse_mode=html&text=${text.replace(/\n/g, '%0A')}`
 
                 console.log("Отправка текста...", url_send_msg)
                 
                 sendTextToTelegram = await $host.get(url_send_msg)
-      
+                //const report = bot.sendMessage(chatId, text)
+                                    
+                const convId = await sendMessageAdmin(text, "text", chatId, sendTextToTelegram.message_id, null, false)
+                
+                // Подключаемся к серверу socket
+                let socket = io(socketUrl);
+                //socket.emit("addUser", chatId)
+                socket.emit("sendAdminSpec", {
+                    senderId: chatTelegramId,
+                    receiverId: chatId,
+                    text: text,
+                    convId: convId,
+                    messageId: sendTextToTelegram.message_id,
+                }) 
             }
-        
-            //const report = bot.sendMessage(chatId, text)
-                                
-            // const convId = await sendMessageAdmin(text, "text", chatId, report.message_id, null, false)
-                                                            
-            // // Подключаемся к серверу socket
-            // let socket = io(socketUrl);
-            // //socket.emit("addUser", chatId)
-            // socket.emit("sendAdminSpec", {
-            //     senderId: chatTelegramId,
-            //     receiverId: chatId,
-            //     text: text,
-            //     convId: convId,
-            //     messageId: report.message_id,
-            // })                                                                  
-            return res.status(200).json(text);
+                                                                
+            return res.status(200).json(sendTextToTelegram);
         } catch (error) {
             return res.status(500).json(error.message);
         }
