@@ -102,7 +102,7 @@ class SpecialistController {
         try {
             const project = await getProjectName(projectId)
             console.log("project: ", project)
-            const projectName = project.title
+            const projectName = project.name
 
             const worker = await getWorkerId(id)
             console.log("worker: ", worker)
