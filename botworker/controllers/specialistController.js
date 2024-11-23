@@ -121,25 +121,25 @@ class SpecialistController {
             }                
 
             //отправить сообщение в админ-панель
-            const text = `${hello}, ${user.dataValues.username}! 
-            Спасибо, что откликнулись на проект «${projectName}». В настоящий момент основной состав уже сформирован. 
-            Будем рады сотрудничеству на новых проектах!`
+            // const text = `${hello}, ${user.dataValues.username}! 
+            // Спасибо, что откликнулись на проект «${projectName}». В настоящий момент основной состав уже сформирован. 
+            // Будем рады сотрудничеству на новых проектах!`
         
-            const report = bot.sendMessage(chatId, text)
+            // const report = bot.sendMessage(chatId, text)
                                 
-            const convId = await sendMessageAdmin(text, "text", chatId, report.message_id, null, false)
+            // const convId = await sendMessageAdmin(text, "text", chatId, report.message_id, null, false)
                                                             
-            // Подключаемся к серверу socket
-            let socket = io(socketUrl);
-            //socket.emit("addUser", chatId)
-            socket.emit("sendAdminSpec", {
-                senderId: chatTelegramId,
-                receiverId: chatId,
-                text: text,
-                convId: convId,
-                messageId: report.message_id,
-            })                                                                  
-            //return res.status(200).json(workers);
+            // // Подключаемся к серверу socket
+            // let socket = io(socketUrl);
+            // //socket.emit("addUser", chatId)
+            // socket.emit("sendAdminSpec", {
+            //     senderId: chatTelegramId,
+            //     receiverId: chatId,
+            //     text: text,
+            //     convId: convId,
+            //     messageId: report.message_id,
+            // })                                                                  
+            return res.status(200).json(worker);
         } catch (error) {
             return res.status(500).json(error.message);
         }
