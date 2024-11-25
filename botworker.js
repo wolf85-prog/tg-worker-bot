@@ -1540,13 +1540,14 @@ bot.on('message', async (msg) => {
         if (text.startsWith('/getpretendent')) {
 
             //специалист
-            const workerId = await getWorkerChatId(chatId)
+            const worker = await getWorkerChatId(chatId)
+            const workerId = worker.dataValues.id.toString()
             console.log("workerId: ", workerId)
             
             //новый претендент
             const pretendent = {
-                projectId: '5d2ac571-c32d-4dbe-9c0a-c2a7395363ef', 
-                workerId: workerId.dataValues.id.toString(), 
+                projectId: '120', 
+                workerId: workerId, 
                 receiverId: chatId,  
                 accept: false, 
                 otclick: 1   
@@ -1555,8 +1556,8 @@ bot.on('message', async (msg) => {
 
             const user = await Pretendent.findOne({
                 where: {
-                    projectId: '5d2ac571-c32d-4dbe-9c0a-c2a7395363ef',
-                    workerId: workerId.dataValues.id.toString(),
+                    projectId: '120',
+                    workerId: workerId,
                 },
             })
             console.log("ID: ", user)
@@ -1573,8 +1574,8 @@ bot.on('message', async (msg) => {
                 },
                 {
                     where: {
-                        projectId: '5d2ac571-c32d-4dbe-9c0a-c2a7395363ef',
-                        workerId: workerId.dataValues.id.toString(),
+                        projectId: '120',
+                        workerId: workerId,
                     },
                 })
             }
