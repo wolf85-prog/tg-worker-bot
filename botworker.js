@@ -2903,7 +2903,7 @@ bot.on('message', async (msg) => {
             projectId: projectId, 
             workerId: workerId, 
             receiverId: chatId,  
-            accept: false, 
+            accept: true, 
             otclick: 1     
         }
 
@@ -3034,7 +3034,7 @@ bot.on('message', async (msg) => {
             projectId: projectId, 
             workerId: workerId, 
             receiverId: chatId,  
-            accept: true,  
+            accept: false,  
             cancel: 1    
         }
 
@@ -3065,8 +3065,9 @@ bot.on('message', async (msg) => {
             //или было нажато принять
             } else {
                 const res = await Pretendent.update({ 
-                    accept: true,
-                    cancel: 1 
+                    accept: false,
+                    cancel: 1,
+                    status: 'Передумал' 
                 },
                 {
                     where: {
@@ -3101,7 +3102,18 @@ bot.on('message', async (msg) => {
                     
                 //обновить специалиста в таблице Претенденты если есть
                 if (worker.length > 0) {
-                    await updatePretendent(worker?.id);
+                    //await updatePretendent(worker?.id);
+                    const res = await Pretendent.update({ 
+                        accept: false,
+                        //cancel: 1 
+                        status: 'Передумал'
+                    },
+                    {
+                        where: {
+                            projectId: projectId,
+                            workerId: worker?.id,
+                        },
+                    })
                 } else {
                     console.log("Специалист отсутствует в таблице Претенденты: ") 
                 } 
