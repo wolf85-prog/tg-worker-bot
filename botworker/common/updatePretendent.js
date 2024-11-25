@@ -1,7 +1,6 @@
 require("dotenv").config();
-//notion api
-const { Client } = require("@notionhq/client");
-const notion = new Client({ auth: process.env.NOTION_API_KEY });
+const sequelize = require('../connections/db')
+const {Pretendent} = require('../models/models')
 
 // текущая дата
 const dateNow = new Date();
@@ -9,36 +8,22 @@ const dateNow = new Date();
 //send data to notion
 module.exports = async function updatePretendent(pageId) {
     try {
-        const response = await notion.pages.update({
-            page_id: pageId,
-            icon: {
-                type: "emoji",
-                emoji: "❌"
+        let exist=await Pretendent.findOne( {where: {id: pageId}} )
+            
+        if(!exist){
+            return;
+        }
+
+        const {
+            status,
+        } = req.body
+
+        const response = await Pretendent.update(
+            { 
+                status,
             },
-            properties: {
-                "01. Чек-ин": {
-                    type: "title",
-                    title: [
-                        {
-                            type: 'text',
-                            text: {
-                                content: " ",
-                            },
-                            "annotations": {
-                                "bold": false,
-                                "italic": false,
-                                "strikethrough": false,
-                                "underline": false,
-                                "code": false,
-                                "color": "default"
-                            },
-                            "plain_text": " ",
-                            "href": null
-                        }
-                    ],
-                },
-            }
-        })
+        { where: {id: id} })
+
         //console.log(response)
         if (response) {
             console.log("Претендент обновлен!") //+ JSON.stringify(response))

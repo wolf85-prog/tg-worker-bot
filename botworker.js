@@ -61,8 +61,8 @@ const getBlocksP = require('./botworker/common/getBlocksP')
 const addPretendent = require('./botworker/common/addPretendent')
 const addPretendentAlt = require('./botworker/common/addPretendentAlt')
 const sendMyMessage = require('./botworker/common/sendMyMessage')
-const getWorkerPretendent = require('./botworker/common/getWorkerPretendent')
-const updatePretendent = require("./botworker/common/updatePretendent");
+const getWorkerPretendent = require('./botworker/common/getWorkerPretendent_old')
+const updatePretendent = require("./botworker/common/updatePretendent_old");
 const updatePretendent2 = require("./botworker/common/updatePretendent2");
 const getBlocks = require('./botworker/common/getBlocks')
 const getDatabaseId = require('./botworker/common/getDatabaseId')
@@ -3221,55 +3221,55 @@ bot.on('message', async (msg) => {
             },
         })
 
-        // if ((exist2.dataValues.cancel < 2) || ( Math.abs(new Date(exist2.dataValues.createdAt).getTime()-new Date().getTime()) )>3600000) {
-        //     //ноушен
-        //     const blockId = await getBlocksP(projectId);  
+        if ((exist2.dataValues.cancel < 2) || ( Math.abs(new Date(exist2.dataValues.createdAt).getTime()-new Date().getTime()) )>3600000) {
+            //ноушен
+            //const blockId = await getBlocksP(projectId);  
                 
-        //     //найти претендента в ноушене
-        //     if (blockId) {
-        //     const worker = await getWorkerPretendent(blockId, workerId, projectId)
-        //         //console.log("worker: ", worker)
+            //найти претендента в ноушене
+            //if (blockId) {
+                const worker = await getWorkerPretendent(chatId, projectId)
+                console.log("worker: ", worker)
                     
-        //         //обновить специалиста в таблице Претенденты если есть
-        //         if (worker.length > 0) {
-        //             await updatePretendent(worker[0]?.id);
-        //         } else {
-        //             console.log("Специалист отсутствует в таблице Претенденты: ") 
-        //         } 
-        //     }
+                //обновить специалиста в таблице Претенденты если есть
+                if (worker.length > 0) {
+                    await updatePretendent(worker?.id);
+                } else {
+                    console.log("Специалист отсутствует в таблице Претенденты: ") 
+                } 
+            //}
 
-        //     return bot.sendMessage(chatId, "Больше не показывать это предложение даже при условии, что ставка измениться в большую сторону?", {
-        //         reply_markup: ({
-        //             inline_keyboard: [
-        //                 [
-        //                     {"text": "Показать еще", callback_data:'/todocancel2'}, 
-        //                     {"text": "Не показывать", callback_data:`/todocancel3 ${projectId} ${chatId}`},
-        //                 ],
-        //             ]
-        //         })
-        //     }) 
-        // } else {
-        //     //отправить сообщение в админ-панель
-        //     //const convId = await sendMessageAdmin('Отправка заявки временно недоступна. Попробуйте позже', "text", chatId, null, null, true)
-        //     console.log("Время заявки (мин.) ", Math.round(Math.abs(new Date(exist2.dataValues.createdAt).getTime()-new Date().getTime())/60000))
-        //     return bot.sendMessage(chatId, 'Отправка заявки временно недоступна. Попробуйте позже (через ' + parseInt(60 - Math.round(Math.abs(new Date(exist2.dataValues.createdAt).getTime()-new Date().getTime())/60000)) + ' мин.)')
-        // }
+            return bot.sendMessage(chatId, "Больше не показывать это предложение даже при условии, что ставка измениться в большую сторону?", {
+                reply_markup: ({
+                    inline_keyboard: [
+                        [
+                            {"text": "Показать еще", callback_data:'/todocancel2'}, 
+                            {"text": "Не показывать", callback_data:`/todocancel3 ${projectId} ${chatId}`},
+                        ],
+                    ]
+                })
+            }) 
+        } else {
+            //отправить сообщение в админ-панель
+            //const convId = await sendMessageAdmin('Отправка заявки временно недоступна. Попробуйте позже', "text", chatId, null, null, true)
+            console.log("Время заявки (мин.) ", Math.round(Math.abs(new Date(exist2.dataValues.createdAt).getTime()-new Date().getTime())/60000))
+            return bot.sendMessage(chatId, 'Отправка заявки временно недоступна. Попробуйте позже (через ' + parseInt(60 - Math.round(Math.abs(new Date(exist2.dataValues.createdAt).getTime()-new Date().getTime())/60000)) + ' мин.)')
+        }
 
-        // if (exist2.dataValues.otclick > 1) {
-        //     //отправить сообщение в админ-панель
-        //     const convId = await sendMessageAdmin('Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить', "text", chatId, null, null, true)
+        if (exist2.dataValues.otclick > 1) {
+            //отправить сообщение в админ-панель
+            const convId = await sendMessageAdmin('Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить', "text", chatId, null, null, true)
 
-        //     // Подключаемся к серверу socket
-        //     socket.emit("sendAdminSpec", {
-        //         senderId: chatTelegramId,
-        //         receiverId: chatId,
-        //         text: 'Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить',
-        //         convId: convId,
-        //         messageId: null,
-        //         isBot: true,
-        //     })
-        //     return bot.sendMessage(chatId, 'Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить')
-        // } 
+            // Подключаемся к серверу socket
+            socket.emit("sendAdminSpec", {
+                senderId: chatTelegramId,
+                receiverId: chatId,
+                text: 'Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить',
+                convId: convId,
+                messageId: null,
+                isBot: true,
+            })
+            return bot.sendMessage(chatId, 'Вы ' + exist2.dataValues.cancel +'-й раз нажали кнопку Отклонить')
+        } 
 
         //отправить сообщение в админ-панель
         const text = 'Хорошо, тогда в следующий раз!'

@@ -4,7 +4,7 @@ require("dotenv").config();
 const sequelize = require('../connections/db')
 const {Canceled, Worker} = require('../models/models')
 const getProjectName = require("./getProjectName");
-const getWorkerPretendent = require('./getWorkerPretendent')
+const getWorkerPretendent = require('./getWorkerPretendent_old')
 const sendMessageAdmin = require("./sendMessageAdmin");
 
 //socket.io
