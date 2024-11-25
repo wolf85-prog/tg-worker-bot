@@ -3049,9 +3049,9 @@ bot.on('message', async (msg) => {
         
         if (exist) {
             console.log('Претендент уже создан в БД для этого проекта!')
-
+            console.log("Exist: ", exist.dataValues)
             //проверяем отклонил ли специалист заявку в прошлый раз
-            if (exist.dataValues.accept) {
+            if (!exist.dataValues.accept) {
                 const count = exist.dataValues.cancel + 1
                 const res = await Pretendent.update({ 
                     cancel: count  
