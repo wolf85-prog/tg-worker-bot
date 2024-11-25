@@ -3092,32 +3092,6 @@ bot.on('message', async (msg) => {
         })
 
         if ((exist2.dataValues.cancel < 2) || ( Math.abs(new Date(exist2.dataValues.createdAt).getTime()-new Date().getTime()) )>3600000) {
-            //ноушен
-            //const blockId = await getBlocksP(projectId);  
-                
-            //найти претендента в ноушене
-            //if (blockId) {
-                const worker = await getWorkerPretendent(chatId, projectId)
-                console.log("worker: ", worker)
-                    
-                //обновить специалиста в таблице Претенденты если есть
-                if (worker.length > 0) {
-                    //await updatePretendent(worker?.id);
-                    const res = await Pretendent.update({ 
-                        accept: false,
-                        //cancel: 1 
-                        status: 'Передумал'
-                    },
-                    {
-                        where: {
-                            projectId: projectId,
-                            workerId: workerId,
-                        },
-                    })
-                } else {
-                    console.log("Специалист отсутствует в таблице Претенденты: ") 
-                } 
-            //}
 
             return bot.sendMessage(chatId, "Больше не показывать это предложение даже при условии, что ставка измениться в большую сторону?", {
                 reply_markup: ({
