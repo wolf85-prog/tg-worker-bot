@@ -3111,7 +3111,7 @@ bot.on('message', async (msg) => {
                     {
                         where: {
                             projectId: projectId,
-                            workerId: worker?.id,
+                            workerId: workerId,
                         },
                     })
                 } else {
