@@ -78,6 +78,7 @@ const Pretendent = sequelize.define('pretendent', {
     otclick: {type: DataTypes.INTEGER}, //кол-во откликов (нажатий)
     cancel: {type: DataTypes.INTEGER}, //кол-во отмен (нажатий)
     blockDistrib: {type: DataTypes.BOOLEAN}, //блокировка рассылки по проекту
+    status: {type: DataTypes.STRING}, //статус передумал
 })
 
 const Projectcash = sequelize.define('projectcash', {

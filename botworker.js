@@ -3035,7 +3035,8 @@ bot.on('message', async (msg) => {
             workerId: workerId, 
             receiverId: chatId,  
             accept: false,  
-            cancel: 1    
+            cancel: 1,
+            status: 'Передумал'    
         }
 
         //найти претендента в БД
