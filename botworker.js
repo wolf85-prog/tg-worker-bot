@@ -61,8 +61,8 @@ const getBlocksP = require('./botworker/common/getBlocksP')
 const addPretendent = require('./botworker/common/addPretendent')
 const addPretendentAlt = require('./botworker/common/addPretendentAlt')
 const sendMyMessage = require('./botworker/common/sendMyMessage')
-const getWorkerPretendent = require('./botworker/common/getWorkerPretendent_old')
-const updatePretendent = require("./botworker/common/updatePretendent_old");
+const getWorkerPretendent = require('./botworker/common/getWorkerPretendent')
+const updatePretendent = require("./botworker/common/updatePretendent");
 const updatePretendent2 = require("./botworker/common/updatePretendent2");
 const getBlocks = require('./botworker/common/getBlocks')
 const getDatabaseId = require('./botworker/common/getDatabaseId')
@@ -2962,139 +2962,7 @@ bot.on('message', async (msg) => {
             },
         })
 
-        //if ((exist2[exist2.length-1].dataValues.otclick < 2) || ( Math.abs(new Date(exist[exist.length-1].dataValues.updatedAt).getTime()-new Date().getTime()) ) > 3600000) { //3600000) {
-            
-            //ноушен
-            //const blockIdP = await getBlocksP(projectId); 
-
-            //const projectDate = await getProjectName(projectId)
-            //console.log("projectDate: ", projectDate.properties["Дата"].date?.start) 
-           
-           // текущая дата
-            // const date = Date.now() + 10800000; //+3 часа
-            // const dateNow =new Date(date)
-            
-            //Добавить специалиста в таблицу Претенденты (Ноушен)
-            //найти претендента в ноушене
-//             if (blockIdP) {
-
-//                 await addPretendent(blockIdP, workerId, dateNow); //добавить претендента
-
-
-//                 let databaseBlock;
-//                 let allDate = [];
-//                 const blockId = await getBlocks(projectId);            
-//                 if (blockId) {
-//                     j = 0    
-//                     databaseBlock = await getDatabaseId(blockId);   
-//                 } 
-
-//                 //получить массив дат
-//                 if (databaseBlock) {   
-//                     databaseBlock.map((db) => {
-//                         allDate.push(db?.date)                        
-//                     })
-//                 }
-
-//                 //получить уникальные даты из Основного состава по возрастанию
-//                 const dates = [...allDate].filter((el, ind) => ind === allDate.indexOf(el));
-//                 const sortedDates = [...dates].sort((a, b) => {       
-//                     var dateA = new Date(a), dateB = new Date(b) 
-//                     return dateA-dateB  //сортировка по возрастающей дате  
-//                 })
-
-//                 const datesObj = []
-
-//                 sortedDates.map((item) =>{
-//                     const obj = {
-//                         date: item,
-//                     }
-//                     datesObj.push(obj)  
-//                 })
-
-//                 //новый интервал слежения статуса отказа
-//                 const otkaz = {
-//                     projectId: projectId, 
-//                     workerId: workerId, 
-//                     receiverId: chatId,  
-//                     blockId: blockIdP,
-//                     cancel: false, 
-//                     datestart: datesObj[0].date,  
-//                     dateend: datesObj[datesObj.length-1].date,
-//                 }
-
-//                 const res = await Canceled.create(otkaz)
-//                 //console.log("Слежение за статусом в БД: ", res.dataValues.id)
-
-//                 var minutCount = 0;
-//                 let i = 0;
-
-//                 // повторить с интервалом 2 минуту (проверка статуса претендента)
-//                 let timerId2 = setInterval(async() => {
-
-//                     const projectName = await getProjectName(projectId)
-                    
-//                     const worker = await getWorkerPretendent(blockId, workerId, projectName.properties.Name.title[0].plain_text)
-//                     console.log("worker status: ", worker?.status, chatId, projectName.properties.Name.title[0].plain_text)
-                    
-//                     const user = await Worker.findOne({where:{chatId: chatId.toString()}})
-
-//                     if (worker && worker.find(item => item.status === "Отказано")) {
-//                         const currentHours = new Date(new Date().getTime()+10800000).getHours()
-//                         console.log("worker (отказано): ", currentHours)
-
-//                         const res = await Canceled.update(
-//                         { 
-//                             cancel: true  
-//                         },
-//                         {
-//                             where: {
-//                                 projectId: projectId,
-//                                 workerId: workerId,
-//                             },
-//                         })
-
-//                         let hello = ''
-//                         if (currentHours >= 6 && currentHours < 12) {
-//                             hello = 'Доброе утро'
-//                         } else if (currentHours >= 12 && currentHours < 18) {
-//                             hello = 'Добрый день'
-//                         } else if (currentHours >= 0 && currentHours < 6) {
-//                             hello = 'Доброй ночи'
-//                         } else {
-//                             hello = 'Добрый вечер' //18-0
-//                         }
-
-//                         //отправить сообщение в админ-панель
-//                         const text = `${hello}, ${user.dataValues.username}! 
-// Спасибо, что откликнулись на проект «${projectName.properties.Name.title[0].plain_text}». В настоящий момент основной состав уже сформирован. 
-// Будем рады сотрудничеству на новых проектах!`
-//                         const convId = await sendMessageAdmin(text, "text", chatId, messageId, null, false)
-                        
-//                         // Подключаемся к серверу socket
-//                         socket.emit("sendAdminSpec", {
-//                             senderId: chatTelegramId,
-//                             receiverId: chatId,
-//                             text: text,
-//                             convId: convId,
-//                             messageId: messageId,
-//                         }) 
-//                         clearInterval(timerId2); 
-
-//                         return bot.sendMessage(chatId, text)
-
-//                     }
-
-//                     i++ //счетчик интервалов
-//                     minutCount = i
-//                 }, 240000) //4 минуты
-
-//                 // остановить вывод через 30 дней
-//                 if (minutCount == 43200) {
-//                     clearInterval(timerId2);
-//                 } 
-//             }
-
+        if ((exist2[exist2.length-1].dataValues.otclick < 2) || ( Math.abs(new Date(exist[exist.length-1].dataValues.updatedAt).getTime()-new Date().getTime()) ) > 3600000) { //3600000) {
 
             //отправить сообщение в админ-панель
             const text = 'Заявка принята! Мы свяжемся с вами в ближайшее время.'
@@ -3111,23 +2979,23 @@ bot.on('message', async (msg) => {
             })                        
              
             return bot.sendMessage(chatId, text)
-        //} 
+        } 
 
-        // if (exist2[exist2.length-1].dataValues.otclick > 1) {
-        //     //отправить сообщение в админ-панель
-        //     const convId = await sendMessageAdmin('Вы ' + exist2[exist2.length-1].dataValues.otclick + '-й раз откликнулись на заявку', "text", chatId, null, null, false)
+        if (exist2[exist2.length-1].dataValues.otclick > 1) {
+            //отправить сообщение в админ-панель
+            const convId = await sendMessageAdmin('Вы ' + exist2[exist2.length-1].dataValues.otclick + '-й раз откликнулись на заявку', "text", chatId, null, null, false)
 
-        //     // Подключаемся к серверу socket
-        //     socket.emit("sendAdminSpec", {
-        //         senderId: chatTelegramId,
-        //         receiverId: chatId,
-        //         text: 'Вы ' + exist2[exist2.length-1].dataValues.otclick + '-й раз откликнулись на заявку',
-        //         convId: convId,
-        //         messageId: null,
-        //         isBot: false,
-        //     })
-        //     return bot.sendMessage(chatId, 'Вы ' + exist2[exist2.length-1].dataValues.otclick + '-й раз откликнулись на заявку')
-        // }       
+            // Подключаемся к серверу socket
+            socket.emit("sendAdminSpec", {
+                senderId: chatTelegramId,
+                receiverId: chatId,
+                text: 'Вы ' + exist2[exist2.length-1].dataValues.otclick + '-й раз откликнулись на заявку',
+                convId: convId,
+                messageId: null,
+                isBot: false,
+            })
+            return bot.sendMessage(chatId, 'Вы ' + exist2[exist2.length-1].dataValues.otclick + '-й раз откликнулись на заявку')
+        }       
 
         
     }
