@@ -2926,10 +2926,10 @@ bot.on('message', async (msg) => {
 
         } else {
 
-            console.log('Претендент уже создан в БД для этого проекта!')
+            console.log('Претендент уже создан в БД для этого проекта!', exist[exist.length-1])
             
             //проверяем отклонил ли специалист заявку в прошлый раз 
-            if (!exist[exist.length-1].dataValues.accept) {         
+            if (exist[exist.length-1].dataValues.accept === false) {         
                 const res = await Pretendent.update({            
                     accept:  true,
                     otclick:  1
