@@ -2932,7 +2932,8 @@ bot.on('message', async (msg) => {
             if (exist[exist.length-1].dataValues.accept === false) {         
                 const res = await Pretendent.update({            
                     accept:  true,
-                    otclick:  1
+                    otclick:  1,
+                    status: ''
                 },
                 {
                     where: {
