@@ -2880,7 +2880,7 @@ bot.on('message', async (msg) => {
 
         // Подключаемся к серверу socket
         let socket = io(socketUrl);
-        socket.emit("addUser", chatId)
+        //socket.emit("addUser", chatId)
 
         socket.emit("sendMessageSpec", {
             senderId: chatId,
@@ -2907,7 +2907,7 @@ bot.on('message', async (msg) => {
             otclick: 1     
         }
 
-        const exist = await Pretendent.findAll({
+        const exist = await Pretendent.findOne({
             where: {
                 projectId: projectId,
                 workerId: workerId,
