@@ -3035,7 +3035,7 @@ bot.on('message', async (msg) => {
             projectId: projectId, 
             workerId: workerId, 
             receiverId: chatId,  
-            accept: false,  
+            accept: true,  
             cancel: 1,
             status: 'Передумал'    
         }
