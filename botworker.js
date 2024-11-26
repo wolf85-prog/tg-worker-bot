@@ -2907,7 +2907,7 @@ bot.on('message', async (msg) => {
             otclick: 1     
         }
 
-        const exist = await Pretendent.findOne({
+        const exist = await Pretendent.findAll({
             where: {
                 projectId: projectId,
                 workerId: workerId,
