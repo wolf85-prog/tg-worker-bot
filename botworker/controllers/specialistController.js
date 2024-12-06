@@ -130,7 +130,7 @@ class SpecialistController {
             }                
 
             //отправить сообщение в админ-панель
-            const text = `${hello}, ${worker.dataValues.fio?.split(' ')[1]}! 
+            const text = `${hello}, ${worker.dataValues.fio?.split(' ')[1] ? worker.dataValues.fio?.split(' ')[1] : worker.dataValues.fio}! 
 Спасибо, что откликнулись на проект «${projectName}». В настоящий момент основной состав уже сформирован. 
 Будем рады сотрудничеству на новых проектах!`
             let sendTextToTelegram
