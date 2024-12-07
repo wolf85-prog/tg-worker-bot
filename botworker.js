@@ -2907,7 +2907,8 @@ bot.on('message', async (msg) => {
             otclick: 1     
         }
 
-        const exist = await Pretendent.findOne({
+        let exist = []
+        exist = await Pretendent.findAll({
             where: {
                 projectId: projectId,
                 workerId: workerId,
@@ -2916,9 +2917,9 @@ bot.on('message', async (msg) => {
 
         console.log("exist: ", exist)
 
-        if (!exist) {
+        if (exist.length === 0) {
             const res = await Pretendent.create(pretendent)
-            console.log("Претендент в БД: ", res.dataValues.id)
+            console.log("Претендент добавлен в БД: ", res.dataValues.id)
 
         } else if (Math.abs(new Date(exist[exist.length-1]?.dataValues.updatedAt).getTime()-new Date().getTime()) > 3600000) { //3600000) {
            const res = await Pretendent.create(pretendent)
