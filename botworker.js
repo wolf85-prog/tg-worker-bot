@@ -3036,10 +3036,11 @@ bot.on('message', async (msg) => {
             projectId: projectId, 
             workerId: workerId, 
             receiverId: chatId,  
-            accept: true,  
+            accept: false,  
             cancel: 1,
-            status: 'Передумал'    
+            //status: 'Передумал'    
         }
+
 
         //найти претендента в БД
         const exist = await Pretendent.findOne({
