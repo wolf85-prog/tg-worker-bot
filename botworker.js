@@ -3069,7 +3069,7 @@ bot.on('message', async (msg) => {
             //или было нажато принять
             } else {
                 const res = await Pretendent.update({ 
-                    accept: false,
+                    accept: true,
                     cancel: 1,
                     status: 'Передумал' 
                 },
