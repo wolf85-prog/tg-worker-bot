@@ -1650,69 +1650,6 @@ bot.on('message', async (msg) => {
             }
         }
 
-        if (text === '/addworker') {
-            //сохраниь в бд ноушен
-            const notion = await getWorkerNotion(910483267)
-            console.log("notion specialist: ", notion)
-            
-            if (notion.length === 0) {
-                console.log("Добавление специалиста...")
-                //добавить специалиста
-                const workerId = await addWorker("Вето Виталий", 910483267, '2002-01-01', '+7 (922) 150-34-81', [], '', null)
-                console.log('Специалист успешно добавлен в Notion!', workerId)
-
-                
-            } else {
-                console.log('Специалист уже существует в Notion!')
-                const currentMonth = new Date().getMonth() + 1
-                    let urlAvatar = ''
-                    
-                    if (currentMonth === 4) {
-                        //апрель
-                        urlAvatar = 'https://proj.uley.team/upload/2024-04-23T08:08:31.547Z.jpg'
-                    } 
-                    else if (currentMonth === 5) {
-                        //май
-                        urlAvatar = 'https://proj.uley.team/upload/2024-04-23T08:09:19.513Z.jpg' 
-                    } 
-                    else if (currentMonth === 6) {
-                        //июнь
-                        urlAvatar = 'https://proj.uley.team/upload/2024-06-06T07:51:23.345Z.jpg'
-                    }
-                    else if (currentMonth === 7) {
-                        //июль
-                        urlAvatar = 'https://proj.uley.team/upload/2024-06-06T07:52:17.472Z.jpg'
-                    }
-                    else if (currentMonth === 8) {
-                        //август
-                        urlAvatar = 'https://proj.uley.team/upload/2024-06-06T07:53:06.699Z.jpg'
-                    }
-                    else if (currentMonth === 9) {
-                        //сентябрь
-                        urlAvatar = 'https://proj.uley.team/upload/2024-06-06T07:54:00.494Z.jpg'
-                    }
-                    else if (currentMonth === 10) {
-                        //октябрь
-                        urlAvatar = 'https://proj.uley.team/upload/2024-06-06T07:54:13.965Z.jpg'
-                    }
-                    else if (currentMonth === 11) {
-                        //ноябрь
-                        urlAvatar = 'https://proj.uley.team/upload/2024-06-06T07:54:28.857Z.jpg'
-                    }
-                    else if (currentMonth === 12) {
-                        //декабрь
-                        urlAvatar = 'https://proj.uley.team/upload/2024-06-06T07:54:44.499Z.jpg'
-                    }
-                    
-
-                //добавить аватар
-               //const res = await addAvatar(notion[0].id, urlAvatar)
-               //console.log("res upload avatar: ", res)
-
-
-
-            }
-        }
 
         if (text === '/startpretendent') {
             const text = 'Добрый день, для добавления вас в чат проекта необходимо ...'
