@@ -1930,7 +1930,7 @@ bot.on('message', async (msg) => {
         
         if (text === '/getdelworker') {
             //получить все запуски сканирования отказов
-            const delWorker = await Worker.update(
+            const delWorker = await Specialist.update(
                 { 
                     deleted: null,
                 },
