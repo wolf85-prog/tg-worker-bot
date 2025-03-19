@@ -84,8 +84,6 @@ const sequelize = require('./botworker/connections/db')
 const {UserBot, Message, Conversation, Worker, Pretendent, 
     Projectcash, Smetacash, Canceled, ProjectNew, Specialist} = require('./botworker/models/models');
 const addWorker = require("./botworker/common/addWorker");
-const getWorkerNotion = require("./botworker/common/getWorkerNotion");
-const getWorkerChatId= require("./botworker/common/getWorkerChatId");
 const addPassport = require("./botworker/common/addPassport");
 const addImage = require("./botworker/common/addImage");
 const updateWorker = require("./botworker/common/updateWorker");
