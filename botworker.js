@@ -85,6 +85,7 @@ const {UserBot, Message, Conversation, Worker, Pretendent,
     Projectcash, Smetacash, Canceled, ProjectNew, Specialist} = require('./botworker/models/models');
 const addWorker = require("./botworker/common/addWorker");
 const getWorkerNotion = require("./botworker/common/getWorkerNotion");
+const getWorkerChatId= require("./botworker/common/getWorkerChatId");
 const addPassport = require("./botworker/common/addPassport");
 const addImage = require("./botworker/common/addImage");
 const updateWorker = require("./botworker/common/updateWorker");
@@ -94,6 +95,7 @@ const getSmetaAll = require("./botworker/http/getSmetaAll");
 const getStavka = require("./botworker/http/stavkaAPI");
 const getWorkersAll= require("./botworker/http/getWorkersAll");
 const getUserbotsAll = require("./botworker/http/getUserbotsAll");
+
 
 app.use(statusMonitor({
     title: 'Бот специалистов',
@@ -330,16 +332,16 @@ app.post('/web-passport', async (req, res) => {
                             
 Адрес регистрации: ${pasAdress}` 
 
-            const worker = await getWorkerNotion(user?.id)
-            console.log("passport: ", worker[0].passport)
+            const worker = await getWorkerChatId(user?.id)
+            console.log("passport: ", worker.passport)
 
             //сохраниь в бд ноушен
-            if (!worker[0].passport) {
+            if (!worker.passport) {
                 console.log("Начинаю сохранять паспорт...")
-                const res_pas = await addPassport(pass_str, worker[0]?.id)
+                const res_pas = await addPassport(pass_str, worker?.id)
                 console.log("add_pas: ", res_pas)
             
-                const res_img = await addImage(image, worker[0]?.id)
+                const res_img = await addImage(image, worker?.id)
                 console.log("add_image: ", res_img)
             } else {
                 console.log("Паспорт уже существует!")
