@@ -93,6 +93,7 @@ const getSmetaAll = require("./botworker/http/getSmetaAll");
 const getStavka = require("./botworker/http/stavkaAPI");
 const getWorkersAll= require("./botworker/http/getWorkersAll");
 const getUserbotsAll = require("./botworker/http/getUserbotsAll");
+const getSpecialistAll= require("./botworker/http/getSpecialistAll");
 
 
 app.use(statusMonitor({
@@ -2172,6 +2173,42 @@ bot.on('message', async (msg) => {
                     }, 500 * ++i)
                 }               
             })
+        }
+
+        if (text === '/copypassport') {
+
+            try {
+                console.log("START GET WORKERS ALL...")
+                const workers = await getSpecialistAll()
+                console.log("workers: ", workers.length)  
+
+                // 1
+                // console.log("START UPDATE WORKERS")
+                
+                // 2
+                console.log("START UPDATE PASSPORT")
+                workers.map(async(worker, i)=> {
+                    let specArr = []
+                    //setTimeout(async()=> {  
+                        //обновить бд
+                        const res = await Specialist.update({ 
+                            surname: worker.fio.split(' ')[0],
+                        },
+                        { 
+                            where: {id: worker.id} 
+                        })
+
+                        if (res) {
+                            console.log("Специалиста пасспорт обновлен! ", i, url) 
+                        }else {
+                            console.log("Ошибка обновления! ", worker.chatId) 
+                        }            
+
+                    //}, 6000 * ++i) //1206000 * ++i)   
+                })     
+            } catch (error) {
+                console.log(error.message)
+            }
         }
 //------------------------------------------------------------------------------------------------
 //обработка контактов
