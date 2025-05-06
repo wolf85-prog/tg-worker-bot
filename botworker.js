@@ -2222,7 +2222,7 @@ bot.on('message', async (msg) => {
                             //Выдан
                             const resStr5 = worker.passport.split('\n')[4]
                             if (resStr5) {
-                                if (resStr5.includes('выдан')) {
+                                if (resStr5.includes('Выдан')) {
                                     //name
                                     //обновить бд
                                     const res = await Specialist.update({ 
@@ -2233,7 +2233,7 @@ bot.on('message', async (msg) => {
                                     })
                                     
                                     i++
-                                    console.log(i, resStr5.split(': ')[1]) 
+                                    console.log(i, resStr5) 
                                 }
                                 
                             // }
