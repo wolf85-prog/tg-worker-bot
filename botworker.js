@@ -2201,26 +2201,27 @@ bot.on('message', async (msg) => {
                             // })  
                         }
                         else {
-                            const res = worker.passport.split('\n')[3]
-                            if (res.includes('Дата рождения')) {
-                                //name
-                                //обновить бд
-                                // const res = await Specialist.update({ 
-                                //     surname: worker.passport.split(' ')[0],
-                                //     name: worker.passport.split(' ')[1],
-                                //     secondname: worker.passport.split(' ')[2],
-                                // },
-                                // { 
-                                //     where: {id: worker.id} 
-                                // })
-                                
-                                i++
-                                console.log(i, res.split(': ')[1]) 
+                            const res = worker.passport.split('\n')[4]
+                            if (res) {
+                                if (res.includes('Выдан')) {
+                                //if (res.includes('Дата рождения')) {
+                                    //name
+                                    //обновить бд
+                                    // const res = await Specialist.update({ 
+                                    //     surname: worker.passport.split(' ')[0],
+                                    //     name: worker.passport.split(' ')[1],
+                                    //     secondname: worker.passport.split(' ')[2],
+                                    // },
+                                    // { 
+                                    //     where: {id: worker.id} 
+                                    // })
+                                    
+                                    i++
+                                    console.log(i, res.split(': ')[1]) 
+                                }
                             }
-                            
+    
                         }
-                                 
-
                     }  
                 })     
             } catch (error) {
