@@ -2195,36 +2195,25 @@ bot.on('message', async (msg) => {
                             const res = await Specialist.update({ 
                                 passeria: worker.passport.split(' ')[0] + worker.passport.split(' ')[1],
                                 pasnumber: worker.passport.split(' ')[2],
-                                // passeria: null,
-                                // pasnumber: null,
                             },
                             { 
                                 where: {id: worker.id} 
-                            })
-
-                            // if (res) {
-                            //     console.log("Специалиста пасспорт обновлен! ") 
-                            // }else {
-                            //     console.log("Ошибка обновления! ", worker.id) 
-                            // }   
+                            })  
                         }
                         else {
                             //name
                             //обновить бд
-                            const res = await Specialist.update({ 
-                                surname: worker.passport.split(' ')[0],
-                                name: worker.passport.split(' ')[1],
-                                secondname: worker.passport.split(' ')[2],
-                            },
-                            { 
-                                where: {id: worker.id} 
-                            })
-
-                            // if (res) {
-                            //     console.log("Специалиста пасспорт обновлен! ") 
-                            // }else {
-                            //     console.log("Ошибка обновления! ", worker.id) 
-                            // }     
+                            // const res = await Specialist.update({ 
+                            //     surname: worker.passport.split(' ')[0],
+                            //     name: worker.passport.split(' ')[1],
+                            //     secondname: worker.passport.split(' ')[2],
+                            // },
+                            // { 
+                            //     where: {id: worker.id} 
+                            // })
+                            
+                            const res = worker.passport.split('\n')[1]
+                            console.log(res)
                         }
                                  
 
