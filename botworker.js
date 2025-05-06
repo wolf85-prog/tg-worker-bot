@@ -2182,15 +2182,11 @@ bot.on('message', async (msg) => {
                 const workers = await getSpecialistAll()
                 console.log("workers: ", workers.length)  
 
-                // 1
-                // console.log("START UPDATE WORKERS")
-                
-                // 2
                 console.log("START UPDATE PASSPORT")
                 workers.map(async(worker, i)=> {
                     let specArr = []
                     if (worker.passport) {  
-                        let matches = val.match(/\d+/g);
+                        let matches = worker.passport.match(/\d+/g);
                         if (matches != null) {
                             //number
                             //обновить бд
