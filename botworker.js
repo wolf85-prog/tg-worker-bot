@@ -2213,7 +2213,7 @@ bot.on('message', async (msg) => {
                             // })
                             
                             const res = worker.passport.split('\n')[3]
-                            console.log(res)
+                            console.log(i, res)
                         }
                                  
 
