@@ -2201,24 +2201,114 @@ bot.on('message', async (msg) => {
                             // })  
                         }
                         else {
-                            const resStr = worker.passport.split('\n')[4]
-                            if (resStr) {
+                            //Дата рождения
+                            // const resStr = worker.passport.split('\n')[4]
+                            // if (resStr) {
+                            //     if (res.includes('Дата рождения')) {
+                            //         //name
+                            //         //обновить бд
+                            //         const res = await Specialist.update({ 
+                            //             age: resStr.split(': ')[1],
+                            //         },
+                            //         { 
+                            //             where: {id: worker.id} 
+                            //         })
+                                    
+                            //         i++
+                            //         console.log(i, resStr.split(': ')[1]) 
+                            //     }
+                                
+                            // }
+                            //Выдан
+                            const resStr5 = worker.passport.split('\n')[5]
+                            if (resStr5) {
                                 if (res.includes('Выдан')) {
-                                //if (res.includes('Дата рождения')) {
                                     //name
                                     //обновить бд
                                     const res = await Specialist.update({ 
-                                        paskemvidan: resStr.split(': ')[1],
+                                        paskemvidan: resStr5.split(': ')[1],
                                     },
                                     { 
                                         where: {id: worker.id} 
                                     })
                                     
                                     i++
-                                    console.log(i, resStr.split(': ')[1]) 
+                                    console.log(i, resStr5.split(': ')[1]) 
                                 }
+                                
                             }
-    
+                            //Дата выдачи
+                            // const resStr6 = worker.passport.split('\n')[6]
+                            // if (resStr6) {
+                            //     if (res.includes('Дата выдачи')) {
+                            //         //name
+                            //         //обновить бд
+                            //         const res = await Specialist.update({ 
+                            //             pasdatevidan: resStr6.split(': ')[1],
+                            //         },
+                            //         { 
+                            //             where: {id: worker.id} 
+                            //         })
+                                    
+                            //         i++
+                            //         console.log(i, resStr6.split(': ')[1]) 
+                            //     }
+                                
+                            // }
+                            //Код подразделения
+                            // const resStr7 = worker.passport.split('\n')[7]
+                            // if (resStr7) {
+                            //     if (res.includes('Код подразделения')) {
+                            //         //name
+                            //         //обновить бд
+                            //         const res = await Specialist.update({ 
+                            //             pascode: resStr7.split(': ')[1],
+                            //         },
+                            //         { 
+                            //             where: {id: worker.id} 
+                            //         })
+                                    
+                            //         i++
+                            //         console.log(i, resStr7.split(': ')[1]) 
+                            //     }
+                                
+                            // }
+                            //Место рождения
+                            // const resStr8 = worker.passport.split('\n')[8]
+                            // if (resStr8) {
+                            //     if (res.includes('Место рождения')) {
+                            //         //name
+                            //         //обновить бд
+                            //         const res = await Specialist.update({ 
+                            //             pasbornplace: resStr8.split(': ')[1],
+                            //         },
+                            //         { 
+                            //             where: {id: worker.id} 
+                            //         })
+                                    
+                            //         i++
+                            //         console.log(i, resStr8.split(': ')[1]) 
+                            //     }
+                                
+                            // }
+                            //Адрес регистрации
+                            // const resStr9 = worker.passport.split('\n')[9]
+                            // if (resStr9) {
+                            //     if (res.includes('Адрес регистрации')) {
+                            //         //name
+                            //         //обновить бд
+                            //         const res = await Specialist.update({ 
+                            //             pasaddress: resStr9.split(': ')[1],
+                            //         },
+                            //         { 
+                            //             where: {id: worker.id} 
+                            //         })
+                                    
+                            //         i++
+                            //         console.log(i, resStr9.split(': ')[1]) 
+                            //     }
+                                
+                            // }
                         }
                     }  
                 })     
