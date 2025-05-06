@@ -2187,15 +2187,16 @@ bot.on('message', async (msg) => {
                     let specArr = []
                     if (worker.passport) {  
                         let matches = worker.passport.split(' ')[0].match(/\d+/g);
-                        console.log("matches: ", matches)
-                        //if (matches != null) {
+                        //
+                        if (matches != null) {
                             //number
+                            console.log("matches: ", matches)
                             //обновить бд
                             const res = await Specialist.update({ 
-                                // passeria: worker.passport.split(' ')[0] + ' '+ worker.passport.split(' ')[1],
-                                // pasnumber: worker.passport.split(' ')[2],
-                                passeria: null,
-                                pasnumber: null,
+                                passeria: worker.passport.split(' ')[0] + worker.passport.split(' ')[1],
+                                pasnumber: worker.passport.split(' ')[2],
+                                // passeria: null,
+                                // pasnumber: null,
                             },
                             { 
                                 where: {id: worker.id} 
@@ -2206,7 +2207,7 @@ bot.on('message', async (msg) => {
                             // }else {
                             //     console.log("Ошибка обновления! ", worker.id) 
                             // }   
-                        //}
+                        }
                         // else {
                         //     //name
                         //     //обновить бд
