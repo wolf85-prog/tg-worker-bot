@@ -2222,7 +2222,7 @@ bot.on('message', async (msg) => {
                             //Выдан
                             const resStr5 = worker.passport.split('\n')[5]
                             if (resStr5) {
-                                if (resStr5.includes('Выдан')) {
+                                if (resStr5.includes('Кем выдан')) {
                                     //name
                                     //обновить бд
                                     const res = await Specialist.update({ 
