@@ -2201,19 +2201,23 @@ bot.on('message', async (msg) => {
                             // })  
                         }
                         else {
-                            //name
-                            //обновить бд
-                            // const res = await Specialist.update({ 
-                            //     surname: worker.passport.split(' ')[0],
-                            //     name: worker.passport.split(' ')[1],
-                            //     secondname: worker.passport.split(' ')[2],
-                            // },
-                            // { 
-                            //     where: {id: worker.id} 
-                            // })
-                            
                             const res = worker.passport.split('\n')[3]
-                            console.log(i, res)
+                            if (res.includes('Дата рождения')) {
+                                //name
+                                //обновить бд
+                                // const res = await Specialist.update({ 
+                                //     surname: worker.passport.split(' ')[0],
+                                //     name: worker.passport.split(' ')[1],
+                                //     secondname: worker.passport.split(' ')[2],
+                                // },
+                                // { 
+                                //     where: {id: worker.id} 
+                                // })
+                                
+                                i++
+                                console.log(i, res.split(': ')[1]) 
+                            }
+                            
                         }
                                  
 
