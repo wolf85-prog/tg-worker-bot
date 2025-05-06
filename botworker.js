@@ -2189,22 +2189,46 @@ bot.on('message', async (msg) => {
                 console.log("START UPDATE PASSPORT")
                 workers.map(async(worker, i)=> {
                     let specArr = []
-                    //setTimeout(async()=> {  
-                        //обновить бд
-                        const res = await Specialist.update({ 
-                            surname: worker.fio.split(' ')[0],
-                        },
-                        { 
-                            where: {id: worker.id} 
-                        })
+                    if (worker.passport) {  
+                        let matches = val.match(/\d+/g);
+                        if (matches != null) {
+                            //number
+                            //обновить бд
+                            const res = await Specialist.update({ 
+                                passeria: worker.passport.split(' ')[0] + worker.passport.split(' ')[1],
+                                pasnumber: worker.passport.split(' ')[2],
+                            },
+                            { 
+                                where: {id: worker.id} 
+                            })
 
-                        if (res) {
-                            console.log("Специалиста пасспорт обновлен! ", i, url) 
-                        }else {
-                            console.log("Ошибка обновления! ", worker.chatId) 
-                        }            
+                            if (res) {
+                                console.log("Специалиста пасспорт обновлен! ", i, url) 
+                            }else {
+                                console.log("Ошибка обновления! ", worker.chatId) 
+                            }   
+                        }
+                        else {
+                            //name
+                            //обновить бд
+                            const res = await Specialist.update({ 
+                                surname: worker.passport.split(' ')[0],
+                                name: worker.passport.split(' ')[1],
+                                secondname: worker.passport.split(' ')[2],
+                            },
+                            { 
+                                where: {id: worker.id} 
+                            })
 
-                    //}, 6000 * ++i) //1206000 * ++i)   
+                            if (res) {
+                                console.log("Специалиста пасспорт обновлен! ", i, url) 
+                            }else {
+                                console.log("Ошибка обновления! ", worker.chatId) 
+                            }     
+                        }
+                                 
+
+                    }  
                 })     
             } catch (error) {
                 console.log(error.message)
