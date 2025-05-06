@@ -2188,7 +2188,7 @@ bot.on('message', async (msg) => {
                     if (worker.passport) {  
                         let matches = worker.passport.split(' ')[0].match(/\d+/g);
                         //
-                        if (matches != null) {
+                        if (matches !== null) {
                             //number
                             console.log("matches: ", matches)
                             //обновить бд
@@ -2208,24 +2208,24 @@ bot.on('message', async (msg) => {
                             //     console.log("Ошибка обновления! ", worker.id) 
                             // }   
                         }
-                        // else {
-                        //     //name
-                        //     //обновить бд
-                        //     const res = await Specialist.update({ 
-                        //         surname: worker.passport.split(' ')[0],
-                        //         name: worker.passport.split(' ')[1],
-                        //         secondname: worker.passport.split(' ')[2],
-                        //     },
-                        //     { 
-                        //         where: {id: worker.id} 
-                        //     })
+                        else {
+                            //name
+                            //обновить бд
+                            const res = await Specialist.update({ 
+                                surname: worker.passport.split(' ')[0],
+                                name: worker.passport.split(' ')[1],
+                                secondname: worker.passport.split(' ')[2],
+                            },
+                            { 
+                                where: {id: worker.id} 
+                            })
 
-                        //     if (res) {
-                        //         console.log("Специалиста пасспорт обновлен! ") 
-                        //     }else {
-                        //         console.log("Ошибка обновления! ", worker.id) 
-                        //     }     
-                        // }
+                            // if (res) {
+                            //     console.log("Специалиста пасспорт обновлен! ") 
+                            // }else {
+                            //     console.log("Ошибка обновления! ", worker.id) 
+                            // }     
+                        }
                                  
 
                     }  
