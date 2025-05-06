@@ -2201,6 +2201,25 @@ bot.on('message', async (msg) => {
                             // })  
                         }
                         else {
+                            //Паспорт
+                            const resStr = worker.passport.split('\n')[2]
+                            if (resStr) {
+                                if (resStr.includes('Паспорт')) {
+                                    //name
+                                    //обновить бд
+                                    const res = await Specialist.update({ 
+                                        passeria: resStr.split(': ')[1].split(' ')[0],
+                                        pasnumber: resStr.split(': ')[1].split(' ')[1],
+                                    },
+                                    { 
+                                        where: {id: worker.id} 
+                                    })
+                                    
+                                    i++
+                                    console.log(i, resStr) 
+                                }
+                                
+                            }
                             //Дата рождения
                             // const resStr = worker.passport.split('\n')[4]
                             // if (resStr) {
@@ -2256,59 +2275,59 @@ bot.on('message', async (msg) => {
                                 
                             //}
                             //Код подразделения
-                            const resStr7 = worker.passport.split('\n')[6]
-                            if (resStr7) {
-                                if (resStr7.includes('Код подразделения')) {
-                                    //name
-                                    //обновить бд
-                                    const res = await Specialist.update({ 
-                                        pascode: resStr7.split(': ')[1],
-                                    },
-                                    { 
-                                        where: {id: worker.id} 
-                                    })
+                            // const resStr7 = worker.passport.split('\n')[6]
+                            // if (resStr7) {
+                            //     if (resStr7.includes('Код подразделения')) {
+                            //         //name
+                            //         //обновить бд
+                            //         const res = await Specialist.update({ 
+                            //             pascode: resStr7.split(': ')[1],
+                            //         },
+                            //         { 
+                            //             where: {id: worker.id} 
+                            //         })
                                     
-                                    i++
-                                    console.log(i, resStr7) 
-                                }
+                            //         i++
+                            //         console.log(i, resStr7) 
+                            //     }
                                 
-                            }
+                            // }
                             //Место рождения
-                            const resStr8 = worker.passport.split('\n')[8]
-                            if (resStr8) {
-                                if (resStr8.includes('Место рождения')) {
-                                    //name
-                                    //обновить бд
-                                    const res = await Specialist.update({ 
-                                        pasbornplace: resStr8.split(': ')[1],
-                                    },
-                                    { 
-                                        where: {id: worker.id} 
-                                    })
+                            // const resStr8 = worker.passport.split('\n')[8]
+                            // if (resStr8) {
+                            //     if (resStr8.includes('Место рождения')) {
+                            //         //name
+                            //         //обновить бд
+                            //         const res = await Specialist.update({ 
+                            //             pasbornplace: resStr8.split(': ')[1],
+                            //         },
+                            //         { 
+                            //             where: {id: worker.id} 
+                            //         })
                                     
-                                    i++
-                                    console.log(i, resStr8) 
-                                }
+                            //         i++
+                            //         console.log(i, resStr8) 
+                            //     }
                                 
-                            }
+                            // }
                             //Адрес регистрации
-                            const resStr9 = worker.passport.split('\n')[10]
-                            if (resStr9) {
-                                if (resStr9.includes('Адрес регистрации')) {
-                                    //name
-                                    //обновить бд
-                                    const res = await Specialist.update({ 
-                                        pasaddress: resStr9.split(': ')[1],
-                                    },
-                                    { 
-                                        where: {id: worker.id} 
-                                    })
+                            // const resStr9 = worker.passport.split('\n')[10]
+                            // if (resStr9) {
+                            //     if (resStr9.includes('Адрес регистрации')) {
+                            //         //name
+                            //         //обновить бд
+                            //         const res = await Specialist.update({ 
+                            //             pasaddress: resStr9.split(': ')[1],
+                            //         },
+                            //         { 
+                            //             where: {id: worker.id} 
+                            //         })
                                     
-                                    i++
-                                    console.log(i, resStr9) 
-                                }
+                            //         i++
+                            //         console.log(i, resStr9) 
+                            //     }
                                 
-                            }
+                            // }
                         }
                     }  
                 })     
