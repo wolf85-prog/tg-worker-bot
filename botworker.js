@@ -2190,15 +2190,15 @@ bot.on('message', async (msg) => {
                         //
                         if (matches !== null) {
                             //number
-                            console.log("matches: ", matches)
+                            //console.log("matches: ", matches)
                             //обновить бд
-                            const res = await Specialist.update({ 
-                                passeria: worker.passport.split(' ')[0] + worker.passport.split(' ')[1],
-                                pasnumber: worker.passport.split(' ')[2],
-                            },
-                            { 
-                                where: {id: worker.id} 
-                            })  
+                            // const res = await Specialist.update({ 
+                            //     passeria: worker.passport.split(' ')[0] + worker.passport.split(' ')[1],
+                            //     pasnumber: worker.passport.split(' ')[2],
+                            // },
+                            // { 
+                            //     where: {id: worker.id} 
+                            // })  
                         }
                         else {
                             //name
@@ -2212,7 +2212,7 @@ bot.on('message', async (msg) => {
                             //     where: {id: worker.id} 
                             // })
                             
-                            const res = worker.passport.split('\n')[1]
+                            const res = worker.passport.split('\n')[3]
                             console.log(res)
                         }
                                  
