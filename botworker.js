@@ -2220,41 +2220,41 @@ bot.on('message', async (msg) => {
                                 
                             // }
                             //Выдан
-                            const resStr5 = worker.passport.split('\n')[5]
-                            if (resStr5) {
-                                if (resStr5.includes('Кем выдан')) {
-                                    //name
-                                    //обновить бд
-                                    const res = await Specialist.update({ 
-                                        paskemvidan: resStr5.split(': ')[1],
-                                    },
-                                    { 
-                                        where: {id: worker.id} 
-                                    })
-                                    
-                                    i++
-                                    console.log(i, resStr5.split(': ')[1]) 
-                                }
-                                
-                            }
-                            //Дата выдачи
-                            // const resStr6 = worker.passport.split('\n')[6]
-                            // if (resStr6) {
-                            //     if (res.includes('Дата выдачи')) {
+                            // const resStr5 = worker.passport.split('\n')[5]
+                            // if (resStr5) {
+                            //     if (resStr5.includes('Кем выдан')) {
                             //         //name
                             //         //обновить бд
                             //         const res = await Specialist.update({ 
-                            //             pasdatevidan: resStr6.split(': ')[1],
+                            //             paskemvidan: resStr5.split(': ')[1],
                             //         },
                             //         { 
                             //             where: {id: worker.id} 
                             //         })
                                     
                             //         i++
-                            //         console.log(i, resStr6.split(': ')[1]) 
+                            //         console.log(i, resStr5.split(': ')[1]) 
                             //     }
                                 
                             // }
+                            //Дата выдачи
+                            const resStr6 = worker.passport.split('\n')[6]
+                            if (resStr6) {
+                                if (resStr6.includes('Дата выдачи')) {
+                                    //name
+                                    //обновить бд
+                                    const res = await Specialist.update({ 
+                                        pasdatevidan: resStr6.split(': ')[1],
+                                    },
+                                    { 
+                                        where: {id: worker.id} 
+                                    })
+                                    
+                                    i++
+                                    console.log(i, resStr6.split(': ')[1]) 
+                                }
+                                
+                            }
                             //Код подразделения
                             // const resStr7 = worker.passport.split('\n')[7]
                             // if (resStr7) {
