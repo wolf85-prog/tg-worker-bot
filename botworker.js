@@ -2199,9 +2199,9 @@ bot.on('message', async (msg) => {
                             })
 
                             if (res) {
-                                console.log("Специалиста пасспорт обновлен! ", i, url) 
+                                console.log("Специалиста пасспорт обновлен! ") 
                             }else {
-                                console.log("Ошибка обновления! ", worker.chatId) 
+                                console.log("Ошибка обновления! ", worker.id) 
                             }   
                         }
                         else {
@@ -2217,9 +2217,9 @@ bot.on('message', async (msg) => {
                             })
 
                             if (res) {
-                                console.log("Специалиста пасспорт обновлен! ", i, url) 
+                                console.log("Специалиста пасспорт обновлен! ") 
                             }else {
-                                console.log("Ошибка обновления! ", worker.chatId) 
+                                console.log("Ошибка обновления! ", worker.id) 
                             }     
                         }
                                  
