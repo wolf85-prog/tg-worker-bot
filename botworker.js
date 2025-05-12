@@ -337,7 +337,7 @@ app.post('/web-passport', async (req, res) => {
             //сохраниь в бд ноушен
             if (!worker.passport) {
                 console.log("Начинаю сохранять паспорт...")
-                const res_pas = await addPassport(pass_str, worker?.id)
+                const res_pas = await addPassport(pass_str, worker?.id, pasFam, pasName, pasSoname, pasNumber, pasDateborn, pasKem, pasDate, pasKod, pasPlaceborn, pasAdress)
                 console.log("add_pas: ", res_pas)
             
                 const res_img = await addImage(image, worker?.id)
