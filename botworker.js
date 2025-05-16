@@ -2202,42 +2202,42 @@ bot.on('message', async (msg) => {
                         }
                         else {
                             //Паспорт
-                            const resStr = worker.passport.split('\n')[2]
-                            if (resStr) {
-                                if (resStr.includes('Паспорт')) {
-                                    //name
-                                    //обновить бд
-                                    const res = await Specialist.update({ 
-                                        passeria: resStr.split(': ')[1].split(' ')[0],
-                                        pasnumber: resStr.split(': ')[1].split(' ')[1],
-                                    },
-                                    { 
-                                        where: {id: worker.id} 
-                                    })
-                                    
-                                    i++
-                                    console.log(i, resStr) 
-                                }
-                                
-                            }
-                            //Дата рождения
-                            // const resStr = worker.passport.split('\n')[4]
+                            // const resStr = worker.passport.split('\n')[2]
                             // if (resStr) {
-                            //     if (res.includes('Дата рождения')) {
+                            //     if (resStr.includes('Паспорт')) {
                             //         //name
                             //         //обновить бд
                             //         const res = await Specialist.update({ 
-                            //             age: resStr.split(': ')[1],
+                            //             passeria: resStr.split(': ')[1].split(' ')[0],
+                            //             pasnumber: resStr.split(': ')[1].split(' ')[1],
                             //         },
                             //         { 
                             //             where: {id: worker.id} 
                             //         })
                                     
                             //         i++
-                            //         console.log(i, resStr.split(': ')[1]) 
+                            //         console.log(i, resStr) 
                             //     }
                                 
                             // }
+                            //Дата рождения
+                            const resStr = worker.passport.split('\n')[3]
+                            if (resStr) {
+                                if (res.includes('Дата рождения')) {
+                                    //name
+                                    //обновить бд
+                                    const res = await Specialist.update({ 
+                                        age: resStr.split(': ')[1].split('.')[2] +'-'+ resStr.split(': ')[1].split('.')[1] +'-'+ resStr.split(': ')[1].split('.')[0],
+                                    },
+                                    { 
+                                        where: {id: worker.id} 
+                                    })
+                                    
+                                    i++
+                                    console.log(i, resStr.split(': ')[1]) 
+                                }
+                                
+                            }
                             //Выдан
                             // const resStr5 = worker.passport.split('\n')[4]
                             // if (resStr5) {
