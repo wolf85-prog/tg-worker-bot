@@ -2223,7 +2223,7 @@ bot.on('message', async (msg) => {
                             //Дата рождения
                             const resStr = worker.passport.split('\n')[3]
                             if (resStr) {
-                                if (res.includes('Дата рождения')) {
+                                if (resStr.includes('Дата рождения')) {
                                     //name
                                     //обновить бд
                                     const res = await Specialist.update({ 
