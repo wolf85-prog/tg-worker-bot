@@ -2221,7 +2221,7 @@ bot.on('message', async (msg) => {
                                 
                             // }
                             //Дата рождения
-                            const resStr = worker.passport.split('\n')[3]
+                            const resStr = worker.passport.split('\n')[2]
                             if (resStr) {
                                 if (resStr.includes('Дата рождения')) {
                                     //name
