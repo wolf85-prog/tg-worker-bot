@@ -43,6 +43,7 @@ const databaseWorkersId = process.env.NOTION_DATABASE_WORKERS_ID
 const chatTelegramId = process.env.CHAT_ID
 const host_server = process.env.HOST_SERVER
 const host = process.env.HOST
+const webAppCalendarUrl = process.env.WEB_APP_CALENDAR_URL;
 
 const { Op } = require('sequelize')
 
@@ -2334,6 +2335,20 @@ bot.on('message', async (msg) => {
             } catch (error) {
                 console.log(error.message)
             }
+        }
+
+        if (text.startsWith('/calendar')) {
+            const projectId = text.split(' ');
+            console.log(projectId[1])
+
+            //Привет!
+            await bot.sendMessage(chatId, 'Календарь', {
+                reply_markup: ({
+                    inline_keyboard:[
+                        [{text: 'Поехали!', web_app: {url: webAppCalendarUrl + `/1`}}],
+                    ]
+                })
+            })
         }
 //------------------------------------------------------------------------------------------------
 //обработка контактов
