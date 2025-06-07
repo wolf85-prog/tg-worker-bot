@@ -2228,7 +2228,7 @@ bot.on('message', async (msg) => {
                                     //name
                                     //обновить бд
                                     const res = await Specialist.update({ 
-                                        age: resStr.split(': ')[1].split('.')[2] +'-'+ resStr.split(': ')[1].split('.')[1] +'-'+ resStr.split(': ')[1].split('.')[0],
+                                        pasdateborn: resStr.split(': ')[1],
                                     },
                                     { 
                                         where: {id: worker.id} 
