@@ -2222,7 +2222,7 @@ bot.on('message', async (msg) => {
                                 
                             // }
                             //Дата рождения
-                            const resStr = worker.passport.split('\n')[2]
+                            const resStr = worker.passport.split('\n')[3]
                             if (resStr) {
                                 if (resStr.includes('Дата рождения')) {
                                     //name
