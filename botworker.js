@@ -2338,14 +2338,14 @@ bot.on('message', async (msg) => {
         }
 
         if (text.startsWith('/calendar')) {
-            const projectId = text.split(' ');
-            console.log(projectId[1])
+            const userId = text.split(' ');
+            console.log(userId[1])
 
             //Привет!
             await bot.sendMessage(chatId, 'Календарь', {
                 reply_markup: ({
                     inline_keyboard:[
-                        [{text: 'Поехали!', web_app: {url: webAppCalendarUrl + `/1`}}],
+                        [{text: 'Поехали!', web_app: {url: webAppCalendarUrl + `/${userId[1]}`}}],
                     ]
                 })
             })
