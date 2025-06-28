@@ -131,6 +131,10 @@ async function getWorkers2() {
 async function getWorkerId(id) {
     console.log("Открытие приложения Workhub: ", id, new Date().toLocaleDateString())
     try {
+        //сохранение сообщения в базе данных wmessage
+        const workerId = await Specialist.findOne({where: {chatId: id.toString()}})
+
+        return workerId;
         // const response = await notion.databases.query({
         //     database_id: databaseWorkerId, 
         //     "filter": {
@@ -167,7 +171,7 @@ async function getWorkerId(id) {
 
         // //console.log(worker)
 
-        return null;
+        //return null;
     } catch (error) {
         console.error(error.message)
     }
