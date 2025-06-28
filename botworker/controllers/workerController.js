@@ -1,4 +1,5 @@
 require("dotenv").config();
+const {Specialist} = require('../models/models')
 const { Client } = require("@notionhq/client");
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
 const databaseWorkerId = process.env.NOTION_DATABASE_WORKERS_ID
@@ -17,44 +18,44 @@ const socketUrl = process.env.SOCKET_APP_URL
 async function getWorkers() {
     try {
 
-        let results = []
+        // let results = []
 
-        let data = await notion.databases.query({
-            database_id: databaseWorkerId
-        });
+        // let data = await notion.databases.query({
+        //     database_id: databaseWorkerId
+        // });
 
-        results = [...data.results]
+        // results = [...data.results]
 
-        while(data.has_more) {
-            data = await notion.databases.query({
-                database_id: databaseWorkerId,
-                start_cursor: data.next_cursor,
-            }); 
+        // while(data.has_more) {
+        //     data = await notion.databases.query({
+        //         database_id: databaseWorkerId,
+        //         start_cursor: data.next_cursor,
+        //     }); 
 
-            results = [...results, ...data.results];
-        }
+        //     results = [...results, ...data.results];
+        // }
 
-        const workers = results.map((page) => {
-            return {
-                id: page.id,
-                fio: page.properties.Name.title[0]?.plain_text,
-                tgId: page.properties.Telegram.number,
-                phone: page.properties.Phone.phone_number,
-                age: page.properties.Age.date,
-                city: page.properties.City[0]?.plain_text,
-                spec: page.properties.Specialization.multi_select,
-                comment: page.properties["Комментарии"].rich_text[0]?.plain_text,
-                reyting: page.properties["Рейтинг"].rich_text[0]?.plain_text,
-                merch: page.properties.Merch.multi_select,
-                comteg: page.properties["КомТег"].multi_select,
-                rank: page.properties["Ранг"].number,
-                passport: page.properties.Passport.rich_text[0]?.plain_text,
-                skill: page.properties.Skill.multi_select,
-                profile: page.properties["Профиль"],
-            };
-        });
+        // const workers = results.map((page) => {
+        //     return {
+        //         id: page.id,
+        //         fio: page.properties.Name.title[0]?.plain_text,
+        //         tgId: page.properties.Telegram.number,
+        //         phone: page.properties.Phone.phone_number,
+        //         age: page.properties.Age.date,
+        //         city: page.properties.City[0]?.plain_text,
+        //         spec: page.properties.Specialization.multi_select,
+        //         comment: page.properties["Комментарии"].rich_text[0]?.plain_text,
+        //         reyting: page.properties["Рейтинг"].rich_text[0]?.plain_text,
+        //         merch: page.properties.Merch.multi_select,
+        //         comteg: page.properties["КомТег"].multi_select,
+        //         rank: page.properties["Ранг"].number,
+        //         passport: page.properties.Passport.rich_text[0]?.plain_text,
+        //         skill: page.properties.Skill.multi_select,
+        //         profile: page.properties["Профиль"],
+        //     };
+        // });
 
-        return workers;
+        return null;
 
     } catch (error) {
         console.error(error.message, new Date().toLocaleDateString())
@@ -63,68 +64,19 @@ async function getWorkers() {
 
 //получить данные таблицы Специалисты
 async function getWorkers100(id) {
-    try {
-        // let response = await notion.databases.query({
-        //     database_id: databaseWorkerId
-        // });
-
-        let response = {}
-        //if (id === 1) {
-            // response = await notion.databases.query({
-            //     database_id: databaseWorkerId
-            // });
-        // } else {
-            response = await notion.databases.query({
-                database_id: databaseWorkerId,
-                start_cursor: id === 1 ? "" : id,
-            }); 
-        // }
-        
-
-        const workers = response.results.map((page) => {
-            return {
-                id: page.id,
-                fio: page.properties.Name.title[0]?.plain_text,
-                tgId: page.properties.Telegram.number,
-                phone: page.properties.Phone.phone_number,
-                age: page.properties.Age.date,
-                city: page.properties.City[0]?.plain_text,
-                spec: page.properties.Specialization.multi_select,
-                comment: page.properties["Комментарии"].rich_text[0]?.plain_text,
-                reyting: page.properties["Рейтинг"].rich_text[0]?.plain_text,
-                merch: page.properties.Merch.multi_select,
-                comteg: page.properties["КомТег"].multi_select,
-                rank: page.properties["Ранг"].number,
-                passport: page.properties.Passport.rich_text[0]?.plain_text,
-                skill: page.properties.Skill.multi_select,
-                //image: page.properties["Профиль"].files[0]?.file.url,
-                profile: page.properties["Профиль"],
-            };
-        });
-
-        const newObj = {
-            workers: workers,
-            cursor: response.next_cursor,
-            more: response.has_more
-        }
-
-        return newObj;
-
-    } catch (error) {
-        console.error(error.message)
-    }
+    
 }
 
 async function getWorkers2() {
-    try {
-        const response = await notion.databases.query({
-            database_id: databaseWorkerId
-        });
+    // try {
+    //     const response = await notion.databases.query({
+    //         database_id: databaseWorkerId
+    //     });
 
-        return response;
-    } catch (error) {
-        console.error(error.message)
-    }
+    //     return response;
+    // } catch (error) {
+    //     console.error(error.message)
+    // }
 }
 
 //получить специалиста по его telegram id
@@ -135,43 +87,7 @@ async function getWorkerId(id) {
         const workerId = await Specialist.findOne({where: {chatId: id.toString()}})
 
         return workerId;
-        // const response = await notion.databases.query({
-        //     database_id: databaseWorkerId, 
-        //     "filter": {
-        //         "property": "Telegram", //Telegram
-        //         "number": {
-        //             "equals": id ? parseInt(id) : 0
-        //         },
-        //     }, 
-        //     "sorts": [{ 
-        //         "timestamp": "created_time", 
-        //         "direction": "ascending" 
-        //     }]
-        // });
-
-        // const worker = response.results.map((page) => {
-        //     return {
-        //         id: page.id,
-        //         fio: page.properties.Name.title[0]?.plain_text,
-        //         tgId: page.properties.Telegram.number,
-        //         phone: page.properties.Phone.phone_number,
-        //         age: page.properties.Age.date,
-        //         city: page.properties.City.rich_text[0]?.plain_text,
-        //         newcity: page.properties["Город"].multi_select,
-        //         spec: page.properties.Specialization.multi_select,
-        //         comment: page.properties["Комментарии"].rich_text[0]?.plain_text,
-        //         reyting: page.properties["Рейтинг"].rich_text[0]?.plain_text,
-        //         merch: page.properties.Merch.multi_select,
-        //         comteg: page.properties["КомТег"].multi_select,
-        //         rank: page.properties["Ранг"].number,
-        //         passport: page.properties.Passport.rich_text[0]?.plain_text,
-        //         skill: page.properties.Skill.multi_select,
-        //     };
-        // });
-
-        // //console.log(worker)
-
-        //return null;
+       
     } catch (error) {
         console.error(error.message)
     }
@@ -181,18 +97,18 @@ async function getWorkerId(id) {
 async function getWorkerChildrenId(pageId) {
     try {
 
-        const response = await notion.blocks.children.list({
-            block_id: pageId,
-        });
+        // const response = await notion.blocks.children.list({
+        //     block_id: pageId,
+        // });
 
-        const worker = response.results.map((page) => {
-            return {
-                id: page.id,
-                image: page.image ? (page.image?.file ? page.image?.file.url : page.image.external.url) : null, //page.image?.file ? page.image?.file.url : page.image.external.url,
-            };
-        });
+        // const worker = response.results.map((page) => {
+        //     return {
+        //         id: page.id,
+        //         image: page.image ? (page.image?.file ? page.image?.file.url : page.image.external.url) : null, //page.image?.file ? page.image?.file.url : page.image.external.url,
+        //     };
+        // });
 
-        return worker;
+        // return worker;
     } catch (error) {
         console.error(error.message)
     }
@@ -233,32 +149,32 @@ async function sendMessage(chatId) {
 async function getProjects() {
     try {
         //1
-        const response = await notion.databases.query({
-            database_id: databaseId,
-            //page_size: 30,
-            "filter": 
-            {
-                "timestamp": "created_time",
-                "created_time": {
-                    "after": "2023-09-30"
-                }
-            }
-        });
+        // const response = await notion.databases.query({
+        //     database_id: databaseId,
+        //     //page_size: 30,
+        //     "filter": 
+        //     {
+        //         "timestamp": "created_time",
+        //         "created_time": {
+        //             "after": "2023-09-30"
+        //         }
+        //     }
+        // });
 
-        const responseResults = response.results.map((page) => {
-            return {
-                id: page.id,
-                title: page.properties.Name.title[0]?.plain_text,
-                date_start: page.properties["Дата"].date?.start,
-                date_end: page.properties["Дата"].date?.end,
-                status: page.properties["Статус проекта"].select,
-                tgURL_chat: page.properties.TG_URL_chat.rich_text[0]?.plain_text,
-                manager: page.properties["Менеджер"].relation[0]?.id,
-            };
-        });
+        // const responseResults = response.results.map((page) => {
+        //     return {
+        //         id: page.id,
+        //         title: page.properties.Name.title[0]?.plain_text,
+        //         date_start: page.properties["Дата"].date?.start,
+        //         date_end: page.properties["Дата"].date?.end,
+        //         status: page.properties["Статус проекта"].select,
+        //         tgURL_chat: page.properties.TG_URL_chat.rich_text[0]?.plain_text,
+        //         manager: page.properties["Менеджер"].relation[0]?.id,
+        //     };
+        // });
 
         
-        return responseResults;
+        // return responseResults;
 
     } catch (error) {
         console.error(error.message)
@@ -267,54 +183,54 @@ async function getProjects() {
 
 async function getProjectNew() {
     try {
-        const response = await notion.databases.query({
-            database_id: databaseId,
-            "filter": {
-                "or": [
-                    {
-                        "property": "Статус проекта",
-                        "select": {
-                            "equals": "Ready"
-                        }
-                    },
-                    {
-                        "property": "Статус проекта",
-                        "select": {
-                            "equals": "Load"
-                        }
-                    },
-                    {
-                        "property": "Статус проекта",
-                        "select": {
-                            "equals": "OnAir"
-                        }
-                    }
-                    // {
-                    //     // "property": "Date",
-                    //     // "date": {
-                    //     //     "after": "2023-05-31"
-                    //     // }
-                    //     "timestamp": "created_time",
-                    //     "created_time": {
-                    //         "after": "2023-05-31"
-                    //     }
-                    // }
-                ]
+        // const response = await notion.databases.query({
+        //     database_id: databaseId,
+        //     "filter": {
+        //         "or": [
+        //             {
+        //                 "property": "Статус проекта",
+        //                 "select": {
+        //                     "equals": "Ready"
+        //                 }
+        //             },
+        //             {
+        //                 "property": "Статус проекта",
+        //                 "select": {
+        //                     "equals": "Load"
+        //                 }
+        //             },
+        //             {
+        //                 "property": "Статус проекта",
+        //                 "select": {
+        //                     "equals": "OnAir"
+        //                 }
+        //             }
+        //             // {
+        //             //     // "property": "Date",
+        //             //     // "date": {
+        //             //     //     "after": "2023-05-31"
+        //             //     // }
+        //             //     "timestamp": "created_time",
+        //             //     "created_time": {
+        //             //         "after": "2023-05-31"
+        //             //     }
+        //             // }
+        //         ]
                 
-            },
-        });
+        //     },
+        // });
 
-        const responseResults = response.results.map((page) => {
-            return {
-                id: page.id,
-                title: page.properties.Name.title[0]?.plain_text,
-                date_start: page.properties["Дата"].date?.start,
-                date_end: page.properties["Дата"].date?.end,
-                status: page.properties["Статус проекта"].select,
-            };
-        });
+        // const responseResults = response.results.map((page) => {
+        //     return {
+        //         id: page.id,
+        //         title: page.properties.Name.title[0]?.plain_text,
+        //         date_start: page.properties["Дата"].date?.start,
+        //         date_end: page.properties["Дата"].date?.end,
+        //         status: page.properties["Статус проекта"].select,
+        //     };
+        // });
 
-        return responseResults;
+        // return responseResults;
 
     } catch (error) {
         console.error(error.message)
@@ -325,37 +241,37 @@ async function getProjectNew() {
 async function getProjectOld() {
     try {
 
-        const response = await notion.databases.query({
-            database_id: databaseId,
-            "filter": {
-                "or": [
-                    {
-                        "property": "Статус проекта",
-                        "select": {
-                            "equal": "Wasted"
-                        }
-                    },
-                    {
-                        "property": "Статус проекта",
-                        "select": {
-                            "equal": "Done"
-                        }
-                    },
-                ],            
-            },
-        });
+        // const response = await notion.databases.query({
+        //     database_id: databaseId,
+        //     "filter": {
+        //         "or": [
+        //             {
+        //                 "property": "Статус проекта",
+        //                 "select": {
+        //                     "equal": "Wasted"
+        //                 }
+        //             },
+        //             {
+        //                 "property": "Статус проекта",
+        //                 "select": {
+        //                     "equal": "Done"
+        //                 }
+        //             },
+        //         ],            
+        //     },
+        // });
 
-        const responseResults = response.results.map((page) => {
-            return {
-                id: page.id,
-                title: page.properties.Name.title[0]?.plain_text,
-                date_start: page.properties["Дата"].date?.start,
-                date_end: page.properties["Дата"].date?.end,
-                status: page.properties["Статус проекта"].select,
-            };
-        });
+        // const responseResults = response.results.map((page) => {
+        //     return {
+        //         id: page.id,
+        //         title: page.properties.Name.title[0]?.plain_text,
+        //         date_start: page.properties["Дата"].date?.start,
+        //         date_end: page.properties["Дата"].date?.end,
+        //         status: page.properties["Статус проекта"].select,
+        //     };
+        // });
 
-        return responseResults;
+        // return responseResults;
 
     } catch (error) {
         console.error(error.message)
@@ -366,18 +282,18 @@ async function getProjectOld() {
 async function getPretendents(id) {
     try {
 
-        const response = await notion.databases.query({
-            database_id: id,
-        });
+        // const response = await notion.databases.query({
+        //     database_id: id,
+        // });
 
-        const responseResults = response.results.map((page) => {
-            return {
-                id: page.id,
-                fioId: page.properties["4. ФИО"].relation,
-            };
-        });
+        // const responseResults = response.results.map((page) => {
+        //     return {
+        //         id: page.id,
+        //         fioId: page.properties["4. ФИО"].relation,
+        //     };
+        // });
 
-        return responseResults;
+        // return responseResults;
 
     } catch (error) {
         console.error(error.message)
@@ -388,17 +304,17 @@ async function getPretendents(id) {
 async function getWorkerChatId(id) {
     console.log("chat worker: ", id)
     try {
-        const response = await notion.databases.query({
-            database_id: databaseWorkerId, 
-            "filter": {
-                "property": "Telegram",
-                "number": {
-                    "equals": id ? parseInt(id) : 0
-                },
-            }
-        });
+        // const response = await notion.databases.query({
+        //     database_id: databaseWorkerId, 
+        //     "filter": {
+        //         "property": "Telegram",
+        //         "number": {
+        //             "equals": id ? parseInt(id) : 0
+        //         },
+        //     }
+        // });
 
-        return response.results[0]?.id; 
+        // return response.results[0]?.id; 
         
     } catch (error) {
         console.error(error.message)
