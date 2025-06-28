@@ -242,7 +242,7 @@ ${worklist.map(item =>' - ' + item.spec).join('\n')}`
             }
             })
 
-            console.log("Начинаю сохранять данные в ноушене...", user?.id)
+            //console.log("Начинаю сохранять данные в ноушене...", user?.id)
 
             //сохраниь в бд ноушен
             const specObj = await Specialist.findOne({where:{chatId: user?.id.toString()}}) //await getWorkerNotion(user?.id)
@@ -336,7 +336,7 @@ app.post('/web-passport', async (req, res) => {
 
             //сохраниь в бд ноушен
             if (!worker.passport) {
-                console.log("Начинаю сохранять паспорт...")
+                console.log("Начинаю сохранять паспорт...", user?.id)
                 const res_pas = await addPassport(pass_str, worker?.id, pasFam, pasName, pasSoname, pasNumber, pasDateborn, pasKem, pasDate, pasKod, pasPlaceborn, pasAdress)
                 console.log("add_pas: ", res_pas)
             
