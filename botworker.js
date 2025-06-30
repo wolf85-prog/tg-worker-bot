@@ -1944,6 +1944,39 @@ bot.on('message', async (msg) => {
             console.log("res: ", delWorker)
         }
 
+        if (text === '/delspam') {
+            //получить все запуски сканирования отказов
+            const specialist = await Specialist.findAll({
+                order: [
+                    ['id', 'DESC'], //DESC, ASC
+                ],
+            })
+            console.log("specialist: ", specialist.length)
+
+            specialist.map(async(man, index)=> {
+                setTimeout(async()=> { 
+                    for (let i = 420826; i <= 421650; i++) {
+                        console.log("specialist: ", index, i, man.chatId)
+                        try {
+                            const url_del_msg = `https://api.telegram.org/bot${token}/deleteMessage?chat_id=${man.chatId}&message_id=${i}`
+                            const delToTelegram = await $host.get(url_del_msg);
+
+                            //Выводим сообщение об успешном удалении
+                            if (delToTelegram) {
+                                console.log('Ваше сообщение удалено из телеграм! ', i, man.chatId);	
+                                setVisibleDelMess(true) //показать сообщение об отправке
+                            }           
+                        } catch (err) {
+                            console.error(err.message, index, i, man.chatId)
+                        }
+                        
+    
+                    }
+                    
+                }, 10000 * ++index)       
+            })
+        }
+
 
         if (text === '/savespecdb') {
 
