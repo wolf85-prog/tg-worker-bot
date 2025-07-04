@@ -3335,6 +3335,38 @@ bot.on('message', async (msg) => {
         return bot.deleteMessage(chatId, messageId)  
     }
 
+    if (data.startsWith('/poster_accept1')) {
+
+        //отправить сообщение в админ-панель
+        const convId = await sendMyMessage('Пользователь нажал кнопку "Принято / Понято"', "text", chatId, messageId, null, true)
+
+        // Подключаемся к серверу socket
+        let socket = io(socketUrl);
+        socket.emit("addUser", chatId)
+        
+        socket.emit("sendMessageSpec", {
+            senderId: chatId,
+            receiverId: chatTelegramId,
+            text: 'Пользователь нажал кнопку "Принято / Понято"',
+            convId: convId,
+            messageId: messageId,
+            isBot: true,
+        }) 
+
+        for (let i=1; i<=5; i++) {
+           setTimeout(()=> {
+                bot.deleteMessage(chatId, messageId-1)  
+                bot.deleteMessage(chatId, messageId-2)  
+                bot.deleteMessage(chatId, messageId-3)  
+                bot.deleteMessage(chatId, messageId-4)  
+                bot.deleteMessage(chatId, messageId-5)  
+           }, 500 * i) 
+        }
+        
+
+        return bot.deleteMessage(chatId, messageId)  
+    }
+
 
 
     //нажатие на кнопку "Кнопка"
