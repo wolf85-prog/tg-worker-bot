@@ -3332,6 +3332,8 @@ bot.on('message', async (msg) => {
             isBot: true,
         }) 
 
+        console.log("messagesId: ", messageId, Number(messageId-1), Number(messageId-2), Number(messageId-3), Number(messageId-4), Number(messageId-5))
+
         return bot.deleteMessage(chatId, messageId)  
     }
 
