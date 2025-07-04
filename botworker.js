@@ -3353,15 +3353,15 @@ bot.on('message', async (msg) => {
             isBot: true,
         }) 
 
-        for (let i=1; i<=5; i++) {
-           setTimeout(()=> {
-                bot.deleteMessage(chatId, messageId-1)  
-                bot.deleteMessage(chatId, messageId-2)  
-                bot.deleteMessage(chatId, messageId-3)  
-                bot.deleteMessage(chatId, messageId-4)  
-                bot.deleteMessage(chatId, messageId-5)  
-           }, 500 * i) 
-        }
+        //for (let i=1; i<=5; i++) {
+           //setTimeout(()=> {
+                bot.deleteMessage(chatId, Number(messageId-1))  
+                bot.deleteMessage(chatId, Number(messageId-2))  
+                bot.deleteMessage(chatId, Number(messageId-3))
+                bot.deleteMessage(chatId, Number(messageId-4)) 
+                bot.deleteMessage(chatId, Number(messageId-5)) 
+           //}, 500 * i) 
+        //}
         
 
         return bot.deleteMessage(chatId, messageId)  
