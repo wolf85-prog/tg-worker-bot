@@ -3355,14 +3355,14 @@ bot.on('message', async (msg) => {
 
         //for (let i=1; i<=5; i++) {
            //setTimeout(()=> {
-                bot.deleteMessage(chatId, Number(messageId-1))  
-                bot.deleteMessage(chatId, Number(messageId-2))  
-                bot.deleteMessage(chatId, Number(messageId-3))
-                bot.deleteMessage(chatId, Number(messageId-4)) 
-                bot.deleteMessage(chatId, Number(messageId-5)) 
+                // bot.deleteMessage(chatId, Number(messageId-1))  
+                // bot.deleteMessage(chatId, Number(messageId-2))  
+                // bot.deleteMessage(chatId, Number(messageId-3))
+                // bot.deleteMessage(chatId, Number(messageId-4)) 
+                // bot.deleteMessage(chatId, Number(messageId-5)) 
            //}, 500 * i) 
         //}
-        
+        console.log("messagesId: ", messageId, Number(messageId-1), Number(messageId-2), Number(messageId-3), Number(messageId-4), Number(messageId-5))
 
         return bot.deleteMessage(chatId, messageId)  
     }
