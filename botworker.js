@@ -3338,7 +3338,7 @@ bot.on('message', async (msg) => {
     if (data.startsWith('/poster_accept1')) {
 
         //отправить сообщение в админ-панель
-        const convId = await sendMyMessage('Пользователь нажал кнопку "Принято / Понято"', "text", chatId, messageId, null, true)
+        const convId = await sendMyMessage('Пользователь нажал кнопку "Принято / Понято"', "text", chatId, null, null, true)
 
         // Подключаемся к серверу socket
         let socket = io(socketUrl);
@@ -3349,7 +3349,7 @@ bot.on('message', async (msg) => {
             receiverId: chatTelegramId,
             text: 'Пользователь нажал кнопку "Принято / Понято"',
             convId: convId,
-            messageId: messageId,
+            messageId: null,
             isBot: true,
         }) 
 
